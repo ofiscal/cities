@@ -3,8 +3,6 @@
 # However, in this case the font is part of the repo.
 # It might be space-inefficient, but it's certainly safe.
 
-import sys
-import os
 import matplotlib.font_manager as fm
 
 

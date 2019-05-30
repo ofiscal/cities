@@ -1,9 +1,17 @@
+* update pandas in the new docekr image
+run "conda update pandas --yes"
 * Emulate the graph on p.2 of the mockup pdf.
+** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
-** Color the boxes dark.
-** Put white text indicating the amount on each box.
+** Color the boxes per Manuela's specs.
+** DONE Put text indicating the amount on each box.
+"By default, [the x and y arguments to matplotlib.axes.Axes.text() are] in data coordinates."
+https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.text.html
 ** DONE No y-axis. Years on the x-axis.
 ** DONE Big space between each column.
-** font: Montserrat black & MS light
-available here: https://fonts.google.com/specimen/Montserrat
+** Change fonts
+refer to fonts/custom-font.py for
+*** color: white
+*** style: Montserrat black & Montserrat light
+source: https://fonts.google.com/specimen/Montserrat
 ** Include text from an accompanying .txt file.
