@@ -11,12 +11,12 @@ xvals = np.arange( len( df.columns ) )
 plots = {}
 for rn in range(nRows):
   if rn < 1: bottom = None
-  else: bottom =  df.iloc[rn-1,:]
+  else: bottom = df.iloc[0:rn,:].sum()
   plots[rn] = plt.bar(
       xvals
     , df.iloc[rn,:]
     , width = [0.5 for i in range( nCols )]
-    , bottom=bottom )
+    , bottom = bottom)
 
 plt.title('Cool Stuff')
 plt.ylabel('How Much')
