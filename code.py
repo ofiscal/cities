@@ -1,4 +1,5 @@
 # import matplotlib as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -8,21 +9,29 @@ nCols = len( df.columns )
 nRows = len( df.index )
 xvals = np.arange( len( df.columns ) )
 
-plots = {}
-for rn in range(nRows):
-  if rn < 1: bottom = None
-  else: bottom = df.iloc[0:rn,:].sum()
-  plots[rn] = plt.bar(
-      xvals
-    , df.iloc[rn,:]
-    , width = [0.5 for i in range( nCols )]
-    , bottom = bottom)
+if True: # draw stuff
+  fig, (ax) = plt.subplots() # or subplots(1,1)
+  plots = {}
+  for rn in range(nRows):
+    if rn < 1: bottom = None
+    else: bottom = df.iloc[0:rn,:].sum()
+    plots[rn] = ax.bar(
+        xvals
+      , df.iloc[rn,:]
+      , width = [0.5 for i in range( nCols )]
+      , bottom = bottom)
+  plt.legend( plots.values(), df.index )
+  del(bottom, plots)
 
-plt.title('Cool Stuff')
-plt.ylabel('How Much')
-plt.xticks(xvals, df.columns )
-frame = plt.gca()
-frame.axes.get_yaxis().set_visible(False)
-plt.legend( plots.values(), df.index )
+if True: # add labels
+  # Vertical axis needs a label, but no ticks, and no tick labels. Based on
+  # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
+  ax.set( title='Cool Stuff'
+        , xlabel="Year"
+        , ylabel='Real spending (2019 pesos)' )
+  plt.xticks( xvals, df.columns )
+  plt.setp( ax.get_yticklabels()
+          , visible=False )
+  ax.tick_params( axis='y', which='both', length=0 )
 
 plt.show()
