@@ -1,3 +1,8 @@
+# Based on: https://matplotlib.org/examples/api/font_file.html
+# Ordinarily, reading a font from a fixed location is not recommended.
+# However, in this case the font is part of the repo.
+# It might be space-inefficient, but it's certainly safe.
+
 import sys
 import os
 import matplotlib.font_manager as fm
