@@ -1,9 +1,10 @@
-Emulate the graph on p.2 of the mockup pdf.
-Stack the boxes, with a line and no space between.
-Color the boxes dark.
-Put white text indicating the amount on each box.
-No y-axis. Years on the x-axis.
-Big space between each column.
-font: Montserrat black & MS light
-  available here: https://fonts.google.com/specimen/Montserrat
-Include text from an accompanying .txt file.
+* Emulate the graph on p.2 of the mockup pdf.
+* Stack the boxes, with a line and no space between.
+* Color the boxes dark.
+* Put white text indicating the amount on each box.
+* No y-axis. Years on the x-axis.
+* Big space between each column.
+* font: Montserrat black & MS light
+available here: https://fonts.google.com/specimen/Montserrat
+* Include text from an accompanying .txt file.
+2
