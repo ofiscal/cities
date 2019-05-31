@@ -4,7 +4,10 @@ import numpy as np
 import pandas as pd
 
 
-df = pd.read_csv( "data.csv", index_col=0 )
+df = pd.read_csv( "data/data.csv", index_col=0 )
+with open ("data/text.txt", "r") as myfile:
+    text = map( lambda s: s.replace( "\n","" )
+              , myfile.readlines() )
 nCols = len( df.columns )
 nRows = len( df.index )
 xvals = np.arange( nCols )

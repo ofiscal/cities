@@ -1,5 +1,27 @@
-* update pandas in the new docekr image
-run "conda update pandas --yes"
+* ONGOING update docker image
+** TODO in Dockerfile, update pandas, conda, jupyter script
+*** update Jupyter server script
+The IP address should be 0.0.0.0:
+/opt/conda/bin/jupyter notebook --notebook-dir=/mnt --ip='0.0.0.0' --port=8887 --no-browser --allow-root
+
+And then, in browser, maybe just connect to http://127.0.0.1:8887/tree
+(the giant URL shown at the bottom of the output definitely works, but needs some editing -- choose one of the two things in parens, and then delete the parens).
+*** updating conda updates pandas also
+"conda update --prefix /opt/conda anaconda --yes"
+** install a pdf library
+*** get pip3
+apt install python3-pip -y # seemed to work; now pip3 is installed
+pip3 install --upgrade pip # reported was already up to date
+*** reportlab looks good
+pip3 install reportlab
+*** DONE pyfpdf appears to badly support Python 3
+pip install --upgrade pip # afte running this, did not have pip3
+seems to be working: "python3 -m pip install fpdf"
+recommended was      "python  -m pip install fpdf"
+* ReportLab
+https://www.reportlab.com/documentation/
+**** custom fonts in reportlab
+https://www.reportlab.com/documentation/faq/#2.6.2
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
@@ -15,3 +37,4 @@ refer to fonts/custom-font.py for
 *** style: Montserrat black & Montserrat light
 source: https://fonts.google.com/specimen/Montserrat
 ** Include text from an accompanying .txt file.
+** TODO build a pdf
