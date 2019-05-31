@@ -1,6 +1,6 @@
 # Adapted from https://matplotlib.org/3.1.0/gallery/misc/multipage_pdf.html
-# import matplotlib.pyplot as plt
 
+# import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import datetime
 import numpy as np
