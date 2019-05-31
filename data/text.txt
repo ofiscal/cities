@@ -1,4 +1,4 @@
 This is a line.
-This is a longer line. It might be so long that it wraps around the screen. Let's hope it does, because that's the point.
+This is a longer line. Matplotlib will not automatically wrap it, so it will get truncated when rendered.
 
 The previous line is empty.

@@ -1,15 +1,22 @@
 # import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.font_manager as fm
 import datetime
 import numpy as np
 
+
+font_black = "fonts/Montserrat_Black.ttf"
+font_light = "fonts/Montserrat_Light.ttf"
 
 plt.subplot(2, 1, 1)
 with open ("data/text.txt", "r") as myfile:
     text = map( lambda s: s.replace( "\n","" )
               , myfile.readlines() )
-# list(text)[0]
-plt.text( 0, 0.5, "a\nb", verticalalignment="center" )
+plt.text( 0, 0.5
+        , "\n".join( text )
+        , fontproperties =
+          fm.FontProperties(fname=font_black)
+        , verticalalignment="center" )
 #        , transform="axes" )
 
 plt.subplot(2, 1, 2)
