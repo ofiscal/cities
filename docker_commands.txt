@@ -1,3 +1,4 @@
 sudo docker run --name cities -it -v /home/jeff/cities:/mnt \
   -p 8887:8887 -d -h 127.0.0.1                              \
   jeffreybbrown/tax.co:2019-05-31.conda-update
+

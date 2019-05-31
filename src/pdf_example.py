@@ -5,6 +5,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import datetime
 import numpy as np
 
+
 # Create the PdfPages object to which we will save the pages:
 # The with statement makes sure that the PdfPages object is closed properly at
 # the end of the block, even if an Exception occurs.

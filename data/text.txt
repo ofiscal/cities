@@ -1,2 +1,4 @@
 This is a line.
-This is another.
+This is a longer line. It might be so long that it wraps around the screen. Let's hope it does, because that's the point.
+
+The previous line is empty.

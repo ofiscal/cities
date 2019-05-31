@@ -1,18 +1,3 @@
-* ONGOING update docker image
-** TODO in Dockerfile, update pandas, conda, jupyter script
-*** update Jupyter server script
-The IP address should be 0.0.0.0:
-/opt/conda/bin/jupyter notebook --notebook-dir=/mnt --ip='0.0.0.0' --port=8887 --no-browser --allow-root
-
-And then, in browser, maybe just connect to http://127.0.0.1:8887/tree
-(the giant URL shown at the bottom of the output definitely works, but needs some editing -- choose one of the two things in parens, and then delete the parens).
-*** updating conda updates pandas also
-"conda update --prefix /opt/conda anaconda --yes"
-*** maybe get pip3
-apt install python3-pip -y # seemed to work; now pip3 is installed
-pip3 install --upgrade pip # reported was already up to date
-** TODO install pdf library, if needed
-matplotlib might do it
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
@@ -30,7 +15,7 @@ refer to fonts/custom-font.py for
 source: https://fonts.google.com/specimen/Montserrat
 ** Include text from an accompanying .txt file.
 * TODO build a pdf
-** TODO using matplotlib
+** TODO use matplotlib
 ** DONE reportlab is too complex and unfree
 pip3 install reportlab
 *** DONE ReportLab
