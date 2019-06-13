@@ -1,3 +1,5 @@
+* TODO how to import local code into Jupyter notebook
+?https://stackoverflow.com/questions/34478398/import-local-function-from-a-module-housed-in-another-directory-with-relative-im
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
