@@ -1,6 +1,7 @@
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
+** legend : draw to the side, not on top of graph
 ** Write the total above each stack.
 ** Color the boxes per Manuela's specs.
 ** DONE Put text indicating the amount on each box.
