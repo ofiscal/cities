@@ -12,7 +12,8 @@ https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.text.html
 refer to fonts/custom-font.py for
 *** color: white
 *** style: Montserrat black & Montserrat light
-source: https://fonts.google.com/specimen/Montserrat
+source code: https://github.com/JulietaUla/Montserrat
+main page: https://fonts.google.com/specimen/Montserrat
 ** Include text from an accompanying .txt file.
 * TODO build a pdf
 ** TODO use matplotlib
@@ -26,3 +27,11 @@ https://www.reportlab.com/documentation/faq/#2.6.2
 pip install --upgrade pip # afte running this, did not have pip3
 seems to be working: "python3 -m pip install fpdf"
 recommended was      "python  -m pip install fpdf"
+* gotchas
+** underscores in filenames seem to confuse Matplotlib's font_manager
+https://github.com/matplotlib/matplotlib/issues/14536
+* if we need to automate data collection
+https://www.chip.gov.co/schip_rt/index.jsf
+Main page
+Consultas
+Informes al Ciudadano
