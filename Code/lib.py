@@ -8,10 +8,11 @@ def drawPage( folder ):
   df = pd.read_csv( folder + "/data.csv", index_col=0 )
   with open( folder + "/text.txt", "r") as myfile:
       lines = myfile.readlines()
-  plt.subplot(2, 1, 1)
+  plt.subplots(2, 1)
+  (    plt.subplot(2, 1, 1))
   drawText( lines )
-  plt.subplot(2, 1, 2)
-  drawStacks( df )
+  ax = plt.subplot(2, 1, 2)
+  drawStacks( ax, df )
 
 def drawText( lines ):
   plt.text( 0, 0.5
@@ -20,13 +21,12 @@ def drawText( lines ):
             fm.FontProperties(fname=font_light)
           , verticalalignment="center" )
 
-def drawStacks( df ):
+def drawStacks( ax, df ):
   nCols = len( df.columns )
   nRows = len( df.index )
   xvals = np.arange( nCols )
 
   if True: # draw stuff
-    fig, (ax) = plt.subplots() # or subplots(1,1)
     plots = {}
     for rn in range(nRows):
       if rn < 1: bottom = [0. for i in range(nCols)]
