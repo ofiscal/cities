@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import numpy as np
@@ -52,9 +53,10 @@ def drawStacks( ax, df ):
   if True: # add labels
     # Vertical axis needs a label, but no ticks, and no tick labels. Based on
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
-    ax.set( title='Cool Stuff'
+    ax.set( title="Cool stufff"
           , xlabel="Year"
           , ylabel='Real spending (2019 pesos)' )
+
     plt.xticks( xvals, df.columns )
     plt.setp( ax.get_xticklabels(), visible=False )
     plt.setp( ax.get_yticklabels(), visible=False )
