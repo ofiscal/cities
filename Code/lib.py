@@ -1,13 +1,30 @@
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import numpy as np
 import pandas as pd
 
+
+def drawPage( folder ):
+  df = pd.read_csv( folder + "/data.csv", index_col=0 )
+  with open( folder + "/text.txt", "r") as myfile:
+      lines = myfile.readlines()
+  plt.subplot(2, 1, 1)
+  drawText( lines )
+  plt.subplot(2, 1, 2)
+  drawStacks( df )
+
+def drawText( lines ):
+  plt.text( 0, 0.5
+          , "".join( lines )
+          , fontproperties =
+            fm.FontProperties(fname=font_light)
+          , verticalalignment="center" )
 
 def drawStacks( df ):
   nCols = len( df.columns )
   nRows = len( df.index )
   xvals = np.arange( nCols )
-  
+
   if True: # draw stuff
     fig, (ax) = plt.subplots() # or subplots(1,1)
     plots = {}
@@ -27,10 +44,10 @@ def drawStacks( df ):
                , fontsize=10
                , verticalalignment='center'
                , horizontalalignment='center' )
-  
+
     plt.legend( plots.values(), df.index )
     del(bottom, plots)
-  
+
   if True: # add labels
     # Vertical axis needs a label, but no ticks, and no tick labels. Based on
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
@@ -41,3 +58,6 @@ def drawStacks( df ):
     plt.setp( ax.get_yticklabels()
             , visible=False )
     ax.tick_params( axis='y', which='both', length=0 )
+
+font_black = "fonts/Montserrat_Black.ttf"
+font_light = "fonts/Montserrat_Light.ttf"
