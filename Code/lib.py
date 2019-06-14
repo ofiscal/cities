@@ -9,17 +9,18 @@ def drawPage( folder ):
   with open( folder + "/text.txt", "r") as myfile:
       lines = myfile.readlines()
   plt.subplots(2, 1)
-  (    plt.subplot(2, 1, 1))
-  drawText( lines )
+  ax = plt.subplot(2, 1, 1)
+  drawText( ax, lines )
   ax = plt.subplot(2, 1, 2)
   drawStacks( ax, df )
 
-def drawText( lines ):
+def drawText( ax, lines ):
   plt.text( 0, 0.5
           , "".join( lines )
           , fontproperties =
             fm.FontProperties(fname=font_light)
           , verticalalignment="center" )
+  ax.axis('off')
 
 def drawStacks( ax, df ):
   nCols = len( df.columns )
