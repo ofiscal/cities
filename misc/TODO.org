@@ -33,6 +33,10 @@ recommended was      "python  -m pip install fpdf"
 * gotchas
 ** underscores in filenames seem to confuse Matplotlib's font_manager
 https://github.com/matplotlib/matplotlib/issues/14536
+** local modules must begin with a capital letter to be imported in Jupyter
+Keeping all code in a top-level folder that starts with a capital letter solves this problem. Subfolders and files suffer no naming restriction.
+** every code folder needs a __init__.py file
+as of some recent version of Python
 * if we need to automate data collection
 https://www.chip.gov.co/schip_rt/index.jsf
 Main page

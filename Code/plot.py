@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import code.lib as lib
+import Code.lib as lib
 
 
 df = pd.read_csv( "data/data.csv", index_col=0 )
