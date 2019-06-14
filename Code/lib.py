@@ -56,9 +56,11 @@ def drawStacks( ax, df ):
           , xlabel="Year"
           , ylabel='Real spending (2019 pesos)' )
     plt.xticks( xvals, df.columns )
-    plt.setp( ax.get_yticklabels()
-            , visible=False )
+    plt.setp( ax.get_xticklabels(), visible=False )
+    plt.setp( ax.get_yticklabels(), visible=False )
+    ax.tick_params( axis='x', which='both', length=0 )
     ax.tick_params( axis='y', which='both', length=0 )
+    ax.set_frame_on(False)
 
 font_black = "fonts/Montserrat_Black.ttf"
 font_light = "fonts/Montserrat_Light.ttf"
