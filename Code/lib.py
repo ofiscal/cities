@@ -18,8 +18,7 @@ def drawPage( folder ):
 def drawText( ax, lines ):
   plt.text( 0, 0.5
           , "".join( lines )
-          , fontproperties =
-            fm.FontProperties(fname=font_light)
+          , fontproperties = font_light
           , verticalalignment="center" )
   ax.axis('off')
 
@@ -45,17 +44,23 @@ def drawStacks( ax, df ):
                , df.iloc[ rn, cn ]
                , fontsize=10
                , verticalalignment='center'
-               , horizontalalignment='center' )
+               , horizontalalignment='center'
+               , fontproperties = font_light )
 
-    plt.legend( plots.values(), df.index )
+    plt.legend( plots.values()
+              , df.index
+              , prop = font_light )
     del(bottom, plots)
 
   if True: # add labels
     # Vertical axis needs a label, but no ticks, and no tick labels. Based on
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
-    ax.set( title="Cool stufff"
-          , xlabel="Year"
-          , ylabel='Real spending (2019 pesos)' )
+    ax.set_title( "Cool stufff"
+                , fontproperties = font_light )
+    ax.set_xlabel( "Year"
+                 , fontproperties = font_light )
+    ax.set_ylabel( 'Real spending (2019 pesos)'
+                 , fontproperties = font_light )
 
     plt.xticks( xvals, df.columns )
     plt.setp( ax.get_xticklabels(), visible=False )
@@ -64,5 +69,5 @@ def drawStacks( ax, df ):
     ax.tick_params( axis='y', which='both', length=0 )
     ax.set_frame_on(False)
 
-font_black = "fonts/Montserrat_Black.ttf"
-font_light = "fonts/Montserrat_Light.ttf"
+font_black = fm.FontProperties( fname = "fonts/Montserrat_Black.ttf" )
+font_light = fm.FontProperties( fname = "fonts/Montserrat_Light.ttf" )

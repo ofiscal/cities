@@ -1,3 +1,5 @@
+* TODO check for responses re. setting font for all types of text
+https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
