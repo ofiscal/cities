@@ -1,9 +1,9 @@
-* TODO check for responses re. setting font for all types of text
+* wish: that I could set font only once, affecting all types of text
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
 * Emulate the graph on p.2 of the mockup pdf.
 ** *???* If boxes are too small to fit a number, aggregate somehow.
 ** DONE Stack the boxes, with a line and no space between.
-** legend : draw to the side, not on top of graph
+** DONE legend : draw to the side, not on top of graph
 ** Write the total above each stack.
 ** Color the boxes per Manuela's specs.
 ** DONE Put text indicating the amount on each box.
@@ -37,6 +37,24 @@ https://github.com/matplotlib/matplotlib/issues/14536
 Keeping all code in a top-level folder that starts with a capital letter solves this problem. Subfolders and files suffer no naming restriction.
 ** every code folder needs a __init__.py file
 as of some recent version of Python
+** change every background color: methods that didn't work
+*** plt.rcParams['axes.facecolor] = 'b'
+Changes the legend background, nothing else
+*** ax.set_facecolor('b')
+no discernible effect
+*** ax.patch.set_facecolor('b')
+no discernible effect
+*** fig.add_subplot(2, 1, 1, facecolor = "red")
+causes the second figure not to be drawn,
+no other discernible effect
+**** code example
+   fig = Figure()
+
+   ax = fig.add_subplot(2, 1, 1, facecolor = "red")
+   drawText( ax, lines )
+
+   ax = fig.add_subplot(2, 1, 2) #, facecolor = "red")
+   drawStacks( ax, df )
 * if we need to automate data collection
 https://www.chip.gov.co/schip_rt/index.jsf
 Main page
