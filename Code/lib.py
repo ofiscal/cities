@@ -18,6 +18,7 @@ def drawPage( folder ):
 def drawText( ax, lines ):
   plt.text( 0, 0.5
           , "".join( lines )
+          , color = 'k'
           , fontproperties = font_light
           , verticalalignment="center" )
   ax.axis('off')
@@ -45,21 +46,28 @@ def drawStacks( ax, df ):
                , fontsize=10
                , verticalalignment='center'
                , horizontalalignment='center'
+               , color = 'w'
                , fontproperties = font_light )
 
-    plt.legend( plots.values()
-              , df.index
-              , prop = font_light )
+    leg = plt.legend( plots.values()
+                    , df.index
+                    , prop = font_light )
+    plt.setp( leg.get_texts()
+            , color='k' )
+
     del(bottom, plots)
 
   if True: # add labels
     # Vertical axis needs a label, but no ticks, and no tick labels. Based on
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
-    ax.set_title( "Cool stufff"
+    ax.set_title( "Cool stuff"
+                , color = 'k'
                 , fontproperties = font_light )
     ax.set_xlabel( "Year"
+                 , color = 'k'
                  , fontproperties = font_light )
     ax.set_ylabel( 'Real spending (2019 pesos)'
+                 , color = 'k'
                  , fontproperties = font_light )
 
     plt.xticks( xvals, df.columns )

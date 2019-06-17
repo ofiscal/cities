@@ -11,7 +11,7 @@ https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font
 https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.text.html
 ** DONE No y-axis. Years on the x-axis.
 ** DONE Big space between each column.
-** Change fonts
+** DONE Change fonts
 refer to fonts/custom-font.py for
 *** color: white
 *** style: Montserrat black & Montserrat light
