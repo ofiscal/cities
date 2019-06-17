@@ -49,9 +49,21 @@ def drawStacks( ax, df ):
                , color = 'w'
                , fontproperties = font_light )
 
+    chartBox = ax.get_position()
+    ax.set_position([ chartBox.x0
+                    , chartBox.y0
+                    , chartBox.width*0.6
+                    , chartBox.height ])
+
     leg = plt.legend( plots.values()
                     , df.index
-                    , prop = font_light )
+                    , prop = font_light
+                    , shadow=True
+            # Next arguments: draw the legend to the right of the plot, ala
+            # https://pythonspot.com/matplotlib-legend/
+                    , loc='upper center'
+                    , bbox_to_anchor=(1.45, 0.8)
+                    , ncol=1 )
     plt.setp( leg.get_texts()
             , color='k' )
 
@@ -71,7 +83,9 @@ def drawStacks( ax, df ):
                  , fontproperties = font_light )
 
     plt.xticks( xvals, df.columns )
-    plt.setp( ax.get_xticklabels(), visible=False )
+    plt.setp( ax.get_xticklabels() ,visible=True
+            , color = 'k'
+            , fontproperties = font_light )
     plt.setp( ax.get_yticklabels(), visible=False )
     ax.tick_params( axis='x', which='both', length=0 )
     ax.tick_params( axis='y', which='both', length=0 )
