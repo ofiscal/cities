@@ -31,15 +31,17 @@ def drawStacks( ax, df ):
   if True: # draw stuff
     plots = {}
     for rn in range( nRows ):
+      # bottom, top are both series describing that row's bars
       if rn < 1: bottom = [0. for i in range( nCols )]
       else:      bottom = df.iloc[0:rn,:].sum()
       top =      bottom + df.iloc[  rn,:]
-      plots[rn] = ax.bar(
+      plots[rn] = ax.bar( # plot stack of bar charts
           xvals
         , df.iloc[rn,:]
         , width = [ 0.8 for i in range( nCols ) ]
         , bottom = bottom )
-      for cn in range( nCols ): # TODO ? speed: use pd.Seeries.iteritems().
+      for cn in range( nCols ): # plot amounts over each box
+        # todo ? speed: use pd.Seeries.iteritems()
         ax.text( float( cn )
                , ((bottom + top) / 2)[cn]
                , df.iloc[ rn, cn ]
@@ -48,7 +50,18 @@ def drawStacks( ax, df ):
                , horizontalalignment = 'center'
                , color = 'w'
                , fontproperties = font_light )
+    for cn in range( nCols ): # plot totals above each column
+        total = df.iloc[:,cn].sum()
+        ax.text( float( cn )
+               , total + 1
+               , total
+               , fontsize = 10
+               , verticalalignment = 'center'
+               , horizontalalignment = 'center'
+               , color = 'w'
+               , fontproperties = font_light )
 
+    plt.rcParams['axes.titlepad'] = 10
     chartBox = ax.get_position()
     ax.set_position([ chartBox.x0
                     , chartBox.y0
@@ -70,7 +83,7 @@ def drawStacks( ax, df ):
 
     del( bottom, chartBox, leg, plots )
 
-  if True: # add labels
+  if True: # add (outer) labels
     # Vertical axis needs a label, but no ticks, and no tick labels. Based on
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
     ax.set_title( "Cool stuff"
