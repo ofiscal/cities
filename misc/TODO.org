@@ -55,6 +55,7 @@ no other discernible effect
 
    ax = fig.add_subplot(2, 1, 2) #, facecolor = "red")
    drawStacks( ax, df )
+*** pdf.savefig() overrides background color in figures
 * if we need to automate data collection
 https://www.chip.gov.co/schip_rt/index.jsf
 Main page

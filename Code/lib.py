@@ -6,18 +6,33 @@ import pandas as pd
 
 
 def drawPage( folder ):
-  df = pd.read_csv( folder + "/data.csv", index_col=0 )
+  df = pd.read_csv( folder + "/data.csv"
+                  , index_col=0
+       ) . iloc[::-1] # Revserse column order.
+    # In the bar chart, each row is drawn on top of the previous one.
+    # This reversal causes earlier ("higher") rows to be drawn above later ones,
+    # which means vertical order of items in the chart corresponds to
+    # the vertical order of items in the data file.
+    # It's a nuance the chart would still make sense without.
   with open( folder + "/text.txt", "r") as myfile:
-      lines = myfile.readlines()
-  plt.subplots( 2, 1, facecolor=background_color )
+      content = myfile.readlines()
+  with open( folder + "/title.txt", "r") as myfile:
+      title = myfile.readlines()
+
+  plt.subplots( 2, 1, facecolor = background_color )
   ax = plt.subplot( 2, 1, 1 )
-  drawText( ax, lines )
+  drawText( ax, title, content )
   ax = plt.subplot( 2, 1, 2 )
   drawStacks( ax, df )
 
-def drawText( ax, lines ):
+def drawText( ax, title, content ):
+  plt.text( 0.5, 0.9
+          , "".join( title )
+          , color = 'k'
+          , fontproperties = font_black
+          , horizontalalignment="center" )
   plt.text( 0, 0.5
-          , "".join( lines )
+          , "".join( content )
           , color = 'k'
           , fontproperties = font_light
           , verticalalignment="center" )
@@ -29,17 +44,17 @@ def drawStacks( ax, df ):
   xvals = np.arange( nCols )
 
   if True: # draw stuff
-    plots = {}
+    plots = []
     for rn in range( nRows ):
       # bottom, top are both series describing that row's bars
       if rn < 1: bottom = [0. for i in range( nCols )]
       else:      bottom = df.iloc[0:rn,:].sum()
       top =      bottom + df.iloc[  rn,:]
-      plots[rn] = ax.bar( # plot stack of bar charts
-          xvals
-        , df.iloc[rn,:]
-        , width = [ 0.8 for i in range( nCols ) ]
-        , bottom = bottom )
+      plots.insert( 0 # prepend => legend items in the right order
+                  , ax.bar( xvals # plot stack of bar charts
+                          , df.iloc[rn,:]
+                          , width = [ 0.8 for i in range( nCols ) ]
+                          , bottom = bottom ) )
       for cn in range( nCols ): # plot amounts over each box
         # todo ? speed: use pd.Seeries.iteritems()
         ax.text( float( cn )
@@ -68,11 +83,11 @@ def drawStacks( ax, df ):
                     , chartBox.width*0.6
                     , chartBox.height ])
 
-    leg = plt.legend( plots.values()
-                    , df.index
-                    , prop = font_light
-                    , facecolor = background_color
-                    , shadow=True
+    leg = ax.legend( plots
+                   , reversed( df.index ) # to match the order of `plots`
+                   , prop = font_light
+                   , facecolor = background_color
+                   , shadow=True
             # Next arguments: draw the legend to the right of the plot, ala
             # https://pythonspot.com/matplotlib-legend/
                     , loc = 'upper center'
@@ -88,7 +103,7 @@ def drawStacks( ax, df ):
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
     ax.set_title( "Cool stuff"
                 , color = 'k'
-                , fontproperties = font_light )
+                , fontproperties = font_black )
     ax.set_xlabel( "Year"
                  , color = 'k'
                  , fontproperties = font_light )
@@ -106,6 +121,6 @@ def drawStacks( ax, df ):
     ax.tick_params( axis='y', which='both', length=0 )
     ax.set_frame_on(False)
 
-background_color = "xkcd:salmon"
+background_color = "mediumaquamarine"
 font_black = fm.FontProperties( fname = "fonts/Montserrat_Black.ttf" )
 font_light = fm.FontProperties( fname = "fonts/Montserrat_Light.ttf" )
