@@ -1,18 +1,37 @@
 * getting the data
 https://www.chip.gov.co/schip_rt/index.jsf
-** human click actions
-Main page
-Consultas
-Informes al Ciudadano
-** scraping
-*** "mechanize" library for python
-http://wwwsearch.sourceforge.net/mechanize/
-**** recommended here; seems appropriate for a .jsf form
-https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
+** site behavior
+*** clicks change HTML but not URL
+After clicking in a menu, the URL is unchanged,
+but, per diff --ignore-space-change,
+the HTML (when saved) is almost entirely different.
+*** drop-down menu contents are not in the HTML
+e.g. what happens when you press "Down" within the "entidad" window.
+The resulting menu must be served live from some server.
+** site syntax
 *** >< marks surround the text of items.
 e.g. ">Informaci&#243;n de la Categoria<"
 This is useful becuase some words, e.g. "Entidad", appear all over the place,
 but only once between those carets.
+** human click recipe
+Main page
+Consultas
+Informes al Ciudadano
+** automated scraping
+*** "selenium" library for python
+24K+ commits, last updated two days ago
+**** modify Docker container
+python3.6 -m pip install selenium
+*** DONE "mechanize" library for python
+http://wwwsearch.sourceforge.net/mechanize/
+**** looks inappropriate
+http://wwwsearch.sourceforge.net/mechanize/faq.html
+"this is a library for web automation, not an interactive browser"
+**** untouched since 2017
+**** would have to modify Docker container
+RUN easy_install mechanize
+**** recommended here; seems appropriate for a .jsf form
+https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
 * drawing
 ** TODO get drawStacks() to respect outer subplots
  rework this line:
