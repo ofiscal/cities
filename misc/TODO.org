@@ -1,25 +1,53 @@
-* TODO maybe
-** If boxes are too small to fit a number, aggregate somehow.
-** if we need to automate data collection
+* getting the data
 https://www.chip.gov.co/schip_rt/index.jsf
+** human click actions
 Main page
 Consultas
 Informes al Ciudadano
-** nesting formats
-*** options, still considering
-**** matplotlib => pdf
-**** matplotlib => eps, latex => pdf
-*** DONE options, rejected
-**** reportlab is too complex and unfree
-pip3 install reportlab
-***** DONE ReportLab
-https://www.reportlab.com/documentation/
-***** custom fonts in reportlab
-https://www.reportlab.com/documentation/faq/#2.6.2
-**** pyfpdf appears to badly support Python 3
-pip install --upgrade pip # afte running this, did not have pip3
-seems to be working: "python3 -m pip install fpdf"
-recommended was      "python  -m pip install fpdf"
+** scraping
+*** "mechanize" library for python
+http://wwwsearch.sourceforge.net/mechanize/
+**** recommended here; seems appropriate for a .jsf form
+https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
+*** >< marks surround the text of items.
+e.g. ">Informaci&#243;n de la Categoria<"
+This is useful becuase some words, e.g. "Entidad", appear all over the place,
+but only once between those carets.
+* drawing
+** TODO get drawStacks() to respect outer subplots
+ rework this line:
+   fig, (ax) = plt.subplots()
+** Emulate the graph on p.2 of the mockup pdf.
+*** *???* If boxes are too small to fit a number, aggregate somehow.
+*** DONE Stack the boxes, with a line and no space between.
+*** legend : draw to the side, not on top of graph
+*** Write the total above each stack.
+*** Color the boxes per Manuela's specs.
+*** DONE Put text indicating the amount on each box.
+ "By default, [the x and y arguments to matplotlib.axes.Axes.text() are] in data coordinates."
+ https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.text.html
+*** DONE No y-axis. Years on the x-axis.
+*** DONE Big space between each column.
+*** Change fonts
+ refer to fonts/custom-font.py for
+**** color: white
+**** style: Montserrat black & Montserrat light
+ source code: https://github.com/JulietaUla/Montserrat
+ main page: https://fonts.google.com/specimen/Montserrat
+*** Include text from an accompanying .txt file.
+** TODO build a pdf
+*** TODO use matplotlib
+*** DONE reportlab is too complex and unfree
+ pip3 install reportlab
+**** DONE ReportLab
+ https://www.reportlab.com/documentation/
+**** custom fonts in reportlab
+ https://www.reportlab.com/documentation/faq/#2.6.2
+*** DONE pyfpdf appears to badly support Python 3
+ pip install --upgrade pip # afte running this, did not have pip3
+ seems to be working: "python3 -m pip install fpdf"
+ recommended was      "python  -m pip install fpdf"
+** wish: that I could set font only once, affecting all types of text
 * gotchas
 ** underscores in filenames seem to confuse Matplotlib's font_manager
 https://github.com/matplotlib/matplotlib/issues/14536
@@ -42,27 +70,5 @@ no other discernible effect
 
    ax = fig.add_subplot(2, 1, 1, facecolor = "red")
    drawText( ax, lines )
-
-   ax = fig.add_subplot(2, 1, 2) #, facecolor = "red")
-   drawStacks( ax, df )
 *** pdf.savefig() overrides background color in figures
-* wish: that I could set font only once, affecting all types of text
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
-* DONE
-** Emulate the graph on p.2 of the mockup pdf.
-*** Stack the boxes, with a line and no space between.
-*** legend : draw to the side, not on top of graph
-*** Write the total above each stack.
-*** Color the boxes per Manuela's specs.
-*** Put text indicating the amount on each box.
-"By default, [the x and y arguments to matplotlib.axes.Axes.text() are] in data coordinates."
-https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.text.html
-*** No y-axis. Years on the x-axis.
-*** Big space between each column.
-*** Change fonts
-refer to fonts/custom-font.py for
-**** color: white
-**** style: Montserrat black & Montserrat light
-source code: https://github.com/JulietaUla/Montserrat
-main page: https://fonts.google.com/specimen/Montserrat
-*** Include text from an accompanying .txt file.
