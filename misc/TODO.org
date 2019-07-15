@@ -9,6 +9,11 @@ the HTML (when saved) is almost entirely different.
 e.g. what happens when you press "Down" within the "entidad" window.
 The resulting menu must be served live from some server.
 ** site syntax
+*** regions might be uniquely identified by 9 digit codes
+example: 217525175 = Chia
+**** here's a big list of about 300 of them
+but some are businesses, not municipalities.
+http://www.banrep.gov.co/sites/default/files/paginas/operaciones-reciprocas-contaduria-general-de-la-nacion-trim-2_2017.pdf
 *** >< marks surround the text of items.
 e.g. ">Informaci&#243;n de la Categoria<"
 This is useful becuase some words, e.g. "Entidad", appear all over the place,
@@ -22,6 +27,32 @@ Informes al Ciudadano
 24K+ commits, last updated two days ago
 **** modify Docker container
 python3.6 -m pip install selenium
+*** abstract strategy
+**** TODO determine whether a submenu has loaded
+http://allselenium.info/wait-for-elements-python-selenium-webdriver/
+***** example
+After choosing "Bogota",
+a list of series will eventually become available.
+**** Use "volver" to return almost to the main menu.
+Going all the way back to the main menu would be slower.
+**** Verify each dropdown menu has what's expected.
+***** Upon asking for a city, it should have length one.
+***** For some "categorias", one must choose a "formulario"
+****** the problem
+ "gastos de inversion" offers only one "formulario", itself.
+ "gastos funcionamiento" offers two "formulario" choices:
+   "gastos funcionamiento"
+   "transferencias comprometidas"
+ "indicadores de calidad" offers only one, itself.
+ "ingresos" offers two:
+   "reporte informacion"
+   "transferencias recibidas"
+****** TODO awaiting response from Juan
+**** restart once the downloaded file is detected
+**** TODO timeout slow operations, to repeat later
+Save the elements of every timed-out request to a list.
+Or, more natural, bump them to the end of the queue --
+if I can figure out how to parallellize that.
 *** DONE "mechanize" library for python
 http://wwwsearch.sourceforge.net/mechanize/
 **** looks inappropriate
@@ -32,6 +63,8 @@ http://wwwsearch.sourceforge.net/mechanize/faq.html
 RUN easy_install mechanize
 **** recommended here; seems appropriate for a .jsf form
 https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
+* PITFALLS interpreting the data
+Some series might not be uniformly sampled across time.
 * drawing
 ** TODO get drawStacks() to respect outer subplots
  rework this line:
