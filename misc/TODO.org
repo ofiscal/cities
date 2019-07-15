@@ -22,6 +22,8 @@ Informes al Ciudadano
 24K+ commits, last updated two days ago
 **** modify Docker container
 python3.6 -m pip install selenium
+**** to list all page elements
+https://stackoverflow.com/questions/20244691/python-selenium-how-do-i-find-all-element-ids-on-a-pagex
 *** DONE "mechanize" library for python
 http://wwwsearch.sourceforge.net/mechanize/
 **** looks inappropriate
