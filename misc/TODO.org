@@ -73,6 +73,13 @@ http://wwwsearch.sourceforge.net/mechanize/faq.html
 RUN easy_install mechanize
 **** recommended here; seems appropriate for a .jsf form
 https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
+** TODO fuzzy string match
+Probably the best candidate:
+  from fuzzywuzzy import process
+There are othersm, too; see this tutorial:
+https://www.datacamp.com/community/tutorials/fuzzy-string-python
+Functions mentioned later in the tutorial are more powerful
+(and maybe faster too?).
 * PITFALLS interpreting the data
 Some series might not be uniformly sampled across time.
 * drawing
