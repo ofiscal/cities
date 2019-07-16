@@ -9,11 +9,21 @@ the HTML (when saved) is almost entirely different.
 e.g. what happens when you press "Down" within the "entidad" window.
 The resulting menu must be served live from some server.
 ** site syntax
-*** regions might be uniquely identified by 9 digit codes
-example: 217525175 = Chia
-**** here's a big list of about 300 of them
-but some are businesses, not municipalities.
-http://www.banrep.gov.co/sites/default/files/paginas/operaciones-reciprocas-contaduria-general-de-la-nacion-trim-2_2017.pdf
+*** regions
+**** are almost uniquely identified by 8|9 digit codes
+Some valid 8-digit codes are subsets of valid 9-digit ones.
+Will therefore need to find the best regex match to the name.
+**** a nearly-comprehensive list of them
+comes from Directorio_CHIP_Mesa_de_Ayuda_Contraloria_2009.xls
+  (which Juan found)
+A subset of it became data/regions/*.csv
+Municipalities are those in which the first column is 21.
+  That rule collects 9 false positives,
+  all of which match one of these two regular expressions:
+    ^DEFENSA CIVIL COLOMBIANA$
+    ^CORPORACION.*
+  They have been deleted.
+Departments are those in which the first column is 11.
 *** >< marks surround the text of items.
 e.g. ">Informaci&#243;n de la Categoria<"
 This is useful becuase some words, e.g. "Entidad", appear all over the place,
