@@ -63,6 +63,8 @@ Going all the way back to the main menu would be slower.
 Save the elements of every timed-out request to a list.
 Or, more natural, bump them to the end of the queue --
 if I can figure out how to parallellize that.
+**** to list all page elements
+https://stackoverflow.com/questions/20244691/python-selenium-how-do-i-find-all-element-ids-on-a-pagex
 *** DONE "mechanize" library for python
 http://wwwsearch.sourceforge.net/mechanize/
 **** looks inappropriate
