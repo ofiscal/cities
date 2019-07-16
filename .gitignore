@@ -1,9 +1,9 @@
 *~
 output/
 data/source-material
-git_comment
+git*comment
 Untitled*.ipynb
 fonts/all/
 __pycache__/
-docker_commands.laptop.txt
+docker-commands.laptop.txt
 Downloads/

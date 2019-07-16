@@ -1,3 +1,14 @@
+* TODO atm
+** try changing user in tax.co Docker container
+per the recipe in the "share display" comment
+** try firefox recipe(s) without (initially) bringing tax.co along
+** once the container builds
+run firefox from it
+test selenium
+change the container's name
+add geckodriver to .gitignore, commit from tax.co
+commit from cities
+uninstall geckodriver from native machine
 * getting the data
 https://www.chip.gov.co/schip_rt/index.jsf
 ** site behavior
@@ -36,7 +47,26 @@ Informes al Ciudadano
 *** "selenium" library for python
 24K+ commits, last updated two days ago
 **** modify Docker container
-python3.6 -m pip install selenium
+***** install Firefox
+apt update && \
+  apt upgrade -y && \
+  apt install firefox-esr -y
+***** install geckodriver
+download, extract, copy to somewhere on $PATH
+  /usr/local/bin works
+If `uname -m" returns `x86_64`, the container is 64-bit.
+(jeffreybbrown/tax.co is.)
+the download page
+  https://github.com/mozilla/geckodriver/releases/tag/v0.24.0
+the download
+  https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+***** python3.6 -m pip install selenium
+**** modify Docker run command, to share graphics
+sudo docker run                                     \
+  --net=host                                        \
+  --env="DISPLAY"                                   \
+  --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+  gui-app
 *** abstract strategy
 **** TODO determine whether a submenu has loaded
 http://allselenium.info/wait-for-elements-python-selenium-webdriver/
