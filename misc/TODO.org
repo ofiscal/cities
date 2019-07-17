@@ -1,7 +1,7 @@
 * TODO atm
-** try changing user in tax.co Docker container
-per the recipe in the "share display" comment
 ** try firefox recipe(s) without (initially) bringing tax.co along
+** try changing user early in tax.co Docker container
+per the recipe in the "share display" comment
 ** once the container builds
 run firefox from it
 test selenium
@@ -11,7 +11,7 @@ commit from cities
 uninstall geckodriver from native machine
 * getting the data
 https://www.chip.gov.co/schip_rt/index.jsf
-** site behavior
+** site behavior, syntax
 *** clicks change HTML but not URL
 After clicking in a menu, the URL is unchanged,
 but, per diff --ignore-space-change,
@@ -19,12 +19,16 @@ the HTML (when saved) is almost entirely different.
 *** drop-down menu contents are not in the HTML
 e.g. what happens when you press "Down" within the "entidad" window.
 The resulting menu must be served live from some server.
-** site syntax
-*** regions
-**** are almost uniquely identified by 8|9 digit codes
+*** >< marks surround the text of items.
+e.g. ">Informaci&#243;n de la Categoria<"
+This is useful becuase some words, e.g. "Entidad", appear all over the place,
+but only once between those carets.
+
+** regions
+*** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.
 Will therefore need to find the best regex match to the name.
-**** a nearly-comprehensive list of them
+*** a nearly-comprehensive list of them
 comes from Directorio_CHIP_Mesa_de_Ayuda_Contraloria_2009.xls
   (which Juan found)
 A subset of it became data/regions/*.csv
@@ -35,10 +39,6 @@ Municipalities are those in which the first column is 21.
     ^CORPORACION.*
   They have been deleted.
 Departments are those in which the first column is 11.
-*** >< marks surround the text of items.
-e.g. ">Informaci&#243;n de la Categoria<"
-This is useful becuase some words, e.g. "Entidad", appear all over the place,
-but only once between those carets.
 ** human click recipe
 Main page
 Consultas
