@@ -7,4 +7,4 @@ fonts/all/
 __pycache__/
 docker-commands.laptop.txt
 Downloads/
-firefox/logs/
+logs/

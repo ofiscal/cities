@@ -1,29 +1,10 @@
-* TODO atm
-** try firefox recipe(s) without (initially) bringing tax.co along
-** try changing user early in tax.co Docker container
-per the recipe in the "share display" comment
-** once the container builds
-run firefox from it
-test selenium
-change the container's name
-add geckodriver to .gitignore, commit from tax.co
-commit from cities
-uninstall geckodriver from native machine
 * getting the data
-https://www.chip.gov.co/schip_rt/index.jsf
-** site behavior, syntax
-*** clicks change HTML but not URL
-After clicking in a menu, the URL is unchanged,
-but, per diff --ignore-space-change,
-the HTML (when saved) is almost entirely different.
-*** drop-down menu contents are not in the HTML
-e.g. what happens when you press "Down" within the "entidad" window.
-The resulting menu must be served live from some server.
-*** >< marks surround the text of items.
-e.g. ">Informaci&#243;n de la Categoria<"
-This is useful becuase some words, e.g. "Entidad", appear all over the place,
-but only once between those carets.
-
+** TODO new site, method
+https://sisfut.dnp.gov.co/app/reportes/categoria
+*** Reporte FUT > Categoria
+fill in until "cargue" (upload).
+  At which choose one: Definitivo > Oportuno > Temporal
+Don't specify dep or muni.
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.
@@ -39,79 +20,6 @@ Municipalities are those in which the first column is 21.
     ^CORPORACION.*
   They have been deleted.
 Departments are those in which the first column is 11.
-** human click recipe
-Main page
-Consultas
-Informes al Ciudadano
-** automated scraping
-*** "selenium" library for python
-24K+ commits, last updated two days ago
-**** modify Docker container
-***** install Firefox
-apt update && \
-  apt upgrade -y && \
-  apt install firefox-esr -y
-***** install geckodriver
-download, extract, copy to somewhere on $PATH
-  /usr/local/bin works
-If `uname -m" returns `x86_64`, the container is 64-bit.
-(jeffreybbrown/tax.co is.)
-the download page
-  https://github.com/mozilla/geckodriver/releases/tag/v0.24.0
-the download
-  https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
-***** python3.6 -m pip install selenium
-**** modify Docker run command, to share graphics
-sudo docker run                                     \
-  --net=host                                        \
-  --env="DISPLAY"                                   \
-  --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-  gui-app
-*** abstract strategy
-**** TODO determine whether a submenu has loaded
-http://allselenium.info/wait-for-elements-python-selenium-webdriver/
-***** example
-After choosing "Bogota",
-a list of series will eventually become available.
-**** Use "volver" to return almost to the main menu.
-Going all the way back to the main menu would be slower.
-**** Verify each dropdown menu has what's expected.
-***** Upon asking for a city, it should have length one.
-***** For some "categorias", one must choose a "formulario"
-****** the problem
- "gastos de inversion" offers only one "formulario", itself.
- "gastos funcionamiento" offers two "formulario" choices:
-   "gastos funcionamiento"
-   "transferencias comprometidas"
- "indicadores de calidad" offers only one, itself.
- "ingresos" offers two:
-   "reporte informacion"
-   "transferencias recibidas"
-****** TODO awaiting response from Juan
-**** restart once the downloaded file is detected
-**** TODO timeout slow operations, to repeat later
-Save the elements of every timed-out request to a list.
-Or, more natural, bump them to the end of the queue --
-if I can figure out how to parallellize that.
-**** to list all page elements
-https://stackoverflow.com/questions/20244691/python-selenium-how-do-i-find-all-element-ids-on-a-pagex
-*** DONE "mechanize" library for python
-http://wwwsearch.sourceforge.net/mechanize/
-**** looks inappropriate
-http://wwwsearch.sourceforge.net/mechanize/faq.html
-"this is a library for web automation, not an interactive browser"
-**** untouched since 2017
-**** would have to modify Docker container
-RUN easy_install mechanize
-**** recommended here; seems appropriate for a .jsf form
-https://stackoverflow.com/questions/49591740/how-to-do-a-web-scrap-in-an-jsf-site-with-cookies-and-javascript-javax-faces-v
-** TODO fuzzy string match
-Probably the best candidate:
-  from fuzzywuzzy import process
-There are othersm, too; see this tutorial:
-https://www.datacamp.com/community/tutorials/fuzzy-string-python
-Functions mentioned later in the tutorial are more powerful
-(and maybe faster too?).
 * PITFALLS interpreting the data
 Some series might not be uniformly sampled across time.
 * drawing
