@@ -1,4 +1,7 @@
 * was last doing
+** PITFALL: Was manipulating the "tax.co" Dockerfile
+but doing Docker research in this ("cities") repo too.
+See README for details.
 ** try firefox recipe(s) without (initially) bringing tax.co along
 ** try changing user early in tax.co Docker container
 per the recipe in the "share display" comment
