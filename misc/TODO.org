@@ -1,3 +1,6 @@
+* TODO simplify data acquisition
+Once the .csv files have all converted, upload a new .zip file,
+and update data/sisfut/README.md.
 * TODO explore the data
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
