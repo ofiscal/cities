@@ -3,8 +3,7 @@
 ## the easy way
 
 A .zip file containing these reports is available here:
-https://livejaverianaedu-my.sharepoint.com/:u:/g/personal/brown-j_javeriana_edu_co/ERqNUO8cpEhKs64nvuyRBOIBx7On3G2LQ2u3-f7dn-1rvw?e=NBoOKw
-
+https://livejaverianaedu-my.sharepoint.com/:u:/g/personal/brown-j_javeriana_edu_co/EcjdkEM5tGBHlzKe3GmAd_UBHs6RJeJygLmMDt4tLAaHyA?e=KKwDE2
 
 ## the hard way, straight from DNP
 
@@ -26,8 +25,10 @@ via to the following process:
 
 ### then convert them to .csv
 
-(This can be done from within the docker container, or outside.)
-
-First install xlsx2csv, by running `easy_install xlsx2csv`.
+In the latest tax.co docker container
+(jeffreybbrown/tax.co:2019-07-22.xlsx2csv),
+xlsx2csv is already installed.
+If you're in another environment,
+first install it, via `easy_install xlsx2csv`.
 
 Then run the included script `to_csv.sh`.
