@@ -1,10 +1,4 @@
-* getting the data
-** TODO new site, method
-https://sisfut.dnp.gov.co/app/reportes/categoria
-*** Reporte FUT > Categoria
-fill in until "cargue" (upload).
-  At which choose one: Definitivo > Oportuno > Temporal
-Don't specify dep or muni.
+* TODO explore the data
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.

@@ -1,4 +1,5 @@
 *~
+data/sisfut/*.xlsx
 output/
 data/source-material
 git*comment
