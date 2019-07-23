@@ -2,7 +2,7 @@
 data/sisfut/*.xlsx
 data/sisfut/*.csv
 output/
-data/source-material
+data/*/source_material
 git*comment
 Untitled*.ipynb
 fonts/all/

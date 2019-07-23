@@ -6,6 +6,6 @@ import Code.lib as lib
 plt.rcParams['axes.facecolor'] = 'b'
 
 with PdfPages('output/a page.pdf') as pdf:
-  lib.drawPage( "data" )
+  lib.drawPage( "data/example" )
   pdf.savefig( facecolor=lib.background_color )
   plt.close()

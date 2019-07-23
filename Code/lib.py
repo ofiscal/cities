@@ -6,7 +6,7 @@ import pandas as pd
 
 
 def drawPage( folder ):
-  df = pd.read_csv( folder + "/data.csv"
+  df = pd.read_csv( folder + "/numbers_to_plot.csv"
                   , index_col=0
        ) . iloc[::-1] # Revserse column order.
     # In the bar chart, each row is drawn on top of the previous one.

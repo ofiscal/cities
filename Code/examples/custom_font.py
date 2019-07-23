@@ -12,9 +12,9 @@ font_black = "fonts/Montserrat_Black.ttf"
 font_light = "fonts/Montserrat_Light.ttf"
 
 ax.set_title(
-    'Check out this font!'
+    'Check out this custom font!'
   , fontproperties =
     fm.FontProperties(fname=font_black) )
-ax.set_xlabel('This is the default font')
+ax.set_xlabel('This, by contrast, is the default font')
 
 plt.show()
