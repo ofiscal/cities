@@ -2,6 +2,18 @@
 ** bump pandas to 0.25.0, other stuff
 * TODO explore the data
 ** check, then delete duplicative columns
+*** the algorithm
+For each of the three series varieties,,
+find the intersection of its columns with the set of duplicative columns.
+Create a single dataset that includes only those columns,
+from all years and all 3 series.
+Aggregate on each pair of column names, discarding other columns.
+Create a unit index.
+Aggregate on each of the two columns, discarding the other.
+Keep only rows for which the unit index is greater than unity.
+If there are none, perfect.
+If there are some, identify the discrepancies.
+*** the columns
 Código FUT, Nombre Entidad
 Cód. DANE Departamento, Nombre DANE Departamento
 Cód. DANE Municipio, Nombre DANE Municipio
