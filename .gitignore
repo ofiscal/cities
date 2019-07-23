@@ -1,5 +1,5 @@
 *~
-data/sisfut/*.xlsx
+data/sisfut/original_csv/*.csv
 data/sisfut/*.csv
 output/
 data/*/source_material
