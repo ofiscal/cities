@@ -1,6 +1,7 @@
 *~
 data/sisfut/original_csv/*.csv
 data/sisfut/*.csv
+data/sisfut/collated*
 output/
 data/*/source_material
 git*comment

@@ -1,6 +1,15 @@
 * docker: conda update --all -y
 ** bump pandas to 0.25.0, other stuff
 * TODO explore the data
+** check, then delete duplicative columns
+Código FUT, Nombre Entidad
+Cód. DANE Departamento, Nombre DANE Departamento
+Cód. DANE Municipio, Nombre DANE Municipio
+  probably
+Código Concepto, Concepto
+Código Fuente Financiación, Fuente Financiación
+  probably
+Código Fuentes De Financiación, Fuentes de Financiación
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.
