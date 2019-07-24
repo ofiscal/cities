@@ -32,3 +32,12 @@ for p in sc.duplicative_columns:
       )
     print(p[i])
     print( dps_counts[p[i]].describe() )
+
+# TODO: complete
+# Demo: How to find many-to-one mappings
+x = ( dps_counts["Nombre DANE Municipio"]
+      . reset_index() )
+y = ( dps_unique_pairs[("Cód. DANE Municipio", "Nombre DANE Municipio")]
+      . reset_index() )
+x0 = x[ x["unit"] > 1 ]
+y.merge(x0, on="Nombre DANE Municipio")

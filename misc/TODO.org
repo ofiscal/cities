@@ -3,9 +3,9 @@
 * TODO fix broken OneDrive archive
 maybe add a key, so that OneDrive can't extract and re-archive it
 * TODO explore the data
-** TODO check, then delete duplicative columns
-see Code/test_bijectivity.py
-*** TODO find the discrepancies in should-be-isomorphic columns
+** TODO enumerate the many-to-one mappings where isomorphisms are expected
+see TODO in test_bijectivity.py
+*** the columns
 Código FUT, Nombre Entidad
   isomorphic
 Cód. DANE Departamento, Nombre DANE Departamento
