@@ -2,8 +2,19 @@
 
 ## the easy way
 
-A .zip file containing these reports is available here:
-https://livejaverianaedu-my.sharepoint.com/:u:/g/personal/brown-j_javeriana_edu_co/EcjdkEM5tGBHlzKe3GmAd_UBHs6RJeJygLmMDt4tLAaHyA?e=KKwDE2
+An encrypted .zip file containing these reports is available here:
+
+https://livejaverianaedu-my.sharepoint.com/:u:/g/personal/brown-j_javeriana_edu_co/EZDtLGI_18pGm114STmE-8gBOvQU1i-NDccjosFUfJZPLw?e=vABAlI
+
+Extract it by running
+`openssl enc -aes-256-cbc -d -in muni-reports.zip.enc -out muni-reports.zip2`
+and then providing the password
+`mil6NIbD6gQiF`
+
+(It was created via
+`openssl enc -aes-256-cbc -salt -in muni-reports.zip -out muni-reports.zip.enc`
+The only reason it's encrypted is to prevent OneDrive from re-compressing using a format that my Linux installation cannot uncompress.)
+
 
 ## the hard way, straight from DNP
 

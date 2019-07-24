@@ -4,27 +4,21 @@
 maybe add a key, so that OneDrive can't extract and re-archive it
 * TODO explore the data
 ** TODO check, then delete duplicative columns
-*** TODO remaining: see "TODO" in Code/explore_dup_columns.py
-*** the algorithm
-For each of the three series varieties,
-find the intersection of its columns with the set of duplicative columns.
-Create a single dataset that includes only those columns,
-from all years and all 3 series.
-Aggregate on each pair of column names, discarding other columns.
-Create a unit index.
-Aggregate on each of the two columns, discarding the other.
-Keep only rows for which the unit index is greater than unity.
-If there are none, perfect.
-If there are some, identify the discrepancies.
-*** the columns
+see Code/test_bijectivity.py
+*** TODO find the discrepancies in should-be-isomorphic columns
 Código FUT, Nombre Entidad
+  isomorphic
 Cód. DANE Departamento, Nombre DANE Departamento
+  isomorphic
 Cód. DANE Municipio, Nombre DANE Municipio
-  probably
+  some "Nombre DANE Municipio" values map to multiple codigos
+  but no codigos maps to multiple nombres
 Código Concepto, Concepto
+  neither direction is bijective
 Código Fuente Financiación, Fuente Financiación
-  probably
+  isomorphic
 Código Fuentes De Financiación, Fuentes de Financiación
+  isomorphic
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.

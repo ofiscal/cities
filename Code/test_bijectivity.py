@@ -30,4 +30,5 @@ for p in sc.duplicative_columns:
     dps_counts[p[i]] = (
       dps_unique_pairs[p].groupby( p[i] ).agg(sum)
       )
+    print(p[i])
     print( dps_counts[p[i]].describe() )
