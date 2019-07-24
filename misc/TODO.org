@@ -1,9 +1,10 @@
 * docker: conda update --all -y
 ** bump pandas to 0.25.0, other stuff
 * TODO explore the data
-** check, then delete duplicative columns
+** TODO check, then delete duplicative columns
+*** TODO remaining: see "TODO" in Code/explore_dup_columns.py
 *** the algorithm
-For each of the three series varieties,,
+For each of the three series varieties,
 find the intersection of its columns with the set of duplicative columns.
 Create a single dataset that includes only those columns,
 from all years and all 3 series.
