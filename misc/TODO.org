@@ -1,5 +1,7 @@
 * docker: conda update --all -y
 ** bump pandas to 0.25.0, other stuff
+* TODO fix broken OneDrive archive
+maybe add a key, so that OneDrive can't extract and re-archive it
 * TODO explore the data
 ** TODO check, then delete duplicative columns
 *** TODO remaining: see "TODO" in Code/explore_dup_columns.py

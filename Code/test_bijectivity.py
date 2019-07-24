@@ -17,15 +17,17 @@ for series in ["ingresos","inversion","funcionamiento"]:
     )
   dup_columns = dup_columns.append( shuttle )
 
-dup_pairs, dup_pairs_agg, dup_pairs_agg_max = ({},{},{})
+# "duplicate pairs": each frame below has 2 columns
+dps, dps_unique_pairs, dps_counts = ({},{},{})
 for p in sc.duplicative_columns:
-  dup_pairs[p] = dup_columns[[ p[0], p[1] ]].copy()
-  dup_pairs[p]["count"] = 1
-  # TODO: Add the count=1 variable *after* aggregating.
-  # It's uninteresting how many times a dup pair occurs before then.
-  # What's interesting is whether any value in either of those pairs
-  # occurs more than once after aggregating on both of them.
-  # That will require a second aggregation.
-  dup_pairs_agg[p] = dup_pairs[p].groupby( p )
-  dup_pairs_agg_max[p] = dup_pairs_agg[p].agg(max)
-  print( dup_pairs_agg_max[p].describe() )
+  dps[p] = dup_columns[[ p[0], p[1] ]].copy()
+  dps[p]["dummy"] = 0
+    # so that |rows| > 0 after .agg() step
+  dps_unique_pairs[p] = dps[p].groupby(list(p)).agg(max)
+  dps_unique_pairs[p]["unit"] = 1
+  dps_unique_pairs[p] = dps_unique_pairs[p].drop(columns="dummy")
+  for i in [0,1]:
+    dps_counts[p[i]] = (
+      dps_unique_pairs[p].groupby( p[i] ).agg(sum)
+      )
+    print( dps_counts[p[i]].describe() )
