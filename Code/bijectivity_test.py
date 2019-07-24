@@ -1,5 +1,7 @@
 # Determine whether the columns in each duplicative pair
 # (defined in Code.sisfut_about) indeed correspond 1-to-1.
+# They mostly are.
+# Anomalies are written to output/non_bijective/.
 
 from itertools import chain
 import pandas as pd
@@ -24,20 +26,26 @@ for p in sc.duplicative_columns:
   dps[p]["dummy"] = 0
     # so that |rows| > 0 after .agg() step
   dps_unique_pairs[p] = dps[p].groupby(list(p)).agg(max)
-  dps_unique_pairs[p]["unit"] = 1
+  dps_unique_pairs[p]["count"] = 1
   dps_unique_pairs[p] = dps_unique_pairs[p].drop(columns="dummy")
   for i in [0,1]:
     dps_counts[p[i]] = (
-      dps_unique_pairs[p].groupby( p[i] ).agg(sum)
-      )
-    print(p[i])
-    print( dps_counts[p[i]].describe() )
+      dps_unique_pairs[p]
+      . groupby( p[i] )
+      . agg(sum) )
 
-# TODO: complete
-# Demo: How to find many-to-one mappings
-x = ( dps_counts["Nombre DANE Municipio"]
-      . reset_index() )
-y = ( dps_unique_pairs[("Cód. DANE Municipio", "Nombre DANE Municipio")]
-      . reset_index() )
-x0 = x[ x["unit"] > 1 ]
-y.merge(x0, on="Nombre DANE Municipio")
+problems = {}
+for p in sc.duplicative_columns:
+  for i in (0,1):
+    if dps_counts[p[i]]["count"].max() > 1:
+      print( p, i )
+      x = ( dps_counts[p[i]]
+            . reset_index() )
+      y = ( dps_unique_pairs[p]
+            . reset_index()
+            . drop( columns = "count" ) )
+      x0 = x[ x["count"] > 1 ]
+      problems[p[i]] = y.merge(x0, on=p[i])
+      problems[p[i]].to_csv( "output/non_bijective/" +
+                             p[i] + ".csv"
+                           , index = False )
