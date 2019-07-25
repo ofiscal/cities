@@ -1,27 +1,24 @@
 * TODO fix broken OneDrive archive
 maybe add a key, so that OneDrive can't extract and re-archive it
 * TODO explore the data
-** TODO enumerate the many-to-one mappings where isomorphisms are expected
-see TODO in test_bijectivity.py
+** isomorphisms relate some columns
+Determined via Code/bijectivity_test.py
 *** the columns
+**** simple isomorphic pairs
 Código FUT, Nombre Entidad
-  isomorphic
 Cód. DANE Departamento, Nombre DANE Departamento
-  isomorphic
-Cód. DANE Municipio, Nombre DANE Municipio
-  some "Nombre DANE Municipio" values map to multiple codigos
-  but no codigos maps to multiple nombres
-Código Concepto, Concepto
-  neither direction is bijective
 Código Fuente Financiación, Fuente Financiación
-  isomorphic
 Código Fuentes De Financiación, Fuentes de Financiación
-  isomorphic
-*** TODO check that department disambiguates the muliply-mapped municipalities
-Make something like "Nombre DANE Municipio.csv",
-but including department and count (as opposed to multiplicity).
-Cód. DANE Municipio	Nombre DANE Municipio	count
-5055.0	                ARGELIA                 3
+**** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
+Problem: Cód. DANE Municipio <=/=> Nombre DANE Municipio
+  No codigo maps to multiple nombres,
+  but some "Nombre DANE Municipio"s map to multiple codigos,
+Solution: The ambiguity disappears once we include department.
+  The problem was simply that some cities in different departments share a name.
+**** Código Concepto <=almost=> Concepto
+Neither direction is bijective.
+However, the one ambiguous Codigo Concepto is too aggregate to matter,
+and the verbal form of a Concepto is not relevant to us.
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.
@@ -39,20 +36,20 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 * TODO build data
 ** aggregate by concepto
- Use codigo concepto, not (verbal) concepto.
+Use codigo concepto, not (verbal) concepto.
 
- If the "subcategory summation" check works,
- then ignore these, because they are redundant.
- VAL	INGRESOS TOTALES
+If the "subcategory summation" check works,
+then ignore these, because they are redundant.
+VAL	INGRESOS TOTALES
 
- Ignore these because they are checks:
- VAL	CIFRA CONTROL
- VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
+Ignore these because they are checks:
+VAL	CIFRA CONTROL
+VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
 * TODO test
-** unit tests
+** unit data tests
 *** "subcategory summation"
 Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
-** integration tests
+** integration data tests
 Can check results at
 https://terridata.dnp.gov.co/
 (enter a municipality (department also possible))

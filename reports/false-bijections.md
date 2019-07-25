@@ -1,3 +1,13 @@
+# PITFALL: notes in TODO.org > this report
+
+This report was written before completing the data exploration.
+It will be helpful for understanding the code in `bijectivity_test.py`.
+However, a more complete understanding of the data can be had by reading
+the section of TODO.org entitled "isomorphisms relate some columns".
+
+
+# The report
+
 The DNP data is pretty good. Everything that's supposed to be a number is a number, and the column names are consistent across spreadsheets. I am pleased. In this email, though, I'm going to focus on the bad news. (It might bad no problem at all, but I'll need your judgement to determine that.)
 
 The data you asked me to select has a lot of columns that looked roughly isomorphic. For instance, "Código FUT" and "Nombre Entidad" seemed to contain the same information -- if you knew the code, it looked like you could determine the name, and vice versa.
