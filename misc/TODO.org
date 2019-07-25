@@ -1,5 +1,3 @@
-* docker: conda update --all -y
-** bump pandas to 0.25.0, other stuff
 * TODO fix broken OneDrive archive
 maybe add a key, so that OneDrive can't extract and re-archive it
 * TODO explore the data
@@ -19,6 +17,11 @@ Código Fuente Financiación, Fuente Financiación
   isomorphic
 Código Fuentes De Financiación, Fuentes de Financiación
   isomorphic
+*** TODO check that department disambiguates the muliply-mapped municipalities
+Make something like "Nombre DANE Municipio.csv",
+but including department and count (as opposed to multiplicity).
+Cód. DANE Municipio	Nombre DANE Municipio	count
+5055.0	                ARGELIA                 3
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.
@@ -34,6 +37,26 @@ Municipalities are those in which the first column is 21.
     ^CORPORACION.*
   They have been deleted.
 Departments are those in which the first column is 11.
+* TODO build data
+** aggregate by concepto
+ Use codigo concepto, not (verbal) concepto.
+
+ If the "subcategory summation" check works,
+ then ignore these, because they are redundant.
+ VAL	INGRESOS TOTALES
+
+ Ignore these because they are checks:
+ VAL	CIFRA CONTROL
+ VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
+* TODO test
+** unit tests
+*** "subcategory summation"
+Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
+** integration tests
+Can check results at
+https://terridata.dnp.gov.co/
+(enter a municipality (department also possible))
+and then choose "finanzas publicas".
 * PITFALLS interpreting the data
 Some series might not be uniformly sampled across time.
 * drawing
