@@ -35,11 +35,6 @@ Municipalities are those in which the first column is 21.
   They have been deleted.
 Departments are those in which the first column is 11.
 * TODO build data
-** TODO build a (muni code) -> (muni,dept) key
-Then delete the latter two from the data before aggregating.
-** TODO build a map from "codigo concepto" to "concepto"
-Aside from "VAL", each code maps to only one concept,
-and "VAL" can be discarded.
 ** TODO aggregate by concepto
 *** how to aggregate
 **** Ingresos
@@ -51,6 +46,8 @@ Note that the second coordinate sometimes has 1 value, sometimes 2.
 *** use codigo concepto
 not (verbal) concepto.
 *** TODO make sure we can ignore VAL
+It is the only "codigo concepto" that maps to more than one "concepto".
+
 If the "subcategory summation" check works,
 then ignore these (code, conepto) pairs, because they are redundant.
 VAL	INGRESOS TOTALES
@@ -58,6 +55,7 @@ VAL	INGRESOS TOTALES
 Ignore these because they are checks:
 VAL	CIFRA CONTROL
 VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
+** reconstitute using keys in output/keys
 * TODO test
 ** unit data tests
 *** "subcategory summation"

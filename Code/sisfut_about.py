@@ -4,6 +4,8 @@
 
 from itertools import chain
 
+series = ["ingresos","inversion","funcionamiento"]
+
 source_folder = "data/sisfut/"
 column_subsets = {
   "ingresos" : [

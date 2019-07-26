@@ -13,7 +13,7 @@ import Code.sisfut_about as sc
 ######
 
 dup_columns = pd.DataFrame()
-for series in ["ingresos","inversion","funcionamiento"]:
+for series in sc.series:
   for year in range( 2012, 2018+1 ):
     shuttle = pd.read_csv(
       ( sc.source_folder + "original_csv/"
