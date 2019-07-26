@@ -1,21 +1,21 @@
 * TODO fix broken OneDrive archive
 maybe add a key, so that OneDrive can't extract and re-archive it
-* TODO explore the data
+* explore the data
 ** isomorphisms relate some columns
 Determined via Code/bijectivity_test.py
-*** the columns
-**** simple isomorphic pairs
+*** simple isomorphic pairs
 Código FUT, Nombre Entidad
+  I suspect this is isomorphic to muni code
 Cód. DANE Departamento, Nombre DANE Departamento
 Código Fuente Financiación, Fuente Financiación
 Código Fuentes De Financiación, Fuentes de Financiación
-**** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
+*** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
 Problem: Cód. DANE Municipio <=/=> Nombre DANE Municipio
   No codigo maps to multiple nombres,
   but some "Nombre DANE Municipio"s map to multiple codigos,
 Solution: The ambiguity disappears once we include department.
   The problem was simply that some cities in different departments share a name.
-**** Código Concepto <=almost=> Concepto
+*** Código Concepto <=almost=> Concepto
 Neither direction is bijective.
 However, the one ambiguous Codigo Concepto is too aggregate to matter,
 and the verbal form of a Concepto is not relevant to us.
@@ -35,11 +35,24 @@ Municipalities are those in which the first column is 21.
   They have been deleted.
 Departments are those in which the first column is 11.
 * TODO build data
-** aggregate by concepto
-Use codigo concepto, not (verbal) concepto.
-
+** TODO build a (muni code) -> (muni,dept) key
+Then delete the latter two from the data before aggregating.
+** TODO build a map from "codigo concepto" to "concepto"
+Aside from "VAL", each code maps to only one concept,
+and "VAL" can be discarded.
+** TODO aggregate by concepto
+*** how to aggregate
+**** Ingresos
+TI.A.1
+TI.A.2
+TI.B
+**** For all other series, just use the first two coordinates.
+Note that the second coordinate sometimes has 1 value, sometimes 2.
+*** use codigo concepto
+not (verbal) concepto.
+*** TODO make sure we can ignore VAL
 If the "subcategory summation" check works,
-then ignore these, because they are redundant.
+then ignore these (code, conepto) pairs, because they are redundant.
 VAL	INGRESOS TOTALES
 
 Ignore these because they are checks:
