@@ -1,15 +1,14 @@
 *~
 data/sisfut/original_csv/*.csv
-data/sisfut/*.csv
-data/sisfut/collated*
 output/
+data/sisfut/heads
+data/sisfut/collated-subsets
 data/*/source_material
 git*comment
 Untitled*.ipynb
 fonts/all/
 __pycache__/
 docker-commands.laptop.txt
-Downloads/
 logs/
 hopefully-ignorable/
 Code/TAGS
