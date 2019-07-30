@@ -1,5 +1,6 @@
 * TODO fix broken OneDrive archive
-maybe add a key, so that OneDrive can't extract and re-archive it
+I added a key, so that OneDrive can't extract and re-archive it,
+and now it takes forever to download.
 * explore the data
 ** isomorphisms relate some columns
 Determined via Code/bijectivity_test.py
