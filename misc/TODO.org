@@ -46,6 +46,11 @@ TI.B
 Note that the second coordinate sometimes has 1 value, sometimes 2.
 *** use the "codigo concepto" column
 not (verbal) "concepto"
+*** TODO distinguish shorter-than-usual prefixes
+The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
+but there already appears an a.b value.
+Exclude the latter (short) from the former (long) when aggregating the long,
+and then test whether they are equal.
 *** TODO make sure we can ignore VAL
 It is the only "codigo concepto" that maps to more than one "concepto".
 
