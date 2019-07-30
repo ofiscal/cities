@@ -37,15 +37,15 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 * TODO build data
 ** TODO aggregate by concepto
-*** how to aggregate
+*** codes to aggregate
 **** Ingresos
 TI.A.1
 TI.A.2
 TI.B
 **** For all other series, just use the first two coordinates.
 Note that the second coordinate sometimes has 1 value, sometimes 2.
-*** use codigo concepto
-not (verbal) concepto.
+*** use the "codigo concepto" column
+not (verbal) "concepto"
 *** TODO make sure we can ignore VAL
 It is the only "codigo concepto" that maps to more than one "concepto".
 
