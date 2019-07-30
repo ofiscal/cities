@@ -18,6 +18,12 @@ for series in sc.series:
       ] )
   source_data = source_data.append( shuttle )
 
+# PITFALL: If any tuple of keys in from_columns maps to more than one
+# tuple in to_columns, make_key will only provide the first mapping it encounters.
+# Thanks to the results from bijectivity_test.py,
+# we know this loss of information happens in only one place:
+# The "Código Concepto" value "VAL" maps to three distinct "Concepto" values.
+# None of them are of interest, so it doesn't matter.
 def make_key( from_columns, to_columns, df ):
   return ( df[ list( chain.from_iterable(
                       [from_columns, to_columns] ) ) ]
