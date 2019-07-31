@@ -34,7 +34,6 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 * TODO build data
 ** TODO aggregate by concepto
-*** TODO do for ingreso codes what I did for other codes
 *** codes to aggregate
 **** Ingresos
 TI.A.1

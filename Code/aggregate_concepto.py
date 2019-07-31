@@ -13,22 +13,15 @@ import re
 ###### find a fixed number of leading subcodes
 ######
 
-def delete_trailing_period_if_present( s : str ) -> str:
-  if not s       : return s
-  if s[-1] == '.': return s[0:-1]
-  else           : return s
-
-assert delete_trailing_period_if_present( ""    ) == ""
-assert delete_trailing_period_if_present( "1.2" ) == "1.2"
-assert delete_trailing_period_if_present( "1.2.") == "1.2"
-
 def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
   """ If a code has exactly n subcodes,
   the last includes no trailing period. """
-  preRegex = "[^\.]+\.?"
+  subcode_with_trailing_period    = "[^\.]+\."
+  subcode_without_trailing_period = "[^\.]+"
   return re.compile(
-    "".join( ["^"] +
-             [ preRegex for _ in range(0,n) ] ) )
+    "".join( ["^"]
+           + [ subcode_with_trailing_period for _ in range(0,n-1) ]
+           + [ subcode_without_trailing_period ] ) )
 
 def first_n_subcodes( n : int, code : str ) -> (str,bool):
   """ Finds the first n subcodes of a code,
@@ -37,7 +30,7 @@ def first_n_subcodes( n : int, code : str ) -> (str,bool):
                       , code )
   if not matches: return ( "", False )
     # The bool is in this case irrelevant
-  else: return ( delete_trailing_period_if_present( matches[0] )
+  else: return ( matches[0]
                , matches[0] == code )
 
 assert first_n_subcodes( 2, "1" )     == (""   , False)
@@ -49,9 +42,21 @@ assert first_n_subcodes( 2, "1.2.3" ) == ("1.2", False)
 ###### ingresos are special:
 ###### rather than detecting a fixed number of subcodes,
 ###### we detect a fixed *set* of them,
-###### as defined by ingreso_regex
+###### namely {"TI.A.1","TI.A.2","TI.B"}
 ######
 
 ingreso_regex : re.Pattern = (
   re.compile( "^(TI\.A\.1|TI\.A\.2|TI\.B)" ) )
 re.findall( ingreso_regex, "TI.B" )
+
+def ingreso_subcodes( code : str ) -> (str,bool):
+  matches = re.findall( ingreso_regex
+                      , code )
+  if not matches: return ( "", False )
+    # The bool is in this case irrelevant
+  else: return ( matches[0]
+               , matches[0] == code )
+
+assert ingreso_subcodes( "TI.A.1"   ) == ("TI.A.1", True )
+assert ingreso_subcodes( "TI.A.1.2" ) == ("TI.A.1", False)
+assert ingreso_subcodes( "TI.A" )     == (""      , False)
