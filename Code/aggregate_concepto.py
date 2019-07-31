@@ -9,6 +9,19 @@ from itertools import chain
 import re
 
 
+period_regex : re.Pattern = (
+  re.compile( "\." ) )
+
+def exactly_n_subcodes( n : int, s : str ) -> str:
+  found = re.findall( period_regex, s )
+  l = len( found )
+  if l == n-1: return s
+  else: return np.nan
+
+assert pd.isnull( exactly_n_subcodes( 2, "b" ) )
+assert "a.b" ==   exactly_n_subcodes( 2, "a.b" )
+assert pd.isnull( exactly_n_subcodes( 2, "a.b.c" ) )
+
 no_period_regex : re.Pattern = (
   re.compile( "[^\.]" ) )
 
@@ -22,7 +35,7 @@ def regex_for_more_than_n_codes( n : int ) -> re.Pattern:
 
 def first_n_proper_subcodes( n : int, code : str ) -> List[int]:
   """ Finds the first n subcodes of a code,
-  but only if it has *more* than n of them. """
+  IF it has *more* than n of them. Otherwise return NaN."""
   matches = re.findall( regex_for_more_than_n_codes(n)
                       , code )
   if not matches:
