@@ -9,6 +9,11 @@ from itertools import chain
 import re
 
 
+######
+###### exactly_n_subcodes():
+###### recognize subcodes, by dividing at periods
+######
+
 period_regex : re.Pattern = (
   re.compile( "\." ) )
 
@@ -21,6 +26,12 @@ def exactly_n_subcodes( n : int, s : str ) -> str:
 assert pd.isnull( exactly_n_subcodes( 2, "b" ) )
 assert "a.b" ==   exactly_n_subcodes( 2, "a.b" )
 assert pd.isnull( exactly_n_subcodes( 2, "a.b.c" ) )
+
+
+######
+###### first_n_proper_subcodes():
+###### find the first few subcodes of a longer code
+######
 
 no_period_regex : re.Pattern = (
   re.compile( "[^\.]" ) )
@@ -50,3 +61,15 @@ assert ["a","b"] == first_n_proper_subcodes( 2, "a.b.c.d" )
 assert ["a","b"] == first_n_proper_subcodes( 2, "a.b.c"   )
 assert pd.isnull(   first_n_proper_subcodes( 2, "a.b" ) )
 assert pd.isnull(   first_n_proper_subcodes( 2, "a"   ) )
+
+
+######
+###### ingresos are special:
+###### rather than detecting a fixed number of subcodes,
+###### we detect a fixed *set* of them,
+###### as defined by ingreso_regex
+######
+
+ingreso_regex : re.Pattern = (
+  re.compile( "^(TI\.A\.1|TI\.A\.2|TI\.B)" ) )
+re.findall( ingreso_regex, "TI.B" )

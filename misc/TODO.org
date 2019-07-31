@@ -37,6 +37,16 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 * TODO build data
 ** TODO aggregate by concepto
+*** TODO refactor aggregation interface
+Rather than distinguishing these:
+  exactly_n_subcodes()
+  first_n_proper_subcodes()
+instead use a single function that returns all of:
+  the subcode-list
+  a bool for whether those subcodes are a proper subset of the input
+If the list is empty, then no match was found,
+  so ignore the bool.
+Do likewise for the ingreso codes.
 *** codes to aggregate
 **** Ingresos
 TI.A.1
