@@ -1,4 +1,4 @@
-* explore the data
+* how the raw data is organized
 ** isomorphisms relate some columns
 Determined via Code/bijectivity_test.py
 *** simple isomorphic pairs
@@ -34,21 +34,45 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 * TODO build data
 ** TODO aggregate by concepto
-*** codes to aggregate
-**** Ingresos
+*** DONE write code (string) interpretation functions
+**** codes to aggregate
+***** Ingresos
 TI.A.1
 TI.A.2
 TI.B
-**** For all other series, just use the first two coordinates.
-Note that the second coordinate sometimes has 1 value, sometimes 2.
-*** use the "codigo concepto" column
-not (verbal) "concepto"
-*** TODO distinguish shorter-than-usual prefixes
+***** For all other series, just use the first two coordinates.
+Note that the a subcode sometimes has 1 character, sometimes 2.
+*** TODO apply code interpretation functions to data
+**** keep data separate by originating dataset
+i.e. funcionamiento, inversion, ingreso
+Pool for the creation of keys, but not for aggregating numbers.
+**** create aggregated-code columns
+Key on the "codigo concepto" column.
+use first_n_subcodes() to generate 2 columns:
+  "agg concepto  " : string = the first 2 subcodes
+  "agg concepto =" : bool, indicates whether a code
+                     is equal to its first two subcodes
+For ingreso data, use ingreso_subcodes() to generate 2 columns:
+  "agg concepto"   : string = the subcode prefix of interest
+  "agg concepto =" : bool, indicates whether a code
+                     is equal to its agg subcodes
+**** aggregate rows
+Group by "muni code", "agg concepto" and "agg concepto =".
+Sum the peso-valued columns.
+**** reconstitute concepto column, using keys in output/keys
+**** check the aggregated sums
+***** how
+For equal values of "muni code" and "agg concepto",
+  but distinct values of "agg concepto =",
+  compare peso sums.x
+***** why
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
-but there already appears an a.b value.
-Exclude the latter (short) from the former (long) when aggregating the long,
-and then test whether they are equal.
-*** TODO make sure we can ignore VAL
+but DNP already provides an a.b value.
+Hopefully they are equal.
+**** check other aggregated sums
+e.g. T1 = T1.A + T1.B
+Good opportunity for property-based testinig.
+**** TODO make sure we can ignore VAL
 It is the only "codigo concepto" that maps to more than one "concepto".
 
 If the "subcategory summation" check works,
@@ -58,7 +82,6 @@ VAL	INGRESOS TOTALES
 Ignore these because they are checks:
 VAL	CIFRA CONTROL
 VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
-** reconstitute using keys in output/keys
 * TODO test
 ** unit data tests
 *** "subcategory summation"
