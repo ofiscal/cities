@@ -10,57 +10,28 @@ import re
 
 
 ######
-###### exactly_n_subcodes():
-###### recognize subcodes, by dividing at periods
+###### find a fixed number of leading subcodes
 ######
 
-period_regex : re.Pattern = (
-  re.compile( "\." ) )
-
-def exactly_n_subcodes( n : int, s : str ) -> str:
-  found = re.findall( period_regex, s )
-  l = len( found )
-  if l == n-1: return s
-  else: return np.nan
-
-assert pd.isnull( exactly_n_subcodes( 2, "b" ) )
-assert "a.b" ==   exactly_n_subcodes( 2, "a.b" )
-assert pd.isnull( exactly_n_subcodes( 2, "a.b.c" ) )
-
-
-######
-###### first_n_proper_subcodes():
-###### find the first few subcodes of a longer code
-######
-
-no_period_regex : re.Pattern = (
-  re.compile( "[^\.]" ) )
-
-def regex_for_more_than_n_codes( n : int ) -> re.Pattern:
-  """ If a code had exactly n subcodes,
-  the last would have no trailing period. """
-  preRegex = "[^\.]+\."
+def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
+  """ If a code has exactly n subcodes,
+  the last includes no trailing period. """
+  preRegex = "[^\.]+\.?"
   return re.compile(
     "".join( ["^"] +
              [ preRegex for _ in range(0,n) ] ) )
 
-def first_n_proper_subcodes( n : int, code : str ) -> List[int]:
+def first_n_subcodes( n : int, code : str ):
   """ Finds the first n subcodes of a code,
-  IF it has *more* than n of them. Otherwise return NaN."""
-  matches = re.findall( regex_for_more_than_n_codes(n)
+  if they exist. Otherwise returns NaN."""
+  matches = re.findall( regex_for_at_least_n_codes(n)
                       , code )
-  if not matches:
-    return np.nan
-  else:
-    match = matches[0]
-    subcodes = re.findall( no_period_regex
-                         , match )
-    return subcodes
+  improper_subset = False if not matches else matches[0] == code
+  return (matches, improper_subset)
 
-assert ["a","b"] == first_n_proper_subcodes( 2, "a.b.c.d" )
-assert ["a","b"] == first_n_proper_subcodes( 2, "a.b.c"   )
-assert pd.isnull(   first_n_proper_subcodes( 2, "a.b" ) )
-assert pd.isnull(   first_n_proper_subcodes( 2, "a"   ) )
+assert first_n_subcodes( 2, "1" )     == ([], False)
+assert first_n_subcodes( 2, "1.2" )   == (['1.2'], True)
+assert first_n_subcodes( 2, "1.2.3" ) == (['1.2.'], False)
 
 
 ######
