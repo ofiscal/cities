@@ -20,8 +20,7 @@ for series in sc.series:
         + str(year) + "_" + series + ".csv" )
       , usecols = set.intersection(
           set( sc.column_subsets[series] )
-        , sc.duplicative_columns_set )
-    )
+        , sc.duplicative_columns_set ) )
     shuttle["year"] = year
     dup_columns = dup_columns.append( shuttle )
 

@@ -46,10 +46,14 @@ TI.B
 ***** For all other series, just use the first two coordinates.
 Note that the a subcode sometimes has 1 character, sometimes 2.
 *** TODO apply code interpretation functions to data
-**** keep data separate by originating dataset
+**** DONE keep data separate by originating dataset
 i.e. funcionamiento, inversion, ingreso
 Pool for the creation of keys, but not for aggregating numbers.
 **** create aggregated-code columns
+***** TODO use pandas.Series.str.extract
+Hopefully it's faster than using a lambda with a regex match.
+Otherwise each build will take more than an hour, given that 3000 rows takes 5 seconds.
+***** idea
 Key on the "codigo concepto" column.
 Use first_n_subcodes() to generate 2 columns:
   "agg concepto  " : string = the first 2 subcodes
