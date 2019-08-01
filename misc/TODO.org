@@ -67,7 +67,7 @@ Sum the peso-valued columns.
 ***** how
 For equal values of "muni code" and "agg concepto",
   but distinct values of "agg concepto =",
-  compare peso sums.x
+  compare peso sums.
 ***** why
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
 but DNP already provides an a.b value.

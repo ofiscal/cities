@@ -69,3 +69,5 @@ duplicative_columns_set = set(
   # chain.from_iterable concatenates these 2-element lists
   chain.from_iterable( [ [ c[0], c[1] ]
                          for c in duplicative_columns ] ) )
+omittable_columns = set( map( lambda x: x[1]
+                            , duplicative_columns ) )
