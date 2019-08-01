@@ -1,22 +1,25 @@
 * how the raw data is organized
 ** isomorphisms relate some columns
-Determined via Code/bijectivity_test.py
+Determined via Code/bijectivity_test.py.
+For one-to-many mappings, see output/non_bijective/*.csv
+*** Codigo Concepto => Concepto, roughly
+Some codes map to more than one concepto name.
+However, those are highly disaggregated.
+Codes for the big categories all map to a single concepto name,
+with the exception of "VAL", which is *so* broad that it's not useful.
 *** simple isomorphic pairs
 Código FUT, Nombre Entidad
   I suspect this is isomorphic to muni code
 Cód. DANE Departamento, Nombre DANE Departamento
-Código Fuente Financiación, Fuente Financiación
-Código Fuentes De Financiación, Fuentes de Financiación
 *** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
 Problem: Cód. DANE Municipio <=/=> Nombre DANE Municipio
   No codigo maps to multiple nombres,
   but some "Nombre DANE Municipio"s map to multiple codigos,
 Solution: The ambiguity disappears once we include department.
   The problem was simply that some cities in different departments share a name.
-*** Código Concepto <=almost=> Concepto
-Neither direction is bijective.
-However, the one ambiguous Codigo Concepto is too aggregate to matter,
-and the verbal form of a Concepto is not relevant to us.
+*** not isomorphic, but don't care (yet, at least)
+Código Fuente Financiación, Fuente Financiación
+Código Fuentes De Financiación, Fuentes de Financiación
 ** regions
 *** are almost uniquely identified by 8|9 digit codes
 Some valid 8-digit codes are subsets of valid 9-digit ones.

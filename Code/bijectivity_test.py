@@ -22,12 +22,12 @@ for series in sc.series:
           set( sc.column_subsets[series] )
         , sc.duplicative_columns_set )
     )
-  dup_columns = dup_columns.append( shuttle )
+    shuttle["year"] = year
+    dup_columns = dup_columns.append( shuttle )
 
 
 ######
 ###### Test whether apparently-duplicate column pairs are in fact isomorphic.
-###### (Most are.)
 ######
 
 # "duplicate pairs": each frame below has 2 columns
@@ -75,20 +75,23 @@ geos = [ "Cód. DANE Municipio"
        , "Nombre DANE Municipio"
        , "Nombre DANE Departamento" ]
        # PITFALL: geo_names depends on this order
+geo_code = geos[0]
 geo_names = geos[1:]
 
 # "duplicate triples": each frame below has 3 columns.
 # What's duplicative, I'm hoping, is that (muni code) <=> (muni name, muni dept).
-dts, dts_unique_triples, dts_counts = ({},{},{})
+dts, dts_unique_triples = ({},{})
 dts = dup_columns[geos] . copy()
 dts["dummy"] = 0
   # only used so that |rows| > 0 after .agg() step
 dts_unique_triples = dts.groupby(geos).agg(max)
   # here "max" could as well be any other function
 dts_unique_triples["count"] = 1
-dts_unique_triples = dts_unique_triples.drop(columns="dummy")
-dts_counts = (
-  dts_unique_triples
-  . groupby( geo_names )
-  . agg(sum) )
-assert dts_counts["count"].max() == 1
+dts_unique_triples = ( dts_unique_triples
+                     . drop( columns="dummy" ) )
+for i in [geo_names, geo_code]: # verify bijectivity
+  assert (
+    ( dts_unique_triples
+    . groupby( i )
+    . agg(sum) )
+    ["count"] . max() == 1 )
