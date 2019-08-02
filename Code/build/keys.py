@@ -1,13 +1,13 @@
 from itertools import chain
 import pandas as pd
-import Code.sisfut_about as sc
+import Code.build.sisfut_metadata sm
 
 
 source_data = pd.DataFrame()
-for series in sc.series:
+for series in sm.series:
   for year in range( 2012, 2018+1 ):
     shuttle = pd.read_csv(
-      ( sc.source_folder + "original_csv/"
+      ( sm.source_folder + "original_csv/"
         + str(year) + "_" + series + ".csv" )
       , usecols = [
           "Cód. DANE Municipio"
@@ -16,7 +16,7 @@ for series in sc.series:
         , "Código Concepto"
         , "Concepto"
       ] )
-  source_data = source_data.append( shuttle )
+    source_data = source_data.append( shuttle )
 
 # PITFALL: If any tuple of keys in from_columns maps to more than one
 # tuple in to_columns, make_key will only provide the first mapping it encounters.

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from   matplotlib.backends.backend_pdf import PdfPages
-import Code.lib as lib
+import Code.draw.lib as lib
 
 
 plt.rcParams['axes.facecolor'] = 'b'

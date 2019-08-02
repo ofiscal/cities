@@ -25,6 +25,7 @@ def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
            + [")"]
     ) )
 
+# a test
 df = pd.DataFrame( {"code" : ["1","1.2","1.2.3"]} )
 df["subcode"] = df["code"].str.extract( regex_for_at_least_n_codes(2) )
 df["code=subcode"] = df["code"] == df["subcode"]
@@ -44,6 +45,7 @@ assert df.equals( pd.DataFrame(
 ingreso_regex : re.Pattern = (
   re.compile( "^(TI\.A\.1|TI\.A\.2|TI\.B)" ) )
 
+# a test
 df = pd.DataFrame( {"code":["TI.A","TI.A.1","TI.A.1.2"] } )
 df["subcode"] = df["code"].str.extract( ingreso_regex )
 df["code=subcode"] = df["code"] == df["subcode"]
@@ -51,3 +53,5 @@ assert df.equals( pd.DataFrame(
   { "code":["TI.A","TI.A.1","TI.A.1.2"]
   , "subcode" : [np.nan, "TI.A.1", "TI.A.1"]
   , "code=subcode" : [False, True, False] } ) )
+
+del(df)

@@ -1,8 +1,8 @@
 from itertools import chain
 import numpy as np
 import pandas as pd
-import Code.aggregate_concepto as ac
-import Code.sisfut_about as sc
+import Code.build.aggregation_regexes as ac
+import Code.build.sisfut_metadata as sm
 
 
 ######
@@ -14,16 +14,16 @@ import Code.sisfut_about as sc
 # i.e. an item of either expenditure or income.
 
 dfs = {}
-for series in sc.series:
+for series in sm.series:
   dfs[series] = pd.DataFrame()
   for year in range( 2012, 2018+1 ):
     shuttle = pd.read_csv(
-      ( sc.source_folder + "original_csv/"
+      ( sm.source_folder + "original_csv/"
         + str(year) + "_" + series + ".csv" )
-      , nrows = 1000
+#      , nrows = 20000
       , usecols = set.difference(
-          set( sc.column_subsets[series] )
-        , sc.omittable_columns ) ) # omit the verbose, redundant columns
+          set( sm.column_subsets[series] )
+        , sm.omittable_columns ) ) # omit the verbose, redundant columns
     shuttle["year"] = year
     dfs[series] = dfs[series] . append(shuttle)
   dfs[series] . to_csv( "output/trimmed_transfers/" + series + ".csv"
@@ -45,14 +45,3 @@ for (series, subcode_regex) in subcode_regex_map:
     . str.extract( subcode_regex ) )
   df["code=subcode"] = (
     df["Código Concepto"] == df["subcode"] )
-
-
-######
-###### Temporary diagnostics
-######
-
-ing = dfs["ingresos"]
-inv = dfs["inversion"]
-fun = dfs["funcionamiento"]
-
-fun[[ "Código Concepto", "subcode", "code=subcode" ]]

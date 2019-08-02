@@ -5,7 +5,7 @@
 
 from itertools import chain
 import pandas as pd
-import Code.sisfut_about as sc
+import Code.build.sisfut_metadata as sm
 
 
 ######
@@ -13,14 +13,14 @@ import Code.sisfut_about as sc
 ######
 
 dup_columns = pd.DataFrame()
-for series in sc.series:
+for series in sm.series:
   for year in range( 2012, 2018+1 ):
     shuttle = pd.read_csv(
-      ( sc.source_folder + "original_csv/"
+      ( sm.source_folder + "original_csv/"
         + str(year) + "_" + series + ".csv" )
       , usecols = set.intersection(
-          set( sc.column_subsets[series] )
-        , sc.duplicative_columns_set ) )
+          set( sm.column_subsets[series] )
+        , sm.duplicative_columns_set ) )
     shuttle["year"] = year
     dup_columns = dup_columns.append( shuttle )
 
@@ -31,7 +31,7 @@ for series in sc.series:
 
 # "duplicate pairs": each frame below has 2 columns
 dps, dps_unique_pairs, dps_counts = ({},{},{})
-for p in sc.duplicative_columns:
+for p in sm.duplicative_columns:
   dps[p] = dup_columns[[ p[0], p[1] ]].copy()
   dps[p]["dummy"] = 0
     # only used so that |rows| > 0 after .agg() step
@@ -46,7 +46,7 @@ for p in sc.duplicative_columns:
       . agg(sum) )
 
 problems = {}
-for p in sc.duplicative_columns:
+for p in sm.duplicative_columns:
   for i in (0,1):
     if dps_counts[p[i]]["count"].max() > 1:
       print( p, i )
