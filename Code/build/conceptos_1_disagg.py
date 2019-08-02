@@ -26,8 +26,6 @@ for series in sm.series:
         , sm.omittable_columns ) ) # omit the verbose, redundant columns
     shuttle["year"] = year
     dfs[series] = dfs[series] . append(shuttle)
-  dfs[series] . to_csv( "output/trimmed_transfers/" + series + ".csv"
-                      , index = False )
 
 
 ######
@@ -45,3 +43,5 @@ for (series, subcode_regex) in subcode_regex_map:
     . str.extract( subcode_regex ) )
   df["code=subcode"] = (
     df["Código Concepto"] == df["subcode"] )
+  dfs[series] . to_csv( "output/conceptos_1_disagg/" + series + ".csv"
+                      , index = False )
