@@ -35,47 +35,30 @@ Municipalities are those in which the first column is 21.
     ^CORPORACION.*
   They have been deleted.
 Departments are those in which the first column is 11.
-* TODO build data
-** TODO aggregate by concepto
-*** DONE write code (string) interpretation functions
-**** codes to aggregate
-***** Ingresos
-TI.A.1
-TI.A.2
-TI.B
-***** For all other series, just use the first two coordinates.
-Note that the a subcode sometimes has 1 character, sometimes 2.
-*** TODO apply code interpretation functions to data
-**** DONE keep data separate by originating dataset
-i.e. funcionamiento, inversion, ingreso
-Pool for the creation of keys, but not for aggregating numbers.
-**** DONE create aggregated-code columns
-Key on the "codigo concepto" column.
-Use first_n_subcodes() to generate 2 columns:
-  "agg concepto  " : string = the first 2 subcodes
-  "agg concepto =" : bool, indicates whether a code
-                     is equal to its first two subcodes
-For ingreso data, use ingreso_subcodes() to generate 2 columns:
-  "agg concepto"   : string = the subcode prefix of interest
-  "agg concepto =" : bool, indicates whether a code
-                     is equal to its agg subcodes
-**** DONE aggregate rows
-Group by "year", "muni code", "agg concepto" and "agg concepto =".
-Sum the peso-valued columns.
-**** reconstitute concepto column, using keys in output/keys
-**** check the aggregated sums
-***** how
+* TODO fix
+** 90 (out of 4 million+) rows are disappearing
+How to see this:
+  In bijectivity_test.py, build the dup_columns data set, and compute its length.
+  Then, in data/sisfut/original_csv, run "wc -l * | grep total"
+  The difference is (4199219 - 4199108 - 21) (there are 21 header columns to ignore).
+** fix broken OneDrive archive
+I added a key, so that OneDrive can't extract and re-archive it,
+and now it takes forever to download.
+* TODO test
+** skipped
+*** check the aggregated sums
+**** how
 For equal values of "muni code" and "agg concepto",
   but distinct values of "agg concepto =",
   compare peso sums.
-***** why
+**** why
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
 but DNP already provides an a.b value.
 Hopefully they are equal.
-**** check other aggregated sums
+*** check other aggregated sums
 e.g. T1 = T1.A + T1.B
 Good opportunity for property-based testinig.
-**** TODO make sure we can ignore VAL
+*** make sure we can ignore VAL
 It is the only "codigo concepto" that maps to more than one "concepto".
 
 If the "subcategory summation" check works,
@@ -85,13 +68,6 @@ VAL	INGRESOS TOTALES
 Ignore these because they are checks:
 VAL	CIFRA CONTROL
 VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
-* TODO fix
-** 90 (out of 4 million+) rows are disappearing
-How to see this:
-  In bijectivity_test.py, build the dup_columns data set, and compute its length.
-  Then, in data/sisfut/original_csv, run "wc -l * | grep total"
-  The difference is (4199219 - 4199108 - 21) (there are 21 header columns to ignore).
-* TODO test
 ** unit data tests
 *** "subcategory summation"
 Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
@@ -162,6 +138,31 @@ no other discernible effect
    drawText( ax, lines )
 *** pdf.savefig() overrides background color in figures
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
-* TODO fix broken OneDrive archive
-I added a key, so that OneDrive can't extract and re-archive it,
-and now it takes forever to download.
+* DONE
+** build data
+*** write code (string) interpretation functions
+**** codes to aggregate
+***** Ingresos
+TI.A.1
+TI.A.2
+TI.B
+***** For all other series, just use the first two coordinates.
+Note that the a subcode sometimes has 1 character, sometimes 2.
+*** apply code interpretation functions to data
+**** keep data separate by originating dataset
+i.e. funcionamiento, inversion, ingreso
+Pool for the creation of keys, but not for aggregating numbers.
+**** create aggregated-code columns
+Key on the "codigo concepto" column.
+Use first_n_subcodes() to generate 2 columns:
+  "agg concepto  " : string = the first 2 subcodes
+  "agg concepto =" : bool, indicates whether a code
+                     is equal to its first two subcodes
+For ingreso data, use ingreso_subcodes() to generate 2 columns:
+  "agg concepto"   : string = the subcode prefix of interest
+  "agg concepto =" : bool, indicates whether a code
+                     is equal to its agg subcodes
+**** aggregate rows
+Group by "year", "muni code", "agg concepto" and "agg concepto =".
+Sum the peso-valued columns.
+**** reconstitute concepto column, using keys in output/keys

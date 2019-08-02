@@ -1,6 +1,6 @@
 from itertools import chain
 import pandas as pd
-import Code.build.sisfut_metadata sm
+import Code.build.sisfut_metadata as sm
 
 
 source_data = pd.DataFrame()

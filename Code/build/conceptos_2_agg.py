@@ -9,6 +9,8 @@ import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
 
 
+concepto_key = pd.read_csv( "output/keys/concepto.csv" )
+
 dfas = {}
 for s in sm.series:
   df = (
@@ -25,6 +27,13 @@ for s in sm.series:
                # dept is redundant given muni code, but maybe handy
             , "subcode"
             , "code=subcode" ] )
-          . agg( sum ) )
-  dfa.to_csv( "output/conceptos_2_agg/" + s + ".csv" )
+          . agg( sum )
+          . reset_index() )
+  dfa["subcode"] = ( dfa["subcode"]
+                   . astype( str ) )
+  dfa = ( dfa.merge( concepto_key
+                   , left_on = "subcode"
+                   , right_on = "Código Concepto" )
+        . drop( columns = ["Código Concepto"] ) ) # redundant given subcode
   dfas[s] = dfa
+  dfa.to_csv( "output/conceptos_2_agg/" + s + ".csv" )
