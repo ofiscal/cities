@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import Code.aggregate_concepto as ac
 import Code.sisfut_about as sc
-import time
 
 
 ######
@@ -35,21 +34,17 @@ for series in sc.series:
 ###### Build aggregated concepto columns
 ######
 
-subcode_function_map = [
-    ("inversion"      , lambda x: ac.first_n_subcodes(2,x))
-  , ("funcionamiento" , lambda x: ac.first_n_subcodes(2,x))
-  , ("ingresos"       , ac.ingreso_subcodes) ]
-start = time.time()
-for (series, subcode_function) in subcode_function_map:
+subcode_regex_map = [
+    ("inversion"      , ac.regex_for_at_least_n_codes(2) )
+  , ("funcionamiento" , ac.regex_for_at_least_n_codes(2) )
+  , ("ingresos"       , ac.ingreso_regex ) ]
+for (series, subcode_regex) in subcode_regex_map:
   df = dfs[series]
-  df[["subcode","subcode ="]] = (
+  df["subcode"] = (
     df["Código Concepto"]
-    . apply( lambda c:
-             pd.Series(
-               subcode_function( c ) ) ) )
-
-end = time.time()
-print( "duration in seconds: ", end - start )
+    . str.extract( subcode_regex ) )
+  df["code=subcode"] = (
+    df["Código Concepto"] == df["subcode"] )
 
 
 ######
@@ -60,4 +55,4 @@ ing = dfs["ingresos"]
 inv = dfs["inversion"]
 fun = dfs["funcionamiento"]
 
-fun[[ "Código Concepto", "subcode", "subcode =" ]]
+fun[[ "Código Concepto", "subcode", "code=subcode" ]]

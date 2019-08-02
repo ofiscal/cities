@@ -19,23 +19,19 @@ def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
   subcode_with_trailing_period    = "[^\.]+\."
   subcode_without_trailing_period = "[^\.]+"
   return re.compile(
-    "".join( ["^"]
+    "".join( ["^("]
            + [ subcode_with_trailing_period for _ in range(0,n-1) ]
-           + [ subcode_without_trailing_period ] ) )
+           + [ subcode_without_trailing_period ]
+           + [")"]
+    ) )
 
-def first_n_subcodes( n : int, code : str ) -> (str,bool):
-  """ Finds the first n subcodes of a code,
-  if they exist. Otherwise returns NaN."""
-  matches = re.findall( regex_for_at_least_n_codes(n)
-                      , code )
-  if not matches: return ( "", False )
-    # The bool is in this case irrelevant
-  else: return ( matches[0]
-               , matches[0] == code )
-
-assert first_n_subcodes( 2, "1" )     == (""   , False)
-assert first_n_subcodes( 2, "1.2" )   == ("1.2", True)
-assert first_n_subcodes( 2, "1.2.3" ) == ("1.2", False)
+df = pd.DataFrame( {"code" : ["1","1.2","1.2.3"]} )
+df["subcode"] = df["code"].str.extract( regex_for_at_least_n_codes(2) )
+df["code=subcode"] = df["code"] == df["subcode"]
+assert df.equals( pd.DataFrame(
+  { "code"         : ["1",     "1.2","1.2.3"]
+  , "subcode"      : [ np.nan, "1.2", "1.2" ]
+  , "code=subcode" : [False,   True,  False ] } ) )
 
 
 ######
@@ -47,16 +43,11 @@ assert first_n_subcodes( 2, "1.2.3" ) == ("1.2", False)
 
 ingreso_regex : re.Pattern = (
   re.compile( "^(TI\.A\.1|TI\.A\.2|TI\.B)" ) )
-re.findall( ingreso_regex, "TI.B" )
 
-def ingreso_subcodes( code : str ) -> (str,bool):
-  matches = re.findall( ingreso_regex
-                      , code )
-  if not matches: return ( "", False )
-    # The bool is in this case irrelevant
-  else: return ( matches[0]
-               , matches[0] == code )
-
-assert ingreso_subcodes( "TI.A.1"   ) == ("TI.A.1", True )
-assert ingreso_subcodes( "TI.A.1.2" ) == ("TI.A.1", False)
-assert ingreso_subcodes( "TI.A" )     == (""      , False)
+df = pd.DataFrame( {"code":["TI.A","TI.A.1","TI.A.1.2"] } )
+df["subcode"] = df["code"].str.extract( ingreso_regex )
+df["code=subcode"] = df["code"] == df["subcode"]
+assert df.equals( pd.DataFrame(
+  { "code":["TI.A","TI.A.1","TI.A.1.2"]
+  , "subcode" : [np.nan, "TI.A.1", "TI.A.1"]
+  , "code=subcode" : [False, True, False] } ) )
