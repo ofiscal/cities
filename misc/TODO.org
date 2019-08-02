@@ -59,8 +59,8 @@ For ingreso data, use ingreso_subcodes() to generate 2 columns:
   "agg concepto"   : string = the subcode prefix of interest
   "agg concepto =" : bool, indicates whether a code
                      is equal to its agg subcodes
-**** aggregate rows
-Group by "muni code", "agg concepto" and "agg concepto =".
+**** DONE aggregate rows
+Group by "year", "muni code", "agg concepto" and "agg concepto =".
 Sum the peso-valued columns.
 **** reconstitute concepto column, using keys in output/keys
 **** check the aggregated sums

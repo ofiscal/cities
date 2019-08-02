@@ -1,3 +1,12 @@
+###### Based on the original three data sets from DNP
+###### (ingresos, inversiones and funcionamiento), this builds three
+###### similar data sets.
+###### The unit of observation is the same, a "concepto",
+###### i.e. an item of either expenditure or income.
+###### Some new columns are added --
+###### namely "year", "subcode" and "code=subcode".
+###### Some verbose, redundant columns are omitted.
+
 from itertools import chain
 import numpy as np
 import pandas as pd
@@ -10,8 +19,6 @@ import Code.build.sisfut_metadata as sm
 ######
 # These are the data sets "ingresos", "inversion", and "funcionamiento",
 # collecting across years and dropping verbose duplicative columns.
-# The unit of observation is a "concepto",
-# i.e. an item of either expenditure or income.
 
 dfs = {}
 for series in sm.series:
@@ -29,8 +36,10 @@ for series in sm.series:
 
 
 ######
-###### Build aggregated concepto columns
+###### Build aggregated concepto-code columns.
 ######
+# This does not aggregate rows; it merely builds the aggregate subcodes
+# by which the data will be (in the next program) aggregated.
 
 subcode_regex_map = [
     ("inversion"      , ac.regex_for_at_least_n_codes(2) )
@@ -43,5 +52,5 @@ for (series, subcode_regex) in subcode_regex_map:
     . str.extract( subcode_regex ) )
   df["code=subcode"] = (
     df["Código Concepto"] == df["subcode"] )
-  dfs[series] . to_csv( "output/conceptos_1_disagg/" + series + ".csv"
+  dfs[series] . to_csv( "output/conceptos_1/" + series + ".csv"
                       , index = False )
