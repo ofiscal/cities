@@ -1,40 +1,3 @@
-* how the raw data is organized
-** isomorphisms relate some columns
-Determined via Code/bijectivity_test.py.
-For one-to-many mappings, see output/non_bijective/*.csv
-*** Codigo Concepto => Concepto, roughly
-Some codes map to more than one concepto name.
-However, those are highly disaggregated.
-Codes for the big categories all map to a single concepto name,
-with the exception of "VAL", which is *so* broad that it's not useful.
-*** simple isomorphic pairs
-Código FUT, Nombre Entidad
-  I suspect this is isomorphic to muni code
-Cód. DANE Departamento, Nombre DANE Departamento
-*** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
-Problem: Cód. DANE Municipio <=/=> Nombre DANE Municipio
-  No codigo maps to multiple nombres,
-  but some "Nombre DANE Municipio"s map to multiple codigos,
-Solution: The ambiguity disappears once we include department.
-  The problem was simply that some cities in different departments share a name.
-*** not isomorphic, but don't care (yet, at least)
-Código Fuente Financiación, Fuente Financiación
-Código Fuentes De Financiación, Fuentes de Financiación
-** regions
-*** are almost uniquely identified by 8|9 digit codes
-Some valid 8-digit codes are subsets of valid 9-digit ones.
-Will therefore need to find the best regex match to the name.
-*** a nearly-comprehensive list of them
-comes from Directorio_CHIP_Mesa_de_Ayuda_Contraloria_2009.xls
-  (which Juan found)
-A subset of it became data/regions/*.csv
-Municipalities are those in which the first column is 21.
-  That rule collects 9 false positives,
-  all of which match one of these two regular expressions:
-    ^DEFENSA CIVIL COLOMBIANA$
-    ^CORPORACION.*
-  They have been deleted.
-Departments are those in which the first column is 11.
 * TODO fix
 ** 90 (out of 4 million+) rows are disappearing
 How to see this:
@@ -138,6 +101,45 @@ no other discernible effect
    drawText( ax, lines )
 *** pdf.savefig() overrides background color in figures
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
+* internalized or stale
+** how the raw data is organized
+*** isomorphisms relate some columns
+Determined via Code/bijectivity_test.py.
+For one-to-many mappings, see output/non_bijective/*.csv
+**** Codigo Concepto => Concepto, roughly
+Some codes map to more than one concepto name.
+However, those are highly disaggregated.
+Codes for the big categories all map to a single concepto name,
+with the exception of "VAL", which is *so* broad that it's not useful.
+**** simple isomorphic pairs
+Código FUT, Nombre Entidad
+  I suspect this is isomorphic to muni code
+Cód. DANE Departamento, Nombre DANE Departamento
+**** Cód. DANE Municipio <=> (Nombre DANE Municipio, Nombre DANE Departamento)
+Problem: Cód. DANE Municipio <=/=> Nombre DANE Municipio
+  No codigo maps to multiple nombres,
+  but some "Nombre DANE Municipio"s map to multiple codigos,
+Solution: The ambiguity disappears once we include department.
+  The problem was simply that some cities in different departments share a name.
+**** not isomorphic, but don't care (yet, at least)
+Código Fuente Financiación, Fuente Financiación
+Código Fuentes De Financiación, Fuentes de Financiación
+*** regions
+**** are almost uniquely identified by 8|9 digit codes
+Some valid 8-digit codes are subsets of valid 9-digit ones.
+Will therefore need to find the best regex match to the name.
+**** a nearly-comprehensive list of them
+comes from Directorio_CHIP_Mesa_de_Ayuda_Contraloria_2009.xls
+  (which Juan found)
+A subset of it became data/regions/*.csv
+Municipalities are those in which the first column is 21.
+  That rule collects 9 false positives,
+  all of which match one of these two regular expressions:
+    ^DEFENSA CIVIL COLOMBIANA$
+    ^CORPORACION.*
+  They have been deleted.
+Departments are those in which the first column is 11.
+
 * DONE
 ** build data
 *** write code (string) interpretation functions

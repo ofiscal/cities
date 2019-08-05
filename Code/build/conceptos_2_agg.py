@@ -14,8 +14,8 @@ concepto_key = pd.read_csv( "output/keys/concepto.csv" )
 dfas = {}
 for s in sm.series:
   df = (
-    pd.read_csv(
-      "output/conceptos_1/" + s + ".csv" )
+      pd.read_csv(
+        "output/conceptos_1/" + s + ".csv" )
     . drop( columns = [
         "Código FUT"            # not useful
       , "Código Concepto" ] ) ) # soon to be aggregated away
@@ -24,7 +24,7 @@ for s in sm.series:
             [ "year"
             , "Cód. DANE Municipio"
             , "Cód. DANE Departamento"
-               # dept is redundant given muni code, but maybe handy
+               # given muni code, dept is a redundant group, but maybe handy
             , "subcode"
             , "code=subcode" ] )
           . agg( sum )
@@ -36,4 +36,6 @@ for s in sm.series:
                    , right_on = "Código Concepto" )
         . drop( columns = ["Código Concepto"] ) ) # redundant given subcode
   dfas[s] = dfa
-  dfa.to_csv( "output/conceptos_2_agg/" + s + ".csv" )
+  dfa.to_csv( "output/conceptos_2_agg/" + s + ".csv"
+            , index = False
+  )
