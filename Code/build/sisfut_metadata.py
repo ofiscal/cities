@@ -9,8 +9,8 @@ series = ["ingresos","inversion","funcionamiento"]
 source_folder = "data/sisfut/"
 column_subsets = {
   "ingresos" : [
-      "Código FUT"
-    , "Nombre Entidad"
+#      "Código FUT"
+      "Nombre Entidad"
     , "Cód. DANE Departamento"
     , "Nombre DANE Departamento"
     , "Cód. DANE Municipio"
@@ -23,16 +23,16 @@ column_subsets = {
     , "Total Ingresos"
   ] ,
   "inversion" : [
-      "Código FUT"
-    , "Nombre Entidad"
+#     "Código FUT"
+      "Nombre Entidad"
     , "Cód. DANE Departamento"
     , "Nombre DANE Departamento"
     , "Cód. DANE Municipio"
     , "Nombre DANE Municipio"
     , "Código Concepto"
     , "Concepto"
-    , "Código Fuentes De Financiación"
-    , "Fuentes de Financiación"
+#    , "Código Fuentes De Financiación"
+#    , "Fuentes de Financiación"
     , "Presupuesto Inicial"
     , "Presupuesto Definitivo"
     , "Compromisos"
@@ -40,16 +40,16 @@ column_subsets = {
     , "Pagos"
   ] ,
   "funcionamiento" : [
-      "Código FUT"
-    , "Nombre Entidad"
+#      "Código FUT"
+      "Nombre Entidad"
     , "Cód. DANE Departamento"
     , "Nombre DANE Departamento"
     , "Cód. DANE Municipio"
     , "Nombre DANE Municipio"
     , "Código Concepto"
     , "Concepto"
-    , "Código Fuente Financiación"
-    , "Fuente Financiación"
+#    , "Código Fuente Financiación"
+#    , "Fuente Financiación"
     , "Presupuesto Inicial"
     , "Presupuesto Definitivo"
     , "Compromisos"
@@ -58,12 +58,12 @@ column_subsets = {
 ] }
 
 duplicative_columns = [
-    ("Código FUT", "Nombre Entidad" )
-  , ("Cód. DANE Departamento", "Nombre DANE Departamento" )
+#    ("Código FUT", "Nombre Entidad" )
+    ("Cód. DANE Departamento", "Nombre DANE Departamento" )
   , ("Cód. DANE Municipio", "Nombre DANE Municipio" )
   , ("Código Concepto", "Concepto" )
-  , ("Código Fuente Financiación", "Fuente Financiación" )
-  , ("Código Fuentes De Financiación", "Fuentes de Financiación" )
+#  , ("Código Fuente Financiación", "Fuente Financiación" )
+#  , ("Código Fuentes De Financiación", "Fuentes de Financiación" )
   ]
 duplicative_columns_set = set(
   # chain.from_iterable concatenates these 2-element lists

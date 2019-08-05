@@ -16,9 +16,7 @@ for s in sm.series:
   df = (
       pd.read_csv(
         "output/conceptos_1/" + s + ".csv" )
-    . drop( columns = [
-        "Código FUT"            # not useful
-      , "Código Concepto" ] ) ) # soon to be aggregated away
+    . drop( columns = [ "Código Concepto" ] ) ) # soon to be aggregated away
   dfa = ( df
           . groupby( by =
             [ "year"
