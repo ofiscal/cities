@@ -13,6 +13,29 @@ import re
 ###### find a fixed number of leading subcodes
 ######
 
+def regexes_for_2_codes() -> (re.Pattern,re.Pattern,re.Pattern):
+  """ See tests, immediately below function definition. """
+  category = re.compile( "^([^\.]+\.[^\.]+)" )
+  top      = re.compile( "^([^\.]+\.[^\.]+)$" )
+  child    = re.compile( "^([^\.]+\.[^\.]+\.[^\.]+)$" )
+  return (category, top, child)
+
+df = pd.DataFrame( {"code" : [ "11"
+                             , "11.22"
+                             , "11.22.33"
+                             , "11.22.33.44" ]} )
+cat,top,child = regexes_for_2_codes()
+df["cat"]   =              df["code"].str.extract( cat )
+df["top"]   = ~ pd.isnull( df["code"].str.extract( top ) )
+df["child"] = ~ pd.isnull( df["code"].str.extract( child ) )
+assert df.equals( pd.DataFrame(
+  { "code"  : ["11"   , "11.22", "11.22.33", "11.22.33.44"]
+  , "cat"   : [ np.nan, "11.22", "11.22"   , "11.22" ]
+  , "top"   : [False,   True,    False,      False]
+  , "child" : [False,   False,   True,       False]
+  } ) )
+
+
 def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
   """ If a code has exactly n subcodes,
   the last includes no trailing period. """
