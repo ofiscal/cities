@@ -20,7 +20,8 @@ def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
   subcode_without_trailing_period = "[^\.]+"
   return re.compile(
     "".join( ["^("]
-           + [ subcode_with_trailing_period for _ in range(0,n-1) ]
+           + [ subcode_with_trailing_period
+               for _ in range(0,n-1) ]
            + [ subcode_without_trailing_period ]
            + [")"]
     ) )
