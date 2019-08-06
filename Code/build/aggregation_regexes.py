@@ -10,7 +10,7 @@ import re
 
 
 ######
-###### find a fixed number of leading subcodes
+###### Regexes for aggregating codes to the first two subcodes.
 ######
 
 def regexes_for_2_codes() -> (re.Pattern,re.Pattern,re.Pattern):
@@ -20,62 +20,57 @@ def regexes_for_2_codes() -> (re.Pattern,re.Pattern,re.Pattern):
   child    = re.compile( "^([^\.]+\.[^\.]+\.[^\.]+)$" )
   return (category, top, child)
 
-df = pd.DataFrame( {"code" : [ "11"
-                             , "11.22"
-                             , "11.22.33"
-                             , "11.22.33.44" ]} )
-cat,top,child = regexes_for_2_codes()
-df["cat"]   =              df["code"].str.extract( cat )
-df["top"]   = ~ pd.isnull( df["code"].str.extract( top ) )
-df["child"] = ~ pd.isnull( df["code"].str.extract( child ) )
-assert df.equals( pd.DataFrame(
-  { "code"  : ["11"   , "11.22", "11.22.33", "11.22.33.44"]
-  , "cat"   : [ np.nan, "11.22", "11.22"   , "11.22" ]
-  , "top"   : [False,   True,    False,      False]
-  , "child" : [False,   False,   True,       False]
-  } ) )
-
-
-def regex_for_at_least_n_codes( n : int ) -> re.Pattern:
-  """ If a code has exactly n subcodes,
-  the last includes no trailing period. """
-  subcode_with_trailing_period    = "[^\.]+\."
-  subcode_without_trailing_period = "[^\.]+"
-  return re.compile(
-    "".join( ["^("]
-           + [ subcode_with_trailing_period
-               for _ in range(0,n-1) ]
-           + [ subcode_without_trailing_period ]
-           + [")"]
-    ) )
-
-# a test
-df = pd.DataFrame( {"code" : ["1","1.2","1.2.3"]} )
-df["subcode"] = df["code"].str.extract( regex_for_at_least_n_codes(2) )
-df["code=subcode"] = df["code"] == df["subcode"]
-assert df.equals( pd.DataFrame(
-  { "code"         : ["1",     "1.2","1.2.3"]
-  , "subcode"      : [ np.nan, "1.2", "1.2" ]
-  , "code=subcode" : [False,   True,  False ] } ) )
+if True: # test regexes_for_2_codes
+  df = pd.DataFrame( {"code" : [ "11"
+                               , "11.22"
+                               , "11.22.33"
+                               , "11.22.33.44" ]} )
+  cat,top,child = regexes_for_2_codes()
+  df["cat"]   =              df["code"].str.extract( cat )
+  df["top"]   = ~ pd.isnull( df["code"].str.extract( top ) )
+  df["child"] = ~ pd.isnull( df["code"].str.extract( child ) )
+  assert df.equals( pd.DataFrame(
+    { "code"  : ["11"   , "11.22", "11.22.33", "11.22.33.44"]
+    , "cat"   : [ np.nan, "11.22", "11.22"   , "11.22" ]
+    , "top"   : [False,   True,    False,      False]
+    , "child" : [False,   False,   True,       False]
+    } ) )
 
 
 ######
-###### ingresos are special:
-###### rather than detecting a fixed number of subcodes,
-###### we detect a fixed *set* of them,
-###### namely {"TI.A.1","TI.A.2","TI.B"}
+###### Ingresos are special:
+###### Rather than detecting a fixed number of subcodes,
+###### we detect an explicit set of them,
+###### namely {"TI.A.1","TI.A.2","TI.B"}.
 ######
+# (This strategy would also work for the other series,
+# but fortunately, in those (non-ingreso) cases
+# we don't need to enumerate every possible prefix,
+# because we always want the first two.)
 
-ingreso_regex : re.Pattern = (
-  re.compile( "^(TI\.A\.1|TI\.A\.2|TI\.B)" ) )
+def regexes_for_ingresos() -> (re.Pattern,re.Pattern,re.Pattern):
+  """ See tests, immediately below function definition. """
+  three_kinds = "TI\.A\.1|TI\.A\.2|TI\.B"
+  category = re.compile( "^(" + three_kinds + ")" )
+  top      = re.compile( "^(" + three_kinds + ")$" )
+  child    = re.compile( "^(" + three_kinds + "\.[^\.]+)$" )
+  return (category, top, child)
 
-# a test
-df = pd.DataFrame( {"code":["TI.A","TI.A.1","TI.A.1.2"] } )
-df["subcode"] = df["code"].str.extract( ingreso_regex )
-df["code=subcode"] = df["code"] == df["subcode"]
-assert df.equals( pd.DataFrame(
-  { "code":["TI.A","TI.A.1","TI.A.1.2"]
-  , "subcode" : [np.nan, "TI.A.1", "TI.A.1"]
-  , "code=subcode" : [False, True, False] } ) )
-
-del(df)
+if True: # test regexes_for_ingresos
+  df = pd.DataFrame( {"code" : [
+      "TI"
+    , "TI.B"
+    , "TI.B.22"
+    , "TI.B.22.33"
+    , "1.2" # does not start with TI, hence should not work
+  ]} )
+  cat,top,child = regexes_for_ingresos()
+  df["cat"]   =              df["code"].str.extract( cat )
+  df["top"]   = ~ pd.isnull( df["code"].str.extract( top ) )
+  df["child"] = ~ pd.isnull( df["code"].str.extract( child ) )
+  assert df.equals( pd.DataFrame(
+    { "code"  : ["TI",   "TI.B", "TI.B.22", "TI.B.22.33", "1.2"]
+    , "cat"   : [np.nan, "TI.B", "TI.B"   , "TI.B",       np.nan ]
+    , "top"   : [False,   True,  False,     False,        False]
+    , "child" : [False,   False, True,      False,        False]
+    } ) )
