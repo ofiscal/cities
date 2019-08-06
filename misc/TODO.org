@@ -1,20 +1,21 @@
 * TODO fix
 ** TODO sum only first-generation descendents of aggregate conceptos
-*** replace `regex_for_at_least_n_codes` with
+*** DONE replace `regex_for_at_least_n_codes` with
 something of type :: int -> (Patthern,Pattern,Pattern)
 where the first is the category,
 the second matches only the top of the category,
 and the third matches immediate children (not grandchildren, etc.) of the category.
 These will be called concepto-code, conceptop-code-top, and concepto-code-child.
-*** Replace `ingreso_regex` with similar
-*** in the last part of conceptos_1.py
+*** DONE Replace `ingreso_regex` with similar
+*** DONE in the last part of conceptos_1.py
 Build those three columns.
-Delete rows for which neither "top" nor "child" are true.
-Verify that top + child = 1 (after deleting rows).
-Delete "child" -- it is now redundant to "top".
-*** Delete the code that generates | uses "code=subcode".
+regDelete rows for which neither "top" nor "child" are true.
+*** Delete the code that generates or uses "code=subcode".
 *** in conceptos_2_agg.py
 Aggregate on year, muni, dept, concepto-code and concepto-code-top.
+*** tidy up conceptos_1
+Verify that top + child = 1 (after deleting rows).
+Delete "child" -- it is now redundant to "top".
 ** 90 (out of 4 million+) rows are disappearing
 How to see this:
   In bijectivity_test.py, build the dup_columns data set, and compute its length.

@@ -15,9 +15,10 @@ import re
 
 def regexes_for_2_codes() -> (re.Pattern,re.Pattern,re.Pattern):
   """ See tests, immediately below function definition. """
-  category = re.compile( "^([^\.]+\.[^\.]+)" )
-  top      = re.compile( "^([^\.]+\.[^\.]+)$" )
-  child    = re.compile( "^([^\.]+\.[^\.]+\.[^\.]+)$" )
+  two_subcodes = "[^\.]+\.[^\.]+"
+  category = re.compile( "^(" + two_subcodes +              ")"  )
+  top      = re.compile( "^(" + two_subcodes +              ")$" )
+  child    = re.compile( "^(" + two_subcodes + "\.[^\.]+" + ")$" )
   return (category, top, child)
 
 if True: # test regexes_for_2_codes
@@ -50,10 +51,13 @@ if True: # test regexes_for_2_codes
 
 def regexes_for_ingresos() -> (re.Pattern,re.Pattern,re.Pattern):
   """ See tests, immediately below function definition. """
-  three_kinds = "TI\.A\.1|TI\.A\.2|TI\.B"
-  category = re.compile( "^(" + three_kinds + ")" )
-  top      = re.compile( "^(" + three_kinds + ")$" )
-  child    = re.compile( "^(" + three_kinds + "\.[^\.]+)$" )
+  three_kinds = "(?:TI\.A\.1|TI\.A\.2|TI\.B)"
+    # The leading ?: creates a non-capturing group.
+    # This groups the alternatives, so that the | operators bind
+    # before the rest of the string in the "child" case.
+  category = re.compile( "^(" + three_kinds +              ")"  )
+  top      = re.compile( "^(" + three_kinds +              ")$" )
+  child    = re.compile( "^(" + three_kinds + "\.[^\.]+" + ")$" )
   return (category, top, child)
 
 if True: # test regexes_for_ingresos

@@ -41,16 +41,24 @@ for series in sm.series:
 # This does not aggregate rows; it merely builds the aggregate subcodes
 # by which the data will be (in the next program) aggregated.
 
-for (series, subcode_regex) in [
-      ("inversion"      , ac.regex_for_at_least_n_codes(2) )
-    , ("funcionamiento" , ac.regex_for_at_least_n_codes(2) )
-    , ("ingresos"       , ac.ingreso_regex ) ]:
+for (series, regexes) in [
+      ("inversion"      , ac.regexes_for_2_codes() )
+    , ("funcionamiento" , ac.regexes_for_2_codes() )
+    , ("ingresos"       , ac.regexes_for_ingresos() ) ]:
   df = dfs[series]
-  df["subcode"] = (
-    df["Código Concepto"]
-    . str.extract( subcode_regex ) )
-  df["code=subcode"] = (
-    ( df["Código Concepto"] == df["subcode"] )
-    . astype( int ) )
+  (category, top, child) = regexes
+  df["codigo"]       = (
+      df["Código Concepto"]
+    . str.extract( category ) )
+  df["codigo-top"]   = ~ pd.isnull(
+      df["Código Concepto"]
+    . str.extract( top ) )
+  df["codigo-child"] = ~ pd.isnull(
+      df["Código Concepto"]
+    . str.extract( child ) )
+  df = ( # keep only top categories and the first generation below
+    df[ (df["codigo-top"])
+      | (df["codigo-child"]) ] )
   df . to_csv( "output/conceptos_1/" + series + ".csv"
              , index = False )
+  dfs[series] = df
