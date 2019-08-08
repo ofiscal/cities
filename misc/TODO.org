@@ -9,13 +9,15 @@ These will be called concepto-code, conceptop-code-top, and concepto-code-child.
 *** DONE Replace `ingreso_regex` with similar
 *** DONE in the last part of conceptos_1.py
 Build those three columns.
-regDelete rows for which neither "top" nor "child" are true.
-*** Delete the code that generates or uses "code=subcode".
-*** in conceptos_2_agg.py
+Delete rows for which neither "top" nor "child" are true.
+*** DONE in conceptos_2_agg.py
 Aggregate on year, muni, dept, concepto-code and concepto-code-top.
-*** tidy up conceptos_1
-Verify that top + child = 1 (after deleting rows).
-Delete "child" -- it is now redundant to "top".
+*** TODO Verify that top + child = 1 (after deleting rows).
+
+*** TODO celete "codigo-child"
+Itshould be redundant to "top",
+  and putting it through .agg(sum) downstream is confusing.
+*** maybe rename codigo* to subcode*
 ** 90 (out of 4 million+) rows are disappearing
 How to see this:
   In bijectivity_test.py, build the dup_columns data set, and compute its length.

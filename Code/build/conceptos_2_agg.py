@@ -17,29 +17,26 @@ for s in sm.series:
   df = (
       pd.read_csv( "output/conceptos_1/" + s + ".csv" )
     . drop( columns = [ "Código Concepto" ] ) # soon to be aggregated away
+    . rename( columns =
+              { "Cód. DANE Municipio" : "muni"
+              , "Cód. DANE Departamento" : "dept" } )
     . groupby( by =
-      [ "year"
-      , "Cód. DANE Municipio"
-      , "Cód. DANE Departamento" # given that we aggregate on muni code,
+      [ "year", "muni"
+      , "dept" # Given that we aggregate on muni code,
          # aggregating on dept is redundant,
-         # but an easy way to retain the variable
-      , "subcode"
-      , "code=subcode" ] )
+         # but it's an easy way to retain a non-numeric column after agg(sum).
+      , "codigo", "codigo-top" ] )
     . agg( sum )
     . reset_index() )
-  df["subcode"] = ( df["subcode"]
-                   . astype( str ) )
+  df["codigo"] = df["codigo"] . astype(str)
   df = util.to_front(
-      ["muni","year","subcode","code=subcode","dept","Concepto"]
+      ["muni","year","codigo","codigo-top","dept","Concepto"]
     , ( df.merge( concepto_key
-                , left_on = "subcode"
+                , left_on = "codigo"
                 , right_on = "Código Concepto" )
       . drop( columns = ["Código Concepto"] ) # redundant given subcode
-      . rename( columns =
-                { "Cód. DANE Municipio" : "muni"
-                , "Cód. DANE Departamento" : "dept" } )
-      . sort_values( ["muni","year","subcode","code=subcode"] ) ) )
+      . sort_values( ["muni","year","codigo","codigo-top"] ) ) )
   dfs[s] = df
   df.to_csv( "output/conceptos_2_agg/" + s + ".csv"
-            , index = False
-  )
+           , index = False )
+
