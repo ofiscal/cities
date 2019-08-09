@@ -18,6 +18,7 @@ For equal values of "muni code" and "agg concepto",
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
 but DNP already provides an a.b value.
 Hopefully they are equal.
+** unit data tests
 *** check other aggregated sums
 e.g. T1 = T1.A + T1.B
 Good opportunity for property-based testinig.
@@ -31,13 +32,12 @@ VAL	INGRESOS TOTALES
 Ignore these because they are checks:
 VAL	CIFRA CONTROL
 VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
-** unit data tests
 *** "subcategory summation"
 Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
 ** integration data tests
 Can check results at
 https://terridata.dnp.gov.co/
-(enter a municipality (department also possible))
+enter a municipality (department also possible)
 and then choose "finanzas publicas".
 * PITFALLS interpreting the data
 Some series might not be uniformly sampled across time.
