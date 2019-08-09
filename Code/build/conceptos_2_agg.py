@@ -29,7 +29,8 @@ for s in sm.series:
     . agg( sum )
     . reset_index() )
   if True: # Verify that dept code is redundant given muni code.
-    df["one"] = 1
+    dtest = df
+    dtest["one"] = 1
     dtest = ( df .
               groupby( by = ["year","muni","codigo","codigo-top"] ) .
               agg( sum ) )

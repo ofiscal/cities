@@ -7,6 +7,25 @@ from itertools import chain
 series = ["ingresos","inversion","funcionamiento"]
 
 source_folder = "data/sisfut/"
+columns_peso = {
+  "ingresos" : [
+      "Presupuesto Inicial"
+    , "Presupuesto Definitivo"
+    , "Recaudo"
+    , "Total Ingresos" ]
+  , "inversion" : [
+      "Presupuesto Inicial"
+    , "Presupuesto Definitivo"
+    , "Compromisos"
+    , "Obligaciones"
+    , "Pagos" ]
+  , "funcionamiento" : [
+      "Presupuesto Inicial"
+    , "Presupuesto Definitivo"
+    , "Compromisos"
+    , "Obligaciones"
+    , "Pagos" ] }
+
 column_subsets = {
   "ingresos" : [
 #      "Código FUT"
@@ -17,11 +36,7 @@ column_subsets = {
     , "Nombre DANE Municipio"
     , "Código Concepto"
     , "Concepto"
-    , "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Recaudo"
-    , "Total Ingresos"
-  ] ,
+  ] + columns_peso["ingresos"],
   "inversion" : [
 #     "Código FUT"
       "Nombre Entidad"
@@ -33,12 +48,7 @@ column_subsets = {
     , "Concepto"
 #    , "Código Fuentes De Financiación"
 #    , "Fuentes de Financiación"
-    , "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Compromisos"
-    , "Obligaciones"
-    , "Pagos"
-  ] ,
+  ] + columns_peso["inversion"],
   "funcionamiento" : [
 #      "Código FUT"
       "Nombre Entidad"
@@ -50,12 +60,8 @@ column_subsets = {
     , "Concepto"
 #    , "Código Fuente Financiación"
 #    , "Fuente Financiación"
-    , "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Compromisos"
-    , "Obligaciones"
-    , "Pagos"
-] }
+  ] + columns_peso["funcionamiento"]
+}
 
 duplicative_columns = [
 #    ("Código FUT", "Nombre Entidad" )
