@@ -20,11 +20,11 @@ for s in sm.series:
     . rename( columns =
               { "Cód. DANE Municipio" : "muni"
               , "Cód. DANE Departamento" : "dept" } )
-    . groupby( by =
-      [ "year", "muni"
-      , "dept" # Given that we aggregate on muni code,
-         # aggregating on dept is redundant,
-         # but it's an easy way to retain a non-numeric column after agg(sum).
+    . groupby( by = [
+      "year", "muni"
+      , "dept" # Given that we already aggregate on muni code,
+        # aggregating on dept is redundant,
+        # but it's an easy way to retain a non-numeric column after agg(sum).
       , "codigo", "codigo-top" ] )
     . agg( sum )
     . reset_index() )
@@ -39,4 +39,3 @@ for s in sm.series:
   dfs[s] = df
   df.to_csv( "output/conceptos_2_agg/" + s + ".csv"
            , index = False )
-

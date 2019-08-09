@@ -46,6 +46,8 @@ for (series, regexes) in [
     , ("funcionamiento" , ac.regexes_for_2_codes() )
     , ("ingresos"       , ac.regexes_for_ingresos() ) ]:
   df = dfs[series]
+
+  # build some columns
   (category, top, child) = regexes
   df["codigo"]       = (
       df["Código Concepto"]
@@ -56,9 +58,20 @@ for (series, regexes) in [
   df["codigo-child"] = ~ pd.isnull(
       df["Código Concepto"]
     . str.extract( child ) )
-  df = ( # keep only top categories and the first generation below
+
+  df = ( # keep only rows labeled with top categories
+         # or the first generation below the top categories
     df[ (df["codigo-top"])
       | (df["codigo-child"]) ] )
+
+  # Verify that codigo-top is the boolean negative of codigo-child.
+  # (That's not true before we drop rows categorized deeper than top or child.)
+  assert ( len ( df[ ( (df["codigo-top"].astype(int)) +
+                       (df["codigo-child"]).astype(int) )
+                     != 1 ][["codigo","codigo-top","codigo-child"]] )
+           == 0 )
+  df = df.drop( columns = ["codigo-child"] )
+
   df . to_csv( "output/conceptos_1/" + series + ".csv"
              , index = False )
   dfs[series] = df
