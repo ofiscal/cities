@@ -29,12 +29,12 @@ for s in sm.series:
     . agg( sum )
     . reset_index() )
   if True: # Verify that dept code is redundant given muni code.
-    dtest = df
-    dtest["one"] = 1
+    df["one"] = 1
     dtest = ( df .
               groupby( by = ["year","muni","codigo","codigo-top"] ) .
               agg( sum ) )
     assert dtest["one"].max() == 1
+    df = df.drop( columns = ["one"] )
     del(dtest)
   df["codigo"] = df["codigo"] . astype(str)
   df = util.to_front(
@@ -42,9 +42,8 @@ for s in sm.series:
     , ( df.merge( concepto_key
                 , left_on = "codigo"
                 , right_on = "Código Concepto" )
-      . drop( columns = ["Código Concepto"] ) # redundant given subcode
+      . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
       . sort_values( ["muni","year","codigo","codigo-top"] ) ) )
   dfs[s] = df
   df.to_csv( "output/conceptos_2_agg/" + s + ".csv"
            , index = False )
-

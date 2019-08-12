@@ -1,6 +1,6 @@
 # To determine whether the (muni,year,concepto)-aggregated data makes sense.
 
-
+# import Code.explore.conceptos_agg as eca
 from itertools import chain
 import numpy as np
 import pandas as pd
@@ -16,42 +16,35 @@ dfs = {}
 for s in sm.series:
   dfs[s] = pd.read_csv( "output/conceptos_2_agg/" + s + ".csv" )
 
-#  dfg = ( df[s] .
-#          groupby( columns_uob ) .
-#          agg( ["min","max"] ) )
+ing = dfs["ingresos"]
+inv = dfs["inversion"]
+fun = dfs["funcionamiento"]
 
-df = dfs["inversion"]
-x = df.groupby( by = ["muni","year","codigo"] )
-def f( col, df ):
+def summarize_col( col : str, df : pd.DataFrame ) -> pd.DataFrame:
   theRange = df[col].max() - df[col].min()
   theMin = df[col].min()
   theMax = df[col].max()
   theRatio = 0 if theRange == 0 else theRange / theMin
-  return pd.DataFrame( { "range" : [theRange]
-                       , "min"   : [theMin]
-                       , "max"   : [theMax]
-                       , "ratio" : [theRatio] } )
+  return pd.DataFrame( { ( col + "range") : [theRange]
+                       , ( col + "min"  ) : [theMin]
+                       , ( col + "max"  ) : [theMax]
+                       , ( col + "ratio") : [theRatio] } )
 
-y = ( x .
-  apply(lambda df: f("Presupuesto Definitivo",df) ) .
-  reset_index() .
-  drop( columns = ["level_3"] ) )
+df = ing
+x = ( df .
+  groupby( by = ["muni","year","codigo"] ) .
+  apply( lambda df :
+         summarize_col( "Presupuesto Definitivo",
+                        df) ) )
+#   reset_index() .
+#   drop( columns = ["level_3"] ) )
 
 df["Presupuesto Inicial"].max()
 df["Presupuesto Inicial"].min()
-y["ratio"].min()
-y["ratio"].max()
-y[ y["ratio"] == np.inf ]
-len( y[ y["max"] < 0.5 ] )
-y[ y["max"] > 1 ].min()
+x["ratio"].min()
+x["ratio"].max()
+x[ x["ratio"] == np.inf ]
+len( x[ x["max"] < 0.5 ] )
+x[ x["max"] > 1 ].min()
 
 # ingresos -- looks good. max ratio (of presupuestal inicial)  is infinity, but those are 0.01 pesos / 0 pesos
-inversion
-funcionamiento
-
-x = pd.DataFrame( [[1,2],[2,2],[3,4],[5,4]], columns = ["a","b"] )
-y = x.groupby( "b" )
-def f(df):
-  return df.iloc[0]
-
-y.apply(f).reset_index(drop=True)
