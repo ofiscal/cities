@@ -45,5 +45,5 @@ for s in sm.series:
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
       . sort_values( ["muni","year","codigo","codigo-top"] ) ) )
   dfs[s] = df
-  df.to_csv( "output/conceptos_2_agg/" + s + ".csv"
+  df.to_csv( "output/conceptos_3_agg/" + s + ".csv"
            , index = False )

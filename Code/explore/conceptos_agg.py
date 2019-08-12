@@ -14,7 +14,7 @@ columns_uob = ["muni","year","codigo","codigo-top"]
 
 dfs = {}
 for s in sm.series:
-  dfs[s] = pd.read_csv( "output/conceptos_2_agg/" + s + ".csv" )
+  dfs[s] = pd.read_csv( "output/conceptos_3_agg/" + s + ".csv" )
 
 ing = dfs["ingresos"]
 inv = dfs["inversion"]

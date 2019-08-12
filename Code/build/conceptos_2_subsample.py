@@ -4,7 +4,7 @@ import numpy as np
 
 
 source   = "/mnt/output/conceptos_1"
-top_dest = "/mnt/output/conceptos_1_5_subsample"
+top_dest = "/mnt/output/conceptos_2_subsample"
 
 if not os.path.exists(top_dest):
   os.makedirs(top_dest)
