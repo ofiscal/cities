@@ -3,19 +3,27 @@
 #   by broad (usually 2 prefixes, otherwise 3) concepto category
 
 from itertools import chain
+import os
 import numpy as np
 import pandas as pd
+
+import Code.common as c
 import Code.util as util
 import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
 
 
 concepto_key = pd.read_csv( "output/keys/concepto.csv" )
+source       = "output/conceptos_2_subsample/recip-" + str(c.subsample)
+dest         = "output/conceptos_3_agg/recip-"       + str(c.subsample)
+
+if not os.path.exists( dest ):
+  os.makedirs(         dest )
 
 dfs = {}
 for s in sm.series:
   df = (
-      pd.read_csv( "output/conceptos_1/" + s + ".csv" )
+      pd.read_csv( source + "/" + s + ".csv" )
     . drop( columns = [ "Código Concepto" ] ) # soon to be aggregated away
     . rename( columns =
               { "Cód. DANE Municipio" : "muni"
@@ -45,5 +53,5 @@ for s in sm.series:
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
       . sort_values( ["muni","year","codigo","codigo-top"] ) ) )
   dfs[s] = df
-  df.to_csv( "output/conceptos_3_agg/" + s + ".csv"
-           , index = False )
+  df.to_csv( dest + "/" + s + ".csv" ,
+             index = False )

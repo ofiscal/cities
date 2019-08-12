@@ -1,4 +1,5 @@
 *~
+clone/
 data/sisfut/original_csv/*.csv
 output/
 data/sisfut/heads

@@ -1,15 +1,25 @@
 ### Variables
 SHELL := bash
 
+subsample?=1
+  # default value; can be overridden from the command line,
+  # as in "make raw subsample=10"
+  # possibilities: 1, 10, 100 and 1000
+ss=$(strip $(subsample))
+  # removes trailing space
+myPython=PYTHONPATH='.' python3
+
 .PHONY: all							\
   keys								\
   conceptos_1							\
   conceptos_2_subsample						\
+  conceptos_2_subsamples					\
   subsample conceptos_3_agg
 
 all: keys							\
   conceptos_1							\
   conceptos_2_subsample						\
+  conceptos_2_subsamples					\
   conceptos_3_agg
 
 keys =								\
@@ -22,6 +32,11 @@ conceptos_1 =							\
   output/conceptos_1/inversion.csv
 
 conceptos_2_subsample =						\
+  output/conceptos_2_subsample/recip-$(ss)/funcionamiento.csv	\
+  output/conceptos_2_subsample/recip-$(ss)/ingresos.csv		\
+  output/conceptos_2_subsample/recip-$(ss)/inversion.csv
+
+conceptos_2_subsamples =					\
   output/conceptos_2_subsample/recip-10/funcionamiento.csv	\
   output/conceptos_2_subsample/recip-10/ingresos.csv		\
   output/conceptos_2_subsample/recip-10/inversion.csv		\
@@ -33,11 +48,9 @@ conceptos_2_subsample =						\
   output/conceptos_2_subsample/recip-1000/inversion.csv
 
 conceptos_3_agg =						\
-  output/conceptos_3_agg/funcionamiento.csv			\
-  output/conceptos_3_agg/ingresos.csv				\
-  output/conceptos_3_agg/inversion.csv
-
-myPython=PYTHONPATH='.' python3
+  output/conceptos_3_agg/recip-$(ss)/funcionamiento.csv		\
+  output/conceptos_3_agg/recip-$(ss)/ingresos.csv		\
+  output/conceptos_3_agg/recip-$(ss)/inversion.csv
 
 
 #### Recipes
@@ -55,8 +68,8 @@ $(conceptos_1):							\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_1.py
 
-conceptos_2_subsample: $(conceptos_2_subsample)
-$(conceptos_2_subsample):					\
+conceptos_2_subsamples: $(conceptos_2_subsamples)
+$(conceptos_2_subsamples):					\
   $(conceptos_1)						\
   Code/build/conceptos_2_subsample.py				\
   Code/build/aggregation_regexes.py				\
@@ -70,4 +83,4 @@ $(conceptos_3_agg):						\
   Code/util.py							\
   Code/build/aggregation_regexes.py				\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_3_agg.py
+	$(myPython) Code/build/conceptos_3_agg.py $(ss)
