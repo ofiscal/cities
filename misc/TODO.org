@@ -1,7 +1,7 @@
 * TODO fix
 ** TODO muni codes not present
-in "/conceptos_2_subsample/recip-" + str(c.subsample),
-and maybe even upstream
+slightly missing in raw data
+entirely missing in output/conceptos_1
 ** 90 (out of 4 million+) rows are disappearing
 How to see this:
   In bijectivity_test.py, build the dup_columns data set, and compute its length.
