@@ -1,6 +1,16 @@
 # Demonstrates that 3% to 5% of observations in each data set
 # are missing both municipality (name) and municipality code.
- itertools import chain
+
+#Examples of how to use this code.
+#dfs = get_raw_data()
+#analyze( dfs )
+#
+#dfs1 = get_output_data("output/conceptos_1")
+#analyze( dfs1 )
+#
+#dfs2 = get_output_data("output/conceptos_2/recip-1")
+#analyze( dfs )
+
 import numpy as np
 import pandas as pd
 import Code.build.aggregation_regexes as ac
@@ -39,13 +49,4 @@ def analyze( dfs ):
       ( True if not "muni" in df.columns
         else df["muni"]      .isnull() ) ]
     print( len(df_bad) / len(df) )
-
-dfs = get_raw_data()
-analyze( dfs )
-
-dfs1 = get_output_data("output/conceptos_1")
-analyze( dfs1 )
-
-dfs2 = get_output_data("output/conceptos_2/recip-1")
-analyze( dfs )
 
