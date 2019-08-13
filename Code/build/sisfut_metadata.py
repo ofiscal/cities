@@ -9,61 +9,69 @@ series = ["ingresos","inversion","funcionamiento"]
 source_folder = "data/sisfut/"
 columns_peso = {
   "ingresos" : [
-      "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Recaudo"
-    , "Total Ingresos" ]
+      ("Presupuesto Inicial"    , "item init")
+    , ("Presupuesto Definitivo" , "item def")
+    , ("Recaudo"                , "item recaudo")
+    , ("Total Ingresos"         , "item total") ]
   , "inversion" : [
-      "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Compromisos"
-    , "Obligaciones"
-    , "Pagos" ]
+      ("Presupuesto Inicial"    , "item init")
+    , ("Presupuesto Definitivo" , "item def")
+    , ("Compromisos"            , "item comp")
+    , ("Obligaciones"           , "item oblig")
+    , ("Pagos"                  , "item pagos") ]
   , "funcionamiento" : [
-      "Presupuesto Inicial"
-    , "Presupuesto Definitivo"
-    , "Compromisos"
-    , "Obligaciones"
-    , "Pagos" ] }
+      ("Presupuesto Inicial"    , "item init")
+    , ("Presupuesto Definitivo" , "item def")
+    , ("Compromisos"            , "item comp")
+    , ("Obligaciones"           , "item oblig")
+    , ("Pagos"                  , "item pagos") ]
+  }
 
-column_subsets = {
+column_subsets = { # Columns that we might actually use.
   "ingresos" : [
-#      "Código FUT"
-      "Nombre Entidad"
-    , "Cód. DANE Departamento"
-    , "Nombre DANE Departamento"
-    , "Cód. DANE Municipio"
-    , "Nombre DANE Municipio"
-    , "Código Concepto"
-    , "Concepto"
-  ] + columns_peso["ingresos"],
+    # "Código FUT"
+      ("Nombre Entidad"           , "name")
+    , ("Cód. DANE Departamento"   , "dept code")
+    , ("Nombre DANE Departamento" , "dept")
+    , ("Cód. DANE Municipio"      , "muni code")
+    , ("Nombre DANE Municipio"    , "muni")
+    , ("Código Concepto"          , "item code")
+    , ("Concepto"                 , "item")
+    ] + columns_peso["ingresos"],
   "inversion" : [
-#     "Código FUT"
-      "Nombre Entidad"
-    , "Cód. DANE Departamento"
-    , "Nombre DANE Departamento"
-    , "Cód. DANE Municipio"
-    , "Nombre DANE Municipio"
-    , "Código Concepto"
-    , "Concepto"
-#    , "Código Fuentes De Financiación"
-#    , "Fuentes de Financiación"
-  ] + columns_peso["inversion"],
+    # "Código FUT"
+      ("Nombre Entidad"           , "name")
+    , ("Cód. DANE Departamento"   , "dept code")
+    , ("Nombre DANE Departamento" , "dept")
+    , ("Cód. DANE Municipio"      , "muni code")
+    , ("Nombre DANE Municipio"    , "muni")
+    , ("Código Concepto"          , "item code")
+    , ("Concepto"                 , "item")
+    # , "Código Fuentes De Financiación"
+    # , "Fuentes de Financiación"
+    ] + columns_peso["inversion"],
   "funcionamiento" : [
-#      "Código FUT"
-      "Nombre Entidad"
-    , "Cód. DANE Departamento"
-    , "Nombre DANE Departamento"
-    , "Cód. DANE Municipio"
-    , "Nombre DANE Municipio"
-    , "Código Concepto"
-    , "Concepto"
-#    , "Código Fuente Financiación"
-#    , "Fuente Financiación"
-  ] + columns_peso["funcionamiento"]
+    # "Código FUT"
+      ("Nombre Entidad"           , "name")
+    , ("Cód. DANE Departamento"   , "dept code")
+    , ("Nombre DANE Departamento" , "dept")
+    , ("Cód. DANE Municipio"      , "muni code")
+    , ("Nombre DANE Municipio"    , "muni")
+    , ("Código Concepto"          , "item code")
+    , ("Concepto"                 , "item")
+    # , "Código Fuente Financiación"
+    # , "Fuente Financiación"
+    ] + columns_peso["funcionamiento"]
 }
 
-duplicative_columns = [
+column_subsets_long, column_subsets_short = ({},{})
+def fst(x): return x[0]
+def snd(x): return x[1]
+for s in series:
+  column_subsets_long[s]  = list( map( fst, column_subsets[s] ) )
+  column_subsets_short[s] = list( map( snd, column_subsets[s] ) )
+
+duplicative_columns_long = [
 #    ("Código FUT", "Nombre Entidad" )
     ("Cód. DANE Departamento", "Nombre DANE Departamento" )
   , ("Cód. DANE Municipio", "Nombre DANE Municipio" )
@@ -71,9 +79,24 @@ duplicative_columns = [
 #  , ("Código Fuente Financiación", "Fuente Financiación" )
 #  , ("Código Fuentes De Financiación", "Fuentes de Financiación" )
   ]
-duplicative_columns_set = set(
+duplicative_columns_long_set = set(
   # chain.from_iterable concatenates these 2-element lists
   chain.from_iterable( [ [ c[0], c[1] ]
-                         for c in duplicative_columns ] ) )
-omittable_columns = set( map( lambda x: x[1]
-                            , duplicative_columns ) )
+                         for c in duplicative_columns_long ] ) )
+omittable_columns_long = set( map( lambda x: x[1]
+                            , duplicative_columns_long ) )
+
+duplicative_columns_short = [
+#    ("Código FUT", "Nombre Entidad" )
+    ("dept code", "dept" )
+  , ("muni code", "muni" )
+  , ("item code", "item" )
+#  , ("Código Fuente Financiación", "Fuente Financiación" )
+#  , ("Código Fuentes De Financiación", "Fuentes de Financiación" )
+  ]
+duplicative_columns_short_set = set(
+  # chain.from_iterable concatenates these 2-element lists
+  chain.from_iterable( [ [ c[0], c[1] ]
+                         for c in duplicative_columns_short ] ) )
+omittable_columns_short = set( map( lambda x: x[1]
+                            , duplicative_columns_short ) )

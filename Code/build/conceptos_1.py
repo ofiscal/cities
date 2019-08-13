@@ -1,5 +1,5 @@
 ###### Based on the original three data sets from DNP
-###### (ingresos, inversiones and funcionamiento), this builds three
+###### (ingreso, inversiones and funcionamiento), this builds three
 ###### similar data sets.
 ###### The unit of observation is the same, a "concepto",
 ###### i.e. an item of either expenditure or income.
@@ -24,13 +24,15 @@ dfs = {}
 for series in sm.series:
   dfs[series] = pd.DataFrame()
   for year in range( 2012, 2018+1 ):
-    shuttle = pd.read_csv(
-      ( sm.source_folder + "original_csv/"
-        + str(year) + "_" + series + ".csv" )
-#      , nrows = 20000
-      , usecols = set.difference(
-          set( sm.column_subsets[series] )
-        , sm.omittable_columns ) ) # omit the verbose, redundant columns
+    shuttle = (
+      pd.read_csv(
+        ( sm.source_folder + "original_csv/"
+          + str(year) + "_" + series + ".csv" )
+#        , nrows = 20000
+        , usecols = set.difference(
+            set( sm.column_subsets_long[series] )
+          , sm.omittable_columns_long ) ) . # omit the omittable ones
+      rename( columns = dict( sm.column_subsets[series] ) ) )
     shuttle["year"] = year
     dfs[series] = dfs[series] . append(shuttle)
 
@@ -49,28 +51,28 @@ for (series, regexes) in [
 
   # build some columns
   (category, top, child) = regexes
-  df["codigo"]       = (
-      df["Código Concepto"]
+  df["item categ"]       = (
+      df["item code"]
     . str.extract( category ) )
-  df["codigo-top"]   = ~ pd.isnull(
-      df["Código Concepto"]
+  df["item top"]   = ~ pd.isnull(
+      df["item code"]
     . str.extract( top ) )
-  df["codigo-child"] = ~ pd.isnull(
-      df["Código Concepto"]
+  df["item child"] = ~ pd.isnull(
+      df["item code"]
     . str.extract( child ) )
 
   df = ( # keep only rows labeled with top categories
          # or the first generation below the top categories
-    df[ (df["codigo-top"])
-      | (df["codigo-child"]) ] )
+    df[ (df["item top"])
+      | (df["item child"]) ] )
 
   # Verify that codigo-top is the boolean negative of codigo-child.
   # (That's not true before we drop rows categorized deeper than top or child.)
-  assert ( len ( df[ ( (df["codigo-top"].astype(int)) +
-                       (df["codigo-child"]).astype(int) )
-                     != 1 ][["codigo","codigo-top","codigo-child"]] )
+  assert ( len ( df[ ( (df["item top"].astype(int)) +
+                       (df["item child"]).astype(int) )
+                     != 1 ] )
            == 0 )
-  df = df.drop( columns = ["codigo-child"] )
+  df = df.drop( columns = ["item child"] )
 
   df . to_csv( "output/conceptos_1/" + series + ".csv"
              , index = False )
