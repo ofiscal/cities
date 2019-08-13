@@ -24,34 +24,32 @@ dfs = {}
 for s in sm.series:
   df = (
       pd.read_csv( source + "/" + s + ".csv" )
-    . drop( columns = [ "Código Concepto" ] ) # soon to be aggregated away
-    . rename( columns =
-              { "Cód. DANE Municipio" : "muni"
-              , "Cód. DANE Departamento" : "dept" } )
+    . drop( columns = [ "item code" ] ) # soon to be aggregated away
     . groupby( by = [
-      "year", "muni"
-      , "dept" # Given that we already aggregate on muni code,
-        # aggregating on dept is redundant,
-        # but it's an easy way to retain a non-numeric column after agg(sum).
-      , "codigo", "codigo-top" ] )
+      "year", "muni code"
+      , "dept code" # Given that we already aggregate on muni code,
+        # aggregating on dept code is redundant,
+        # but offers an easy way to keep the column without summing it.
+      , "item categ", "item top" ] )
     . agg( sum )
     . reset_index() )
   if True: # Verify that dept code is redundant given muni code.
     df["one"] = 1
     dtest = ( df .
-              groupby( by = ["year","muni","codigo","codigo-top"] ) .
+              groupby( by = ["year","muni code","item categ","item top"] ) .
               agg( sum ) )
     assert dtest["one"].max() == 1
     df = df.drop( columns = ["one"] )
     del(dtest)
-  df["codigo"] = df["codigo"] . astype(str)
+  df["item categ"] = df["item categ"] . astype(str)
   df = util.to_front(
-      ["muni","year","codigo","codigo-top","dept","Concepto"]
+      ["muni code","year","item categ","item top","dept code","Concepto"]
     , ( df.merge( concepto_key
-                , left_on = "codigo"
+                , left_on = "item code"
                 , right_on = "Código Concepto" )
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
-      . sort_values( ["muni","year","codigo","codigo-top"] ) ) )
+      . rename( columns = { "Concepto" : "item" } )
+      . sort_values( ["muni code","year","item categ","item top"] ) ) )
   dfs[s] = df
   df.to_csv( dest + "/" + s + ".csv" ,
              index = False )

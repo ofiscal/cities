@@ -5,7 +5,6 @@ import numpy as np
 
 source   = "/mnt/output/conceptos_1"
 top_dest = "/mnt/output/conceptos_2_subsample"
-city_col = "Cód. DANE Municipio"
 
 if not os.path.exists(top_dest):
   os.makedirs(top_dest)
@@ -17,7 +16,7 @@ for filename in ["funcionamiento","ingresos","inversion"]:
       source + "/" + filename + ".csv" )
   df = dfs[filename]
   cities = ( cities .
-             append( df[city_col] ) )
+             append( df["muni code"] ) )
 
 cities = ( cities .
            drop_duplicates() .
@@ -35,13 +34,13 @@ for filename in ["funcionamiento","ingresos","inversion"]:
         cities.sample(
           frac = 1/subsample,
           random_state = 0 ), # seed
-        columns = [city_col] )
+        columns = ["muni code"] )
       if not os.path.exists( sub_dest ):
         os.makedirs(         sub_dest )
       ( dfs[filename] .
         merge( cities_subset,
                how = "inner",
-               on = city_col ) .
+               on = "muni code" ) .
         to_csv(
           sub_dest + "/" + filename + ".csv",
           index = False ) )
