@@ -1,7 +1,7 @@
 ### Variables
 SHELL := bash
 
-subsample?=1
+subsample?=100
   # default value; can be overridden from the command line,
   # as in "make raw subsample=10"
   # possibilities: 1, 10, 100 and 1000
