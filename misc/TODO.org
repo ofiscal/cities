@@ -1,3 +1,44 @@
+* notes from meeting, 2019 08 14
+** regalias
+*** oil price fell a lot from 2014 to 2015
+But fortunately the regalias data lumps 2013 with 2014, and 2015 with 2016.
+*** the country's revenue split
+Is 80% to non-producer munis, and 20% to the few that do produce.
+Among those producers it is divided by some complex formula,
+taking into account poverty, other things.
+** what to use
+Obligaciones = money that will be spent. Pagos = money already spent. Obligaciones seems more natural; it includes money that was budgeted this year even if it actually gets spent next year.
+** what things are
+*** TI.A.1, TI.A.2, TI.B
+asignaciones = transferencias
+  not including regalias
+
+("Presupuesto Inicial"    , "item init")
+  # expectation, proposed by secretary of finance of muni or dept
+("Presupuesto Definitivo" , "item def")
+  # expectation, approved by city council or state assembly
+("Recaudo"                , "item recaudo")
+  # what they took in
+("Total Ingresos"         , "item total")]
+  # ? sould be equal to recaudo
+*** spending
+These are ordered by time.
+
+("Presupuesto Inicial"    , "item init") 
+  # proposed by secretary of finance of muni or dept
+
+("Presupuesto Definitivo" , "item def") 
+  # approved by city council or state assembly
+
+("Compromisos"            , "item comp")  
+  # the maximum they could use in obligaciones; at end of year, should be equal to obligaciones. this is more disaggregated than the presupuesto.
+
+("Obligaciones"           , "item oblig") 
+  # both parties promise, neither has delivered yet
+
+("Pagos"                  , "item pagos") 
+  # what they've actually spent
+
 * TODO fix
 ** TODO muni codes not present
 *** TODO use less state
