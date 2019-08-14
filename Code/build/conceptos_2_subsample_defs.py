@@ -12,31 +12,31 @@ top_dest = "/mnt/output/conceptos_2_subsample"
 def sub_dest( subsample ):
   return top_dest + "/" + "recip-" + str( subsample )
 
-def read_data():
+def read_data( nrows = None ):
   """Returns a dictionary of three data frames."""
   dfs = {}
   for filename in sm.series:
-    dfs[filename] = pd.read_csv(
-        source + "/" + filename + ".csv" )
+    df = pd.read_csv( source + "/" + filename + ".csv",
+                      nrows = nrows )
+    df = df[ ~ df["muni code"].isnull() ]
+    dfs[filename] = df
   return dfs
 
 def munis_unique( dfs ):
-  """Creates a pandas Series that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
-  munis = pd.Series()
+  """Creates a pandas DataFrame that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
+  munis = pd.DataFrame()
   for s in sm.series:
-    munis = ( munis .
-              append( dfs[s]
-                      ["muni code"] ) )
+    munis = pd.concat( [ munis,
+                         dfs[s] ["muni code"] ],
+                       axis = "rows" )
+  munis.columns = ["muni code"]
   return ( munis .
-           drop_duplicates() .
-           reset_index() )
+           drop_duplicates() )
 
-def munis_subset( subsample : int, munis : pd.Series ) -> pd.DataFrame:
-  return pd.DataFrame(
-    munis.sample(
-      frac = 1/subsample,
-      random_state = 0 ), # seed
-    columns = ["muni code"] )
+def subsample( subsample : int,
+               df : pd.DataFrame ) -> pd.DataFrame:
+  return df.sample( frac = 1/subsample,
+                    random_state = 0 ) # seed
 
 def dfs_subset( munis_subset, dfs ):
   dfs2 = dfs.copy()

@@ -5,9 +5,9 @@
 import numpy as np
 import pandas as pd
 
-import Code.build.sisfut_metadata as sm
-import Code.explore.muni_missing_5_percent as miss
-import Code.build.conceptos_1_defs as defs
+import Code.build.sisfut_metadata            as sm
+import Code.build.conceptos_1_defs           as d1
+import Code.build.conceptos_2_subsample_defs as d2
 
 
 def analyze( dfs, colname ):
@@ -17,20 +17,58 @@ def analyze( dfs, colname ):
     df_bad = df[ df[colname] .isnull() ]
     print( len(df_bad) / len(df) )
 
-dfs = defs.collect_raw()
-analyze(dfs, "muni code")
 
-dfs2 = defs.aggregated_item_codes( dfs )
-analyze(dfs2, "muni code")
+######
+###### (mostly) duplicating the code from
+###### conceptos_2_subsample.py
+######
 
-if False: # write data
+dfs   = d2.read_data( nrows = 20000 )
+analyze( dfs, "muni code" ) # so far, so good
+munis = d2.munis_unique( dfs )
+
+### <<< The problem was here.
+for subsample in [10]:
+  munis_subset = d2.subsample( subsample,
+                               munis )
+  dfs_subset   = d2.dfs_subset( munis_subset,
+                                dfs )
+  analyze( dfs_subset, "muni code" )
+
+munis = pd.Series()
+for s in sm.series:
+  print( dfs[s]["muni code"] )
+## The problem was here >>>
+
+if True: # reading from what it writes to disk
+  dfs3 = {}
+  for s in sm.series:
+    df = pd.read_csv( "output/conceptos_2_subsample/recip-10/" + s + ".csv" )
+    dfs3[s] = df
+    print( len( df ) )
+  analyze(dfs3, "muni code")
+
+
+######
+###### (mostly) duplicating the code from
+###### conceptos_1.py
+######
+
+if False: # everything but writing to disk
+  dfs = d1.collect_raw()
+  analyze(dfs, "muni code")
+  dfs2 = d1.aggregated_item_codes( dfs )
+  analyze(dfs2, "muni code")
+
+if False: # writing to disk
   for s in sm.series:
     dfs2[s].to_csv( "output/conceptos_1/" + s + ".csv",
                     index = False )
 
-if True: # read data
+if True: # reading from what it writes to disk
   dfs3 = {}
   for s in sm.series:
     df = pd.read_csv( "output/conceptos_1/" + s + ".csv" )
     dfs3[s] = df
   analyze(dfs3, "muni code")
+

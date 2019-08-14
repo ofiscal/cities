@@ -19,9 +19,9 @@ munis = defs.munis_unique( dfs )
 for subsample in [10,100,1000]:
   if not os.path.exists( defs.sub_dest( subsample ) ):
     os.makedirs(         defs.sub_dest( subsample ) )
-  munis_subset = defs.munis_subset( subsample,
+  munis_subsample = defs.subsample( subsample,
                                     munis )
-  dfs_subset   = defs.dfs_subset( munis_subset,
+  dfs_subset   = defs.dfs_subset( munis_subsample,
                                   dfs )
   for s in sm.series:
     dfs_subset[s].to_csv(
