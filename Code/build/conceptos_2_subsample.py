@@ -1,47 +1,30 @@
 import os
-import pandas as pd
-import numpy as np
+
+import Code.build.conceptos_2_subsample_defs as defs
+import Code.build.sisfut_metadata as sm
 
 
-source   = "/mnt/output/conceptos_1"
-top_dest = "/mnt/output/conceptos_2_subsample"
+if not os.path.exists( defs.top_dest ):
+  os.makedirs( defs.top_dest )
 
-if not os.path.exists(top_dest):
-  os.makedirs(top_dest)
+# For the recip-1/ folder, use a symblink; don't copy the full sample.
+if True:
+  if os.path.exists(       defs.sub_dest(1) ):
+    os.remove(             defs.sub_dest(1) )
+  os.symlink( defs.source, defs.sub_dest(1) )
 
-dfs = {}
-cities = pd.Series()
-for filename in ["funcionamiento","ingresos","inversion"]:
-  dfs[filename] = pd.read_csv(
-      source + "/" + filename + ".csv" )
-  df = dfs[filename]
-  cities = ( cities .
-             append( df["muni code"] ) )
+dfs   = defs.read_data()
+munis = defs.munis_unique( dfs )
 
-cities = ( cities .
-           drop_duplicates() .
-           reset_index() )
-
-for filename in ["funcionamiento","ingresos","inversion"]:
-  for subsample in [1,10,100,1000]:
-    sub_dest = top_dest + "/" + "recip-" + str(subsample)
-    if subsample==1:
-      if os.path.exists(  sub_dest ):
-        os.remove(        sub_dest )
-      os.symlink( source, sub_dest )
-    else:
-      cities_subset = pd.DataFrame(
-        cities.sample(
-          frac = 1/subsample,
-          random_state = 0 ), # seed
-        columns = ["muni code"] )
-      if not os.path.exists( sub_dest ):
-        os.makedirs(         sub_dest )
-      ( dfs[filename] .
-        merge( cities_subset,
-               how = "inner",
-               on = "muni code" ) .
-        to_csv(
-          sub_dest + "/" + filename + ".csv",
-          index = False ) )
+for subsample in [10,100,1000]:
+  if not os.path.exists( defs.sub_dest( subsample ) ):
+    os.makedirs(         defs.sub_dest( subsample ) )
+  munis_subset = defs.munis_subset( subsample,
+                                    munis )
+  dfs_subset   = defs.dfs_subset( munis_subset,
+                                  dfs )
+  for s in sm.series:
+    dfs_subset[s].to_csv(
+      defs.sub_dest( subsample ) + "/" + s + ".csv",
+      index = False )
 
