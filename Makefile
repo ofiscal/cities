@@ -64,6 +64,7 @@ $(keys):							\
 conceptos_1: $(conceptos_1)
 $(conceptos_1):							\
   Code/build/conceptos_1.py					\
+  Code/build/conceptos_1_defs.py				\
   Code/build/aggregation_regexes.py				\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_1.py

@@ -5,34 +5,10 @@
 import numpy as np
 import pandas as pd
 
-import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
-# import Code.explore.muni_missing_5_percent as miss
+import Code.explore.muni_missing_5_percent as miss
+import Code.build.conceptos_1_defs as defs
 
-
-######
-###### The first part of build/conceptos_1
-######
-
-dfs = {}
-for series in sm.series:
-  dfs[series] = pd.DataFrame()
-  for year in range( 2012, 2018+1 ):
-    shuttle = (
-      pd.read_csv(
-        ( sm.source_folder + "original_csv/"
-          + str(year) + "_" + series + ".csv" )
-        , nrows = 20000
-        , usecols = set.difference(
-            set( sm.column_subsets_long[series] )
-          , sm.omittable_columns_long ) ) . # omit the omittable ones
-      rename( columns = dict( sm.column_subsets[series] ) ) )
-    shuttle["year"] = year
-    dfs[series] = dfs[series] . append(shuttle)
-
-######
-###### Tests, which fail.
-######
 
 def analyze( dfs, colname ):
   for s in sm.series:
@@ -41,4 +17,20 @@ def analyze( dfs, colname ):
     df_bad = df[ df[colname] .isnull() ]
     print( len(df_bad) / len(df) )
 
+dfs = defs.collect_raw()
 analyze(dfs, "muni code")
+
+dfs2 = defs.aggregated_item_codes( dfs )
+analyze(dfs2, "muni code")
+
+if False: # write data
+  for s in sm.series:
+    dfs2[s].to_csv( "output/conceptos_1/" + s + ".csv",
+                    index = False )
+
+if True: # read data
+  dfs3 = {}
+  for s in sm.series:
+    df = pd.read_csv( "output/conceptos_1/" + s + ".csv" )
+    dfs3[s] = df
+  analyze(dfs3, "muni code")
