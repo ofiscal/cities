@@ -4,7 +4,7 @@ import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
 
 
-def collect_raw(nrows = None):
+def collect_raw( nrows = None ):
   """Returns a dictionary of three data frames, one for each of ingresos, inversion and funcionamiento. If using the optional 'nrows' argument, bear in mind that the 3 data sets have about 4 million rows between them."""
   dfs = {}
   for series in sm.series:
@@ -27,7 +27,6 @@ def collect_raw(nrows = None):
 ######
 ###### Build aggregated concepto-code columns.
 ######
-# 
 
 def aggregated_item_codes( dfs ):
   """An 'item' is a record of spending or income (taxes). This function builds some new columns, the aggregate item subcodes by which the data will downstream be aggregated. It does not aggregate rows. The 'dfs' argument should be a dictionary containing the three data sets, per collect_raw()."""

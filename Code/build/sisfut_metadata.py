@@ -100,3 +100,15 @@ duplicative_columns_short_set = set(
                          for c in duplicative_columns_short ] ) )
 omittable_columns_short = set( map( lambda x: x[1]
                             , duplicative_columns_short ) )
+
+column_subsets_no_dups_short = {}
+column_subsets_no_dups_long = {}
+for s in series:
+  column_subsets_no_dups_short[s] = [
+    i for i in column_subsets_short[s]
+    if not i in map( snd,
+                     duplicative_columns_short ) ]
+  column_subsets_no_dups_long[s] = [
+    i for i in column_subsets_long[s]
+    if not i in map( snd,
+                     duplicative_columns_long ) ]
