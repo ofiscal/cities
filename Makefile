@@ -83,6 +83,9 @@ $(conceptos_2_subsamples):					\
 conceptos_3_agg: $(conceptos_3_agg)
 $(conceptos_3_agg):						\
   $(conceptos_2_subsample)					\
+  Code/common.py						\
+  Code/params/cl.py						\
+  Code/params/fixed.py						\
   Code/build/conceptos_3_agg.py					\
   Code/util.py							\
   Code/build/aggregation_regexes.py				\
