@@ -1,5 +1,6 @@
 import os
 
+from Code.build.conceptos_1_tests import column_names_after_agg
 import Code.build.conceptos_2_subsample_defs as defs
 import Code.build.sisfut_metadata as sm
 
@@ -16,15 +17,26 @@ if True:
 dfs   = defs.read_data()
 munis = defs.munis_unique( dfs )
 
-for subsample in [10,100,1000]:
+for subsample in [1000,100,10]: # smaller ones first, to catch errors faster
   if not os.path.exists( defs.sub_dest( subsample ) ):
     os.makedirs(         defs.sub_dest( subsample ) )
   munis_subsample = defs.subsample( subsample,
                                     munis )
   dfs_subset   = defs.dfs_subset( munis_subsample,
                                   dfs )
+  column_names_after_agg( dfs_subset )
   for s in sm.series:
-    dfs_subset[s].to_csv(
+    df        = dfs       [s]
+    df_subset = dfs_subset[s]
+    # Test that the length of each subsample is reasonable.
+    # The 1/10 subsample, for instance, should be not less than half,
+    # and not more than twice, len(df) / 10.
+    # It's not exact because some cities have more budget items recorded than others.
+    assert ( ( 2 *   len(df) / subsample )
+             >=      len(df_subset) )
+    assert ( ( 0.5 * len(df) / subsample )
+             <=      len(df_subset) )
+    df_subset . to_csv(
       defs.sub_dest( subsample ) + "/" + s + ".csv",
       index = False )
 

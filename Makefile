@@ -74,6 +74,8 @@ conceptos_2_subsamples: $(conceptos_2_subsamples)
 $(conceptos_2_subsamples):					\
   $(conceptos_1)						\
   Code/build/conceptos_2_subsample.py				\
+  Code/build/conceptos_2_subsample_defs.py			\
+  Code/build/conceptos_1_tests.py				\
   Code/build/aggregation_regexes.py				\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_2_subsample.py
