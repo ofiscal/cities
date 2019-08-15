@@ -43,9 +43,9 @@ for s in sm.series:
     del(dtest)
   df["item categ"] = df["item categ"] . astype(str)
   df = util.to_front(
-      ["muni code","year","item categ","item top","dept code","Concepto"]
+      ["muni code","year","item categ","item top","dept code","item"]
     , ( df.merge( concepto_key
-                , left_on = "item code"
+                , left_on = "item categ"
                 , right_on = "Código Concepto" )
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
       . rename( columns = { "Concepto" : "item" } )
