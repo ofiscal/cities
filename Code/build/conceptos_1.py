@@ -14,14 +14,17 @@ import Code.build.conceptos_1_tests as tests
 import Code.build.sisfut_metadata as sm
 
 
-dfs = defs.collect_raw( )
-tests.row_numbers( dfs )
+dfs = defs.collect_raw()
+tests.row_numbers_raw( dfs )
 tests.column_names_of_raw_data( dfs )
+tests.types_and_missings_for_raw_data( dfs )
 
-dfs = defs.aggregated_item_codes( dfs )
-tests.row_numbers( dfs )
-tests.column_names_after_agg( dfs )
+# compute aggregated item code (ic) columns
+dfs_ic = defs.aggregated_item_codes( dfs )
+tests.row_numbers_after_keeping_only_relevant_item_codes( dfs_ic )
+tests.column_names_after_agg( dfs_ic )
+tests.types_and_missings_for_data_after_adding_item_code_columns( dfs_ic )
 
 for s in sm.series:
-  dfs[s].to_csv( "output/conceptos_1/" + s + ".csv",
-                 index = False )
+  dfs_ic[s].to_csv( "output/conceptos_1/" + s + ".csv",
+                    index = False )

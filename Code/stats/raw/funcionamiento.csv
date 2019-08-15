@@ -1,0 +1,11 @@
+,dtype,min,max,missing
+name,object,ABEJORRAL,ÚTICA,0.0
+dept code,int64,5,99,0.0
+muni code,float64,5001.0,99773.0,0.04948442692942856
+item code,object,1,VAL,0.0
+item init,float64,0.0,8257600000000.0,0.0
+item def,float64,0.0,9264647949000.0,0.0
+item comp,float64,0.0,7702655211000.0,6.875224304314642e-07
+item oblig,float64,0.0,7283767906000.0,6.875224304314642e-07
+item pagos,float64,0.0,6919749273000.0,3.4376121520462988e-06
+year,int64,2012,2018,0.0

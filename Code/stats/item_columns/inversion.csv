@@ -1,0 +1,3 @@
+,dtype,min,max,missing
+item categ,object,A.1,A.9,0.0
+item top,bool,False,True,0.0
