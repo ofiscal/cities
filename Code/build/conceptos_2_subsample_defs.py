@@ -30,6 +30,9 @@ def munis_unique( dfs ):
                          dfs[s] ["muni code"] ],
                        axis = "rows" )
   munis.columns = ["muni code"]
+  munis = munis[
+    ~ pd.isnull(
+      munis["muni code"] ) ]
   return ( munis .
            drop_duplicates() )
 
