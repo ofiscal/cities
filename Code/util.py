@@ -24,7 +24,7 @@ def myDescribe( df : pd.DataFrame ) -> pd.DataFrame:
   numericTypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
   stats = ( df .
             describe( include="all",
-                      percentiles = [.1,.2,.5,.9,.99] ) .
+                      percentiles = percentiles_reported ) .
             transpose() )
 
   if True: # count missing as fraction

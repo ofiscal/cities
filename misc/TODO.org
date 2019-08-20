@@ -54,6 +54,7 @@ How to see this:
   In bijectivity_test.py, build the dup_columns data set, and compute its length.
   Then, in data/sisfut/original_csv, run "wc -l * | grep total"
   The difference is (4199219 - 4199108 - 21) (there are 21 header columns to ignore).
+** TODO were there not a few negative budget items?
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
