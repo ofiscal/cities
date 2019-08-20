@@ -9,18 +9,21 @@ ss=$(strip $(subsample))
   # removes trailing space
 myPython=PYTHONPATH='.' python3
 
-.PHONY: all							\
-  keys								\
-  conceptos_1							\
-  conceptos_2_subsample						\
-  conceptos_2_subsamples					\
-  subsample conceptos_3_agg
+.PHONY: all				\
+  keys					\
+  conceptos_1				\
+  conceptos_2_subsample			\
+  conceptos_2_subsamples		\
+  subsample				\
+  conceptos_3_muni_year_categ_top	\
+  conceptos_4_muni_year_categ
 
-all: keys							\
-  conceptos_1							\
-  conceptos_2_subsample						\
-  conceptos_2_subsamples					\
-  conceptos_3_agg
+all: keys				\
+  conceptos_1				\
+  conceptos_2_subsample			\
+  conceptos_2_subsamples		\
+  conceptos_3_muni_year_categ_top	\
+  conceptos_4_muni_year_categ
 
 keys =								\
   output/keys/concepto.csv					\
@@ -47,10 +50,18 @@ conceptos_2_subsamples =					\
   output/conceptos_2_subsample/recip-1000/ingresos.csv		\
   output/conceptos_2_subsample/recip-1000/inversion.csv
 
-conceptos_3_agg =						\
-  output/conceptos_3_agg/recip-$(ss)/funcionamiento.csv		\
-  output/conceptos_3_agg/recip-$(ss)/ingresos.csv		\
-  output/conceptos_3_agg/recip-$(ss)/inversion.csv
+conceptos_3_muni_year_categ_top =					\
+  output/conceptos_3_muni_year_categ_top/recip-$(ss)/funcionamiento.csv	\
+  output/conceptos_3_muni_year_categ_top/recip-$(ss)/ingresos.csv	\
+  output/conceptos_3_muni_year_categ_top/recip-$(ss)/inversion.csv
+
+conceptos_4_muni_year_categ =							\
+  output/conceptos_4_muni_year_categ/recip-$(ss)/funcionamiento.csv		\
+  output/conceptos_4_muni_year_categ/recip-$(ss)/ingresos.csv			\
+  output/conceptos_4_muni_year_categ/recip-$(ss)/inversion.csv			\
+  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/funcionamiento.csv	\
+  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/ingresos.csv		\
+  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/inversion.csv
 
 
 #### Recipes
@@ -80,14 +91,24 @@ $(conceptos_2_subsamples):					\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_2_subsample.py
 
-conceptos_3_agg: $(conceptos_3_agg)
-$(conceptos_3_agg):						\
-  $(conceptos_2_subsample)					\
-  Code/common.py						\
-  Code/params/cl.py						\
-  Code/params/fixed.py						\
-  Code/build/conceptos_3_agg.py					\
-  Code/util.py							\
-  Code/build/aggregation_regexes.py				\
+conceptos_3_muni_year_categ_top: $(conceptos_3_muni_year_categ_top)
+$(conceptos_3_muni_year_categ_top):			\
+  $(conceptos_2_subsample)				\
+  Code/build/conceptos_3_muni_year_categ_top.py		\
+  Code/build/conceptos_3_muni_year_categ_top_defs.py	\
+  Code/common.py					\
+  Code/params/cl.py					\
+  Code/params/fixed.py					\
+  Code/util.py						\
+  Code/build/aggregation_regexes.py			\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_3_agg.py $(ss)
+	$(myPython) Code/build/conceptos_3_muni_year_categ_top.py $(ss)
+
+conceptos_4_muni_year_categ: $(conceptos_4_muni_year_categ)
+$(conceptos_4_muni_year_categ):			\
+  $(conceptos_3_muni_year_categ_top)		\
+  Code/build/conceptos_4_muni_year_item.py	\
+  Code/common.py				\
+  Code/util.py					\
+  Code/build/sisfut_metadata.py
+	$(myPython) Code/build/conceptos_4_muni_year_item.py $(ss)

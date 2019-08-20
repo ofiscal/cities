@@ -3,19 +3,17 @@
 #   by broad (usually 2 prefixes, otherwise 3) concepto category
 
 import os
-import numpy as np
 import pandas as pd
 
 import Code.common as c
 import Code.util as util
-import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
-import Code.build.conceptos_3_agg_defs as defs
+import Code.build.conceptos_3_muni_year_categ_top_defs as defs
 
 
 concepto_key = pd.read_csv( "output/keys/concepto.csv" )
-source       = "output/conceptos_2_subsample/recip-" + str(c.subsample)
-dest         = "output/conceptos_3_agg/recip-"       + str(c.subsample)
+source       = "output/conceptos_2_subsample/recip-"           + str(c.subsample)
+dest         = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
 
 if not os.path.exists( dest ):
   os.makedirs(         dest )
@@ -52,3 +50,4 @@ for s in sm.series:
   dfs[s] = df
   df.to_csv( dest + "/" + s + ".csv" ,
              index = False )
+

@@ -8,7 +8,8 @@
 * notes from meeting, 2019 08 14
 ** regalias
 *** oil price fell a lot from 2014 to 2015
-But fortunately the regalias data lumps 2013 with 2014, and 2015 with 2016.
+But fortunately the regalias data lumps 2013 with 2014,
+and 2015 with 2016.
 *** the country's revenue split
 Is 80% to non-producer munis, and 20% to the few that do produce.
 Among those producers it is divided by some complex formula,
