@@ -1,3 +1,10 @@
+* notes from seminar, 2019 08 16
+** draw a benchmark similarly to the city's report
+** corrupt governors will suppress the mediax
+** TODO before testing the stats, just think about|share them
+** can measure complaints of [vote buying] after election
+** candidates might use our reports
+** control for|stratify by reporters' sense of security
 * notes from meeting, 2019 08 14
 ** regalias
 *** oil price fell a lot from 2014 to 2015
