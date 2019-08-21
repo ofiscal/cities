@@ -16,14 +16,16 @@ myPython=PYTHONPATH='.' python3
   conceptos_2_subsamples		\
   subsample				\
   conceptos_3_muni_year_categ_top	\
-  conceptos_4_muni_year_categ
+  conceptos_4_muni_year_categ		\
+  pics
 
 all: keys				\
   conceptos_1				\
   conceptos_2_subsample			\
   conceptos_2_subsamples		\
   conceptos_3_muni_year_categ_top	\
-  conceptos_4_muni_year_categ
+  conceptos_4_muni_year_categ		\
+  pics
 
 keys =								\
   output/keys/concepto.csv					\
@@ -62,6 +64,8 @@ conceptos_4_muni_year_categ =							\
   output/conceptos_4_muni_year_categ_summary/recip-$(ss)/funcionamiento.csv	\
   output/conceptos_4_muni_year_categ_summary/recip-$(ss)/ingresos.csv		\
   output/conceptos_4_muni_year_categ_summary/recip-$(ss)/inversion.csv
+
+pics = output/a_page.pdf
 
 
 #### Recipes
@@ -112,3 +116,9 @@ $(conceptos_4_muni_year_categ):			\
   Code/util.py					\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_4_muni_year_item.py $(ss)
+
+pics: $(pics)
+$(pics): Code/main.py
+	date
+	$(myPython) Code/main.py $(ss)
+	date

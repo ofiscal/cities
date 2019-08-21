@@ -5,40 +5,38 @@ import numpy as np
 import pandas as pd
 
 
-def drawPage( folder ):
-  df = pd.read_csv( folder + "/numbers_to_plot.csv"
-                  , index_col=0
-       ) . iloc[::-1] # Revserse column order.
+def drawPage( df : pd.DataFrame,
+              title : str,
+              text : str ):
+  df = df . iloc[::-1] # Revserse column order.
     # In the bar chart, each row is drawn on top of the previous one.
     # This reversal causes earlier ("higher") rows to be drawn above later ones,
     # which means vertical order of items in the chart corresponds to
     # the vertical order of items in the data file.
     # It's a nuance the chart would still make sense without.
-  with open( folder + "/text.txt", "r") as myfile:
-      content = myfile.readlines()
-  with open( folder + "/title.txt", "r") as myfile:
-      title = myfile.readlines()
-
   plt.subplots( 2, 1, facecolor = background_color )
   ax = plt.subplot( 2, 1, 1 )
-  drawText( ax, title, content )
+  drawText( ax, title, text )
   ax = plt.subplot( 2, 1, 2 )
   drawStacks( ax, df )
 
-def drawText( ax, title, content ):
+def drawText( ax, # : matplotlib.axes.SubplotBase
+              title : str,
+              text : str ):
   plt.text( 0.5, 0.9
           , "".join( title )
           , color = 'k'
           , fontproperties = font_black
           , horizontalalignment="center" )
   plt.text( 0, 0.5
-          , "".join( content )
+          , "".join( text )
           , color = 'k'
           , fontproperties = font_light
           , verticalalignment="center" )
   ax.axis( 'off' )
 
-def drawStacks( ax, df ):
+def drawStacks( ax, # : matplotlib.axes.SubplotBase
+                df : pd.DataFrame ):
   nCols = len( df.columns )
   nRows = len( df.index )
   xvals = np.arange( nCols )
