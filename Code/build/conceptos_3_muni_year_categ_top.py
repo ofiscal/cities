@@ -14,7 +14,6 @@ import Code.build.conceptos_3_muni_year_categ_top_defs as defs
 concepto_key = pd.read_csv( "output/keys/concepto.csv" )
 source       = "output/conceptos_2_subsample/recip-"           + str(c.subsample)
 dest         = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
-
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
