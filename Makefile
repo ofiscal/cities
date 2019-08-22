@@ -24,8 +24,8 @@ all: keys				\
   conceptos_2_subsample			\
   conceptos_2_subsamples		\
   conceptos_3_muni_year_categ_top	\
-  sanity_child_sum_is_parent		\
-  pics
+  sanity_child_sum_is_parent
+  # pics
 
 keys =								\
   output/keys/concepto.csv					\
@@ -122,3 +122,4 @@ $(pics): Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)
 	date
+

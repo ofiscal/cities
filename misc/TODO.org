@@ -32,22 +32,29 @@ asignaciones = transferencias
 *** spending
 These are ordered by time.
 
-("Presupuesto Inicial"    , "item init") 
+("Presupuesto Inicial"    , "item init")
   # proposed by secretary of finance of muni or dept
 
-("Presupuesto Definitivo" , "item def") 
+("Presupuesto Definitivo" , "item def")
   # approved by city council or state assembly
 
-("Compromisos"            , "item comp")  
+("Compromisos"            , "item comp")
   # the maximum they could use in obligaciones; at end of year, should be equal to obligaciones. this is more disaggregated than the presupuesto.
 
-("Obligaciones"           , "item oblig") 
+("Obligaciones"           , "item oblig")
   # both parties promise, neither has delivered yet
 
-("Pagos"                  , "item pagos") 
+("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO : Figures, at least for ingresos, are 1e3 times bigger after 2016
+* TODO : compare order of magnitude of figures across years
+** problem: Figures, at least for ingresos, are 1e3 times bigger after 2016
+** TODO method
+Within each municipality-item "mi" indexed by year "y",
+compute the ratio of mi[y] / mi[y+1], for y in [2012 .. 2017].
+(Use the "pct_change" function from pandas for this.)
+Put each in a separate column.
+Across municipality-items, find the min, max of each column.
 * TODO ? decide: use top categories or their children
 * TODO fix
 ** TODO use less state, check row numbers and column headers
