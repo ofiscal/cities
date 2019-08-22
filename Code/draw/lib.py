@@ -1,3 +1,4 @@
+from typing import List
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
@@ -6,8 +7,8 @@ import pandas as pd
 
 
 def drawPage( df : pd.DataFrame,
-              title : str,
-              text : str ):
+              title : List[str],
+              text : List[str] ):
   df = df . iloc[::-1] # Revserse column order.
     # In the bar chart, each row is drawn on top of the previous one.
     # This reversal causes earlier ("higher") rows to be drawn above later ones,
@@ -21,8 +22,8 @@ def drawPage( df : pd.DataFrame,
   drawStacks( ax, df )
 
 def drawText( ax, # : matplotlib.axes.SubplotBase
-              title : str,
-              text : str ):
+              title : List[str],
+              text : List[str] ):
   plt.text( 0.5, 0.9
           , "".join( title )
           , color = 'k'

@@ -47,6 +47,8 @@ These are ordered by time.
 ("Pagos"                  , "item pagos") 
   # what they've actually spent
 
+* TODO : Figures, at least for ingresos, are 1e3 times bigger after 2016
+* TODO ? decide: use top categories or their children
 * TODO fix
 ** TODO use less state, check row numbers and column headers
 ** 90 (out of 4 million+) rows are disappearing
