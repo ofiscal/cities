@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from   matplotlib.backends.backend_pdf import PdfPages
@@ -29,9 +30,10 @@ for s in ["ingresos"]:
       # It doesn't seem to help.
       df_pivot.index.name = None
       df_pivot.columns.name = None
-    dest = 'output/reports/' + str(muni) + "/" + s + ".pdf"
-    print(dest)
-    with PdfPages( dest ) as pdf:
+    dest = 'output/reports/' + str(muni)
+    if not os.path.exists( dest ):
+      os.makedirs( dest )
+    with PdfPages( dest + "/" + s + ".pdf" ) as pdf:
       lib.drawPage( df_pivot, ["Title?"], ["Text?"] )
       pdf.savefig( facecolor=lib.background_color )
       plt.close()
