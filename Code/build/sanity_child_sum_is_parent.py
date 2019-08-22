@@ -41,15 +41,15 @@ regarding the column "col" in the data frame "df2r".
                        , ( col + ", ratio") : [theRatio] } )
 
 df_summaries, df_myi_summaries = ({},{})
-for (s, item_variety) in [
-    ("ingresos"       ,"recaudo"),
-    ("inversion"      ,"oblig"),
-    ("funcionamiento" ,"oblig") ]:
+for (s, pesos_column) in [
+    ("ingresos"       ,"item recaudo"),
+    ("inversion"      ,"item oblig"),
+    ("funcionamiento" ,"item oblig") ]:
   df_myi_summaries[s] = (
     dfs[s] .
     groupby( by = ["muni code","year","item categ"] ) .
     apply( lambda df2r :
-           summarize_muni_yr_categ( "item " + item_variety, df2r) ) .
+           summarize_muni_yr_categ( pesos_column, df2r) ) .
     reset_index() .
     drop( columns = ["level_3"] ) )
   df_myi_summaries[s] . to_csv( dest + "/" + s + ".csv",
