@@ -16,7 +16,7 @@ myPython=PYTHONPATH='.' python3
   conceptos_2_subsamples		\
   subsample				\
   conceptos_3_muni_year_categ_top	\
-  conceptos_4_muni_year_categ		\
+  sanity_child_sum_is_parent		\
   pics
 
 all: keys				\
@@ -24,7 +24,7 @@ all: keys				\
   conceptos_2_subsample			\
   conceptos_2_subsamples		\
   conceptos_3_muni_year_categ_top	\
-  conceptos_4_muni_year_categ		\
+  sanity_child_sum_is_parent		\
   pics
 
 keys =								\
@@ -57,13 +57,13 @@ conceptos_3_muni_year_categ_top =					\
   output/conceptos_3_muni_year_categ_top/recip-$(ss)/ingresos.csv	\
   output/conceptos_3_muni_year_categ_top/recip-$(ss)/inversion.csv
 
-conceptos_4_muni_year_categ =							\
-  output/conceptos_4_muni_year_categ/recip-$(ss)/funcionamiento.csv		\
-  output/conceptos_4_muni_year_categ/recip-$(ss)/ingresos.csv			\
-  output/conceptos_4_muni_year_categ/recip-$(ss)/inversion.csv			\
-  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/funcionamiento.csv	\
-  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/ingresos.csv		\
-  output/conceptos_4_muni_year_categ_summary/recip-$(ss)/inversion.csv
+sanity_child_sum_is_parent =							\
+  output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
+  output/sanity_child_sum_is_parent/recip-$(ss)/ingresos.csv			\
+  output/sanity_child_sum_is_parent/recip-$(ss)/inversion.csv			\
+  output/sanity_child_sum_is_parent_summary/recip-$(ss)/funcionamiento.csv	\
+  output/sanity_child_sum_is_parent_summary/recip-$(ss)/ingresos.csv		\
+  output/sanity_child_sum_is_parent_summary/recip-$(ss)/inversion.csv
 
 pics = output/a_page.pdf
 
@@ -108,14 +108,14 @@ $(conceptos_3_muni_year_categ_top):			\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_3_muni_year_categ_top.py $(ss)
 
-conceptos_4_muni_year_categ: $(conceptos_4_muni_year_categ)
-$(conceptos_4_muni_year_categ):			\
+sanity_child_sum_is_parent: $(sanity_child_sum_is_parent)
+$(sanity_child_sum_is_parent):			\
   $(conceptos_3_muni_year_categ_top)		\
-  Code/build/conceptos_4_muni_year_item.py	\
+  Code/build/sanity_child_sum_is_parent.py	\
   Code/common.py				\
   Code/util.py					\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_4_muni_year_item.py $(ss)
+	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
 pics: $(pics)
 $(pics): Code/main.py
