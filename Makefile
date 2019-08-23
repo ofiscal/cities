@@ -16,8 +16,9 @@ myPython=PYTHONPATH='.' python3
   conceptos_2_subsamples		\
   subsample				\
   conceptos_3_muni_year_categ_top	\
-  sanity_order_of_mag_x_yrs		\
+  explore_order_of_mag_x_yrs		\
   sanity_child_sum_is_parent		\
+  conceptos_4_top_categs_only_and_scaled \
   pics
 
 all: keys				\
@@ -26,7 +27,8 @@ all: keys				\
   conceptos_2_subsamples		\
   conceptos_3_muni_year_categ_top	\
   sanity_child_sum_is_parent		\
-  sanity_order_of_mag_x_yrs
+  conceptos_4_top_categs_only_and_scaled \
+  explore_order_of_mag_x_yrs
   # pics
 
 keys =								\
@@ -67,8 +69,13 @@ sanity_child_sum_is_parent =							\
   output/sanity_child_sum_is_parent_summary/recip-$(ss)/ingresos.csv		\
   output/sanity_child_sum_is_parent_summary/recip-$(ss)/inversion.csv
 
-sanity_order_of_mag_x_yrs =	\
-  output/sanity_order_of_mag_x_yrs/recip-$(ss)/report.csv
+explore_order_of_mag_x_yrs =	\
+  output/explore/order_of_mag_x_yrs/recip-$(ss)/report.csv
+
+conceptos_4_top_categs_only_and_scaled =					\
+  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/funcionamiento.csv	\
+  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/ingresos.csv	\
+  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/inversion.csv
 
 pics = output/a_page.pdf
 
@@ -122,18 +129,27 @@ $(sanity_child_sum_is_parent):			\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
-sanity_order_of_mag_x_yrs: $(sanity_order_of_mag_x_yrs)
-$(sanity_order_of_mag_x_yrs):			\
+explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
+$(explore_order_of_mag_x_yrs):			\
   $(conceptos_3_muni_year_categ_top)		\
-  Code/explore/order_of_mag_x_yrs.py	\
+  Code/explore/order_of_mag_x_yrs.py		\
   Code/common.py				\
   Code/util.py					\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
+
+conceptos_4_top_categs_only_and_scaled: $(conceptos_4_top_categs_only_and_scaled)
+$(conceptos_4_top_categs_only_and_scaled):		\
+  $(conceptos_3_muni_year_categ_top)			\
+  Code/build/conceptos_4_top_categs_only_and_scaled.py	\
+  Code/explore/order_of_mag_x_yrs.py			\
+  Code/common.py					\
+  Code/util.py						\
+  Code/build/sisfut_metadata.py
+	$(myPython) Code/build/conceptos_4_top_categs_only_and_scaled.py $(ss)
 
 pics: $(pics)
 $(pics): Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)
 	date
-

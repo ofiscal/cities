@@ -14,7 +14,7 @@ import Code.build.sisfut_metadata as sm
 
 
 source = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
-dest   = "output/sanity_order_of_mag_x_yrs/recip-"       + str(c.subsample)
+dest   = "output/explore/order_of_mag_x_yrs/recip-"      + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -25,7 +25,8 @@ for s in sm.series:
 def add_pct_change(
     column : str,
     df : pd.DataFrame ) -> pd.DataFrame:
-  """ PITFALL: Mutates its input. """
+  """ PITFALL: Mutates its input.
+      PITFALL: Not really percent change -- rather, 100 times that."""
   df["pc"] = df[column].pct_change()
   return df
 
@@ -36,12 +37,11 @@ for (s, pesos_column) in [
     ("funcionamiento" ,"item oblig") ]:
   df = dfs[s]
   df = df[ df["item top"] ]
-  df_by_muni_item = (
+  dfs_by_muni_item[s] = (
     df .
     groupby( by = ["muni code", "item categ"] ) .
     apply( lambda df: add_pct_change( pesos_column, df) ) .
     reset_index() )
-  dfs_by_muni_item[s] = df_by_muni_item
 
 report = pd.DataFrame()
 for s in sm.series:
