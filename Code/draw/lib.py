@@ -55,11 +55,17 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
                           , df.iloc[rn,:]
                           , width = [ 0.8 for i in range( nCols ) ]
                           , bottom = bottom ) )
-      print( "\nrow",rn,"bottom:\n",bottom,"top:\n",top )
+      middle = (bottom + top) / 2
+      print( "\n\nROW",rn,
+             "bottom:\n",bottom,
+             "top:\n",top,
+             "middle:\n",middle,
+             "type(middle)",str(type(middle)))
       for cn in range( nCols ): # plot amounts over each box
         # todo ? speed: use pd.Seeries.iteritems()
+        print( "col",cn )
         ax.text( float( cn )
-               , ((bottom + top) / 2)[cn]
+               , middle[cn]
                , df.iloc[ rn, cn ]   # what we're printing
                , fontsize = 10
                , verticalalignment = 'center'
