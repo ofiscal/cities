@@ -21,10 +21,12 @@ for s in ["ingresos"]:
     df_muni = ( df
                 [ df["muni code"] == muni ]
                 [["year","item categ", "item recaudo"]] )
-    df_pivot = df_muni.pivot(
-      index = "item categ",
-      columns = "year",
-      values = "item recaudo" )
+    df_pivot = (
+      df_muni .
+      pivot( index = "item categ",
+             columns = "year",
+             values = "item recaudo" ) .
+      astype(int) ) # TODO : this should happen upstream
     if True: # This is to make df_pivot resemble the example.
       # It doesn't seem to help.
       df_pivot.index.name = None

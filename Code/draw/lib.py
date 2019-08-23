@@ -48,6 +48,9 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
     for rn in range( nRows ):
       # bottom, top are both series describing that row's bars
       if rn < 1: bottom = [0. for i in range( nCols )]
+        # TODO ? I would like to wrap the above list in pd.Series(),
+        # but doing that generates weird errors, and changes the dimensions
+        # of middle and top for row = 0.
       else:      bottom = df.iloc[0:rn,:].sum()
       top =      bottom + df.iloc[  rn,:]
       plots.insert( 0 # prepend => legend items in the right order
@@ -56,17 +59,11 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
                           , width = [ 0.8 for i in range( nCols ) ]
                           , bottom = bottom ) )
       middle = (bottom + top) / 2
-      print( "\n\nROW",rn,
-             "bottom:\n",bottom,
-             "top:\n",top,
-             "middle:\n",middle,
-             "type(middle)",str(type(middle)))
       for cn in range( nCols ): # plot amounts over each box
         # todo ? speed: use pd.Seeries.iteritems()
-        print( "col",cn )
         ax.text( float( cn )
-               , middle[cn]
-               , df.iloc[ rn, cn ]   # what we're printing
+               , middle.iloc[cn]
+               , df.iloc[ rn, cn ] # what we're printing
                , fontsize = 10
                , verticalalignment = 'center'
                , horizontalalignment = 'center'
