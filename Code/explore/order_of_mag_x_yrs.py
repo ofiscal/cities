@@ -1,6 +1,9 @@
-# Comparing (100 times) the percentage change in peso-valued columns,
+# Comparing 100 times the percentage change* in peso-valued columns,
 # to determine whether it's true, as appears from eyeballing some samples,
 # that figures from 2017 and after are a thousand times greater than those from before.
+#
+# *that is, 0 indicates no change, 1 indicates the value doubled, 2 indicates it tripled,
+# -1 indicates it went to 0, inf indicates it was zero and now is positive, etc.
 
 import os
 import pandas as pd

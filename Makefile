@@ -125,11 +125,11 @@ $(sanity_child_sum_is_parent):			\
 sanity_order_of_mag_x_yrs: $(sanity_order_of_mag_x_yrs)
 $(sanity_order_of_mag_x_yrs):			\
   $(conceptos_3_muni_year_categ_top)		\
-  Code/build/sanity_order_of_mag_x_yrs.py	\
+  Code/explore/order_of_mag_x_yrs.py	\
   Code/common.py				\
   Code/util.py					\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/sanity_order_of_mag_x_yrs.py $(ss)
+	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
 
 pics: $(pics)
 $(pics): Code/main.py

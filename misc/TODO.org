@@ -49,12 +49,17 @@ These are ordered by time.
 
 * TODO : compare order of magnitude of figures across years
 ** problem: Figures, at least for ingresos, are 1e3 times bigger after 2016
-** TODO method
+** method
 Within each municipality-item "mi" indexed by year "y",
 compute the ratio of mi[y] / mi[y+1], for y in [2012 .. 2017].
 (Use the "pct_change" function from pandas for this.)
 Put each in a separate column.
 Across municipality-items, find the min, max of each column.
+** TODO use assertions
+After correcting the data (multiplying peso values pre-2017 by 1000),
+it should be that,
+for each of the 3 kinds of file and each year after the first (2012),
+the median change is less than, say, 0.1.
 * TODO ? decide: use top categories or their children
 * TODO fix
 ** TODO use less state, check row numbers and column headers
