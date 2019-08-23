@@ -7,10 +7,10 @@ import Code.draw.lib as lib
 
 plt.rcParams['axes.facecolor'] = 'b'
 
-if True: # define df, title, text
+if True: # define data, title, text
   folder = "data/example/"
-  df = pd.read_csv( folder + "numbers_to_plot.csv"
-                  , index_col=0 )
+  data = pd.read_csv( folder + "numbers_to_plot.csv",
+                      index_col=0 )
   with open( folder + "/title.txt", "r") as myfile:
       title = myfile.readlines()
   with open( folder + "/text.txt", "r") as myfile:
@@ -18,7 +18,7 @@ if True: # define df, title, text
   del(folder)
 
 with PdfPages('output/a_page.pdf') as pdf:
-  lib.drawPage( df, title, text )
+  lib.drawPage( data, title, text )
   pdf.savefig( facecolor=lib.background_color )
   plt.close()
 

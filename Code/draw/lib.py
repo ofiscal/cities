@@ -2,6 +2,7 @@ from typing import List
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
+
 import numpy as np
 import pandas as pd
 
@@ -54,11 +55,12 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
                           , df.iloc[rn,:]
                           , width = [ 0.8 for i in range( nCols ) ]
                           , bottom = bottom ) )
+      print( "\nrow",rn,"bottom:\n",bottom,"top:\n",top )
       for cn in range( nCols ): # plot amounts over each box
         # todo ? speed: use pd.Seeries.iteritems()
         ax.text( float( cn )
                , ((bottom + top) / 2)[cn]
-               , df.iloc[ rn, cn ]
+               , df.iloc[ rn, cn ]   # what we're printing
                , fontsize = 10
                , verticalalignment = 'center'
                , horizontalalignment = 'center'

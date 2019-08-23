@@ -8,12 +8,11 @@ import Code.build.sisfut_metadata as sm
 import Code.draw.lib as lib
 
 
-source = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
+source = "output/conceptos_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
 
 dfs = {}
 for s in sm.series:
   df = pd.read_csv( source + "/" + s + ".csv" )
-  df = df[ df["item top"] ]
   dfs[s] = df
 
 for s in ["ingresos"]:
@@ -26,7 +25,7 @@ for s in ["ingresos"]:
       index = "item categ",
       columns = "year",
       values = "item recaudo" )
-    if False: # This is to make df_pivot resemble the example.
+    if True: # This is to make df_pivot resemble the example.
       # It doesn't seem to help.
       df_pivot.index.name = None
       df_pivot.columns.name = None
