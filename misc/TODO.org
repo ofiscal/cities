@@ -48,7 +48,6 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO presentation
-** use item name, not item code, in legend
 ** shrink numbers
 *** fewer digits
 *** smaller font

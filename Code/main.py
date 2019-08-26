@@ -20,10 +20,10 @@ for s in ["ingresos"]:
     df = dfs[s]
     df_muni = ( df
                 [ df["muni code"] == muni ]
-                [["year","item categ", "item recaudo"]] )
+                [["year","item", "item recaudo"]] )
     df_pivot = (
       df_muni .
-      pivot( index = "item categ",
+      pivot( index = "item",
              columns = "year",
              values = "item recaudo" ) .
       astype(int) ) # TODO : this should happen upstream
