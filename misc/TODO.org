@@ -47,23 +47,17 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO : compare order of magnitude of figures across years
-** problem: Figures, at least for ingresos, are 1e3 times bigger after 2016
-** method
-Within each municipality-item "mi" indexed by year "y",
-compute the ratio of mi[y] / mi[y+1], for y in [2012 .. 2017].
-(Use the "pct_change" function from pandas for this.)
-Put each in a separate column.
-Across municipality-items, find the min, max of each column.
-** TODO use assertions
-After correcting the data (multiplying peso values pre-2017 by 1000),
-it should be that,
-for each of the 3 kinds of file and each year after the first (2012),
-the median change is less than, say, 0.1.
+* TODO presentation
+** use item name, not item code, in legend
+** shrink numbers
+*** fewer digits
+*** smaller font
+** compute (muni,series)-specific titles, text, axis names
+*** store series-specific titles, text, axis boilerplate
+* TODO : are these figures inflation-adjusted?
 * TODO ? decide: use top categories or their children
 * TODO fix
-** TODO use less state, check row numbers and column headers
-** 90 (out of 4 million+) rows are disappearing
+** TODO 90 (out of 4 million+) rows are disappearing
 How to see this:
   In bijectivity_test.py, build the dup_columns data set, and compute its length.
   Then, in data/sisfut/original_csv, run "wc -l * | grep total"
@@ -250,3 +244,16 @@ Aggregate on year, muni, dept, concepto-code and concepto-code-top.
 *** delete "codigo-child"
 It should be redundant to "top",
   and putting it through .agg(sum) downstream is confusing.
+** compare order of magnitude of figures across years
+*** problem: Figures, at least for ingresos, are 1e3 times bigger after 2016
+*** method
+ Within each municipality-item "mi" indexed by year "y",
+ compute the ratio of mi[y] / mi[y+1], for y in [2012 .. 2017].
+ (Use the "pct_change" function from pandas for this.)
+ Put each in a separate column.
+ Across municipality-items, find the min, max of each column.
+*** TODO use assertions
+ After correcting the data (multiplying peso values pre-2017 by 1000),
+ it should be that,
+ for each of the 3 kinds of file and each year after the first (2012),
+ the median change is less than, say, 0.1.
