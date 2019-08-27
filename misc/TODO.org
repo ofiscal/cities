@@ -48,7 +48,8 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO FIRST
-** TODO FIRST : solve 90 row bug, send tables to Manuela
+** TODO FIRST : solve 90 row bug
+** TODO SECOND : send tables to Manuela
 *** tax categories
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios
