@@ -47,14 +47,25 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO presentation
+* TODO FIRST
+** TODO FIRST : solve 90 row bug, send tables to Manuela
+*** tax categories
+TI.A.2.6 = transferencias
+TI.A - transferencias = propios
+TI.B = INGRESOS DE CAPITAL
+*** spending categories
+** draw top five categs per muni, and draw the rest together
+** group funcionamiento (as a single category) and inversion into gastos
+** add regalias
 ** shrink numbers
 *** fewer digits
 *** smaller font
 ** compute (muni,series)-specific titles, text, axis names
+*** "(upside down ?)Cuanto dinero recibe mi municipio?"
+*** "(upside down ?)En que se gasta el dinero mi municipio?"
 *** store series-specific titles, text, axis boilerplate
-* TODO : are these figures inflation-adjusted?
-* TODO ? decide: use top categories or their children
+** adjust for inflation
+** experiment with dimension changes (of whole page)
 * TODO fix
 ** TODO 90 (out of 4 million+) rows are disappearing
 How to see this:
