@@ -10,9 +10,9 @@ folder = {
 folder["with_index"] = folder["bughunt"] + "/with_index"
 folder["collected"] = folder["bughunt"] + "/collected"
 
-if False: # add a manual index to each file
+if True: # add a manual index to each file
   for filename in os.listdir( folder["orig"] ):
-    with open( folder["source"] + "/" + filename) as f:
+    with open( folder["orig"] + "/" + filename) as f:
         lines = f.readlines()
     with open( folder["with_index"] + "/" + filename, "w") as f:
       f.write(
@@ -27,3 +27,12 @@ dfs = collect_raw( folder["with_index"],
 for s in sm.series:
   dfs[s].to_csv( folder["collected"] + "/" + s + ".csv",
                  index = False )
+
+### FOUND THEM!
+
+for s in ["inversion"]: # ingresos and funcionamiento are good
+  df = dfs[s]
+  df["diff"] = df["manual index"].diff()
+  df["diff-lead"] = df["diff"].shift(-1)
+  df[ (df["diff"     ] != 1) |
+      (df["diff-lead"] != 1) ][["year","manual index","diff","diff-lead"]]
