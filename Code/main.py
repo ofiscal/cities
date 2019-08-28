@@ -37,3 +37,5 @@ for s in ser.series:
       pdf.savefig( facecolor=lib.background_color )
       plt.close()
 
+with open( "output/reports/done.txt", "w" ) as f:
+  f.write( "done" )

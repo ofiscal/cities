@@ -77,7 +77,7 @@ conceptos_4_top_categs_only_and_scaled =					\
   output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/ingresos.csv	\
   output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/inversion.csv
 
-pics = output/a_page.pdf
+pics = output/reports/done.txt
 
 
 #### Recipes
@@ -149,7 +149,9 @@ $(conceptos_4_top_categs_only_and_scaled):		\
 	$(myPython) Code/build/conceptos_4_top_categs_only_and_scaled.py $(ss)
 
 pics: $(pics)
-$(pics): Code/main.py
+$(pics): \
+  $(conceptos_4_top_categs_only_and_scaled) \
+  Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)
 	date
