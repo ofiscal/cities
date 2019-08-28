@@ -49,8 +49,7 @@ These are ordered by time.
 
 * TODO FIRST
 ** TODO FIRST : solve 90 row bug
-continue bughunt: 90 missing rows
-  rule out a lot of corner cases** TODO SECOND : send tables to Manuela
+** TODO SECOND : send tables to Manuela
 *** tax categories
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios

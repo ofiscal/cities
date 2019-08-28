@@ -26,33 +26,50 @@ for i in folder.keys():
     os.makedirs( folder[i] )
 
 
-if True: # add a manual index to each file
-  for filename in os.listdir( folder["orig"] ):
-    with open( folder["orig"] + "/" + filename) as f:
-        lines = f.readlines()
-    with open( folder["with_index"] + "/" + filename, "w") as f:
-      f.write(
-        "manual index," + lines[0] )
-      for i in range(1,len(lines)):
+if False: # build data
+  if True: # add a manual index to each file
+    for filename in os.listdir( folder["orig"] ):
+      with open( folder["orig"] + "/" + filename) as f:
+          lines = f.readlines()
+      with open( folder["with_index"] + "/" + filename, "w") as f:
         f.write(
-          str(i) + "," + lines[i] )
+          "manual index," + lines[0] )
+        for i in range(1,len(lines)):
+          f.write(
+            str(i) + "," + lines[i] )
+  if True: # collect those 21 files across years into 3 files
+    dfs = collect_raw( folder["with_index"],
+                       extra_columns = {"manual index"} )
+    for s in sm.series:
+      dfs[s].to_csv( folder["collected"] + "/" + s + ".csv",
+                     index = False )
 
-dfs = collect_raw( folder["with_index"],
-                   extra_columns = {"manual index"} )
-
-for s in sm.series:
-  dfs[s].to_csv( folder["collected"] + "/" + s + ".csv",
-                 index = False )
-
-### FOUND THEM!
-
-for s in ["inversion"]: # ingresos and funcionamiento are good
+for s in ["inversion"]: # Found them!
   df = dfs[s]
   df["diff"] = df["manual index"].diff()
   df["diff-lead"] = df["diff"].shift(-1)
   weird = df[ (df["diff"     ] != 1) |
       (df["diff-lead"] != 1) ][["year","manual index","diff","diff-lead","muni code","dept code","item code"]]
 
+if True: # Generate some command-line operations.
+  # Run these from here:
+  # # output/explore/missing_rows/with_index
+  # and if the grep finds nothing, the missing rows all involve codes we do not use.
+  for year in sorted( df["year"].unique() ):
+    missers = ( df
+                [ (df["year"] == year) &
+                  (df["diff"] == 2) ]
+                ["manual index"] )
+    if len(missers) > 0:
+      print( "egrep \"^(" +
+             str.join( "|", missers.astype(str) ) +
+             ")\" " +
+             str(year) + "_inversion.csv " +
+             "> " + str(year) + "_missing.txt" )
+  print( "egrep \",A\.[0-9]*,\" *missing.txt" )
+
+# To verify that this has found all 90 missing rows, run this:
+# wc -l *missing* | grep total
 
 """
 ##  How I know "ingresos" and "funcionamiento" are okay.
@@ -93,7 +110,7 @@ year                            wc -l *inver*
 7
 
 
-##  TODO - therefore, every missing row can be identified by
+##  TODO - therefore, every missing row can be identified by:
 take all rows where diff = 2
 subtract 1 from their manual index
 note the year
