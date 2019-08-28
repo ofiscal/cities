@@ -44,7 +44,15 @@ if False: # build data
       dfs[s].to_csv( folder["collected"] + "/" + s + ".csv",
                      index = False )
 
-for s in ["inversion"]: # Found them!
+
+######
+###### Find, analyze missing rows
+######
+
+# For the logic|assumptions behind these actions,
+# see the long string at the end of this file.
+
+for s in ["inversion"]:
   df = dfs[s]
   df["diff"] = df["manual index"].diff()
   df["diff-lead"] = df["diff"].shift(-1)
@@ -71,8 +79,12 @@ if True: # Generate some command-line operations.
 # To verify that this has found all 90 missing rows, run this:
 # wc -l *missing* | grep total
 
+
 """
-##  How I know "ingresos" and "funcionamiento" are okay.
+###   How I know some things
+
+
+##  "ingresos" and "funcionamiento" are okay.
 No python necessary; just count lines in files.
 In total the raw files should have 7 more lines than the collected files,
 because the raw ones have 7 headers, and the collected file just has 1.
@@ -110,7 +122,7 @@ year                            wc -l *inver*
 7
 
 
-##  TODO - therefore, every missing row can be identified by:
+##  therefore, every missing row can be identified by:
 take all rows where diff = 2
 subtract 1 from their manual index
 note the year
