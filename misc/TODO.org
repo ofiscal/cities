@@ -49,7 +49,8 @@ These are ordered by time.
 
 * TODO FIRST
 ** TODO FIRST : solve 90 row bug
-** TODO SECOND : send tables to Manuela
+continue bughunt: 90 missing rows
+  rule out a lot of corner cases** TODO SECOND : send tables to Manuela
 *** tax categories
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios
@@ -68,11 +69,6 @@ TI.B = INGRESOS DE CAPITAL
 ** adjust for inflation
 ** experiment with dimension changes (of whole page)
 * TODO fix
-** TODO 90 (out of 4 million+) rows are disappearing
-How to see this:
-  In bijectivity_test.py, build the dup_columns data set, and compute its length.
-  Then, in data/sisfut/original_csv, run "wc -l * | grep total"
-  The difference is (4199219 - 4199108 - 21) (there are 21 header columns to ignore).
 ** TODO were there not a few negative budget items?
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
