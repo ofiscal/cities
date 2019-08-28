@@ -14,7 +14,8 @@ import Code.build.conceptos_1_tests as tests
 import Code.build.sisfut_metadata as sm
 
 
-dfs = defs.collect_raw()
+dfs = defs.collect_raw( sm.source_folder + "original_csv" )
+
 tests.row_numbers_raw( dfs )
 tests.column_names_of_raw_data( dfs )
 tests.types_and_missings_for_raw_data( dfs )

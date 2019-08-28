@@ -21,15 +21,15 @@ myPython=PYTHONPATH='.' python3
   conceptos_4_top_categs_only_and_scaled \
   pics
 
-all: keys				\
-  conceptos_1				\
-  conceptos_2_subsample			\
-  conceptos_2_subsamples		\
-  conceptos_3_muni_year_categ_top	\
-  sanity_child_sum_is_parent		\
-  conceptos_4_top_categs_only_and_scaled \
-  explore_order_of_mag_x_yrs
-  # pics
+all: keys					\
+  conceptos_1					\
+  conceptos_2_subsample				\
+  conceptos_2_subsamples			\
+  conceptos_3_muni_year_categ_top		\
+  sanity_child_sum_is_parent			\
+  conceptos_4_top_categs_only_and_scaled	\
+  explore_order_of_mag_x_yrs			\
+  pics
 
 keys =								\
   output/keys/concepto.csv					\
