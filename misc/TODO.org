@@ -47,25 +47,36 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO FIRST
-** TODO FIRST : solve 90 row bug
-** TODO SECOND : send tables to Manuela
-*** tax categories
+* TODO send tables to Manuela
+** tax categories
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
-*** spending categories
+** spending categories
+** munis and depts
+*** Municipalities
+Bogotá
+Santa Marta
+Filandia
+Valle del Guamuez
+*** Departamentos
+Antioquia
+Cesar
+Chocó
+Arauca
 ** draw top five categs per muni, and draw the rest together
 ** group funcionamiento (as a single category) and inversion into gastos
 ** add regalias
-** shrink numbers
-*** fewer digits
-*** smaller font
+** adjust for inflation
+make sure that includes the new regalias
+* TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
 *** "(upside down ?)En que se gasta el dinero mi municipio?"
 *** store series-specific titles, text, axis boilerplate
-** adjust for inflation
+** shrink numbers
+*** fewer digits
+*** smaller font
 ** experiment with dimension changes (of whole page)
 * TODO fix
 ** TODO were there not a few negative budget items?

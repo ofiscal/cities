@@ -6,8 +6,10 @@ import pandas as pd
 
 def is_last_month(s : str) -> bool:
   return s[-2:] == "12"
+
 def is_after_2011(s : str) -> bool:
   return int( s[:4] ) > 2011
+
 def year_month_to_year(s : str) -> int:
   return int( s[:4] )
 
@@ -18,7 +20,8 @@ deflator = ( deflator
 deflator = ( deflator
              [ deflator["when"] .
                apply( is_after_2011 ) ] )
-deflator["when"] = ( deflator["when"] .
+deflator["year"] = ( deflator["when"] .
                      apply( year_month_to_year ) )
-deflator.to_csv( "data/inflation/final.csv",
-                 index = False )
+( deflator[["year","deflator"]] .
+  to_csv( "data/inflation/final.csv",
+          index = False ) )
