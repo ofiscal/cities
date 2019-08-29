@@ -20,8 +20,8 @@ import Code.build.sisfut_metadata as sm
 import Code.explore.order_of_mag_x_yrs as lib
 
 
-source = "output/conceptos_3_muni_year_categ_top/recip-"        + str(c.subsample)
-dest   = "output/conceptos_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
+source = "output/budget_3_muni_year_categ_top/recip-"        + str(c.subsample)
+dest   = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 

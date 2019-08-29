@@ -1,4 +1,4 @@
-# This mimics conceptos_1.py.
+# This mimics budget_1.py.
 # By the end of it, both dfs and efs yield missing-fractions less than 1.
 # raw is also well behaved -- but somehow dfs1 has a fraction of 1.
 
@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 import Code.build.sisfut_metadata            as sm
-import Code.build.conceptos_1_defs           as d1
-import Code.build.conceptos_2_subsample_defs as d2
+import Code.build.budget_1_defs           as d1
+import Code.build.budget_2_subsample_defs as d2
 
 
 def analyze( dfs, colname ):
@@ -20,7 +20,7 @@ def analyze( dfs, colname ):
 
 ######
 ###### (mostly) duplicating the code from
-###### conceptos_2_subsample.py
+###### budget_2_subsample.py
 ######
 
 dfs   = d2.read_data( nrows = 20000 )
@@ -43,7 +43,7 @@ for s in sm.series:
 if True: # reading from what it writes to disk
   dfs3 = {}
   for s in sm.series:
-    df = pd.read_csv( "output/conceptos_2_subsample/recip-10/" + s + ".csv" )
+    df = pd.read_csv( "output/budget_2_subsample/recip-10/" + s + ".csv" )
     dfs3[s] = df
     print( len( df ) )
   analyze(dfs3, "muni code")
@@ -51,7 +51,7 @@ if True: # reading from what it writes to disk
 
 ######
 ###### (mostly) duplicating the code from
-###### conceptos_1.py
+###### budget_1.py
 ######
 
 if False: # everything but writing to disk
@@ -62,13 +62,13 @@ if False: # everything but writing to disk
 
 if False: # writing to disk
   for s in sm.series:
-    dfs2[s].to_csv( "output/conceptos_1/" + s + ".csv",
+    dfs2[s].to_csv( "output/budget_1/" + s + ".csv",
                     index = False )
 
 if True: # reading from what it writes to disk
   dfs3 = {}
   for s in sm.series:
-    df = pd.read_csv( "output/conceptos_1/" + s + ".csv" )
+    df = pd.read_csv( "output/budget_1/" + s + ".csv" )
     dfs3[s] = df
   analyze(dfs3, "muni code")
 

@@ -29,7 +29,7 @@ def collect_raw( source : str,
 
 
 ######
-###### Build aggregated concepto-code columns.
+###### Build aggregated budget-code columns.
 ######
 
 def aggregated_item_codes( dfs ):

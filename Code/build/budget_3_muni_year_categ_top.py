@@ -1,6 +1,6 @@
-# aggregate conceptos
+# aggregate budget
 #   within muni-year,
-#   by broad (usually 2 prefixes, otherwise 3) concepto category
+#   by broad (usually 2 prefixes, otherwise 3) budget category
 
 import os
 import pandas as pd
@@ -8,12 +8,12 @@ import pandas as pd
 import Code.common as c
 import Code.util as util
 import Code.build.sisfut_metadata as sm
-import Code.build.conceptos_3_muni_year_categ_top_defs as defs
+import Code.build.budget_3_muni_year_categ_top_defs as defs
 
 
-concepto_key = pd.read_csv( "output/keys/concepto.csv" )
-source       = "output/conceptos_2_subsample/recip-"           + str(c.subsample)
-dest         = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
+budget_key = pd.read_csv( "output/keys/budget.csv" )
+source       = "output/budget_2_subsample/recip-"           + str(c.subsample)
+dest         = "output/budget_3_muni_year_categ_top/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -40,7 +40,7 @@ for s in sm.series:
   df["item categ"] = df["item categ"] . astype(str)
   df = util.to_front(
       ["muni code","year","item categ","item top","dept code","item"]
-    , ( df.merge( concepto_key
+    , ( df.merge( budget_key
                 , left_on = "item categ"
                 , right_on = "Código Concepto" )
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode

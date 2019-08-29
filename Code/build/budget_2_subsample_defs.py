@@ -5,8 +5,8 @@ import numpy as np
 import Code.build.sisfut_metadata as sm
 
 
-source   = "/mnt/output/conceptos_1"
-top_dest = "/mnt/output/conceptos_2_subsample"
+source   = "/mnt/output/budget_1"
+top_dest = "/mnt/output/budget_2_subsample"
   # destinations are immediate child folders of this folder
 
 def sub_dest( subsample ):

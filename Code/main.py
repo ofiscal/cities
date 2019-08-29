@@ -8,7 +8,7 @@ import Code.series_metadata as ser
 import Code.draw.lib as lib
 
 
-source = "output/conceptos_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
+source = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
 
 dfs = {}
 for s in ser.series:

@@ -5,10 +5,10 @@
 #dfs = get_raw_data()
 #analyze( dfs )
 #
-#dfs1 = get_output_data("output/conceptos_1")
+#dfs1 = get_output_data("output/budget_1")
 #analyze( dfs1 )
 #
-#dfs2 = get_output_data("output/conceptos_2/recip-1")
+#dfs2 = get_output_data("output/budget_2/recip-1")
 #analyze( dfs )
 
 import numpy as np

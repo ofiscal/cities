@@ -1,4 +1,4 @@
-# To determine whether, in the (muni,year,concepto)-aggregated data,
+# To determine whether, in the (muni,year,budget)-aggregated data,
 # the figure associated with one of the "top" categories, i.e. a category we use,
 # is equal to the sum of its immediate child categories. (It usually is.)
 
@@ -11,7 +11,7 @@ import Code.util as u
 import Code.build.sisfut_metadata as sm
 
 
-source       = "output/conceptos_3_muni_year_categ_top/recip-"    + str(c.subsample)
+source       = "output/budget_3_muni_year_categ_top/recip-"    + str(c.subsample)
 dest         = "output/sanity_child_sum_is_parent/recip-"         + str(c.subsample)
 dest_summary = "output/sanity_child_sum_is_parent_summary/recip-" + str(c.subsample)
 for d in [dest, dest_summary]:

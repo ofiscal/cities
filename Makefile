@@ -11,57 +11,57 @@ myPython=PYTHONPATH='.' python3
 
 .PHONY: all					\
   keys						\
-  conceptos_1					\
-  conceptos_2_subsample				\
-  conceptos_2_subsamples			\
+  budget_1					\
+  budget_2_subsample				\
+  budget_2_subsamples			\
   subsample					\
-  conceptos_3_muni_year_categ_top		\
+  budget_3_muni_year_categ_top		\
   explore_order_of_mag_x_yrs			\
   sanity_child_sum_is_parent			\
-  conceptos_4_top_categs_only_and_scaled	\
+  budget_4_top_categs_only_and_scaled	\
   pics
 
 all: keys					\
-  conceptos_1					\
-  conceptos_2_subsample				\
-  conceptos_2_subsamples			\
-  conceptos_3_muni_year_categ_top		\
+  budget_1					\
+  budget_2_subsample				\
+  budget_2_subsamples			\
+  budget_3_muni_year_categ_top		\
   sanity_child_sum_is_parent			\
-  conceptos_4_top_categs_only_and_scaled	\
+  budget_4_top_categs_only_and_scaled	\
   explore_order_of_mag_x_yrs			\
   output/inflation.csv				\
   output/regalias.csv				\
   pics
 
 keys =								\
-  output/keys/concepto.csv					\
+  output/keys/budget.csv					\
   output/keys/geo.csv
 
-conceptos_1 =							\
-  output/conceptos_1/funcionamiento.csv				\
-  output/conceptos_1/ingresos.csv				\
-  output/conceptos_1/inversion.csv
+budget_1 =							\
+  output/budget_1/funcionamiento.csv				\
+  output/budget_1/ingresos.csv				\
+  output/budget_1/inversion.csv
 
-conceptos_2_subsample =						\
-  output/conceptos_2_subsample/recip-$(ss)/funcionamiento.csv	\
-  output/conceptos_2_subsample/recip-$(ss)/ingresos.csv		\
-  output/conceptos_2_subsample/recip-$(ss)/inversion.csv
+budget_2_subsample =						\
+  output/budget_2_subsample/recip-$(ss)/funcionamiento.csv	\
+  output/budget_2_subsample/recip-$(ss)/ingresos.csv		\
+  output/budget_2_subsample/recip-$(ss)/inversion.csv
 
-conceptos_2_subsamples =					\
-  output/conceptos_2_subsample/recip-10/funcionamiento.csv	\
-  output/conceptos_2_subsample/recip-10/ingresos.csv		\
-  output/conceptos_2_subsample/recip-10/inversion.csv		\
-  output/conceptos_2_subsample/recip-100/funcionamiento.csv	\
-  output/conceptos_2_subsample/recip-100/ingresos.csv		\
-  output/conceptos_2_subsample/recip-100/inversion.csv		\
-  output/conceptos_2_subsample/recip-1000/funcionamiento.csv	\
-  output/conceptos_2_subsample/recip-1000/ingresos.csv		\
-  output/conceptos_2_subsample/recip-1000/inversion.csv
+budget_2_subsamples =					\
+  output/budget_2_subsample/recip-10/funcionamiento.csv	\
+  output/budget_2_subsample/recip-10/ingresos.csv		\
+  output/budget_2_subsample/recip-10/inversion.csv		\
+  output/budget_2_subsample/recip-100/funcionamiento.csv	\
+  output/budget_2_subsample/recip-100/ingresos.csv		\
+  output/budget_2_subsample/recip-100/inversion.csv		\
+  output/budget_2_subsample/recip-1000/funcionamiento.csv	\
+  output/budget_2_subsample/recip-1000/ingresos.csv		\
+  output/budget_2_subsample/recip-1000/inversion.csv
 
-conceptos_3_muni_year_categ_top =					\
-  output/conceptos_3_muni_year_categ_top/recip-$(ss)/funcionamiento.csv	\
-  output/conceptos_3_muni_year_categ_top/recip-$(ss)/ingresos.csv	\
-  output/conceptos_3_muni_year_categ_top/recip-$(ss)/inversion.csv
+budget_3_muni_year_categ_top =					\
+  output/budget_3_muni_year_categ_top/recip-$(ss)/funcionamiento.csv	\
+  output/budget_3_muni_year_categ_top/recip-$(ss)/ingresos.csv	\
+  output/budget_3_muni_year_categ_top/recip-$(ss)/inversion.csv
 
 sanity_child_sum_is_parent =							\
   output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
@@ -74,10 +74,10 @@ sanity_child_sum_is_parent =							\
 explore_order_of_mag_x_yrs =	\
   output/explore/order_of_mag_x_yrs/recip-$(ss)/report.csv
 
-conceptos_4_top_categs_only_and_scaled =					\
-  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/funcionamiento.csv	\
-  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/ingresos.csv	\
-  output/conceptos_4_top_categs_only_and_scaled/recip-$(ss)/inversion.csv
+budget_4_top_categs_only_and_scaled =					\
+  output/budget_4_top_categs_only_and_scaled/recip-$(ss)/funcionamiento.csv	\
+  output/budget_4_top_categs_only_and_scaled/recip-$(ss)/ingresos.csv	\
+  output/budget_4_top_categs_only_and_scaled/recip-$(ss)/inversion.csv
 
 pics = output/reports/done.txt
 
@@ -90,41 +90,41 @@ $(keys):							\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/keys.py
 
-conceptos_1: $(conceptos_1)
-$(conceptos_1):							\
-  Code/build/conceptos_1.py					\
-  Code/build/conceptos_1_defs.py				\
-  Code/build/conceptos_1_tests.py				\
+budget_1: $(budget_1)
+$(budget_1):							\
+  Code/build/budget_1.py					\
+  Code/build/budget_1_defs.py				\
+  Code/build/budget_1_tests.py				\
   Code/build/aggregation_regexes.py				\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_1.py
+	$(myPython) Code/build/budget_1.py
 
-conceptos_2_subsamples: $(conceptos_2_subsamples)
-$(conceptos_2_subsamples):					\
-  $(conceptos_1)						\
-  Code/build/conceptos_2_subsample.py				\
-  Code/build/conceptos_2_subsample_defs.py			\
-  Code/build/conceptos_1_tests.py				\
+budget_2_subsamples: $(budget_2_subsamples)
+$(budget_2_subsamples):					\
+  $(budget_1)						\
+  Code/build/budget_2_subsample.py				\
+  Code/build/budget_2_subsample_defs.py			\
+  Code/build/budget_1_tests.py				\
   Code/build/aggregation_regexes.py				\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_2_subsample.py
+	$(myPython) Code/build/budget_2_subsample.py
 
-conceptos_3_muni_year_categ_top: $(conceptos_3_muni_year_categ_top)
-$(conceptos_3_muni_year_categ_top):			\
-  $(conceptos_2_subsample)				\
-  Code/build/conceptos_3_muni_year_categ_top.py		\
-  Code/build/conceptos_3_muni_year_categ_top_defs.py	\
+budget_3_muni_year_categ_top: $(budget_3_muni_year_categ_top)
+$(budget_3_muni_year_categ_top):			\
+  $(budget_2_subsample)				\
+  Code/build/budget_3_muni_year_categ_top.py		\
+  Code/build/budget_3_muni_year_categ_top_defs.py	\
   Code/common.py					\
   Code/params/cl.py					\
   Code/params/fixed.py					\
   Code/util.py						\
   Code/build/aggregation_regexes.py			\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_3_muni_year_categ_top.py $(ss)
+	$(myPython) Code/build/budget_3_muni_year_categ_top.py $(ss)
 
 sanity_child_sum_is_parent: $(sanity_child_sum_is_parent)
 $(sanity_child_sum_is_parent):			\
-  $(conceptos_3_muni_year_categ_top)		\
+  $(budget_3_muni_year_categ_top)		\
   Code/build/sanity_child_sum_is_parent.py	\
   Code/common.py				\
   Code/util.py					\
@@ -133,32 +133,32 @@ $(sanity_child_sum_is_parent):			\
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
 $(explore_order_of_mag_x_yrs):			\
-  $(conceptos_3_muni_year_categ_top)		\
+  $(budget_3_muni_year_categ_top)		\
   Code/explore/order_of_mag_x_yrs.py		\
   Code/common.py				\
   Code/util.py					\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
 
-conceptos_4_top_categs_only_and_scaled: $(conceptos_4_top_categs_only_and_scaled)
-$(conceptos_4_top_categs_only_and_scaled):		\
-  $(conceptos_3_muni_year_categ_top)			\
-  Code/build/conceptos_4_top_categs_only_and_scaled.py	\
+budget_4_top_categs_only_and_scaled: $(budget_4_top_categs_only_and_scaled)
+$(budget_4_top_categs_only_and_scaled):		\
+  $(budget_3_muni_year_categ_top)			\
+  Code/build/budget_4_top_categs_only_and_scaled.py	\
   Code/explore/order_of_mag_x_yrs.py			\
   Code/common.py					\
   Code/util.py						\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/conceptos_4_top_categs_only_and_scaled.py $(ss)
+	$(myPython) Code/build/budget_4_top_categs_only_and_scaled.py $(ss)
 
-conceptos_5_deflate_and_regalias: $(conceptos_5_deflate_and_regalias)
-$(conceptos_5_deflate_and_regalias):			\
-  $(conceptos_4_top_categs_only_and_scaled)             \
+budget_5_deflate_and_regalias: $(budget_5_deflate_and_regalias)
+$(budget_5_deflate_and_regalias):			\
+  $(budget_4_top_categs_only_and_scaled)             \
   output/regalias.csv					\
   output/inflation.csv					\
-  Code/build/conceptos_5_deflate_and_regalias.py	\
+  Code/build/budget_5_deflate_and_regalias.py	\
   Code/common.py					\
   Code/series_metadata.py
-	$(myPython) Code/build/conceptos_5_deflate_and_regalias.py $(ss)
+	$(myPython) Code/build/budget_5_deflate_and_regalias.py $(ss)
 
 output/inflation.csv: \
   data/inflation.csv \
@@ -172,7 +172,7 @@ output/regalias.csv: \
 
 pics: $(pics)
 $(pics): \
-  $(conceptos_4_top_categs_only_and_scaled) \
+  $(budget_4_top_categs_only_and_scaled) \
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

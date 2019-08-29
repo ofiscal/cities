@@ -12,8 +12,8 @@ deflator["deflator"] = ( # normalize in terms of 2018 pesos
                [ deflator["year"] == 2018 ]
                ["deflator"] ) ) )
 
-source = "output/conceptos_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
-dest = "output/conceptos_5_deflate_and_regalias/recip-"        + str(c.subsample)
+source = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
+dest = "output/budget_5_deflate_and_regalias/recip-"        + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 

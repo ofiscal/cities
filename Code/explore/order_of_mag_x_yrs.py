@@ -13,7 +13,7 @@ import Code.util as util
 import Code.build.sisfut_metadata as sm
 
 
-source = "output/conceptos_3_muni_year_categ_top/recip-" + str(c.subsample)
+source = "output/budget_3_muni_year_categ_top/recip-" + str(c.subsample)
 dest   = "output/explore/order_of_mag_x_yrs/recip-"      + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )

@@ -1,7 +1,7 @@
 import os
 
-from Code.build.conceptos_1_tests import column_names_after_agg
-import Code.build.conceptos_2_subsample_defs as defs
+from Code.build.budget_1_tests import column_names_after_agg
+import Code.build.budget_2_subsample_defs as defs
 import Code.build.sisfut_metadata as sm
 
 

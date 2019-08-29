@@ -47,15 +47,16 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO send tables to Manuela*
-* tax categories
+* TODO send tables to Manuela
+** change budget categories
+*** income
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
-** add regalias
+REGALÍAS
+*** group funcionamiento (as a single category) into inversion
 ** adjust for inflation
 make sure that includes the new regalias
-** spending categories
 ** munis and depts
 *** Municipalities
 Bogotá
@@ -68,7 +69,6 @@ Cesar
 Chocó
 Arauca
 ** draw top five categs per muni, and draw the rest together
-** group funcionamiento (as a single category) and inversion into gastos
 * TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
@@ -87,8 +87,8 @@ and now it takes forever to download.
 ** skipped
 *** check the aggregated sums
 **** how
-For equal values of "muni code" and "agg concepto",
-  but distinct values of "agg concepto =",
+For equal values of "muni code" and "agg budget",
+  but distinct values of "agg budget =",
   compare peso sums.
 **** why
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
@@ -99,7 +99,7 @@ Hopefully they are equal.
 e.g. T1 = T1.A + T1.B
 Good opportunity for property-based testinig.
 *** make sure we can ignore VAL
-It is the only "codigo concepto" that maps to more than one "concepto".
+It is the only "codigo budget" that maps to more than one "budget".
 
 If the "subcategory summation" check works,
 then ignore these (code, conepto) pairs, because they are redundant.
@@ -183,7 +183,7 @@ https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font
 Determined via Code/bijectivity_test.py.
 For one-to-many mappings, see output/non_bijective/*.csv
 **** Codigo Concepto => Concepto, roughly
-Some codes map to more than one concepto name.
+Some codes map to more than one concepto (budget item) name.
 However, those are highly disaggregated.
 Codes for the big categories all map to a single concepto name,
 with the exception of "VAL", which is *so* broad that it's not useful.
@@ -231,32 +231,32 @@ Note that the a subcode sometimes has 1 character, sometimes 2.
 i.e. funcionamiento, inversion, ingreso
 Pool for the creation of keys, but not for aggregating numbers.
 **** create aggregated-code columns
-Key on the "codigo concepto" column.
+Key on the "codigo budget" column.
 Use first_n_subcodes() to generate 2 columns:
-  "agg concepto  " : string = the first 2 subcodes
-  "agg concepto =" : bool, indicates whether a code
+  "agg budget  " : string = the first 2 subcodes
+  "agg budget =" : bool, indicates whether a code
                      is equal to its first two subcodes
 For ingreso data, use ingreso_subcodes() to generate 2 columns:
-  "agg concepto"   : string = the subcode prefix of interest
-  "agg concepto =" : bool, indicates whether a code
+  "agg budget"   : string = the subcode prefix of interest
+  "agg budget =" : bool, indicates whether a code
                      is equal to its agg subcodes
 **** aggregate rows
-Group by "year", "muni code", "agg concepto" and "agg concepto =".
+Group by "year", "muni code", "agg budget" and "agg budget =".
 Sum the peso-valued columns.
-**** reconstitute concepto column, using keys in output/keys
-** sum only first-generation descendents of aggregate conceptos
+**** reconstitute budget column, using keys in output/keys
+** sum only first-generation descendents of aggregate budgets
 *** replace `regex_for_at_least_n_codes` with
 something of type :: int -> (Patthern,Pattern,Pattern)
 where the first is the category,
 the second matches only the top of the category,
 and the third matches immediate children (not grandchildren, etc.) of the category.
-These will be called concepto-code, conceptop-code-top, and concepto-code-child.
+These will be called budget-code, budgetp-code-top, and budget-code-child.
 *** Replace `ingreso_regex` with similar
-*** in the last part of conceptos_1.py
+*** in the last part of budgets_1.py
 Build those three columns.
 Delete rows for which neither "top" nor "child" are true.
-*** in conceptos_2_agg.py
-Aggregate on year, muni, dept, concepto-code and concepto-code-top.
+*** in budgets_2_agg.py
+Aggregate on year, muni, dept, budget-code and budget-code-top.
 *** Verify that top + child = 1 (after deleting rows).
 *** delete "codigo-child"
 It should be redundant to "top",
