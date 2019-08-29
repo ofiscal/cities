@@ -55,6 +55,16 @@ TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
 REGALÍAS
 *** group funcionamiento (as a single category) into inversion
+For the sake of simplicity in the codebase,
+just sum the 2-level funcionamiento items,
+rather than worry about parsing their total from the raw data.
+(That's because the code "VAL" used to denote the total of all ingresos
+is also used to mean other things.
+Hopefully, it can be differentiated with the
+"INGRESOS TOTALES" value of the "concepto" (not codigo concepto) column,
+but then I'd have to read that whole column into the db,
+and it has super-long strings, which would slow the process.
+Also I'd have to test that I'm reading it correctly, which takes time.)
 ** adjust for inflation
 make sure that includes the new regalias
 ** munis and depts
