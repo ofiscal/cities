@@ -47,11 +47,14 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO send tables to Manuela
-** tax categories
+* TODO send tables to Manuela*
+* tax categories
 TI.A.2.6 = transferencias
 TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
+** add regalias
+** adjust for inflation
+make sure that includes the new regalias
 ** spending categories
 ** munis and depts
 *** Municipalities
@@ -66,9 +69,6 @@ Chocó
 Arauca
 ** draw top five categs per muni, and draw the rest together
 ** group funcionamiento (as a single category) and inversion into gastos
-** add regalias
-** adjust for inflation
-make sure that includes the new regalias
 * TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
