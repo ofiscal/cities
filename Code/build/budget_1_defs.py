@@ -1,6 +1,9 @@
 from typing import Set
+import re
+
 import numpy as np
 import pandas as pd
+
 import Code.build.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
 
@@ -32,7 +35,7 @@ def collect_raw( source : str,
 ###### Build aggregated budget-code columns.
 ######
 
-def match_df_budget_codes( d0 : pd.DataFrame,
+def match_df_budget_codes( d : pd.DataFrame,
                            r : re.Pattern ):
   return d[ ( ~ pd.isnull( d["item code"] .
                            str.extract(r) ) )
@@ -42,7 +45,7 @@ def match_df_budget_codes( d0 : pd.DataFrame,
 assert ( # test it
   match_df_budget_codes(
     pd.DataFrame( { "item code" : ["TI.A","monkey"] } ),
-    ingresos ) .
+    re.compile("(TI)") ) .
   equals( pd.DataFrame( { "item code" : ["TI.A"] } ) ) )
 
 
