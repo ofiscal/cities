@@ -17,6 +17,7 @@ def read_data( nrows = None ):
   dfs = {}
   for filename in sm.series:
     df = pd.read_csv( source + "/" + filename + ".csv",
+                      encoding = "utf-16",
                       nrows = nrows )
     df = df[ ~ df["muni code"].isnull() ]
     dfs[filename] = df

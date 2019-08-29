@@ -12,7 +12,8 @@ source = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
 
 dfs = {}
 for s in ser.series:
-  df = pd.read_csv( source + "/" + s.name + ".csv" )
+  df = pd.read_csv( source + "/" + s.name + ".csv",
+                    encoding = "utf-16" )
   dfs[s.name] = df
 
 for s in ser.series:

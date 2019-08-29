@@ -56,5 +56,6 @@ if True: # change from wide to long, adding a "yaer" column
     df["year"] = startYear + 1
     long = long.append(df)
   long.to_csv( "output/regalias.csv",
+               encoding="utf-16",
                index = False )
 

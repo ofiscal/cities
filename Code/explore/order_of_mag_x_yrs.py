@@ -20,7 +20,8 @@ if not os.path.exists( dest ):
 
 dfs = {}
 for s in sm.series:
-  dfs[s] = pd.read_csv( source + "/" + s + ".csv" )
+  dfs[s] = pd.read_csv( source + "/" + s + ".csv",
+                        encoding = "utf-16" )
 
 def add_pct_change(
     column : str,

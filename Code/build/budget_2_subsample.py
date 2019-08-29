@@ -38,5 +38,6 @@ for subsample in [1000,100,10]: # smaller ones first, to catch errors faster
              <=      len(df_subset) )
     df_subset . to_csv(
       defs.sub_dest( subsample ) + "/" + s + ".csv",
+      encoding="utf-16",
       index = False )
 

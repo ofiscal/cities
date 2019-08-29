@@ -11,7 +11,8 @@ import Code.build.sisfut_metadata as sm
 import Code.build.budget_3_muni_year_categ_top_defs as defs
 
 
-budget_key = pd.read_csv( "output/keys/budget.csv" )
+budget_key = pd.read_csv( "output/keys/budget.csv",
+                          encoding = "utf-16" )
 source       = "output/budget_2_subsample/recip-"           + str(c.subsample)
 dest         = "output/budget_3_muni_year_categ_top/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
@@ -27,7 +28,8 @@ group_fields = [
 dfs = {}
 for s in sm.series:
   df = (
-      pd.read_csv( source + "/" + s + ".csv" )
+      pd.read_csv( source + "/" + s + ".csv",
+                   encoding = "utf-16" )
     . drop( columns = [ "item code" ] ) # soon to be aggregated away
     . groupby( by = group_fields )
     . agg( sum )
@@ -48,5 +50,6 @@ for s in sm.series:
       . sort_values( ["muni code","year","item categ","item top"] ) ) )
   dfs[s] = df
   df.to_csv( dest + "/" + s + ".csv" ,
+             encoding="utf-16",
              index = False )
 

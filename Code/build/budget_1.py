@@ -28,4 +28,5 @@ tests.types_and_missings_for_data_after_adding_item_code_columns( dfs_ic )
 
 for s in sm.series:
   dfs_ic[s].to_csv( "output/budget_1/" + s + ".csv",
+                    encoding="utf-16",
                     index = False )

@@ -37,13 +37,15 @@ def make_key( from_columns, to_columns, df ):
       , "Nombre DANE Departamento" ]
     , source_data )
   . to_csv(
-      "output/keys/geo.csv"
-    , index = False ) )
+    "output/keys/geo.csv",
+    encoding="utf-16",
+    index = False ) )
 
 ( make_key(
       [ "Código Concepto" ]
     , [ "Concepto" ]
     , source_data )
   . to_csv(
-      "output/keys/budget.csv"
-    , index = False ) )
+    "output/keys/budget.csv",
+    encoding="utf-16",
+    index = False ) )

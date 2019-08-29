@@ -24,4 +24,5 @@ deflator["year"] = ( deflator["when"] .
                      apply( year_month_to_year ) )
 ( deflator[["year","deflator"]] .
   to_csv( "output/inflation.csv",
+          encoding="utf-16",
           index = False ) )

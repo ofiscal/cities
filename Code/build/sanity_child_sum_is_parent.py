@@ -24,7 +24,8 @@ columns_uob = ["muni code","year","item categ","item top"]
 
 dfs = {}
 for s in sm.series:
-  dfs[s] = pd.read_csv( source + "/" + s + ".csv" )
+  dfs[s] = pd.read_csv( source + "/" + s + ".csv",
+                        encoding = "utf-16" )
 
 def summarize_muni_yr_categ( col : str, df2r : pd.DataFrame ) -> pd.DataFrame:
   """Computes a one-row data frame with some statistics of interest,
@@ -53,8 +54,10 @@ for (s, pesos_column) in [
     reset_index() .
     drop( columns = ["level_3"] ) )
   df_myi_summaries[s] . to_csv( dest + "/" + s + ".csv",
-    index = False )
+                                encoding="utf-16",
+                                index = False )
   df_summaries[s] = ( u.myDescribe( df_myi_summaries[s] ) .
                       transpose() )
-  df_summaries[s] . to_csv( dest_summary + "/" + s + ".csv" )
-
+  df_summaries[s] . to_csv( dest_summary + "/" + s + ".csv",
+                            encoding="utf-16",
+                            index = False )

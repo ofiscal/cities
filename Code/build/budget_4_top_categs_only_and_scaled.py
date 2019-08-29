@@ -38,7 +38,8 @@ for (file,pesos_col) in [
     ("inversion"      ,"item oblig"),
     ("funcionamiento" ,"item oblig") ]:
   if True: # clean the data
-    df = pd.read_csv( source + "/" + file + ".csv" )
+    df = pd.read_csv( source + "/" + file + ".csv",
+                      encoding = "utf-16" )
     df = df[ df["item top"] ]
     assert (df["item top"] == True).all()
     df = df.drop( columns = ["item top"] )
@@ -67,5 +68,6 @@ for (file,pesos_col) in [
         # the order of magnitude problem is solved.
     dfs_by_muni_item[file] = df_by_muni_item
   df.to_csv( dest + "/" + file + ".csv" ,
+             encoding="utf-16",
              index = False )
 
