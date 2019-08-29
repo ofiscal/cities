@@ -32,8 +32,27 @@ def collect_raw( source : str,
 ###### Build aggregated budget-code columns.
 ######
 
+def match_df_budget_codes( d0 : pd.DataFrame,
+                           r : re.Pattern ):
+  return d[ ( ~ pd.isnull( d["item code"] .
+                           str.extract(r) ) )
+            . values ] # "values" turns the "not null" series into an array.
+                       # TODO ? I don't know why it's needed.
+
+assert ( # test it
+  match_df_budget_codes(
+    pd.DataFrame( { "item code" : ["TI.A","monkey"] } ),
+    ingresos ) .
+  equals( pd.DataFrame( { "item code" : ["TI.A"] } ) ) )
+
+
 def aggregated_item_codes( dfs ):
-  """An 'item' is a record of spending or income (taxes). This function builds some new columns, the aggregate item subcodes by which the data will downstream be aggregated. It does not aggregate rows. The 'dfs' argument should be a dictionary containing the three data sets, per collect_raw()."""
+  """
+Back when we had not decided whether to use top categories or the sum of
+each top category's children (immediate descendents), this function was useful.
+Now that we only use the top category, it's overkill.
+
+An 'item' is a record of spending or income (taxes). This function builds some new columns, the aggregate item subcodes by which the data will downstream be aggregated. It does not aggregate rows. The 'dfs' argument should be a dictionary containing the three data sets, per collect_raw()."""
   for (series, regexes) in [
         ("inversion"      , ac.regexes_for_2_codes() )
       , ("funcionamiento" , ac.regexes_for_2_codes() )
