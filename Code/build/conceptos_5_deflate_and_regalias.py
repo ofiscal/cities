@@ -5,7 +5,7 @@ import Code.common as c
 import Code.series_metadata as ser
 
 
-deflator = pd.read_csv( "data/inflation/final.csv" )
+deflator = pd.read_csv( "output/inflation.csv" )
 deflator["deflator"] = ( # normalize in terms of 2018 pesos
   1 / ( deflator["deflator"] /
         float( deflator
@@ -21,7 +21,7 @@ dfs = {}
 for s in ser.series:
   name, pesos_col = (s.name, s.pesos_col)
   df = pd.read_csv( source + "/" +
-                           name + ".csv" )
+                    name + ".csv" )
   df = df.merge( deflator, on = "year" )
   df[pesos_col] = df[pesos_col] * df["deflator"]
 

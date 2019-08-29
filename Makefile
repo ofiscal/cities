@@ -3,22 +3,22 @@ SHELL := bash
 
 subsample?=100
   # default value; can be overridden from the command line,
-  # as in "make raw subsample=10"
+  # as in "make all subsample=10"
   # possibilities: 1, 10, 100 and 1000
 ss=$(strip $(subsample))
   # removes trailing space
 myPython=PYTHONPATH='.' python3
 
-.PHONY: all				\
-  keys					\
-  conceptos_1				\
-  conceptos_2_subsample			\
-  conceptos_2_subsamples		\
-  subsample				\
-  conceptos_3_muni_year_categ_top	\
-  explore_order_of_mag_x_yrs		\
-  sanity_child_sum_is_parent		\
-  conceptos_4_top_categs_only_and_scaled \
+.PHONY: all					\
+  keys						\
+  conceptos_1					\
+  conceptos_2_subsample				\
+  conceptos_2_subsamples			\
+  subsample					\
+  conceptos_3_muni_year_categ_top		\
+  explore_order_of_mag_x_yrs			\
+  sanity_child_sum_is_parent			\
+  conceptos_4_top_categs_only_and_scaled	\
   pics
 
 all: keys					\
@@ -29,6 +29,8 @@ all: keys					\
   sanity_child_sum_is_parent			\
   conceptos_4_top_categs_only_and_scaled	\
   explore_order_of_mag_x_yrs			\
+  output/inflation.csv				\
+  output/regalias.csv				\
   pics
 
 keys =								\
@@ -147,6 +149,26 @@ $(conceptos_4_top_categs_only_and_scaled):		\
   Code/util.py						\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/conceptos_4_top_categs_only_and_scaled.py $(ss)
+
+conceptos_5_deflate_and_regalias: $(conceptos_5_deflate_and_regalias)
+$(conceptos_5_deflate_and_regalias):			\
+  $(conceptos_4_top_categs_only_and_scaled)             \
+  output/regalias.csv					\
+  output/inflation.csv					\
+  Code/build/conceptos_5_deflate_and_regalias.py	\
+  Code/common.py					\
+  Code/series_metadata.py
+	$(myPython) Code/build/conceptos_5_deflate_and_regalias.py $(ss)
+
+output/inflation.csv: \
+  data/inflation.csv \
+  Code/build/inflation.py
+	$(myPython) Code/build/inflation.py
+
+output/regalias.csv: \
+  data/regalias.csv \
+  Code/build/regalias.py
+	$(myPython) Code/build/regalias.py
 
 pics: $(pics)
 $(pics): \

@@ -1,9 +1,7 @@
 import pandas as pd
 
 
-folder = "data/regalias"
-
-wide = pd.read_csv( folder + "/raw.csv",
+wide = pd.read_csv( "data/regalias.csv",
                     encoding = "utf-16" )
 
 wide = wide.rename( columns = {
