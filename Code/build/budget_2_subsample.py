@@ -1,6 +1,6 @@
 import os
 
-from Code.build.budget_1_tests import column_names_after_agg
+from Code.build.budget_1p5_tests import column_names_after_agg
 import Code.build.budget_2_subsample_defs as defs
 import Code.build.sisfut_metadata as sm
 

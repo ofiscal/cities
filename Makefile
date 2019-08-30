@@ -16,7 +16,7 @@ myPython=PYTHONPATH='.' python3
   budget_2_subsample								\
   budget_2_subsamples								\
   subsample									\
-  budget_3_muni_year_categ_top							\
+  budget_3_muni_year_item							\
   explore_order_of_mag_x_yrs							\
   budget_4_top_categs_only_and_scaled						\
   pics
@@ -26,7 +26,7 @@ all: keys									\
   budget_1p5									\
   budget_2_subsample								\
   budget_2_subsamples								\
-  budget_3_muni_year_categ_top							\
+  budget_3_muni_year_item							\
   budget_4_top_categs_only_and_scaled						\
   explore_order_of_mag_x_yrs							\
   output/inflation.csv								\
@@ -63,10 +63,10 @@ budget_2_subsamples =								\
   output/budget_2_subsample/recip-1000/ingresos.csv				\
   output/budget_2_subsample/recip-1000/inversion.csv
 
-budget_3_muni_year_categ_top =							\
-  output/budget_3_muni_year_categ_top/recip-$(ss)/funcionamiento.csv		\
-  output/budget_3_muni_year_categ_top/recip-$(ss)/ingresos.csv			\
-  output/budget_3_muni_year_categ_top/recip-$(ss)/inversion.csv
+budget_3_muni_year_item =							\
+  output/budget_3_muni_year_item/recip-$(ss)/funcionamiento.csv			\
+  output/budget_3_muni_year_item/recip-$(ss)/ingresos.csv			\
+  output/budget_3_muni_year_item/recip-$(ss)/inversion.csv
 
 #sanity_child_sum_is_parent =							\
 #  output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
@@ -105,7 +105,7 @@ $(budget_1):						\
 
 budget_1p5: $(budget_1p5)
 $(budget_1p5):						\
-  $(budget_1) 						\
+  $(budget_1)						\
   Code/build/budget_1p5.py				\
   Code/build/budget_1p5_defs.py				\
   Code/build/budget_1p5_tests.py			\
@@ -123,25 +123,25 @@ $(budget_2_subsamples):					\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/budget_2_subsample.py
 
-budget_3_muni_year_categ_top: $(budget_3_muni_year_categ_top)
-$(budget_3_muni_year_categ_top):			\
+budget_3_muni_year_item: $(budget_3_muni_year_item)
+$(budget_3_muni_year_item):				\
   $(budget_2_subsample)					\
-  Code/build/budget_3_muni_year_categ_top.py		\
-  Code/build/budget_3_muni_year_categ_top_defs.py	\
+  Code/build/budget_3_muni_year_item.py			\
+  Code/build/budget_3_muni_year_item_defs.py		\
   Code/common.py					\
   Code/params/cl.py					\
   Code/params/fixed.py					\
   Code/util.py						\
   Code/build/aggregation_regexes.py			\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/budget_3_muni_year_categ_top.py $(ss)
+	$(myPython) Code/build/budget_3_muni_year_item.py $(ss)
 
 # TODO ? resurrect. This broke when we switched item code specs.
 # In the new method we never create top, child and categ columns;
 # instead we just keep rows with item codes equal to one of the top categories.
 #sanity_child_sum_is_parent: $(sanity_child_sum_is_parent)
 #$(sanity_child_sum_is_parent):				\
-#  $(budget_3_muni_year_categ_top)			\
+#  $(budget_3_muni_year_item)				\
 #  Code/build/sanity_child_sum_is_parent.py		\
 #  Code/common.py					\
 #  Code/util.py						\
@@ -150,7 +150,7 @@ $(budget_3_muni_year_categ_top):			\
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
 $(explore_order_of_mag_x_yrs):				\
-  $(budget_3_muni_year_categ_top)			\
+  $(budget_3_muni_year_item)				\
   Code/explore/order_of_mag_x_yrs.py			\
   Code/common.py					\
   Code/util.py						\
@@ -159,7 +159,7 @@ $(explore_order_of_mag_x_yrs):				\
 
 budget_4_top_categs_only_and_scaled: $(budget_4_top_categs_only_and_scaled)
 $(budget_4_top_categs_only_and_scaled):			\
-  $(budget_3_muni_year_categ_top)			\
+  $(budget_3_muni_year_item)				\
   Code/build/budget_4_top_categs_only_and_scaled.py	\
   Code/explore/order_of_mag_x_yrs.py			\
   Code/common.py					\
