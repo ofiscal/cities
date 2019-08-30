@@ -40,7 +40,7 @@ for (s, pesos_column) in [
   df = df[ df["item top"] ]
   dfs_by_muni_item[s] = (
     df .
-    groupby( by = ["muni code", "item categ"] ) .
+    groupby( by = ["muni code", "item code"] ) .
     apply( lambda df: add_pct_change( pesos_column, df) ) .
     reset_index() )
 

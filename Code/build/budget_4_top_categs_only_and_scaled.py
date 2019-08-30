@@ -47,8 +47,8 @@ for (file,pesos_col) in [
     dfs[file] = df
   if True: # verify the data
     df_by_muni_item = (
-      df[["year","muni code","item categ",pesos_col]] .
-      groupby( by = ["muni code", "item categ"] ) .
+      df[["year","muni code","item code",pesos_col]] .
+      groupby( by = ["muni code", "item code"] ) .
       apply( lambda df: lib.add_pct_change( pesos_col, df) ) .
       reset_index() )
     for year in list( range( 2013, 2019 ) ):

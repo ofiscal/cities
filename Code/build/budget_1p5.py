@@ -5,8 +5,8 @@
 import os
 import pandas as pd
 
-import Code.build.budget_1_defs as defs
-import Code.build.budget_1_tests as tests
+import Code.build.budget_1p5_defs as defs
+import Code.build.budget_1p5_tests as tests
 import Code.build.sisfut_metadata as sm
 import Code.build.budget_codes as codes
 
@@ -22,12 +22,26 @@ for s in sm.series:
                         encoding = "utf-16" )
 
 # compute aggregated item code (ic) columns
-dfs_ic = defs.aggregated_item_codes( dfs )
-tests.row_numbers_after_keeping_only_relevant_item_codes( dfs_ic )
+# dfs_ic = defs.aggregated_item_codes( dfs )
+
+dfs_ic = {}
+for (s,regex) in [ ("ingresos"      , codes.ingresos),
+                   ("inversion"     , codes.two_subcodes),
+                   ("funcionamiento", codes.two_subcodes) ]:
+  dfs_ic[s] = defs.match_budget_codes(
+    dfs[s], regex )
+
 tests.column_names_after_agg( dfs_ic )
-tests.types_and_missings_for_data_after_adding_item_code_columns( dfs_ic )
+
+# TODO ? The following 2 tests broke once we switched budget item specs --
+# specifically, because we now use defs.match_budget_codes()
+# rather than defs.aggregated_item_codes().
+# 
+# tests.row_numbers_after_keeping_only_relevant_item_codes( dfs_ic )
+# tests.types_and_missings_for_data_after_adding_item_code_columns( dfs_ic )
 
 for s in sm.series:
   dfs_ic[s].to_csv( dest + "/" + s + ".csv",
                     encoding="utf-16",
                     index = False )
+

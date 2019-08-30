@@ -22,7 +22,7 @@ group_fields = [
   "year",
   "muni code",
   "dept code",
-  "item categ",
+  "item code",
   "item top" ]
 
 dfs = {}
@@ -39,15 +39,15 @@ for s in sm.series:
     # Given that we already aggregate on muni code,
     # aggregating on dept code is redundant,
     # but offers an easy way to keep the column without summing it.
-  df["item categ"] = df["item categ"] . astype(str)
+  df["item code"] = df["item code"] . astype(str)
   df = util.to_front(
-      ["muni code","year","item categ","item top","dept code","item"]
+      ["muni code","year","item code","item top","dept code","item"]
     , ( df.merge( budget_key
-                , left_on = "item categ"
+                , left_on = "item code"
                 , right_on = "Código Concepto" )
       . drop( columns = [ "Código Concepto" ] ) # redundant given subcode
       . rename( columns = { "Concepto" : "item" } )
-      . sort_values( ["muni code","year","item categ","item top"] ) ) )
+      . sort_values( ["muni code","year","item code","item top"] ) ) )
   dfs[s] = df
   df.to_csv( dest + "/" + s + ".csv" ,
              encoding="utf-16",
