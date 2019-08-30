@@ -27,7 +27,8 @@ group_fields = [
 ######
 ###### TODO : mystery
 ######
-## Why does the grouping change the length of the data set?
+### Why does the "raw" data have multiple rows with the same group_fields?
+### (They are not duplicate rows -- their peso values differ.)
 #
 #dfs_raw = {}
 #for s in sm.series:

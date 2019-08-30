@@ -30,6 +30,8 @@ for (s,regex) in [ ("ingresos"      , codes.ingresos),
                    ("funcionamiento", codes.two_subcodes) ]:
   dfs_ic[s] = defs.match_budget_codes(
     dfs[s], regex )
+  assert ( len( dfs[s] ) >
+           len( dfs_ic[s] ) )
 
 tests.column_names_after_agg( dfs_ic )
 
