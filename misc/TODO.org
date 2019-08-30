@@ -47,6 +47,10 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
+* TODO bughunt -- duplicate rows
+Try collecting all years, see if the same solutions holds.
+Look at higher percentile values -- 99.9, 99.99, etc.
+Look at the rows that duplicate.
 * TODO send tables to Manuela
 ** change budget categories
 *** income
