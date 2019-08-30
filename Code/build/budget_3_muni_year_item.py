@@ -24,6 +24,28 @@ group_fields = [
   "dept code",
   "item code" ]
 
+######
+###### TODO : mystery
+######
+## Why does the grouping change the length of the data set?
+#
+#dfs_raw = {}
+#for s in sm.series:
+#   dfs_raw[s] = (
+#     pd.read_csv( source + "/" + s + ".csv",
+#                  encoding = "utf-16" ) .
+#     sort_values( group_fields ) )
+#
+#dfs = {}
+#for s in sm.series:
+#  dfs[s] = ( dfs_raw[s] .
+#             groupby( by = group_fields ) .
+#             agg( sum ) .
+#             reset_index() )
+#
+#dfs_raw[s].sort_values( group_fields )[group_fields]
+#dfs[s].sort_values( group_fields )[group_fields]
+
 dfs = {}
 for s in sm.series:
   df = (
@@ -50,4 +72,3 @@ for s in sm.series:
   df.to_csv( dest + "/" + s + ".csv" ,
              encoding="utf-16",
              index = False )
-
