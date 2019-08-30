@@ -1,3 +1,7 @@
+# OBSOLETE
+# This was useful for exploration.
+# But now it is redundant to the assertion in budget_4_scaled.py.
+
 # Comparing 100 times the percentage change* in peso-valued columns,
 # to determine whether it's true, as appears from eyeballing some samples,
 # that figures from 2017 and after are a thousand times greater than those from before.
@@ -11,10 +15,11 @@ import pandas as pd
 import Code.common as c
 import Code.util as util
 import Code.build.sisfut_metadata as sm
+import Code.explore.order_of_mag_x_yrs_defs as defs
 
 
-source = "output/budget_3_muni_year_categ_top/recip-" + str(c.subsample)
-dest   = "output/explore/order_of_mag_x_yrs/recip-"      + str(c.subsample)
+source = "output/budget_3_muni_year_item/recip-"    + str(c.subsample)
+dest   = "output/explore/order_of_mag_x_yrs/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -22,14 +27,6 @@ dfs = {}
 for s in sm.series:
   dfs[s] = pd.read_csv( source + "/" + s + ".csv",
                         encoding = "utf-16" )
-
-def add_pct_change(
-    column : str,
-    df : pd.DataFrame ) -> pd.DataFrame:
-  """ PITFALL: Mutates its input.
-      PITFALL: Not really percent change -- rather, 100 times that."""
-  df["pc"] = df[column].pct_change()
-  return df
 
 dfs_by_muni_item = {}
 for (s, pesos_column) in [
@@ -41,7 +38,7 @@ for (s, pesos_column) in [
   dfs_by_muni_item[s] = (
     df .
     groupby( by = ["muni code", "item code"] ) .
-    apply( lambda df: add_pct_change( pesos_column, df) ) .
+    apply( lambda df: defs.add_pct_change( pesos_column, df) ) .
     reset_index() )
 
 report = pd.DataFrame()

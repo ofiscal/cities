@@ -1,27 +1,23 @@
-""" PITFALL
+"""
+PITFALL
 This only corrects the peso-valued columns we are interested in --
 namely "item recaudo" and "item oblig".
 
-Two purposes:
-
-(1): Problem: Peso values pre-2017 are about 1000 times smaller than those post-2016.
-Solution: This multiplies pre-2016 values by 1000,
-
-(2): Keep only top categories, not the sum of their immediate children.
-(The latter are an alternate way of coming to the same figure.
-They are almost equivalent, but not exactly --
-see sanity_child_sum_is_parent.py.) """
+What this does: This multiplies pre-2016 values by 1000,
+because (as you might guess) in the raw data,
+pre-2017 peso values are about 1000 times smaller than those post-2016.
+"""
 
 import os
 import pandas as pd
 
 import Code.common as c
 import Code.build.sisfut_metadata as sm
-import Code.explore.order_of_mag_x_yrs as lib
+import Code.explore.order_of_mag_x_yrs_defs as lib
 
 
-source = "output/budget_3_muni_year_categ_top/recip-"        + str(c.subsample)
-dest   = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
+source = "output/budget_3_muni_year_item/recip-"        + str(c.subsample)
+dest   = "output/budget_4_scaled/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -40,9 +36,6 @@ for (file,pesos_col) in [
   if True: # clean the data
     df = pd.read_csv( source + "/" + file + ".csv",
                       encoding = "utf-16" )
-    df = df[ df["item top"] ]
-    assert (df["item top"] == True).all()
-    df = df.drop( columns = ["item top"] )
     df = correct_peso_column( pesos_col, df )
     dfs[file] = df
   if True: # verify the data
@@ -57,7 +50,6 @@ for (file,pesos_col) in [
         [df_by_muni_item["year"] == year ]
         ["pc"] .
         median() )
-      # print( str(year), file, median_change )
       assert ( (median_change <  1) &
                (median_change > -0.5) )
         # These bounds might look pretty loose --
@@ -70,4 +62,3 @@ for (file,pesos_col) in [
   df.to_csv( dest + "/" + file + ".csv" ,
              encoding="utf-16",
              index = False )
-
