@@ -11,14 +11,14 @@ import Code.explore.duplicate_rows_defs as d
 # The ingresos does not need extra grouping columns,
 # as demonstrated by the fact that the max value in this report is 1.
 series = "ingresos"
-df = d.data_2012(series)
+df = d.fetch_series(series)
 d.report(df,[])
 
 ######
 ###### FUNCIONAMIENTO
 ######
 series = "funcionamiento"
-df = d.data_2012(series)
+df = d.fetch_series(series)
 d.report(df,[]) # funcionamiento, however, needs more grouping columns
 ( # in fact, it needs more than one --
   # no matter which single extra grouping column we add,
@@ -36,7 +36,7 @@ x = ( # But if we use "Código Unidad Ejecutora" *and* "Código Fuente Financiac
     d.non_group_fields[series] )
   [["i1","i2","max"] + d.percentiles_str] .
   sort_values(["max", "99%"]) ).transpose()
-x.iloc[:,1]
+x.iloc[:,0] # This, the first column, is our solution.
 
 ######
 ###### INVERSION
@@ -44,7 +44,7 @@ x.iloc[:,1]
 # Tthe "inversion" data only has two extra columns that could plausibly
 # be used to disambiguate rows.
 series = "inversion"
-df = d.data_2012(series)
+df = d.fetch_series(series)
 d.report(df,[])
 ( d.report_1_extra_groupvar(
     df,

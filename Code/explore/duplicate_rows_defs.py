@@ -42,14 +42,17 @@ non_group_fields = {
   "funcionamiento" : [ 'Código FUT', 'Código Unidad Ejecutora',
                        'Código Fuente Financiación'] }
 
-def data_2012( series : str ) -> pd.DataFrame:
-  df = (
-    pd.read_csv(
-      "data/sisfut/original_csv/2012_" + series + ".csv" ) .
-    rename( columns = dict( sm.column_subsets[series] ) ) )
-  df["year"] = 2012
-  df["one"] = 1
-  return df
+def fetch_series( series : str ) -> pd.DataFrame:
+  acc = pd.DataFrame()
+  for year in range(2012,2019):
+    df = (
+      pd.read_csv(
+        "data/sisfut/original_csv/" + str(year) + "_" + series + ".csv" ) .
+      rename( columns = dict( sm.column_subsets[series] ) ) )
+    df["year"] = year
+    acc = acc.append( df )
+  acc["one"] = 1
+  return acc
 
 def report( df : pd.DataFrame,
             more_group_fields : List[str] ) -> pd.DataFrame:
