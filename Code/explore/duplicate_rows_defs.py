@@ -1,8 +1,3 @@
-# In the raw data, specifying (muni,dept,year,budget item)
-# is not enough to narrow the choice down to one row.
-# This is searching for additional fields that can be used
-# to disambiguate the rows.
-
 from typing import List
 import pandas as pd
 import Code.build.sisfut_metadata as sm
@@ -13,6 +8,18 @@ group_fields = [
   "muni code",
   "dept code",
   "item code" ]
+
+percentiles = [0.9,
+               0.99,
+               0.999,
+               0.9999,
+               0.99999]
+percentiles_str = ["50%",
+                   "90%",
+                   "99%",
+                   "99.9%",
+                   "99.99%",
+                   "99.999%" ]
 
 def how_I_calculated_non_group_fields( df : pd.DataFrame ) -> List[str]:
   """ After running this on each data set,
@@ -53,7 +60,7 @@ def report( df : pd.DataFrame,
     agg( sum ) .
     reset_index() )
   return ( df["one"] .
-           describe( percentiles = [0.95,0.99] ) )
+           describe( percentiles = percentiles ) )
 
 def report_1_extra_groupvar( df : pd.DataFrame,
                              non_group_fields : List[str]
