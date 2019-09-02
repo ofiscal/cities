@@ -29,8 +29,13 @@ for (s,regex) in [ ("ingresos"      , codes.ingresos),
                    ("funcionamiento", codes.funcionamiento) ]:
   dfs_ic[s] = codes.match_budget_codes(
     dfs[s], regex )
-  assert ( len( dfs[s] ) >
-           len( dfs_ic[s] ) )
+  if True: # These tests aren't very tight.
+    assert ( len( dfs[s] ) > # Ensure the data shrank.
+             len( dfs_ic[s] ) )
+    if s == "funcionamiento":
+      kept = dfs_ic[s]["item code"].unique()
+      assert len(kept) == 1 # Ensure we only kept one code in "funcionamiento.csv"
+      assert kept[0] == "1" # Ensure that it's the total ingresos code.
 
 tests.column_names_after_agg( dfs_ic )
 

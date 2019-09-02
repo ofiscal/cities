@@ -55,7 +55,6 @@ TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
 REGALÍAS = REGALÍAS
 *** group funcionamiento (as a single category) into inversion
-Match for the topmost category: "item code" = "1".
 ** adjust for inflation
 make sure that includes the new regalias
 ** munis and depts
