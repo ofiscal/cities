@@ -15,7 +15,7 @@ def sub_dest( subsample ):
 def read_data( nrows = None ):
   """Returns a dictionary of three data frames."""
   dfs = {}
-  for filename in sm.series:
+  for filename in ["ingresos","gastos"]:
     df = pd.read_csv( source + "/" + filename + ".csv",
                       encoding = "utf-16",
                       nrows = nrows )
@@ -26,7 +26,7 @@ def read_data( nrows = None ):
 def munis_unique( dfs ):
   """Creates a pandas DataFrame that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
   munis = pd.DataFrame()
-  for s in sm.series:
+  for s in ["ingresos","gastos"]:
     munis = pd.concat( [ munis,
                          dfs[s] ["muni code"] ],
                        axis = "rows" )
@@ -44,7 +44,7 @@ def subsample( subsample : int,
 
 def dfs_subset( munis_subset, dfs ):
   dfs2 = dfs.copy()
-  for filename in sm.series:
+  for filename in ["ingresos","gastos"]:
     dfs2[filename] = (
       dfs2[filename] .
       merge( munis_subset,

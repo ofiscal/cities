@@ -37,7 +37,7 @@ for (s,regex) in [ ("ingresos"      , codes.ingresos),
       assert len(kept) == 1 # Ensure we only kept one code in "funcionamiento.csv"
       assert kept[0] == "1" # Ensure that it's the total ingresos code.
 
-tests.column_names_after_agg( dfs_ic )
+tests.column_names_after_agg( sm.series, dfs_ic )
 
 # TODO ? The following 2 tests broke once we switched budget item specs --
 # specifically, because we now use codes.match_budget_codes()

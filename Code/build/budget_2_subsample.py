@@ -24,8 +24,9 @@ for subsample in [1000,100,10]: # smaller ones first, to catch errors faster
                                     munis )
   dfs_subset   = defs.dfs_subset( munis_subsample,
                                   dfs )
-  column_names_after_agg( dfs_subset )
-  for s in sm.series:
+  column_names_after_agg( ["ingresos","gastos"],
+                          dfs_subset )
+  for s in ["ingresos","gastos"]:
     df        = dfs       [s]
     df_subset = dfs_subset[s]
     # Test that the length of each subsample is reasonable.

@@ -112,3 +112,7 @@ for s in series:
     i for i in column_subsets_long[s]
     if not i in map( snd,
                      duplicative_columns_long ) ]
+column_subsets_no_dups_short["gastos"] = (
+  column_subsets_no_dups_short["inversion"] )
+column_subsets_no_dups_long["gastos"] = (
+  column_subsets_no_dups_long["inversion"] )

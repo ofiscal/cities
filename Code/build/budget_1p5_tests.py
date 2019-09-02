@@ -10,11 +10,10 @@ def row_numbers_after_keeping_only_relevant_item_codes( dfs ):
                          ( "funcionamiento", 261443 ) ]:
     assert len( dfs[file] ) == length
 
-def column_names_after_agg( dfs ):
-  for i in sm.series:
-    assert ( list( dfs[i].columns ) ==
-             ( sm.column_subsets_no_dups_short[i] +
-               ["year"] ) )
+def column_names_after_agg( filenames, dfs ):
+  for fn in filenames:
+    assert ( list( dfs[fn].columns ) ==
+             ( sm.column_subsets_no_dups_short[fn] + ["year"] ) )
 
 def types_and_missings_for_data_after_adding_item_code_columns( dfs ):
   stats_ref, stats = ({},{})
