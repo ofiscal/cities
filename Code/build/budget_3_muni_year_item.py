@@ -25,7 +25,7 @@ group_fields = [
   "item code" ]
 
 dfs = {}
-for s in sm.series:
+for s in ["ingresos","gastos"]:
   df = (
       pd.read_csv( source + "/" + s + ".csv",
                    encoding = "utf-16" )

@@ -8,14 +8,11 @@ class seriesType:
     self.name = name
     self.pesos_col = pesos_col
 
-ingresos       = seriesType(
+ingresos = seriesType(
   name = "ingresos",
   pesos_col = "item recaudo" )
-inversion      = seriesType(
-  name = "inversion",
-  pesos_col = "item oblig" )
-funcionamiento = seriesType(
-  name = "funcionamiento",
+gastos = seriesType(
+  name = "gastos",
   pesos_col = "item oblig" )
 
-series = [ingresos,inversion,funcionamiento]
+series = [ingresos,gastos]

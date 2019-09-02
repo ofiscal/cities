@@ -9,27 +9,29 @@ ss=$(strip $(subsample))
   # removes trailing space
 myPython=PYTHONPATH='.' python3
 
-.PHONY: all									\
-  keys										\
-  budget_1									\
-  budget_1p5 									\
-  budget_2_subsample								\
-  budget_2_subsamples								\
-  subsample									\
-  budget_3_muni_year_item							\
-  budget_4_scaled								\
+.PHONY: all			\
+  keys				\
+  budget_1			\
+  budget_1p5 			\
+  budget_2_subsample		\
+  budget_2_subsamples		\
+  subsample			\
+  budget_3_muni_year_item	\
+  budget_4_scaled		\
+  budget_5_deflate_and_regalias \
   pics
 
-all: keys									\
-  budget_1									\
-  budget_1p5									\
-  budget_2_subsample								\
-  budget_2_subsamples								\
-  budget_3_muni_year_item							\
-  budget_4_scaled								\
-  output/inflation.csv								\
-  output/regalias.csv								\
-  pics
+all: keys			\
+  budget_1			\
+  budget_1p5			\
+  budget_2_subsample		\
+  budget_2_subsamples		\
+  budget_3_muni_year_item	\
+  budget_4_scaled		\
+  budget_5_deflate_and_regalias \
+  output/inflation.csv		\
+  output/regalias.csv
+#  pics
 
 keys =										\
   output/keys/budget.csv							\
@@ -68,12 +70,16 @@ budget_3_muni_year_item =							\
 #  output/sanity_child_sum_is_parent_summary/recip-$(ss)/ingresos.csv		\
 #  output/sanity_child_sum_is_parent_summary/recip-$(ss)/inversion.csv
 
-explore_order_of_mag_x_yrs =							\
+explore_order_of_mag_x_yrs =					\
   output/explore/order_of_mag_x_yrs/recip-$(ss)/report.csv
 
-budget_4_scaled =								\
-  output/budget_4_scaled/recip-$(ss)/ingresos.csv				\
+budget_4_scaled =						\
+  output/budget_4_scaled/recip-$(ss)/ingresos.csv		\
   output/budget_4_scaled/recip-$(ss)/gastos.csv
+
+budget_5_deflate_and_regalias = \
+  output/budget_5_deflate_and_regalias/recip-$(ss)/ingresos.csv	\
+  output/budget_5_deflate_and_regalias/recip-$(ss)/gastos.csv
 
 pics = output/reports/done.txt
 

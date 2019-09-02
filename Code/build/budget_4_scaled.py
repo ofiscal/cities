@@ -16,8 +16,8 @@ import Code.build.sisfut_metadata as sm
 import Code.explore.order_of_mag_x_yrs_defs as lib
 
 
-source = "output/budget_3_muni_year_item/recip-"        + str(c.subsample)
-dest   = "output/budget_4_scaled/recip-" + str(c.subsample)
+source = "output/budget_3_muni_year_item/recip-" + str(c.subsample)
+dest   = "output/budget_4_scaled/recip-"         + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -30,9 +30,8 @@ def correct_peso_column( column : str,
 
 dfs, dfs_by_muni_item = ({},{})
 for (file,pesos_col) in [
-    ("ingresos"       ,"item recaudo"),
-    ("inversion"      ,"item oblig"),
-    ("funcionamiento" ,"item oblig") ]:
+    ("ingresos" ,"item recaudo"),
+    ("gastos"   ,"item oblig") ]:
   if True: # clean the data
     df = pd.read_csv( source + "/" + file + ".csv",
                       encoding = "utf-16" )
@@ -50,13 +49,14 @@ for (file,pesos_col) in [
         [df_by_muni_item["year"] == year ]
         ["pc"] .
         median() )
-      assert ( (median_change <  1) &
-               (median_change > -0.5) )
+      assert ( (median_change <  2) &
+               (median_change > -(2/3) ) )
         # These bounds might look pretty loose --
-        # they say the median (across (municipality, budget item) pairs)
-        # did no more than double or no less than halve in each (file,year) pair.
+        # they say that in each (file,year) pair,
+        # the median (across (municipality, budget item) pairs)
+        # rose by no more than 200% (i.e. tripling), and fell by no more than two-thirds.
         # In fact they can't be made much tighter (and still have every subsample pass).
-        # Fortunately, they're far more than tight enough to assure that
+        # Fortunately, these bounds are far more than tight enough to assure
         # the order of magnitude problem is solved.
     dfs_by_muni_item[file] = df_by_muni_item
   df.to_csv( dest + "/" + file + ".csv" ,
