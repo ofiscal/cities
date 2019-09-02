@@ -69,5 +69,6 @@ das = (
 das[ das["one"] > 1 ].transpose()
 
 # Great! There's only one weird municipality, number 25430 (Madrid, Cundinamarca)
-# which reported 26 distinct rows with the item code "VAL".
+# which reported 26 distinct rows with the same item code, "VAL" --
+# a code which we don't use.
 # So "Fuentes" is enough to completely disambiguate the rest.

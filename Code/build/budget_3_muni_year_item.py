@@ -13,8 +13,8 @@ import Code.build.budget_3_muni_year_item_defs as defs
 
 budget_key = pd.read_csv( "output/keys/budget.csv",
                           encoding = "utf-16" )
-source       = "output/budget_2_subsample/recip-"       + str(c.subsample)
-dest         = "output/budget_3_muni_year_item/recip-" + str(c.subsample)
+source = "output/budget_2_subsample/recip-"      + str(c.subsample)
+dest   = "output/budget_3_muni_year_item/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )
 
@@ -23,29 +23,6 @@ group_fields = [
   "muni code",
   "dept code",
   "item code" ]
-
-######
-###### TODO : mystery
-######
-### Why does the "raw" data have multiple rows with the same group_fields?
-### (They are not duplicate rows -- their peso values differ.)
-#
-#dfs_raw = {}
-#for s in sm.series:
-#   dfs_raw[s] = (
-#     pd.read_csv( source + "/" + s + ".csv",
-#                  encoding = "utf-16" ) .
-#     sort_values( group_fields ) )
-#
-#dfs = {}
-#for s in sm.series:
-#  dfs[s] = ( dfs_raw[s] .
-#             groupby( by = group_fields ) .
-#             agg( sum ) .
-#             reset_index() )
-#
-#dfs_raw[s].sort_values( group_fields )[group_fields]
-#dfs[s].sort_values( group_fields )[group_fields]
 
 dfs = {}
 for s in sm.series:
