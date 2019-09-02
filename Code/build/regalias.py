@@ -10,16 +10,17 @@ wide = wide.rename( columns = {
   "periodo 2016-2015" : "2015-2016",
   "periodo 2013-2014" : "2013-2014" } )
 
+geo = (
+  pd.read_csv( "output/keys/geo.csv",
+               encoding = "utf-16" ) .
+  rename( columns =
+          { "Cód. DANE Municipio" : "muni code",
+            "Cód. DANE Departamento" : "dept code",
+            "Nombre DANE Municipio" : "muni",
+            "Nombre DANE Departamento" : "dept" } ) )
 
 if False: # verify that muni codes correspond to (muni,dept) the same way
   # in the regalias data as in our main body of SISFUT data. (They do.)
-  geo = (
-    pd.read_csv( "output/keys/geo.csv" ) .
-    rename( columns =
-            { "Cód. DANE Municipio" : "muni code",
-              "Nombre DANE Municipio" : "muni",
-              "Nombre DANE Departamento" : "dept" } ) )
-
   for df in [wide,geo]: # lowercase words are easier to compare
     for c in ["muni","dept"]:
       df[c] = df[c].apply( str.lower )
@@ -41,6 +42,9 @@ if False: # verify that muni codes correspond to (muni,dept) the same way
     encoding="utf-16",
     index = False )
 
+wide = wide.merge( # add "dept code" to regalias
+  geo[["muni code","dept code"]],
+  on = ["muni code"] )
 
 if True: # change from wide to long, adding a "yaer" column
   long = pd.DataFrame()
@@ -48,7 +52,7 @@ if True: # change from wide to long, adding a "yaer" column
                      2015,
                      2017 ]:
     yearPair = str(startYear) + "-" + str(startYear+1)
-    df = wide[[ 'muni code', yearPair ]]
+    df = wide[[ 'muni code', "dept code", yearPair ]]
     df = df.rename( columns = { yearPair : "regalias" } )
     df["regalias"] = df["regalias"] / 2
     df["year"] = startYear

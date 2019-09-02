@@ -12,6 +12,7 @@ for series in sm.series:
       , usecols = [
           "Cód. DANE Municipio"
         , "Nombre DANE Municipio"
+        , "Cód. DANE Departamento"
         , "Nombre DANE Departamento"
         , "Código Concepto"
         , "Concepto"
@@ -34,6 +35,7 @@ def make_key( from_columns, to_columns, df ):
 ( make_key(
       ["Cód. DANE Municipio"]
     , [ "Nombre DANE Municipio"
+      , "Cód. DANE Departamento"
       , "Nombre DANE Departamento" ]
     , source_data )
   . to_csv(

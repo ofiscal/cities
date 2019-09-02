@@ -54,7 +54,6 @@ TI.A.2.6 = transferencias
 TI.A - transferencias = propios
 TI.B = INGRESOS DE CAPITAL
 REGALÍAS = REGALÍAS
-*** group funcionamiento (as a single category) into inversion
 ** adjust for inflation
 make sure that includes the new regalias
 ** munis and depts

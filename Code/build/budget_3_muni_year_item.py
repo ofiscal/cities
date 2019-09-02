@@ -1,6 +1,11 @@
-# aggregate budget
-#   within muni-year,
-#   by broad (usually 2 prefixes, otherwise 3) budget category
+# What this does: aggregate spending observations
+#   within (muni,year,item code) triples,
+#   using the broad item codes defined in budget_codes.py
+#
+# Why: For most of the data, a given (muni, year, item) triple
+#   identifies exactly one row, but sometimes not,
+#   because that kind of spending is divided by fuente and ejecutor,
+#   as demonstrated in explore/duplicate_rows.py.
 
 import os
 import pandas as pd
