@@ -2,7 +2,24 @@
 import numpy as np
 import pandas as pd
 import re
+from typing import Set
 
+import Code.build.budget_codes_stale.aggregation_regexes as ac
+import Code.build.sisfut_metadata as sm
+
+
+def match_budget_codes( d : pd.DataFrame,
+                        r : re.Pattern ):
+  return d[ ( ~ pd.isnull( d["item code"] .
+                           str.extract(r) ) )
+            . values ] # "values" turns the "not null" series into an array.
+                       # TODO ? I don't know why it's needed.
+
+assert ( # test it
+  match_budget_codes(
+    pd.DataFrame( { "item code" : ["TI.A","monkey"] } ),
+    re.compile("(TI)") ) .
+  equals( pd.DataFrame( { "item code" : ["TI.A"] } ) ) )
 
 ingresos = re.compile(
   # To recognize our "top" ingresos categories of interest:
