@@ -28,11 +28,16 @@ def spot_test( n : int ):
   """ No matter what value of n one chooses,
   the resulting slice from each of the input data sets should have
   no more rows than the slice from the corresponding output data set,
-  and the latter should have only one row. """
+  and the latter should have only one row.
+
+  Aggregation seems only to reduce the number of rows in funcionamiento.
+  In the other data sets, once we have narrowed to the rows of interest,
+  the value taken over group_fields
+  is already unique across observations. """
   for s in sm.series:
     df = dfs[s]
     dfa = dfas[s]
-    spot = df.iloc[n][group_fields] 
+    spot = df.iloc[n][group_fields]
       # A "spot" is an assignment of values to group_fields.
     print( "\n" + s + "\n" )
     print( at_spot( spot, df ) )
