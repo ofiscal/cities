@@ -41,30 +41,24 @@ budget_1 =									\
   output/budget_1/inversion.csv
 
 budget_1p5 =									\
-  output/budget_1p5/funcionamiento.csv						\
   output/budget_1p5/ingresos.csv						\
-  output/budget_1p5/inversion.csv
+  output/budget_1p5/gastos.csv
 
 budget_2_subsample =								\
-  output/budget_2_subsample/recip-$(ss)/funcionamiento.csv			\
   output/budget_2_subsample/recip-$(ss)/ingresos.csv				\
-  output/budget_2_subsample/recip-$(ss)/inversion.csv
+  output/budget_2_subsample/recip-$(ss)/gastos.csv
 
 budget_2_subsamples =								\
-  output/budget_2_subsample/recip-10/funcionamiento.csv				\
   output/budget_2_subsample/recip-10/ingresos.csv				\
-  output/budget_2_subsample/recip-10/inversion.csv				\
-  output/budget_2_subsample/recip-100/funcionamiento.csv			\
+  output/budget_2_subsample/recip-10/gastos.csv				\
   output/budget_2_subsample/recip-100/ingresos.csv				\
-  output/budget_2_subsample/recip-100/inversion.csv				\
-  output/budget_2_subsample/recip-1000/funcionamiento.csv			\
+  output/budget_2_subsample/recip-100/gastos.csv				\
   output/budget_2_subsample/recip-1000/ingresos.csv				\
-  output/budget_2_subsample/recip-1000/inversion.csv
+  output/budget_2_subsample/recip-1000/gastos.csv
 
 budget_3_muni_year_item =							\
-  output/budget_3_muni_year_item/recip-$(ss)/funcionamiento.csv			\
   output/budget_3_muni_year_item/recip-$(ss)/ingresos.csv			\
-  output/budget_3_muni_year_item/recip-$(ss)/inversion.csv
+  output/budget_3_muni_year_item/recip-$(ss)/gastos.csv
 
 #sanity_child_sum_is_parent =							\
 #  output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
@@ -78,9 +72,8 @@ explore_order_of_mag_x_yrs =							\
   output/explore/order_of_mag_x_yrs/recip-$(ss)/report.csv
 
 budget_4_scaled =								\
-  output/budget_4_scaled/recip-$(ss)/funcionamiento.csv				\
   output/budget_4_scaled/recip-$(ss)/ingresos.csv				\
-  output/budget_4_scaled/recip-$(ss)/inversion.csv
+  output/budget_4_scaled/recip-$(ss)/gastos.csv
 
 pics = output/reports/done.txt
 

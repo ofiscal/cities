@@ -46,8 +46,15 @@ tests.column_names_after_agg( dfs_ic )
 # tests.row_numbers_after_keeping_only_relevant_item_codes( dfs_ic )
 # tests.types_and_missings_for_data_after_adding_item_code_columns( dfs_ic )
 
-for s in sm.series:
-  dfs_ic[s].to_csv( dest + "/" + s + ".csv",
-                    encoding="utf-16",
-                    index = False )
+assert ( ( ( dfs_ic["funcionamiento"].columns) ==
+           ( dfs_ic["inversion"]     .columns) ) .
+         all() )
+df_gastos = pd.DataFrame.append( dfs_ic["funcionamiento"],
+                                 dfs_ic["inversion"] )
+
+for (name,df) in [ ("ingresos", dfs_ic["ingresos"] ),
+                   ("gastos",   df_gastos) ]:
+  df.to_csv( dest + "/" + name + ".csv",
+             encoding="utf-16",
+             index = False )
 
