@@ -26,7 +26,7 @@ for s in sm.series:
 dfs_ic = {}
 for (s,regex) in [ ("ingresos"      , codes.ingresos),
                    ("inversion"     , codes.two_subcodes),
-                   ("funcionamiento", codes.two_subcodes) ]:
+                   ("funcionamiento", codes.funcionamiento) ]:
   dfs_ic[s] = codes.match_budget_codes(
     dfs[s], regex )
   assert ( len( dfs[s] ) >

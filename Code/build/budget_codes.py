@@ -17,7 +17,7 @@ def match_budget_codes( d : pd.DataFrame,
 
 assert ( # test it
   match_budget_codes(
-    pd.DataFrame( { "item code" : ["TI.A","monkey"] } ),
+    pd.DataFrame(       { "item code" : ["TI.A","monkey"] } ),
     re.compile("(TI)") ) .
   equals( pd.DataFrame( { "item code" : ["TI.A"] } ) ) )
 
@@ -43,6 +43,10 @@ if True: # test
            iloc[:,0] . # str.extract produces a data frame,
                        # so take the first column
            equals( t ) )
+
+funcionamiento = re.compile(
+  # The only category of interest in funcionamiento is total spending.
+  "^(1)$" )
 
 two_subcodes = re.compile(
   # To recognize any budget item with exactly two subcodes,
