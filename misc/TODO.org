@@ -47,13 +47,11 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
+* TODO ? PITFALL -- regalias is not subsampled
+So the supposedly subsampled at or data downstream of
+build/budget_5_deflate_and_regalias.py
+will have too many rows in the ingresos data.
 * TODO send tables to Manuela
-** change budget categories
-*** add regalias to income
-TI.A.2.6 = transferencias
-TI.A - transferencias = propios
-TI.B = INGRESOS DE CAPITAL
-REGALÍAS = REGALÍAS
 ** adjust for inflation
 make sure that includes the new regalias
 ** munis and depts

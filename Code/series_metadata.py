@@ -16,3 +16,5 @@ gastos = seriesType(
   pesos_col = "item oblig" )
 
 series = [ingresos,gastos]
+series_dict = { "ingresos" : ingresos,
+                "gastos"   : gastos }
