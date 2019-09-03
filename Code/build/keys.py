@@ -1,3 +1,4 @@
+import os
 from itertools import chain
 import pandas as pd
 import Code.build.sisfut_metadata as sm
@@ -31,6 +32,9 @@ def make_key( from_columns, to_columns, df ):
          . groupby( from_columns )
          . agg( lambda x: x.iloc[0] ) # take the first in each to_column
          . reset_index() )
+
+if not os.path.exists( "output/keys" ):
+  os.makedirs( "output/keys" )
 
 ( make_key(
       ["Cód. DANE Municipio"]

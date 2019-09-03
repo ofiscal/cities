@@ -18,7 +18,8 @@ myPython=PYTHONPATH='.' python3
   subsample			\
   budget_3_muni_year_item	\
   budget_4_scaled		\
-  budget_5_deflate_and_regalias \
+  budget_5_add_regalias		\
+  budget_6_deflate		\
   pics
 
 all: keys			\
@@ -28,7 +29,8 @@ all: keys			\
   budget_2_subsamples		\
   budget_3_muni_year_item	\
   budget_4_scaled		\
-  budget_5_deflate_and_regalias \
+  budget_5_add_regalias		\
+  budget_6_deflate		\
   output/inflation.csv		\
   output/regalias.csv
 #  pics
@@ -77,9 +79,13 @@ budget_4_scaled =						\
   output/budget_4_scaled/recip-$(ss)/ingresos.csv		\
   output/budget_4_scaled/recip-$(ss)/gastos.csv
 
-budget_5_deflate_and_regalias = \
-  output/budget_5_deflate_and_regalias/recip-$(ss)/ingresos.csv	\
-  output/budget_5_deflate_and_regalias/recip-$(ss)/gastos.csv
+budget_5_add_regalias =					\
+  output/budget_5_add_regalias/recip-$(ss)/ingresos.csv	\
+  output/budget_5_add_regalias/recip-$(ss)/gastos.csv
+
+budget_6_deflate =					\
+  output/budget_6_deflate/recip-$(ss)/ingresos.csv	\
+  output/budget_6_deflate/recip-$(ss)/gastos.csv
 
 pics = output/reports/done.txt
 
@@ -160,15 +166,23 @@ $(budget_4_scaled):				\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
 
-budget_5_deflate_and_regalias: $(budget_5_deflate_and_regalias)
-$(budget_5_deflate_and_regalias):		\
-  $(budget_4_scaled)				\
-  output/regalias.csv				\
-  output/inflation.csv				\
-  Code/build/budget_5_deflate_and_regalias.py	\
-  Code/common.py				\
+budget_5_add_regalias: $(budget_5_add_regalias)
+$(budget_5_add_regalias):		\
+  $(budget_4_scaled)			\
+  output/regalias.csv			\
+  Code/build/budget_5_add_regalias.py	\
+  Code/common.py			\
   Code/series_metadata.py
-	$(myPython) Code/build/budget_5_deflate_and_regalias.py $(ss)
+	$(myPython) Code/build/budget_5_add_regalias.py $(ss)
+
+budget_6_deflate: $(budget_6_deflate)
+$(budget_6_deflate):			\
+  $(budget_5_add_regalias)		\
+  output/inflation.csv			\
+  Code/build/budget_6_deflate.py	\
+  Code/common.py			\
+  Code/series_metadata.py
+	$(myPython) Code/build/budget_6_deflate.py $(ss)
 
 output/inflation.csv:				\
   data/inflation.csv				\
