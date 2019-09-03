@@ -19,11 +19,10 @@ def read_data( nrows = None ):
     df = pd.read_csv( source + "/" + filename + ".csv",
                       encoding = "utf-16",
                       nrows = nrows )
-    df = df[ ~ df["muni code"].isnull() ]
     dfs[filename] = df
   return dfs
 
-def munis_unique( dfs ):
+def munis_unique_without_nan( dfs ):
   """Creates a pandas DataFrame that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
   munis = pd.DataFrame()
   for s in ["ingresos","gastos"]:
@@ -43,7 +42,9 @@ def subsample( subsample : int,
                     random_state = 0 ) # seed
 
 def dfs_subset( munis_subset, dfs ):
-  dfs2 = dfs.copy()
+  dfs2 = {}
+  for s in dfs.keys(): # deep copy
+    dfs2[s] = dfs[s].copy()
   for filename in ["ingresos","gastos"]:
     dfs2[filename] = (
       dfs2[filename] .

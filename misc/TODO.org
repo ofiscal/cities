@@ -47,11 +47,14 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO ? PITFALL -- regalias is not subsampled
-So the supposedly subsampled data at or data downstream of
-build/budget_5_deflate_and_regalias.py
-will have too many rows in the ingresos data.
 * TODO send tables to Manuela
+** TODO restore muni-less dept info
+Scan each data product for whether NaN is among its muni values.
+If it is, scan whether NaN is among the dept values when muni=NaN.
+If not, perfect -- those are totals for the dept.
+
+There are null muni codes with the full range of depts through budget_1p5
+and not budget_2.
 ** munis and depts
 *** Municipalities
 Bogotá
@@ -111,6 +114,13 @@ https://terridata.dnp.gov.co/
 enter a municipality (department also possible)
 and then choose "finanzas publicas".
 * PITFALLS interpreting the data
+** regalias is not subsampled
+So the supposedly subsampled data at or data downstream of
+  build/budget_5_deflate_and_regalias.py
+will have too many rows in the ingresos data.
+This should not matter for drawing charts, though,
+as those are always specific to a particular municipality.
+** in the raw data
 Some series might not be uniformly sampled across time.
 * drawing
 ** TODO get drawStacks() to respect outer subplots

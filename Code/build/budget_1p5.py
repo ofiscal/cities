@@ -1,6 +1,6 @@
-###### This has a funny name because I split budget_1.py into two parts.
+###### This restricts the data to the budget items of interest.
+###### The file has a funny name because I split budget_1.py into two parts.
 ###### (Read it as "budget 1 point 5.py".)
-###### It restricts the data to the budget items of interest.
 
 import os
 import pandas as pd
