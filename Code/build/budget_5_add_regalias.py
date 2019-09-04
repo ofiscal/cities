@@ -27,7 +27,8 @@ regalias = (
 regalias["item code"] = "regalías"
 regalias["item"] = "regalías"
 
-dfs["ingresos"] = pd.DataFrame.append( dfs["ingresos"], regalias,
+dfs["ingresos"] = pd.DataFrame.append( dfs["ingresos"],
+                                       regalias,
                                        sort = False )
 
 for s in ser.series:

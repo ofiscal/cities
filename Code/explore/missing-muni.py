@@ -8,35 +8,31 @@ import Code.build.sisfut_metadata as sis
 import Code.series_metadata as ser
 
 
-###### before joining func and inv into gasto, use sis.series
+if True: # setup
+  source = "output/budget_3_muni_year_item/recip-10"
+  if source == "output/budget_1":
+        file_indices = sis.series
+  else: file_indices = list( map( lambda x: x.name,
+                                  ser.series ) )
 
-if True:
-  source = "output/budget_1"
+if True: # read
   dfs = {}
-  for s in sis.series:
+  for s in file_indices:
     dfs[s] = (
       pd.read_csv( source + "/" + s + ".csv",
                    encoding = "utf-16" ) )
-if True:
-  for s in sis.series:
+
+if True: # check some lengths
+  for s in file_indices:
     df = dfs[s]
     null_muni = pd.isnull( df["muni code"] )
-    len( df[~null_muni]["dept code"].unique() )
-    len( df[ null_muni]["dept code"].unique() )
+    print( s )
+    # put another print statement here
+    print( df.describe().transpose()[["count","min","mean","max"]] )
 
-
-###### after joining func and inv into gastos, use ser.series
-
-if True:
-  source = "output/budget_2_subsample/recip-10"
-  dfs = {}
-  for s in ser.series:
-    dfs[s.name] = (
-      pd.read_csv( source + "/" + s.name + ".csv",
-                   encoding = "utf-16" ) )
-if True:
-  for s in ser.series:
-    df = dfs[s.name]
-    null_muni = pd.isnull( df["muni code"] )
-    len( df[~null_muni]["dept code"].unique() )
-    len( df[ null_muni]["dept code"].unique() )
+if False: # some print statements
+    print( df.iloc[0] )
+    print( df.describe().transpose()[["count","min","mean","max"]] )
+    print( len( df[~null_muni]["dept code"].unique() ) )
+    print( len( df[ null_muni]["dept code"].unique() ) )
+    print( df )

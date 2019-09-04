@@ -4,12 +4,13 @@ import pandas as pd
 
 def to_front( front_columns, df ):
   """ Move some columns to the front of a data frame. """
-  fcs = set( front_columns )
-  rear_columns = [i for i in df.columns if i not in fcs]
+  rear_columns = [ i for i in df.columns
+                   if i not in set( front_columns ) ]
   return df[ front_columns + rear_columns ]
-x = pd.DataFrame( [], columns = ["a","b","c"] )
-assert to_front( ["b","c"], x ).equals(
-  pd.DataFrame( [], columns = ["b","c","a"] ) )
+if True: # test it
+  x = pd.DataFrame( [], columns = ["a","b","c"] )
+  assert to_front( ["b","c"], x ).equals(
+    pd.DataFrame( [], columns = ["b","c","a"] ) )
 
 def myDescribe( df : pd.DataFrame ) -> pd.DataFrame:
   if True: # define percentiles to report

@@ -45,9 +45,9 @@ for (file,pesos_col) in [
       reset_index() )
     for year in list( range( 2013, 2019 ) ):
       median_change = (
-        df_by_muni_item
-        [df_by_muni_item["year"] == year ]
-        ["pc"] .
+        ( df_by_muni_item
+          [df_by_muni_item["year"] == year ]
+          ["pc"] ) .
         median() )
       assert ( (median_change <  2) &
                (median_change > -(2/3) ) )
