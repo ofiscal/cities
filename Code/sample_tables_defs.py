@@ -19,7 +19,7 @@ def last_n_in_groups(
   Keep only the top n rows in each group.
    """
   return (
-    df .
+    df.copy() .
     groupby( group_vars ) .
     apply( lambda df: df . tail(n) ) .
     reset_index( drop = True ) )
@@ -38,7 +38,7 @@ def sum_of_all_but_last_n_rows_in_groups(
     df : pd.DataFrame
     ) -> pd.DataFrame:
   return (
-    df .
+    df.copy() .
     groupby( "year" ) .
     apply( lambda df: df . iloc[:-n] ) .
     reset_index( drop = True ) .

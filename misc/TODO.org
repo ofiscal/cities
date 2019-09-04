@@ -49,6 +49,9 @@ These are ordered by time.
 
 * TODO send tables to Manuela
 ** TODO resume at sample_tables_test.py, bottom
+** TODO try testing on data more like the real thing
+with multiple group columns,
+and xstring variables that are meaningless when summed
 ** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
 *** Municipalities
