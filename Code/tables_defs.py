@@ -21,14 +21,8 @@ def first_n_in_groups(
   return (
     df .
     groupby( group_vars ) .
-    apply( lambda df:
-           ( df .
-             head(2) .
-             drop( columns = group_vars
-                   # these are restored when index is reset
-            ) ) ) .
-    reset_index() .
-    drop( columns = "level_1" ) )
+    apply( lambda df: df . head(n) ) .
+    reset_index( drop = True ) )
 
 if True: # test it
   assert (
@@ -46,14 +40,8 @@ def sum_all_but_first_n_rows_in_groups(
   return (
     df .
     groupby( "year" ) .
-    apply( lambda df:
-           ( df .
-             iloc[2:] .
-             drop( columns = group_vars )
-             # group_vars are restored when index is reset
-            ) ) .
-    reset_index() .
-    drop( columns = "level_1" ) .
+    apply( lambda df: df . iloc[n:] ) .
+    reset_index( drop = True ) .
     groupby( group_vars ) .
     agg( sum ) .
     reset_index() )
