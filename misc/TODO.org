@@ -48,7 +48,8 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO resume at "RESUME HERE" in Code/tables.py, using Code/tables_demo.py
+** TODO resume at sample_tables_test.py, bottom
+** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
 *** Municipalities
 Bogotá
