@@ -20,7 +20,11 @@ if True: # geo data
             groupby( "dept code" ) .
             agg('first') .
             reset_index() )
+  assert depts.shape == (33,2)
+  assert pd.isnull(depts).any().any() == False
   munis = geo[["muni code","muni"]]
+  assert munis.shape == (1101,2)
+  assert pd.isnull(munis).any().any() == False
 
 if True: # merge geo data into main data
   source   = "output/budget_6_deflate/recip-1"
@@ -39,7 +43,7 @@ if True: # merge geo data into main data
     dfs[sn] = df
 
 if True: # restrict to the munis and depts we need,
-         # and sort by budget item value
+         # and sort within group by budget item value
   sample = {}
   for s in ser.series:
     df = dfs[s.name]
@@ -64,14 +68,7 @@ if True:
   for s in ser.series:
     df = sample[s.name]
     items_grouped[s.name] = (
-      pd.concat(
-        [ defs.first_n_in_groups( 5,
-                                  group_vars,
-                                  df ),
-          defs.sum_all_but_first_n_rows_in_groups( 5,
-                                                   group_vars,
-                                                   df ) ],
-        sort = True ) .
-      sort_values( ["dept","muni","year",s.pesos_col] ) )
+      defs.sum_all_but_last_n_rows_in_groups(
+        5, group_vars, [s.pesos_col], ["item","item code"], df ) )
 
-items_grouped["gastos"][["muni","year","item code","item oblig"]]
+# items_grouped["gastos"][["muni","year","item code","item oblig"]]
