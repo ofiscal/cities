@@ -2,14 +2,15 @@
 # i.e. whether some rows are missing muni code,
 # and if so, what they're like.
 
-import pandas as pd
-import numpy as np
-import Code.build.sisfut_metadata as sis
-import Code.series_metadata as ser
+if True:
+  import pandas as pd
+  import numpy as np
+  import Code.build.sisfut_metadata as sis
+  import Code.series_metadata as ser
 
 
 if True: # setup
-  source = "output/budget_3_dept_muni_year_item/recip-10"
+  source = "output/budget_6_deflate/recip-10"
   if source == "output/budget_1":
         file_indices = sis.series
   else: file_indices = list( map( lambda x: x.name,
@@ -22,11 +23,11 @@ if True: # read
       pd.read_csv( source + "/" + s + ".csv",
                    encoding = "utf-16" ) )
 
-if True: # check some lengths
+if True: # print stuff
   for s in file_indices:
-    df = dfs[s]
-    null_muni = pd.isnull( df["muni code"] )
     print( s )
+    df = dfs[s]
+    print( len(df) )
     # put another print statement here
     print( df.describe().transpose()[["count","min","mean","max"]] )
 
