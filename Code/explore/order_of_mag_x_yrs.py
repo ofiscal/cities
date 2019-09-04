@@ -18,7 +18,7 @@ import Code.build.sisfut_metadata as sm
 import Code.explore.order_of_mag_x_yrs_defs as defs
 
 
-source = "output/budget_3_muni_year_item/recip-"    + str(c.subsample)
+source = "output/budget_3_dept_muni_year_item/recip-"    + str(c.subsample)
 dest   = "output/explore/order_of_mag_x_yrs/recip-" + str(c.subsample)
 if not os.path.exists( dest ):
   os.makedirs(         dest )

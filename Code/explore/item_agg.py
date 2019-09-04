@@ -4,11 +4,11 @@ import pandas as pd
 import Code.common as c
 import Code.util as util
 import Code.build.sisfut_metadata as sm
-import Code.build.budget_3_muni_year_item_defs as defs
+import Code.build.budget_3_dept_muni_year_item_defs as defs
 
 
 disagg = "output/budget_2_subsample/recip-"       + str(c.subsample)
-agg    = "output/budget_3_muni_year_item/recip-" + str(c.subsample)
+agg    = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
 
 group_fields = ["year","muni code","item code"]
 

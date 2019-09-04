@@ -16,7 +16,7 @@ myPython=PYTHONPATH='.' python3
   budget_2_subsample		\
   budget_2_subsamples		\
   subsample			\
-  budget_3_muni_year_item	\
+  budget_3_dept_muni_year_item	\
   budget_4_scaled		\
   budget_5_add_regalias		\
   budget_6_deflate		\
@@ -27,7 +27,7 @@ all: keys			\
   budget_1p5			\
   budget_2_subsample		\
   budget_2_subsamples		\
-  budget_3_muni_year_item	\
+  budget_3_dept_muni_year_item	\
   budget_4_scaled		\
   budget_5_add_regalias		\
   budget_6_deflate		\
@@ -35,34 +35,34 @@ all: keys			\
   output/regalias.csv
 #  pics
 
-keys =										\
-  output/keys/budget.csv							\
+keys =								\
+  output/keys/budget.csv					\
   output/keys/geo.csv
 
-budget_1 =									\
-  output/budget_1/funcionamiento.csv						\
-  output/budget_1/ingresos.csv							\
+budget_1 =							\
+  output/budget_1/funcionamiento.csv				\
+  output/budget_1/ingresos.csv					\
   output/budget_1/inversion.csv
 
-budget_1p5 =									\
-  output/budget_1p5/ingresos.csv						\
+budget_1p5 =							\
+  output/budget_1p5/ingresos.csv				\
   output/budget_1p5/gastos.csv
 
-budget_2_subsample =								\
-  output/budget_2_subsample/recip-$(ss)/ingresos.csv				\
+budget_2_subsample =						\
+  output/budget_2_subsample/recip-$(ss)/ingresos.csv		\
   output/budget_2_subsample/recip-$(ss)/gastos.csv
 
-budget_2_subsamples =								\
-  output/budget_2_subsample/recip-10/ingresos.csv				\
-  output/budget_2_subsample/recip-10/gastos.csv				\
-  output/budget_2_subsample/recip-100/ingresos.csv				\
-  output/budget_2_subsample/recip-100/gastos.csv				\
-  output/budget_2_subsample/recip-1000/ingresos.csv				\
+budget_2_subsamples =						\
+  output/budget_2_subsample/recip-10/ingresos.csv		\
+  output/budget_2_subsample/recip-10/gastos.csv			\
+  output/budget_2_subsample/recip-100/ingresos.csv		\
+  output/budget_2_subsample/recip-100/gastos.csv		\
+  output/budget_2_subsample/recip-1000/ingresos.csv		\
   output/budget_2_subsample/recip-1000/gastos.csv
 
-budget_3_muni_year_item =							\
-  output/budget_3_muni_year_item/recip-$(ss)/ingresos.csv			\
-  output/budget_3_muni_year_item/recip-$(ss)/gastos.csv
+budget_3_dept_muni_year_item =					\
+  output/budget_3_dept_muni_year_item/recip-$(ss)/ingresos.csv	\
+  output/budget_3_dept_muni_year_item/recip-$(ss)/gastos.csv
 
 #sanity_child_sum_is_parent =							\
 #  output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
@@ -123,24 +123,24 @@ $(budget_2_subsamples):				\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/budget_2_subsample.py
 
-budget_3_muni_year_item: $(budget_3_muni_year_item)
-$(budget_3_muni_year_item):			\
-  $(budget_2_subsample)				\
-  Code/build/budget_3_muni_year_item.py		\
-  Code/build/budget_3_muni_year_item_defs.py	\
-  Code/common.py				\
-  Code/params/cl.py				\
-  Code/params/fixed.py				\
-  Code/util.py					\
+budget_3_dept_muni_year_item: $(budget_3_dept_muni_year_item)
+$(budget_3_dept_muni_year_item):			\
+  $(budget_2_subsample)					\
+  Code/build/budget_3_dept_muni_year_item.py		\
+  Code/build/budget_3_dept_muni_year_item_defs.py	\
+  Code/common.py					\
+  Code/params/cl.py					\
+  Code/params/fixed.py					\
+  Code/util.py						\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/budget_3_muni_year_item.py $(ss)
+	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
 
 # TODO ? resurrect. This broke when we switched item code specs.
 # In the new method we never create top, child and categ columns;
 # instead we just keep rows with item codes equal to one of the top categories.
 #sanity_child_sum_is_parent: $(sanity_child_sum_is_parent)
 #$(sanity_child_sum_is_parent):			\
-#  $(budget_3_muni_year_item)			\
+#  $(budget_3_dept_muni_year_item)		\
 #  Code/build/sanity_child_sum_is_parent.py	\
 #  Code/common.py				\
 #  Code/util.py					\
@@ -149,7 +149,7 @@ $(budget_3_muni_year_item):			\
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
 $(explore_order_of_mag_x_yrs):			\
-  $(budget_3_muni_year_item)			\
+  $(budget_3_dept_muni_year_item)		\
   Code/explore/order_of_mag_x_yrs.py		\
   Code/common.py				\
   Code/util.py					\
@@ -158,7 +158,7 @@ $(explore_order_of_mag_x_yrs):			\
 
 budget_4_scaled: $(budget_4_scaled)
 $(budget_4_scaled):				\
-  $(budget_3_muni_year_item)			\
+  $(budget_3_dept_muni_year_item)		\
   Code/build/budget_4_scaled.py			\
   Code/explore/order_of_mag_x_yrs_defs.py	\
   Code/common.py				\

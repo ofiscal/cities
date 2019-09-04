@@ -9,7 +9,7 @@ import Code.series_metadata as ser
 
 
 if True: # setup
-  source = "output/budget_3_muni_year_item/recip-10"
+  source = "output/budget_3_dept_muni_year_item/recip-10"
   if source == "output/budget_1":
         file_indices = sis.series
   else: file_indices = list( map( lambda x: x.name,
