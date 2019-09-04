@@ -4,7 +4,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.tables_defs as defs
+  import Code.sample_tables_defs as defs
   import Code.series_metadata as ser
 
 
@@ -38,7 +38,7 @@ if True: # restrict to the munis and depts we need,
 
 if True:
   if True: # prepare output folder
-    dest = "output/sample_tables"
+    dest = "output/sample_tables/recip-" + str(c.subsample)
     if not os.path.exists( dest ):
       os.makedirs(         dest )
   items_grouped = {}
@@ -49,4 +49,4 @@ if True:
       defs.sum_all_but_last_n_rows_in_groups(
         5, group_vars, [s.pesos_col], ["item","item code"], df ) )
     items_grouped[s.name].to_csv(
-      "output/sample_tables/" + s.name + ".csv" )
+      dest + "/" + s.name + ".csv" )
