@@ -66,14 +66,19 @@ def sum_all_but_last_n_rows_in_groups(
   This is only function that faces out of this module;
   the two it uses would be private, if Python allowed that. """
   indiv = last_n_in_groups( n, group_vars, df )
-  grouped = (
-    sum_of_all_but_last_n_rows_in_groups(
-      n, group_vars, df ) .
-    drop( columns = meaningless_to_sum ) )
-  return (
-    pd.concat( [indiv, grouped],
-               sort = True ) .
-    sort_values( group_vars + sort_vars ) )
+  grouped = sum_of_all_but_last_n_rows_in_groups(
+    n, group_vars, df )
+  grouped = grouped.drop(
+    columns = set.intersection( # TODO : why do I need this hack?
+      # Dropping meaningless_to_sum seems like it should be enough;
+      # I shouldn't have to first take the intersection below.
+      # In fact, that works for the test data (in this file),
+      # but somehow on the real data (e.g. tables.py) it doesn't.
+      set(meaningless_to_sum),
+      set(grouped.columns) ) )
+  return ( pd.concat( [indiv, grouped],
+                      sort = True ) .
+           sort_values( group_vars + sort_vars ) )
 
 if True: # test it
   assert (
@@ -81,7 +86,9 @@ if True: # test it
       2, ["year"], ["value"], ["item code"], test_data ) .
     reset_index( drop = True ) .
     equals (
-      pd.DataFrame( {
-        "item code" : [np.nan, 2,3,2,3,np.nan],
-        "value" : [1,2,3,12,13,21],
-        "year" : [1,1,1,2,2,2] } ) ) )
+      pd.DataFrame( { "item code" : [np.nan, 2,3,
+                                     2,3,np.nan],
+                      "value" : [1,2,3,
+                                 12,13,21],
+                      "year" : [1,1,1,
+                                2,2,2] } ) ) )

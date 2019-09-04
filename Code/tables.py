@@ -71,4 +71,4 @@ if True:
       defs.sum_all_but_last_n_rows_in_groups(
         5, group_vars, [s.pesos_col], ["item","item code"], df ) )
 
-# items_grouped["gastos"][["muni","year","item code","item oblig"]]
+items_grouped["gastos"][["muni","year","item code","item oblig"]]
