@@ -49,4 +49,6 @@ if True:
       defs.sum_all_but_last_n_rows_in_groups(
         5, group_vars, [s.pesos_col], ["item","item code"], df ) )
     items_grouped[s.name].to_csv(
-      dest + "/" + s.name + ".csv" )
+      dest + "/" + s.name + ".csv",
+      encoding = "utf-16",
+      index = False )
