@@ -11,9 +11,9 @@ if True: # geo data
     pd.read_csv( "output/keys/geo.csv",
                  encoding = "utf-16" ) .
     rename( columns =
-            { "Cód. DANE Municipio" : "muni code",
-              "Cód. DANE Departamento" : "dept code",
-              "Nombre DANE Municipio" : "muni",
+            { "Cód. DANE Municipio"      : "muni code",
+              "Cód. DANE Departamento"   : "dept code",
+              "Nombre DANE Municipio"    : "muni",
               "Nombre DANE Departamento" : "dept" } ) )
   depts = ( geo[["dept code","dept"]] .
             groupby( "dept code" ) .
@@ -26,8 +26,10 @@ if True: # merge geo data into main data
   dfs = {}
   for s in ser.series:
     sn = s.name
-    df = pd.read_csv( source + "/" + sn + ".csv",
-                      encoding = "utf-16" )
+    df = ( pd.read_csv( source + "/" + sn + ".csv",
+                        encoding = "utf-16" )
+           [["muni code","dept code","year","item code",
+             s.pesos_col]] )
     df = df.merge( munis,
                    how = "left", # b/c in geo, muni code is never -1
                    on = ["muni code"] )
@@ -39,25 +41,19 @@ if True: # merge geo data into main data
 # Left to do: For each (muni,dept,year), take the top 5 expenditures,
 # and sum the rest into a sixth.
 # See tables_demo.py for a start.
-muni_sample = {}
-for s in ser.series:
-  acc = pd.DataFrame()
-  for m in [ "BOGOTÁ, D.C.",
-             "SANTA MARTA",
-             "FILANDIA",
-             "VALLE DEL GUAMUEZ" ]:
-    acc = acc.append( df[ df["muni"] == m ] )
-  muni_sample[s.name] = acc
 
-group_vars = ["muni code","dept code","year","item code"]
-( muni_sample[s.name] .
-  sort_values( group_vars )
-  [group_vars + [s.pesos_col]] )
-
-if False: # some hand-run tests
-  len(df)
-  ( df[['muni code', "muni",'year', 'item code', 'dept code',"dept"]] .
-    describe(include="all").transpose()
-    [["count","mean","min","max"]] )
-  np.nan in df["muni"].unique()
-  np.nan in df["dept"].unique()
+if True: # restrict to the munis and depts we need
+  sample = {}
+  for s in list( map( lambda x: x.name, ser.series ) ):
+    df = dfs[s]
+    sample[s] = pd.concat(
+      [ df[ df["muni"].isin( { "BOGOTÁ, D.C.",
+                               "SANTA MARTA",
+                               "FILANDIA",
+                               "VALLE DEL GUAMUEZ" } ) ],
+        df[ ( df["muni code"] == -1 ) &
+            ( df["dept"].isin( [ "ANTIOQUIA",
+                                 "CESAR",
+                                 "CHOCÓ",
+                                 "ARAUCA" ] ) ) ] ],
+      axis = "rows" )
