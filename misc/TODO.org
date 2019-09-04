@@ -48,13 +48,7 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO restore muni-less dept info
-Scan each data product for whether NaN is among its muni values.
-If it is, scan whether NaN is among the dept values when muni=NaN.
-If not, perfect -- those are totals for the dept.
-
-There are null muni codes with the full range of depts through budget_1p5
-and not budget_2.
+** TODO resume at "RESUME HERE" in Code/tables.py
 ** munis and depts
 *** Municipalities
 Bogotá

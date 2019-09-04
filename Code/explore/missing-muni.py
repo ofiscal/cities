@@ -10,7 +10,7 @@ if True:
 
 
 if True: # setup
-  source = "output/budget_6_deflate/recip-10"
+  source = "output/budget_6_deflate/recip-100"
   if source == "output/budget_1":
         file_indices = sis.series
   else: file_indices = list( map( lambda x: x.name,
