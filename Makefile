@@ -20,6 +20,7 @@ myPython=PYTHONPATH='.' python3
   budget_4_scaled		\
   budget_5_add_regalias		\
   budget_6_deflate		\
+  budget_7_verbose		\
   pics
 
 all: keys			\
@@ -31,6 +32,7 @@ all: keys			\
   budget_4_scaled		\
   budget_5_add_regalias		\
   budget_6_deflate		\
+  budget_7_verbose		\
   output/inflation.csv		\
   output/regalias.csv
 #  pics
@@ -86,6 +88,10 @@ budget_5_add_regalias =					\
 budget_6_deflate =					\
   output/budget_6_deflate/recip-$(ss)/ingresos.csv	\
   output/budget_6_deflate/recip-$(ss)/gastos.csv
+
+budget_7_verbose =					\
+  output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
+  output/budget_7_verbose/recip-$(ss)/gastos.csv
 
 pics = output/reports/done.txt
 
@@ -183,6 +189,15 @@ $(budget_6_deflate):			\
   Code/common.py			\
   Code/series_metadata.py
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
+
+budget_7_verbose: $(budget_7_verbose)
+$(budget_7_verbose):			\
+  $(budget_6_deflate)			\
+  Code/build/budget_7_verbose.py	\
+  Code/common.py			\
+  Code/util.py				\
+  Code/series_metadata.py
+	$(myPython) Code/build/budget_7_verbose.py $(ss)
 
 output/inflation.csv:				\
   data/inflation.csv				\
