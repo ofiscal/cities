@@ -38,6 +38,7 @@ if True: # merge geo data into main data
 # RESUME HERE: Restricting to the slice of data I need.
 # Left to do: For each (muni,dept,year), take the top 5 expenditures,
 # and sum the rest into a sixth.
+# See tables_demo.py for a start.
 muni_sample = {}
 for s in ser.series:
   acc = pd.DataFrame()

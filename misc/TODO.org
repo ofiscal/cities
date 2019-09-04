@@ -48,7 +48,7 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO resume at "RESUME HERE" in Code/tables.py
+** TODO resume at "RESUME HERE" in Code/tables.py, using Code/tables_demo.py
 ** munis and depts
 *** Municipalities
 Bogotá
