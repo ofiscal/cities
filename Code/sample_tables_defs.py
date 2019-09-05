@@ -93,21 +93,3 @@ if True: # test it
                       "year" : [1,1,1,
                                 2,2,2] } ) ) )
 
-realish_data = (
-  # Real-ish in the sense that there are multiple group columns,
-  # and a string variable that is meaningless when summed.
-  pd.DataFrame( {
-    "muni"  : [5,5,5,5,6,6,6,6,
-               5,5,5,5,6,6,6,6],
-    "year"  : [1,1,1,1,1,1,1,1,
-               2,2,2,2,2,2,2,2],
-    "item"  : ["0","1","2","3",    "0","1","2","3",
-               "0","1","2","3",    "0","1","2","3" ],
-    "value" : [0,1,2,3,             10,11,12,13,
-               0,1,2,3,             10,11,12,13 ] } ) .
-  sort_values( ["muni","year","value"] ) )
-
-assert False # Because the following is not what it should be
-defs.sum_all_but_last_n_rows_in_groups(
-  2, ["muni","year"], ["value"], ["item"], realish_data )
-
