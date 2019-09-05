@@ -48,17 +48,7 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO bughunt
-NEXT: The problem is in
-    sum_of_all_but_last_n_rows_in_groups()
-so specialize a test for that (rather than its caller
-    sum_all_but_last_n_rows_in_groups() )
-
-The trigger by multiple groups,
-  not meaningless-to-sum values:
-  If I comment out the meaningless-to-sum columns,
-  I get the same result, except without that column.
-** TODO try testing on data more like the real thing
+** TODO incorporate sort into sum_of_all_but_last_n_rows_in_groups
 ** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
 *** Municipalities

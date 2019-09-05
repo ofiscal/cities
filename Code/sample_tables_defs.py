@@ -39,7 +39,7 @@ def sum_of_all_but_last_n_rows_in_groups(
     ) -> pd.DataFrame:
   return (
     df.copy() .
-    groupby( "year" ) .
+    groupby( group_vars ) .
     apply( lambda df: df . iloc[:-n] ) .
     reset_index( drop = True ) .
     groupby( group_vars ) .
