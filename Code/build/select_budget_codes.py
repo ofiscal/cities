@@ -4,7 +4,7 @@ import pandas as pd
 import re
 from typing import Set
 
-import Code.build.budget_codes_stale.aggregation_regexes as ac
+import Code.build.select_budget_codes_stale.aggregation_regexes as ac
 import Code.build.sisfut_metadata as sm
 
 

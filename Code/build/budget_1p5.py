@@ -7,7 +7,7 @@ import pandas as pd
 
 import Code.build.budget_1p5_tests as tests
 import Code.build.sisfut_metadata as sm
-import Code.build.budget_codes as codes
+import Code.build.select_budget_codes as codes
 
 
 source = "output/budget_1"

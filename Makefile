@@ -123,6 +123,7 @@ $(budget_1p5):					\
   $(budget_1)					\
   Code/build/budget_1p5.py			\
   Code/build/budget_1p5_tests.py		\
+  Code/build/select_budget_codes.py		\
   Code/build/sisfut_metadata.py
 	$(myPython) Code/build/budget_1p5.py
 

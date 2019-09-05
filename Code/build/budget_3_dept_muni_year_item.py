@@ -1,6 +1,6 @@
 # What this does: aggregate spending observations
 #   within (muni,year,item code) triples,
-#   using the broad item codes defined in budget_codes.py
+#   using the broad item codes defined in select_budget_codes.py
 #   It also replaces missing muni values with -1,
 #   because rows with a missing group variable disappear
 #   upon using pandas.DataFrame.groupby().
