@@ -48,9 +48,15 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO resume at sample_tables_defs.py, bottom
-That data is more real in two senses.
-Try data that offers just one of them.
+** TODO bughunt
+Resume at sample_tables_defs.py, bottom.
+  That data is more real in two senses.
+  Try data that offers just one of them.
+Also try working into the two called functions --
+  it seems likely that the problem is in
+    sum_of_all_but_last_n_rows_in_groups()
+  (and not
+    sum_all_but_last_n_rows_in_groups() ).
 ** TODO try testing on data more like the real thing
 ** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
