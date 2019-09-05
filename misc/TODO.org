@@ -49,6 +49,8 @@ These are ordered by time.
 
 * TODO send tables to Manuela
 ** TODO incorporate sort into sum_of_all_but_last_n_rows_in_groups
+** TODO use classify_budget_codes.of_interest
+to filter rows in the first build stage
 ** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
 *** Municipalities
