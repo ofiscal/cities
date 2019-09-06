@@ -29,6 +29,7 @@ if True:
   dfs0, dfs1 = {}, {} # input and output
   group_vars = ["muni code","dept code","year","item categ"]
 
+
 ######
 ###### Build
 ######
@@ -55,8 +56,37 @@ for s in ["ingresos","gastos"]:
   dfs1[s] = df
 
 if True: # for ingresos data, subtract transfers from recursos propios
+  def tax_categ_fix (
+      subtract : "x",      # the categ value of rows to subtract
+      subtract_from : "x", # the categ value of rows to subtract from
+      categ : str, # the name of an "x"-valued column
+      value : str, # a peso-valued column
+      df0 : pd.DataFrame
+      ) -> pd.DataFrame:
+    """ In a given (muni,dept,year) frame,
+    the peso-valued column in the row for which categ =
+    recursos propios is too big.
+    From it we must subtract the value in the peso-valued column
+    in the row where categ = transferencias.
+    This function generalizes that problem. """
+    df = df0.copy()
+    subtract_vec = (df[ df[categ] == subtract ]
+                    [value] )
+    assert len(subtract_vec) == 1
+    df.loc[ df[categ] == subtract_from,
+            value ] = (
+      df.loc[ df[categ] == subtract_from,
+              value ] -
+      float( subtract_vec ) )
+    return df
+  if True: # test it
+    x = pd.DataFrame( { "cat" : ["1", "2", "3"],
+                        "val" : [ 1,   2,   3 ] } )
+    assert ( tax_categ_fix( "1", "2", "cat", "val", x ) .
+             equals(
+               pd.DataFrame( { "cat" : ["1", "2", "3"],
+                               "val" : [ 1.0, 1.0, 3.0 ] } ) ) )
   assert "TODO: resume here" == False
-
 
 ######
 ###### Test, output

@@ -50,7 +50,7 @@ These are ordered by time.
 * TODO send tables to Manuela
 ** TODO Replace item code with item categ
 And then rename column to "item categ".
-
+** TODO subtract transfers from recursos propios
 For ingresos, implement these:
 TI.A - TI.A.2.6 = "ingresos por recursos propios"
 TI.A.2.6 = "ingresos por transferencias de la Nación"
