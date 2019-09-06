@@ -15,35 +15,23 @@ realish_data = (
   # Real-ish in the sense that there are multiple group columns,
   # and a string variable that is meaningless when summed.
   pd.DataFrame( {
-    "muni"  : [5,5,5,5,           6,6,6,6,          5,5,5,5],
-    "year"  : [1,1,1,1,           1,1,1,1,          2,2,2,2],
+    "where" : [5,5,5,5,           6,6,6,6,          5,5,5,5],
+    "when"  : [1,1,1,1,           1,1,1,1,          2,2,2,2],
     "item"  : ["0","1","2","3",  "0","1","2","3",  "0","1","2","3"],
-    "value" : [0,1,2,3,           10,11,12,13,      0,-1,-2,-3] } ) .
-  sort_values( ["muni","year","value"] ) )
+    "value" : [0,1,2,3,           10,11,12,13,      0,-1,-2,-3] } ) )
 
 assert (
   defs .
-  sum_all_but_last_n_rows_in_groups(
-    2, ["muni","year"], ["value"], ["item"], realish_data )
-  [["muni","year","item","value"]] .
+  sum_all_but_greatest_n_rows_in_groups(
+    2, ["where","when"], ["value"], ["item"], realish_data )
+  [["where","when","item","value"]] .
   reset_index( drop = True ) .
   equals( pd.DataFrame(
-    { "muni"  : [5,5,5,           5,5,5,            6,6,6],
-      "year"  : [1,1,1,           2,2,2,            1,1,1],
+    { "where" : [5,5,5,           5,5,5,            6,6,6],
+      "when"  : [1,1,1,           2,2,2,            1,1,1],
       "item"  : [np.nan,"2","3",  np.nan,"1","0",  "2","3",np.nan],
       "value" : [1,2,3,          -5,-1,0,           12,13,21] } ) ) )
 
-
-x = ( defs .
-      sum_all_but_last_n_rows_in_groups(
-        2, ["muni","year"], ["value"], ["item"], realish_data )
-      [["muni","year","item","value"]] )
-
-y = pd.DataFrame(
-    { "muni"  : [5,5,5,           5,5,5,            6,6,6],
-      "year"  : [1,1,1,           2,2,2,            1,1,1],
-      "item"  : [np.nan,"2","3",  np.nan,"1","0",  "2","3",np.nan],
-      "value" : [1,2,3,          -5,-1,0,           12,13,21] } )
 
 ######
 ###### Integration test
@@ -80,3 +68,4 @@ bogota_in = ( at_spot( spot, di )
               sort_values( group_vars + ["item oblig"] ) )
 at_spot( spot, do )[ group_vars + ["item code","item oblig"]]
 bogota_in["item oblig"].sum()
+

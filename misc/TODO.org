@@ -48,7 +48,6 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO incorporate sort into sum_of_all_but_last_n_rows_in_groups
 ** TODO consider the possibility that there are fewer than 5 items
 ** munis and depts
 *** Municipalities

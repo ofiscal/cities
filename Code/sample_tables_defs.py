@@ -55,16 +55,18 @@ if True: # test it
     equals( pd.DataFrame( { "year" : [1,2],
                             "value" : [1,21] } ) ) )
 
-def sum_all_but_last_n_rows_in_groups(
+def sum_all_but_greatest_n_rows_in_groups(
     n : int,
     group_vars : List[str],
     sort_vars : List[str],
     meaningless_to_sum : List[str],
-    df : pd.DataFrame
+    df0 : pd.DataFrame
     ) -> pd.DataFrame:
   """ PITFALL: Has a very similar name to a function it uses.
-  This is only function that faces out of this module;
+  This is only function intended to face out of this module;
   the two it uses would be private, if Python allowed that. """
+  df = ( df0 . copy() .
+         sort_values( group_vars + sort_vars ) )
   indiv = last_n_in_groups( n, group_vars, df )
   grouped = sum_of_all_but_last_n_rows_in_groups(
     n, group_vars, df )
@@ -82,7 +84,7 @@ def sum_all_but_last_n_rows_in_groups(
 
 if True: # test it
   assert (
-    sum_all_but_last_n_rows_in_groups(
+    sum_all_but_greatest_n_rows_in_groups(
       2, ["year"], ["value"], ["item code"], test_data ) .
     reset_index( drop = True ) .
     equals (
