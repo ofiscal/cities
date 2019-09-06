@@ -1,3 +1,3 @@
-subsample = 1
+subsample = 100
 
 

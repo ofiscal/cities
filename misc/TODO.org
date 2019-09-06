@@ -48,13 +48,8 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO Rewrite filtering in build/ stage 1p5
-Use classify_budget_codes.of_interest to filter 
-funccionamiento and inversion rows.
-
-Use the regex in select_budget_codes.py to select ingresos rows.
-** TODO Replace "item code" with "item categ".
-Use classify_budget_codes for inversion and funccionamiento.
+** TODO Replace item code with item categ
+And then rename column to "item categ".
 
 For ingresos, implement these:
 TI.A - TI.A.2.6 = "ingresos por recursos propios"
