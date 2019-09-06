@@ -74,3 +74,11 @@ if True: # the inverse map: from (spending) budget codes to our aggregate catego
           **codes_to_categs[funcionamiento] ) )
   assert codes_to_categs["A.8"] == agro
   assert codes_to_categs["1.1.1.1"] == personal
+
+of_interest = {
+  funcionamiento : [
+    categs_to_codes[funcionamiento][k]
+    for k in categs_to_codes[funcionamiento].keys() ],
+  inversion : [
+    categs_to_codes[inversion][k]
+    for k in categs_to_codes[inversion].keys() ] }

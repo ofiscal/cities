@@ -48,19 +48,19 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
+** TODO Rewrite filtering in build/ stage 1p5
+Use classify_budget_codes.of_interest to filter 
+funccionamiento and inversion rows.
+
+Use the regex in select_budget_codes.py to select ingresos rows.
+** TODO Replace "item code" with "item categ".
+Use classify_budget_codes for inversion and funccionamiento.
+
+For ingresos, implement these:
+TI.A - TI.A.2.6 = "ingresos por recursos propios"
+TI.A.2.6 = "ingresos por transferencias de la Nación"
+TI.B = "ingresos de capital"
 ** TODO consider the possibility that there are fewer than 5 items
-** munis and depts
-*** Municipalities
-Bogotá
-Santa Marta
-Filandia
-Valle del Guamuez
-*** Departamentos
-Antioquia
-Cesar
-Chocó
-Arauca
-** draw top five categs per muni, and draw the rest together
 * TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
