@@ -8,18 +8,20 @@ because (as you might guess) in the raw data,
 pre-2017 peso values are about 1000 times smaller than those post-2016.
 """
 
-import os
-import pandas as pd
+if True:
+  import os
+  import pandas as pd
+  #
+  import Code.common as c
+  import Code.build.sisfut_metadata as sm
+  import Code.explore.order_of_mag_x_yrs_defs as lib
 
-import Code.common as c
-import Code.build.sisfut_metadata as sm
-import Code.explore.order_of_mag_x_yrs_defs as lib
 
-
-source = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
-dest   = "output/budget_4_scaled/recip-"         + str(c.subsample)
-if not os.path.exists( dest ):
-  os.makedirs(         dest )
+if True:
+  source = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
+  dest   = "output/budget_4_scaled/recip-"         + str(c.subsample)
+  if not os.path.exists( dest ):
+    os.makedirs(         dest )
 
 def correct_peso_column( column : str,
                          df : pd.DataFrame ) -> pd.DataFrame:
