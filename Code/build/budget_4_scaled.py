@@ -39,7 +39,7 @@ for (file,pesos_col) in [
                       encoding = "utf-16" )
     df = correct_peso_column( pesos_col, df )
     dfs[file] = df
-  if True: # verify the data
+  if True: # add percent change across years within place-item
     df_by_muni_item = (
       df[["year",     "muni code", "dept code", "item categ",pesos_col]] .
       groupby( by = [ "muni code", "dept code", "item categ"] ) .
