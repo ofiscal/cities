@@ -47,7 +47,7 @@ if True:
     df = geo_sample[s.name]
     items_grouped[s.name] = (
       defs.sum_all_but_last_n_rows_in_groups(
-        5, group_vars, [s.pesos_col], ["item","item code"], df ) )
+        5, group_vars, [s.pesos_col], ["item","item categ"], df ) )
     items_grouped[s.name].to_csv(
       dest + "/" + s.name + ".csv",
       encoding = "utf-16",

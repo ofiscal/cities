@@ -60,6 +60,7 @@ for s in ["ingresos","gastos"]:
       groupby( by = spacetime + ["item categ"] ) .
       agg( sum ) .
       reset_index() ) )
+  dfs1[s] = df
 
 # dfs2: For ingresos only, for each spacetime slice,
 # subtract the "recaudo" value in the row where categ = "transfers"
@@ -133,14 +134,15 @@ if False: # TODO ? This approach, using .groupby(),
 if True:
   dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine for gastos;
     # this section is only supposed to change the ingresos data
-  spots = ( dfs1["ingresos"][spacetime] .
+  ing             = dfs1["ingresos"]
+  spots = ( ing[spacetime] .
             groupby(spacetime) .
             agg( 'first' ) .
             reset_index() )
   acc = pd.DataFrame()
-  ing = dfs1["ingresos"]
   for spot in spots.index:
-    df = ing[ (ing[spacetime] == spots.iloc[spot]).all( axis="columns") ]
+    df = ing[ (ing[spacetime] == spots.iloc[spot]) .
+              all( axis="columns") ]
     acc = acc.append( 
       tax_categ_subtract(
         subtract = "Por transferencias de la Nación",
