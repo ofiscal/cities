@@ -77,7 +77,7 @@ if True:
                     [value] )
     if len(subtract_vec) < 1: return df
     assert len(subtract_vec) == 1
-    if True: # debugging
+    if False: # debugging
       print( "\nOld df:\n", df )
       print( "subtract from: ",
              df.loc[ df[categ] == subtract_from, value ] )
@@ -91,7 +91,8 @@ if True:
       df.loc[ df[categ] == subtract_from,
               value ] -
       float( subtract_vec ) )
-    print( "New df:\n", df )
+    if False: # debugging
+      print( "New df:\n", df )
     return df
   if True: # test it on fake data
     x = pd.DataFrame( { "cat" : [ "1", "2", "3"],
@@ -105,21 +106,29 @@ if True:
              # here the subtract code ("0") is not present
              equals( x ) )
 
-if True: # test it on one spacetime slice of the real data
-  s = "ingresos"
-  spot = dfs1[s][spacetime].iloc[0]
-  df1 = dfs1[s][ (dfs1[s][spacetime] == spot).transpose().all() ]
-  df2 = tax_categ_subtract(
-    subtract = "Por transferencias de la Nación",
-    subtract_from = "Por recursos propios",
-    categ = "item categ",
-    value = "item recaudo",
-    df0 = df1 )
-  assert ( (df1["item recaudo"] > df2["item recaudo"]) .
-           any() )
-  assert (         df1.drop(columns = ["item recaudo"] ) .
-           equals( df2.drop(columns = ["item recaudo"] ) ) )
-  # del( s, spot, df1, df2 )
+if False: # TODO ? This approach, using .groupby(),
+  # is more natural, and ought to give the same result as the next one,
+  # in which I for-loop through all spots in spacetime and accumulate.
+  # Instead it has no effect.
+  dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine here
+  dfs2 ["ingresos"] = (
+    dfs1 ["ingresos"] . copy() .
+    groupby( spacetime ) .
+    apply( lambda df :
+           tax_categ_subtract(
+             subtract = "Por transferencias de la Nación",
+             subtract_from = "Por recursos propios",
+             categ = "item categ",
+             value = "item recaudo",
+             df0 = df ) ) .
+    reset_index( drop=True ) )
+  if True: # test that it worked
+    before = dfs1["ingresos"].sort_values(spacetime).reset_index(drop=True)
+    after = dfs2["ingresos"].sort_values(spacetime).reset_index(drop=True)
+    assert ( not     before["item recaudo"] .
+             equals( after ["item recaudo"] ) )
+    pd.concat( [before["item recaudo"],
+                after["item recaudo"]], axis = "columns" )
 
 if True:
   dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine for gastos;
@@ -139,25 +148,15 @@ if True:
         categ = "item categ",
         value = "item recaudo",
         df0 = df ) )
+  dfs2["ingresos"] = acc
 
-acc = acc . sort_values(spacetime) . reset_index(drop=True)
-ing = ing . sort_values(spacetime) . reset_index(drop=True)
-assert (acc["item recaudo"] < ing["item recaudo"]).any()
-(acc == ing).all()
-
-if True: # do it to all the (applicable) real data
-  dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine here
-  dfs2 ["ingresos"] = (
-    dfs1 ["ingresos"] . copy() .
-    groupby( spacetime ) .
-    apply( lambda df :
-           tax_categ_subtract(
-             subtract = "Por transferencias de la Nación",
-             subtract_from = "Por recursos propios",
-             categ = "item categ",
-             value = "item recaudo",
-             df0 = df ) ) .
-    reset_index( drop=True ) )
+if True: # test (loosely) that it worked
+  acc = acc . sort_values(spacetime) . reset_index(drop=True)
+  ing = ing . sort_values(spacetime) . reset_index(drop=True)
+  assert (acc["item recaudo"] < ing["item recaudo"]).any()
+  assert (acc["item recaudo"] <= ing["item recaudo"]).all()
+  assert (         acc.drop(columns=["item recaudo"]) .
+           equals( ing.drop(columns=["item recaudo"]) ) )
 
 
 ######
@@ -165,6 +164,6 @@ if True: # do it to all the (applicable) real data
 ######
 
 for s in ["ingresos","gastos"]:
-  df.to_csv( dest + "/" + s + ".csv" ,
-             encoding="utf-16",
-             index = False )
+  dfs2[s].to_csv( dest + "/" + s + ".csv" ,
+                  encoding="utf-16",
+                  index = False )
