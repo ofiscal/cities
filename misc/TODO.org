@@ -48,13 +48,8 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO Replace item code with item categ
-And then rename column to "item categ".
-** TODO subtract transfers from recursos propios
-For ingresos, implement these:
-TI.A - TI.A.2.6 = "ingresos por recursos propios"
-TI.A.2.6 = "ingresos por transferencias de la Nación"
-TI.B = "ingresos de capital"
+** TODO try looping with an accumulator
+rather than using pandas "groupby"
 ** TODO consider the possibility that there are fewer than 5 items
 * TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names

@@ -121,6 +121,30 @@ if True: # test it on one spacetime slice of the real data
            equals( df2.drop(columns = ["item recaudo"] ) ) )
   # del( s, spot, df1, df2 )
 
+if True:
+  dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine for gastos;
+    # this section is only supposed to change the ingresos data
+  spots = ( dfs1["ingresos"][spacetime] .
+            groupby(spacetime) .
+            agg( 'first' ) .
+            reset_index() )
+  acc = pd.DataFrame()
+  ing = dfs1["ingresos"]
+  for spot in spots.index:
+    df = ing[ (ing[spacetime] == spots.iloc[spot]).all( axis="columns") ]
+    acc = acc.append( 
+      tax_categ_subtract(
+        subtract = "Por transferencias de la Nación",
+        subtract_from = "Por recursos propios",
+        categ = "item categ",
+        value = "item recaudo",
+        df0 = df ) )
+
+acc = acc . sort_values(spacetime) . reset_index(drop=True)
+ing = ing . sort_values(spacetime) . reset_index(drop=True)
+assert (acc["item recaudo"] < ing["item recaudo"]).any()
+(acc == ing).all()
+
 if True: # do it to all the (applicable) real data
   dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine here
   dfs2 ["ingresos"] = (
