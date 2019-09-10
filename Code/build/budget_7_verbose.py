@@ -38,10 +38,10 @@ if True: # merge geo data into main data
   for s in ser.series:
     sn = s.name
     df = util.to_front(
-      ["dept","muni","year",s.pesos_col,"item"],
+      ["dept","muni","year",s.pesos_col,"item categ"],
       ( ( pd.read_csv( source + "/" + sn + ".csv",
                        encoding = "utf-16" )
-          [["muni code","dept code","year","item","item code",
+          [["muni code","dept code","year","item categ",
             s.pesos_col]] ) .
         merge( munis,
                how = "left", # b/c in geo, muni code is never -1
