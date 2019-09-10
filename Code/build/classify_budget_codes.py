@@ -1,5 +1,9 @@
-from typing import List, Dict, Set
+# The two products of interest in this are
+# codes_to_categs     : Dict[ code, categ ]
+# categs_to_code_sets : Dict[ categ, Set[code] ]
+# of_interest         : Dict[ "gastos"|"ingresos", Set[code] ]
 
+from typing import List, Dict, Set
 
 def invert_set_dict(
     sd : Dict[ "k", Set["e"]]
@@ -107,6 +111,9 @@ if True: # the inverse map: from (spending) budget codes to our aggregate catego
   assert codes_to_categs["1.1.1.1"] == personal
   assert codes_to_categs["TI.B"]    == capital
 
+categs_to_code_sets : Dict[ str, Set[str] ] = (
+    invert_many_to_one_dict( codes_to_categs ) )
+
 of_interest = {
   funcionamiento : set.union( *[
     categs_to_codes[funcionamiento][k]
@@ -117,4 +124,3 @@ of_interest = {
   ingresos : set.union( *[
     categs_to_codes[ingresos][k]
     for k in categs_to_codes[ingresos].keys() ] ) }
-
