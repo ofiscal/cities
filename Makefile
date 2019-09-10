@@ -105,10 +105,10 @@ pics = output/reports/done.txt
 #### Recipes
 
 keys: $(keys)
-$(keys):					\
-  Code/build/keys.py				\
+$(keys):			\
+  Code/build/make_keys.py	\
   Code/build/sisfut_metadata.py
-	$(myPython) Code/build/keys.py
+	$(myPython) Code/build/make_keys.py
 
 budget_1: $(budget_1)
 $(budget_1):					\
