@@ -1,13 +1,15 @@
 if True:
-  from typing import List
+  from typing import List, Set, Dict
   import numpy as np
   import pandas as pd
 
 test_data = (
-  pd.DataFrame( { "year"      : [1,1,1,1,2,2,2,2],
-                  "item code" : [0,1,2,3,0,1,2,3],
-                  "value"     : [0,1,2,3,
-                                 10,11,12,13] } ) .
+  pd.DataFrame( {
+    "year"      : [1,1,1,1,2,2,2,2],
+    "year+1"    : [2,2,2,2,3,3,3,3], # ala the (dept,dept code) redundancy
+    "item code" : [0,1,2,3,0,1,2,3],
+    "value"     : [0,1,2,3,
+                   10,11,12,13] } ) .
   sort_values( ["year","value"] ) )
 
 def last_n_in_groups(
@@ -29,6 +31,7 @@ if True: # test it
     last_n_in_groups( 2, ["year"], test_data ) .
     equals(
       pd.DataFrame( {"year"      : [1,1,2,2],
+                     "year+1"    : [2,2,3,3],
                      "item code" : [2,3,2,3],
                      "value"     : [2,3,12,13] } ) ) )
 
@@ -51,12 +54,14 @@ def sum_of_all_but_last_n_rows_in_groups(
 
 if True: # test it
   assert (
-    sum_of_all_but_last_n_rows_in_groups( 2,
-                                          ["year"],
-                                          test_data ) .
-    drop( columns = "item code" ) . # meaningless after summation
-    equals( pd.DataFrame( { "year" : [1,2],
-                            "value" : [1,21] } ) ) )
+    sum_of_all_but_last_n_rows_in_groups(
+      n = 2,
+      group_vars =["year","year+1"],
+      df0 = test_data ) .
+    drop( columns = "item code" ) .
+    equals( pd.DataFrame( { "year"   : [1,2],
+                            "year+1" : [2,3],
+                            "value"  : [1,21] } ) ) )
 
 def sum_all_but_greatest_n_rows_in_groups(
     n : int,
@@ -88,12 +93,14 @@ def sum_all_but_greatest_n_rows_in_groups(
 if True: # test it
   assert (
     sum_all_but_greatest_n_rows_in_groups(
-      2, ["year"], ["value"], ["item code"], test_data ) .
+      2, ["year","year+1"], ["value"], ["item code"], test_data ) .
     reset_index( drop = True ) .
     equals (
       pd.DataFrame( { "item code" : [2,3,np.nan,
                                      2,3,np.nan],
-                      "value" : [2,3,1,
-                                 12,13,21],
-                      "year" : [1,1,1,
-                                2,2,2] } ) ) )
+                      "value"     : [2,3,1,
+                                    12,13,21],
+                      "year"      : [1,1,1,
+                                     2,2,2],
+                      "year+1"    : [2,2,2,
+                                     3,3,3] } ) ) )

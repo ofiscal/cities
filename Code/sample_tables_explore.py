@@ -1,27 +1,17 @@
-for s in ser.series:
-  print( s.name )
-  df = raw[s.name]
-  df[ df["muni"] == "BOGOTÁ, D.C." ]["muni code"].unique()
-
-  for i in sorted( df["muni"].astype(str).unique() ):
-    print(i)
-  print( (raw[s.name]["muni code"].unique() == 11001).any() )
-
+# This code is designed to be run interactively in a REPL,
+# after running sample_tables.py, to diagnose the latter.
 
 for s in ser.series:
   print( s.name )
   spots = (
-    raw[s.name]
-    [["muni code","dept code"]] .
+    items_grouped # goes wrong for items_grouped, but okay before that
+    [s.name]
+    [["muni code","dept code","dept"]] .
     groupby( ["muni code","dept code"] ) .
-    agg(sum) .
+    agg("first") .
     reset_index() )
-  # print( spots )
-  print( spots["muni code"] == 11001 ) # 11001 = Bogota
-
-for s in ser.series:
-  df = raw[s.name]
-  print( s.name )
-  print( df["muni"].unique() )
-  print( df["dept"].unique() )
-
+  print( spots[ ( spots["muni code"] == -1 ) &
+                ( spots["dept"].isin( [ "ANTIOQUIA",
+                                        "CESAR",
+                                        "CHOCÓ",
+                                        "ARAUCA" ] ) ) ] )
