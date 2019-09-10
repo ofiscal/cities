@@ -48,7 +48,7 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO Bug: year squashed to all-2012 in build/budget stage 3
+** TODO Bug: year squashed to all-2012 in build/budget stage 1p5
 ** TODO consider the possibility that there are fewer than 5 items
 * TODO draw charts
 ** compute (muni,series)-specific titles, text, axis names

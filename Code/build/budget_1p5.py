@@ -21,7 +21,6 @@ if True: # input data
   dfs = {}
   for s in sm.series:
     dfs[s] = pd.read_csv( source + "/" + s + ".csv",
-                          nrows = 1e5,
                           encoding = "utf-16" )
 
 if True: # Filter rows by item code.
@@ -35,8 +34,8 @@ if True: # Filter rows by item code.
 
 if True : # verify
   for s in sm.series: # each data set shrank, and not too much
-    assert len( dfs[s] ) > 5 * len( dfs_filt[s] )
-    assert len( dfs[s] ) < 200 * len( dfs_filt[s] )
+    assert len( dfs[s] ) > 1.5 * len( dfs_filt[s] )
+    assert len( dfs[s] ) < 50 * len( dfs_filt[s] )
   tests.column_names_after_agg( sm.series, dfs_filt )
 
 if True: # output two data sets, not three
