@@ -47,6 +47,7 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
+* TODO RESUME at Code/sample_tables_test.py
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
