@@ -37,6 +37,10 @@ def sum_of_all_but_last_n_rows_in_groups(
     group_vars : List[str],
     df : pd.DataFrame
     ) -> pd.DataFrame:
+  """ PITFALL: Has a very similar name to a function that uses it.
+  That using function is intended to face out of this module;
+  this one would be private, if Python allowed that. """
+  print( "under: ", df.columns )
   return (
     df.copy() .
     groupby( group_vars ) .
@@ -68,6 +72,7 @@ def sum_all_but_greatest_n_rows_in_groups(
   df = ( df0 . copy() .
          sort_values( group_vars + sort_vars ) )
   indiv = last_n_in_groups( n, group_vars, df )
+  print( "top: ", df.columns )
   grouped = sum_of_all_but_last_n_rows_in_groups(
     n, group_vars, df )
   grouped = grouped.drop(
