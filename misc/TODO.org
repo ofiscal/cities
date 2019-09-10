@@ -48,8 +48,6 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO send tables to Manuela
-** TODO in sample_tables.py, after making geo_sample, not all geo areas are there
-This is visible from the two big tables that get written, before the little pivots.
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
 * TODO draw charts
