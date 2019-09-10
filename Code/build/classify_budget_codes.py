@@ -16,6 +16,20 @@ if True: # test it
                        "b" : {3,4} } )
     == { 1:"a", 2:"a", 3:"b", 4:"b"} )
 
+def invert_many_to_one_dict (d : Dict["x","y"]
+                             ) -> Dict["y",Set["x"]]:
+  acc = {}
+  for k in d.keys():
+    v = d[k]
+    if v in acc.keys():
+      acc[v] = set.union( acc[v], {k} )
+    else: acc[v] = {k}
+  return acc
+
+if True: # test it
+  assert ( invert_many_to_one_dict( {1:1,2:1,3:4} )
+           == {1:{1,2},4:{3}} )
+
 if True: # some terms I don't want to misspell
   funcionamiento = "funcionamiento"
   inversion = "inversion"
