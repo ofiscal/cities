@@ -8,7 +8,7 @@ import Code.series_metadata as ser
 import Code.draw.lib as lib
 
 
-source = "output/budget_4_top_categs_only_and_scaled/recip-" + str(c.subsample)
+source = "output/budget_7_verbose/recip-" + str(c.subsample)
 
 dfs = {}
 for s in ser.series:
@@ -18,14 +18,14 @@ for s in ser.series:
 
 for s in ser.series:
   print( s.name, s.pesos_col )
-  for muni in [15764]:
+  for muni in [15183]:
     df = dfs[s.name]
     df_muni = ( df
                 [ df["muni code"] == muni ]
-                [["year","item", s.pesos_col]] )
+                [["year","item categ", s.pesos_col]] )
     df_pivot = (
       df_muni .
-      pivot( index = "item",
+      pivot( index = "item categ",
              columns = "year",
              values = s.pesos_col ) .
       fillna( 0 ) )

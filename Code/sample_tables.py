@@ -17,7 +17,7 @@ if True: # read data
   raw = {}
   for s in ser.series:
     raw[s.name] = (
-      pd.read_csv( 
+      pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
           + "/" + s.name + ".csv"),
         encoding = "utf-16" ) .
@@ -42,11 +42,7 @@ if True: # restrict to the munis and depts we need,
         axis = "rows" ) .
       sort_values( group_vars + [s.pesos_col] ) )
 
-if True:
-  if True: # prepare output folder
-    dest = "output/sample_tables/recip-" + str(c.subsample)
-    if not os.path.exists( dest ):
-      os.makedirs(         dest )
+if True: # group all but the biggest five categories
   items_grouped = {}
   for s in ser.series:
     df = geo_sample[s.name]
@@ -58,7 +54,44 @@ if True:
         sort_vars = [s.pesos_col],
         meaningless_to_sum = ["dept code","muni code","item categ"],
         df0 = df ) )
-    items_grouped[s.name].to_csv(
-      dest + "/" + s.name + ".csv",
-      encoding = "utf-16",
-      index = False )
+    if True: # output one big table
+      dest = "output/sample_tables/recip-" + str(c.subsample)
+      if not os.path.exists( dest ):
+        os.makedirs(         dest )
+      items_grouped[s.name].to_csv(
+        dest + "/" + s.name + ".csv",
+        encoding = "utf-16",
+        index = False )
+
+def output_pivot( df0 : pd.DataFrame,
+                  dest_root : str ):
+  df = df0.reset_index() # to restore muni code and dept code
+  if True: # get our bearings
+    muni_code = str( df["muni code"].iloc[0] )
+    dept_code = str( df["dept code"].iloc[0] )
+    muni      = str( df["muni"].iloc[0] )
+    dept      = str( df["dept"].iloc[0] )
+    dest = dest_root + "/" + dept_code + "_" + muni_code
+    if not os.path.exists( dest ):
+      os.makedirs(         dest )
+  if True: # output a readme that says where this is, and a pivot table
+    ( df.pivot( index = "item categ",
+                columns = "year",
+                values = s.pesos_col ) .
+      to_csv( dest + "/data.csv",
+              encoding = "utf-16",
+              index=False ) )
+    with open( dest + "/README.txt", "w" ) as f:
+      f.write( "Dept: " + dept + "\n" +
+               "Muni: " + muni + "\n" )
+
+if True: # write many little pivot tables, one for each place:
+         # its columns are years, and its rows item categs
+  for s in ser.series:
+    df = items_grouped[s.name].copy()
+    ( df . groupby( ["dept code","muni code"] ) .
+      apply( lambda df:
+             output_pivot(
+               df0       = df,
+               dest_root = "output/sample_pivots" ) ) )
+
