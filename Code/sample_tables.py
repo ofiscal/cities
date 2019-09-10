@@ -4,17 +4,20 @@ if True:
   import pandas as pd
   #
   import Code.common as c
+  import Code.util as util
   import Code.sample_tables_defs as defs
   import Code.series_metadata as ser
 
 
 group_vars = ["dept", "muni", "year"]
 
+assert c.subsample == 1 # This program expects the full sample.
+
 if True: # read data
   raw = {}
   for s in ser.series:
     raw[s.name] = (
-      pd.read_csv(
+      pd.read_csv( 
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
           + "/" + s.name + ".csv"),
         encoding = "utf-16" ) .
@@ -47,11 +50,15 @@ if True:
   items_grouped = {}
   for s in ser.series:
     df = geo_sample[s.name]
-    items_grouped[s.name] = (
+    items_grouped[s.name] = util.to_front(
+      group_vars + ["item categ", s.pesos_col],
       defs.sum_all_but_greatest_n_rows_in_groups(
-        5, group_vars, [s.pesos_col], ["item categ"], df ) )
+        n = 5,
+        group_vars = group_vars,
+        sort_vars = [s.pesos_col],
+        meaningless_to_sum = ["dept code","muni code","item categ"],
+        df0 = df ) )
     items_grouped[s.name].to_csv(
       dest + "/" + s.name + ".csv",
       encoding = "utf-16",
       index = False )
-

@@ -35,14 +35,13 @@ if True: # test it
 def sum_of_all_but_last_n_rows_in_groups(
     n : int,
     group_vars : List[str],
-    df : pd.DataFrame
+    df0 : pd.DataFrame
     ) -> pd.DataFrame:
   """ PITFALL: Has a very similar name to a function that uses it.
   That using function is intended to face out of this module;
   this one would be private, if Python allowed that. """
-  print( "under: ", df.columns )
   return (
-    df.copy() .
+    df0.copy() .
     groupby( group_vars ) .
     apply( lambda df: df . iloc[:-n] ) .
     reset_index( drop = True ) .
@@ -72,7 +71,6 @@ def sum_all_but_greatest_n_rows_in_groups(
   df = ( df0 . copy() .
          sort_values( group_vars + sort_vars ) )
   indiv = last_n_in_groups( n, group_vars, df )
-  print( "top: ", df.columns )
   grouped = sum_of_all_but_last_n_rows_in_groups(
     n, group_vars, df )
   grouped = grouped.drop(
@@ -85,7 +83,7 @@ def sum_all_but_greatest_n_rows_in_groups(
       set(grouped.columns) ) )
   return ( pd.concat( [indiv, grouped],
                       sort = True ) .
-           sort_values( group_vars + sort_vars ) )
+           sort_values( group_vars ) )
 
 if True: # test it
   assert (
@@ -93,10 +91,9 @@ if True: # test it
       2, ["year"], ["value"], ["item code"], test_data ) .
     reset_index( drop = True ) .
     equals (
-      pd.DataFrame( { "item code" : [np.nan, 2,3,
+      pd.DataFrame( { "item code" : [2,3,np.nan,
                                      2,3,np.nan],
-                      "value" : [1,2,3,
+                      "value" : [2,3,1,
                                  12,13,21],
                       "year" : [1,1,1,
                                 2,2,2] } ) ) )
-
