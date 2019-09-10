@@ -48,6 +48,7 @@ if True: # merge geo data into main data
                on = ["muni code"] ) .
         merge( depts,
                on = ["dept code"] ) ) )
+    df["muni"] = df["muni"] . fillna("dept")
     df.to_csv( dest + "/" + s.name + ".csv",
                encoding = "utf-16",
                index = False )
