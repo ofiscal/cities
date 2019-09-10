@@ -53,6 +53,39 @@ This is visible from the two big tables that get written, before the little pivo
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
 * TODO draw charts
+** TODO pivot table output code
+Something like this:
+
+def output_pivot( df0 : pd.DataFrame,
+                  dest_root : str ):
+  df = df0.reset_index() # to restore muni code and dept code
+  if True: # get our bearings
+    muni_code = str( df["muni code"].iloc[0] )
+    dept_code = str( df["dept code"].iloc[0] )
+    muni      = str( df["muni"].iloc[0] )
+    dept      = str( df["dept"].iloc[0] )
+    dest = dest_root + "/" + dept_code + "_" + muni_code
+    if not os.path.exists( dest ):
+      os.makedirs(         dest )
+  if True: # output a readme that says where this is, and a pivot table
+    ( df.pivot( index = "item categ",
+                columns = "year",
+                values = s.pesos_col ) .
+      to_csv( dest + "/data.csv", # in this case we *do* want the index
+              encoding = "utf-16" ) )
+    with open( dest + "/README.txt", "w" ) as f:
+      f.write( "Dept: " + dept + "\n" +
+               "Muni: " + muni + "\n" )
+
+if True: # write many little pivot tables, one for each place:
+         # its columns are years, and its rows item categs
+  for s in ser.series:
+    df = items_grouped[s.name].copy()
+    ( df . groupby( ["dept code","muni code"] ) .
+      apply( lambda df:
+             output_pivot(
+               df0       = df,
+               dest_root = "output/sample_pivots" ) ) )
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
 *** "(upside down ?)En que se gasta el dinero mi municipio?"
