@@ -78,9 +78,8 @@ def output_pivot( df0 : pd.DataFrame,
     ( df.pivot( index = "item categ",
                 columns = "year",
                 values = s.pesos_col ) .
-      to_csv( dest + "/data.csv",
-              encoding = "utf-16",
-              index=False ) )
+      to_csv( dest + "/data.csv", # in this case we *do* want the index
+              encoding = "utf-16" ) )
     with open( dest + "/README.txt", "w" ) as f:
       f.write( "Dept: " + dept + "\n" +
                "Muni: " + muni + "\n" )
