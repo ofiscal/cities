@@ -20,9 +20,16 @@ if True: # for taxes, compare the output to this
                isin( codes.of_interest["ingresos"] ) ] )
   ing2 = ing2[ (ing2["muni"] == "SANTA MARTA") |
                (ing2["dept"] == "ANTIOQUIA") ]
-  ing2
+  print( "\nRAW DATA:" )
+  ing2 . sort_values( ["dept","muni","item code"] )
 
-if True: # construct some test data with those codes
+if True:
+  assert "look at gastos (disabled codebelow)" == "done"
+  assert "look at regalias" == "done"
+  assert "Use places where multiple funcionamiento codes are summed for infrastructure spending" == "done"
+  assert "Use years that require deflation" == "done"
+
+if False: # construct some test data with those codes
   for cs in [iu.edu_codes, iu.infra_codes]:
     inv2 = (inv[ inv["item code"] .
                  isin( cs ) ] )
@@ -32,9 +39,5 @@ if True: # construct some test data with those codes
     ( gastos
       [(gastos["muni"] == "SANTA MARTA") |
        (gastos["dept"] == "ANTIOQUIA") ] .
-      sort_values( ["muni","dept"] ) )
+      sort_values( ["dept","muni","item code"] ) )
 
-if True:
-  assert "look at regalias" == "done"
-  assert "Use places where multiple funcionamiento codes are summed for infrastructure spending" == "done"
-  assert "Use years that require deflation" == "done"

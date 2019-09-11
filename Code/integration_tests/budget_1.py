@@ -2,34 +2,35 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.series_metadata as ser
+  import Code.build.sisfut_metadata as sm
   import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
 
-s2_dfs = {} # stage 2 (build/budget_2_subsample) data frames
-for s in ser.series:
-  s2_dfs[s.name] = uk.merge_geo(
+s1_dfs = {} # stage 1 (build/budget_1) data frames
+for s in sm.series:
+  s1_dfs[s] = uk.merge_geo(
     pd.read_csv(
-      "output/budget_2_subsample/recip-1/" + s.name + ".csv",
+      "output/budget_1/" + s + ".csv",
       encoding = "utf-16" ) )
 
-for s in ser.series:
-  print( s2_dfs[s.name].columns )
+for s in sm.series:
+  print( s1_dfs[s].columns )
 
 if True: # build tax subset
-  df = s2_dfs["ingresos"]
-  s2_ing = (
+  df = s1_dfs["ingresos"]
+  s1_ing = (
     df.copy()
     [   ( df["item code"] .
           isin( codes.of_interest["ingresos"] ) )
       & (   (                df["muni"] == "SANTA MARTA" )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
-  s2_ing["muni"] = s2_ing["muni"].fillna(-1)
-  ( s2_ing
+  s1_ing["muni"] = s1_ing["muni"].fillna(-1)
+  print( "\nSTAGE 1:" )
+  ( s1_ing
     [["dept","muni","item code","item recaudo"]] .
     sort_values( ["dept","muni","item code"] ) )
-  ( s2_ing
+  ( s1_ing
     [["dept","muni","item code","item recaudo"]] .
     groupby( [ "dept","muni","item code" ] ) .
     agg( sum ) .
