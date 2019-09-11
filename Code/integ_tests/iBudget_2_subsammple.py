@@ -22,10 +22,12 @@ if True: # build tax subset
     df.copy()
     [   ( df["item code"] .
           isin( codes.of_interest["ingresos"] ) )
+      & ( df["year"] == 2018 )
       & (   (                df["muni"] == "SANTA MARTA" )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
   s2_ing["muni"] = s2_ing["muni"].fillna(-1)
+  print( "\nDATA: budget_2_subsample:" )
   ( s2_ing
     [["dept","muni","item code","item recaudo"]] .
     sort_values( ["dept","muni","item code"] ) )

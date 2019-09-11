@@ -48,7 +48,9 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO RESUME at Code/sample_tables_test.py
-For ingresos, results from the integration test are *usually* as big in stage 2 as stage 1 -- but for TI.B, they are not exactly that.
+** comparing integ_tests/
+raw is consistent with budget_2
+
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
