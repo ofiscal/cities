@@ -37,21 +37,3 @@ if True: # for taxes, compare the output to this
   print( "\nRAW DATA:" )
   ing2 . sort_values( ["dept","muni","item code"] )
 
-if True:
-  assert "look at gastos (disabled codebelow)" == "done"
-  assert "look at regalias" == "done"
-  assert "Use places where multiple funcionamiento codes are summed for infrastructure spending" == "done"
-  assert "Use years that require deflation" == "done"
-
-if False: # construct some test data with those codes
-  for cs in [iu.edu_codes, iu.infra_codes]:
-    inv2 = (inv[ inv["item code"] .
-                 isin( cs ) ] )
-    fun2 = (fun[ fun["item code"] .
-                 isin( cs ) ] )
-    gastos = pd.concat( [inv2, fun2], axis = "rows" )
-    ( gastos
-      [(gastos["muni"] == "SANTA MARTA") |
-       (gastos["dept"] == "ANTIOQUIA") ] .
-      sort_values( ["dept","muni","item code"] ) )
-

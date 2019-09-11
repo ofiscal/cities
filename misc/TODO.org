@@ -51,11 +51,29 @@ These are ordered by time.
 ** comparing integ_tests/
 raw: good (consistent with budget_2)
 budget_2: good (consistent with budget_3)
+budget_3: good (consistent with budget_4)
 buget_7: what is the ingresos row with a NaN category?
   and why is it only there for the muni, not the dept?
+** TODO more
+*** look at gastos (code below)
+  for cs in [iu.edu_codes, iu.infra_codes]:
+    inv2 = (inv[ inv["item code"] .
+                 isin( cs ) ] )
+    fun2 = (fun[ fun["item code"] .
+                 isin( cs ) ] )
+    gastos = pd.concat( [inv2, fun2], axis = "rows" )
+    ( gastos
+      [(gastos["muni"] == "SANTA MARTA") |
+       (gastos["dept"] == "ANTIOQUIA") ] .
+      sort_values( ["dept","muni","item code"] ) )
+*** look at regalias
+*** Use places where multiple funcionamiento codes are summed for infrastructure spending
+*** Use 2013
+it requires both deflation and scaling by 1000
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
+* TODO add regalias to departments
 * TODO draw charts
 ** TODO pivot table output code
 Something like this:
