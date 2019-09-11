@@ -27,12 +27,11 @@ if True: # get, test data
   assert munis.shape == (1101,2)
   assert pd.isnull(munis).any().any() == False
 
-
 def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
   return (
     df .
     merge( munis,
-           how = "left", # b/c in geo, muni code is never -1
+           how = "left", # b/c muni code is can be missing (for dept data)
            on = ["muni code"] ) .
     merge( depts,
            how = "left", # this is unnecessarily cautious,
