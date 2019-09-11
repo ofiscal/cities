@@ -1,10 +1,9 @@
-from typing import Set
-import re
-
-import numpy as np
-import pandas as pd
-
-import Code.build.sisfut_metadata as sm
+if True:
+  from typing import Set
+  import numpy as np
+  import pandas as pd
+  #
+  import Code.build.sisfut_metadata as sm
 
 
 def collect_raw( source : str,
@@ -28,3 +27,4 @@ def collect_raw( source : str,
       shuttle["year"] = year
       dfs[series] = dfs[series] . append(shuttle)
   return dfs
+

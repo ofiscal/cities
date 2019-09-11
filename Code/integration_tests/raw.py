@@ -13,7 +13,21 @@ if True:
   import Code.build.classify_budget_codes as codes
 
 
-[ing,inv,fun] = iu.get_2018_data()
+if True: # get 2018 data
+  common = { "Nombre DANE Departamento" : "dept",
+             "Nombre DANE Municipio" : "muni",
+             "Código Concepto" : "item code" }
+  raw_2018 = "data/sisfut/original_csv/2018_"
+  def grab( filename: str,
+                money_column: str
+              ) -> pd.DataFrame:
+    return iu.geo_select(
+      pd.read_csv( raw_2018 + filename + ".csv",
+                   usecols = list(common.keys()) + [money_column] ) .
+      rename( columns = dict( common, **{money_column:"money"} ) ) )
+  ing = grab( "ingresos", "Recaudo" )
+  inv = grab( "inversion", "Obligaciones" )
+  fun = grab( "funcionamiento", "Obligaciones" )
 
 if True: # for taxes, compare the output to this
   ing2 = (ing[ ing["item code"] .
