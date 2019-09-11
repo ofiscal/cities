@@ -1,14 +1,16 @@
-# What this does: aggregate spending observations
-#   within (muni,year,item code) triples,
-#   using the broad item categories defined in classify_budget_codes.py
-#   It also replaces missing muni values with -1,
-#   because rows with a missing group variable disappear
-#   upon using pandas.DataFrame.groupby().
-#
-# Why aggregate: For most of the data, a given (muni, year, item)
-#   triple identifies exactly one row -- but sometimes it does not,
-#   because that kind of spending is divided by fuente and ejecutor,
-#   as demonstrated in explore/duplicate_rows.py.
+# What this does:
+#  (1) Aggregate spending observations within
+#    (muni,year,item code) triples,
+#    using the broad item categories from classify_budget_codes.py
+#    Why: For most of the data, a given (muni, year, item)
+#    triple identifies exactly one row -- but sometimes it does not,
+#    because spending on an item can be divided by fuente and ejecutor,
+#    as demonstrated in explore/duplicate_rows.py.
+#  (2) Replace missing muni values with -1,
+#    because rows with a missing group variable disappear
+#    upon using pandas.DataFrame.groupby().
+#  (3) Subtract ingresos category TI.A.2.6 (transferencias)
+#    from TI.A (propios).
 
 if True:
   import os

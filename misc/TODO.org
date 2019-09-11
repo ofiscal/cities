@@ -49,8 +49,8 @@ These are ordered by time.
 
 * TODO RESUME at Code/sample_tables_test.py
 ** comparing integ_tests/
-raw: good
-  (consistent with budget_2)
+raw: good (consistent with budget_2)
+budget_2: good (consistent with budget_3)
 buget_7: what is the ingresos row with a NaN category?
   and why is it only there for the muni, not the dept?
 * TODO send tables to Manuela
