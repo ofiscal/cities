@@ -24,7 +24,7 @@ regalias = (
                encoding="utf-16" ) .
   rename( columns = { "regalias" :
                       ser.series_dict["ingresos"].pesos_col } ) )
-regalias["item catege"] = "regalías"
+regalias["item categ"] = "regalías"
 
 dfs["ingresos"] = pd.DataFrame.append( dfs["ingresos"],
                                        regalias,
