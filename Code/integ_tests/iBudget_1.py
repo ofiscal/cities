@@ -23,6 +23,7 @@ if True: # build tax subset
     df.copy()
     [   ( df["item code"] .
           isin( codes.of_interest["ingresos"] ) )
+      & ( df["year"] == 2018 )
       & (   (                df["muni"] == "SANTA MARTA" )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
