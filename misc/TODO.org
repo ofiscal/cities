@@ -52,6 +52,7 @@ These are ordered by time.
 raw: good (consistent with budget_2)
 budget_2: good (consistent with budget_3)
 budget_3: good (consistent with budget_4)
+budget_4: good (consistent with budget_5)
 buget_7: what is the ingresos row with a NaN category?
   and why is it only there for the muni, not the dept?
 ** TODO more

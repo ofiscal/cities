@@ -8,13 +8,16 @@ if True:
 
 s5_dfs = {} # stage 5 (build/budget_5_add_regalias) data frames
 for s in ser.series:
-  s5_dfs[s.name] = uk.merge_geo(
+  df = uk.merge_geo(
     pd.read_csv(
       "output/budget_5_add_regalias/recip-1/" + s.name + ".csv",
       encoding = "utf-16" ) )
+  df["muni"] = df["muni"].fillna("dept")
+  s5_dfs[s.name] = df
 
 for s in ser.series:
-  print( s5_dfs[s.name].columns )
+  print( "dept" in s5_dfs[s.name]["muni"].unique() )
+  # print( s5_dfs[s.name].columns )
 
 if True: # build tax subset
   df = s5_dfs["ingresos"]
