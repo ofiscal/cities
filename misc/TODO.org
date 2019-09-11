@@ -67,14 +67,15 @@ buget_7: what is the ingresos row with a NaN category?
       [(gastos["muni"] == "SANTA MARTA") |
        (gastos["dept"] == "ANTIOQUIA") ] .
       sort_values( ["dept","muni","item code"] ) )
-*** look at regalias
 *** Use places where multiple funcionamiento codes are summed for infrastructure spending
+
+*** look at row numbers
+
 *** Use 2013
 it requires both deflation and scaling by 1000
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float
-* TODO add regalias to departments
 * TODO draw charts
 ** TODO pivot table output code
 Something like this:
