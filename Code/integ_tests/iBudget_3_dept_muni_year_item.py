@@ -13,8 +13,9 @@ smaller = {} # a spacetime subset of that input data
 for name in ["ingresos","gastos"]:
   df = uk.merge_geo(
     pd.read_csv(
-      "output/budget_3_dept_muni_year_item/recip-1/" + name + ".csv",
+      "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
       encoding = "utf-16" ) )
+  s3_dfs[name] = df
   df["item categ"] = (
     df["item categ"] .
     apply( lambda x: x[0:20] ) )

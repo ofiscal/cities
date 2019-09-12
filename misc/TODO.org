@@ -56,17 +56,7 @@ budget_4: good (consistent with budget_5)
 budget_5: good (consistent with budget_6)
 budget_6: good (consistent with budget_7)
 ** TODO more
-*** look at gastos (code below)
-  for cs in [iu.edu_codes, iu.infra_codes]:
-    inv2 = (inv[ inv["item code"] .
-                 isin( cs ) ] )
-    fun2 = (fun[ fun["item code"] .
-                 isin( cs ) ] )
-    gastos = pd.concat( [inv2, fun2], axis = "rows" )
-    ( gastos
-      [(gastos["muni"] == "SANTA MARTA") |
-       (gastos["dept"] == "ANTIOQUIA") ] .
-      sort_values( ["dept","muni","item code"] ) )
+*** look at gastos
 *** test changes in row numbers
 *** budget item aggregation looks good
 I compared these to the aggregate results from budget_3.
