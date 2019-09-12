@@ -3,6 +3,8 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
+pd.set_option('display.max_rows', 500)
+
 if True:
   year = 2018
   muni = "SANTA MARTA"

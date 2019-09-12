@@ -14,6 +14,8 @@ if True:
   import Code.series_metadata as ser
 
 
+name_of_data_source = "raw data"
+
 if True: # get 2018 data
   col_map = { "Nombre DANE Departamento" : "dept",
              "Nombre DANE Municipio" : "muni",
@@ -24,19 +26,34 @@ if True: # get 2018 data
   def grab( filename: str,
                 money_column: str
               ) -> pd.DataFrame:
-    return st.geo_select(
+    df = st.geo_select(
       pd.read_csv( raw_yr + filename + ".csv",
                    usecols = list(col_map.keys()) + [money_column] ) .
       rename( columns = dict( col_map, **{money_column:"money"} ) ) )
+    df["muni"] = df["muni"].fillna(-1)
+    return df
   ing = grab( "ingresos", "Recaudo" )
   inv = grab( "inversion", "Obligaciones" )
   fun = grab( "funcionamiento", "Obligaciones" )
 
-if True: # for taxes, compare the output to this
-  ing2 = (ing[ ing["item code"] .
-               isin( codes.of_interest["ingresos"] ) ] )
-  ing2 = ing2[ (ing2["muni"] == iu.muni) |
-               (ing2["dept"] == iu.dept) ]
-  print( "\nRAW DATA:" )
-  ing2 . sort_values( ["dept","muni","item code"] )
+smaller = {}
+for (name,source) in [
+    ("ingresos",ing),
+    ("inversion",inv),
+    ("funcionamiento",fun)
+    ]:
+  df = ( source[ source["item code"] .
+                 isin( codes.of_interest[name] ) ] )
+  df = ( df[ (df["muni"] == iu.muni) |
+             (df["dept"] == iu.dept) ] )
+  smaller[name] = df
+  print(
+    "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
+    df . sort_values( ["dept","muni","item code"] ) )
+  print(
+    "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
+    ( df . groupby( [ "dept","muni","item code" ] ) .
+      agg( sum ) .
+      sort_values( ["dept","muni","item code"] ) ) )
+
 
