@@ -28,10 +28,11 @@ if True: # build tax subset
           | (   ( df["muni"] == "dept" )
               & ( df["dept"] == "ANTIOQUIA" ) ) ) ] )
   s5_ing["muni"] = s5_ing["muni"].fillna(-1)
-  print( "\nDATA: budget_5_add_regalias" )
+  print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
   ( s5_ing
     [["dept","muni","item categ","item recaudo"]] .
     sort_values( ["dept","muni","item categ"] ) )
+  print( "\nDATA: budget_5_add_regalias" )
   ( s5_ing
     [["dept","muni","item categ","item recaudo"]] .
     groupby( [ "dept","muni","item categ" ] ) .

@@ -48,13 +48,13 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO RESUME at Code/sample_tables_test.py
-** comparing integ_tests/
+** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia
 raw: good (consistent with budget_2)
 budget_2: good (consistent with budget_3)
 budget_3: good (consistent with budget_4)
 budget_4: good (consistent with budget_5)
-buget_7: what is the ingresos row with a NaN category?
-  and why is it only there for the muni, not the dept?
+budget_5: good (consistent with budget_6)
+budget_6: good (consistent with budget_7)
 ** TODO more
 *** look at gastos (code below)
   for cs in [iu.edu_codes, iu.infra_codes]:
@@ -68,9 +68,7 @@ buget_7: what is the ingresos row with a NaN category?
        (gastos["dept"] == "ANTIOQUIA") ] .
       sort_values( ["dept","muni","item code"] ) )
 *** Use places where multiple funcionamiento codes are summed for infrastructure spending
-
-*** look at row numbers
-
+*** test changes in row numbers
 *** Use 2013
 it requires both deflation and scaling by 1000
 * TODO send tables to Manuela
