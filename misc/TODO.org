@@ -67,10 +67,24 @@ budget_6: good (consistent with budget_7)
       [(gastos["muni"] == "SANTA MARTA") |
        (gastos["dept"] == "ANTIOQUIA") ] .
       sort_values( ["dept","muni","item code"] ) )
-*** Use places where multiple funcionamiento codes are summed for infrastructure spending
 *** test changes in row numbers
-*** Use 2013
+*** budget item aggregation looks good
+I compared these to the aggregate results from budget_3.
+infrastructure codes in budget_2:
+  for Antioquia:
+    '1.3.11' = 0
+    'A.15' = 6.581700e+10
+    'A.7' = 3.091706e+10
+    'A.9' = 5.013389e+11
+    6.581700e+10 + 3.091706e+10 + 5.013389e+11 = 5.9807296e11
+  for Santa Marta:
+    1.607727e+09           A.15
+    1.560000e+09            A.7
+    2.992319e+10            A.9
+    1.607727e+09 + 1.560000e+09 + 2.992319e+10 = 3.3090917e10
+*** Use 2013, edu (rather than infra) codes
 it requires both deflation and scaling by 1000
+And if needed, switch to a place where multiple funcionamiento codes are summed for infrastructure spending
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float

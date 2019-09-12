@@ -7,30 +7,40 @@ if True:
   import Code.integ_tests.integ_util as iu
   import Code.series_metadata as ser
 
+name_of_data_source = "budget_3_dept_muni_year_item"
 s3_dfs = {} # stage 3 (build/budget_3_dept_muni_year_item) data frames
-for s in ser.series:
-  s3_dfs[s.name] = uk.merge_geo(
+smaller = {} # a spacetime subset of that input data
+for name in ["ingresos","gastos"]:
+  df = uk.merge_geo(
     pd.read_csv(
-      "output/budget_3_dept_muni_year_item/recip-1/" + s.name + ".csv",
+      "output/budget_3_dept_muni_year_item/recip-1/" + name + ".csv",
       encoding = "utf-16" ) )
-
-if True: # build tax subset
-  df = s3_dfs["ingresos"]
-  s3_ing = (
+  df["item categ"] = (
+    df["item categ"] .
+    apply( lambda x: x[0:20] ) )
+  smaller[name] = (
     df.copy()
     [   ( df["year"] == iu.year )
       & (   (                df["muni"] == iu.muni )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == iu.dept ) ) ) ] )
-  s3_ing["muni"] = s3_ing["muni"].fillna(-1)
-  print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
-  ( s3_ing
-    [["dept","muni","item categ","item recaudo"]] .
-    sort_values( ["dept","muni","item categ"] ) )
-  print( "\nDATA: budget_3_dept_muni_year_item:" )
-  ( s3_ing
-    [["dept","muni","item categ","item recaudo"]] .
-    groupby( [ "dept","muni","item categ" ] ) .
-    agg( sum ) .
-    sort_values( ["dept","muni","item categ"] ) )
+  smaller[name]["muni"] = smaller[name]["muni"].fillna(-1)
+
+if True: # report
+  for (name,money_column) in [
+      ("ingresos","item recaudo"),
+      ("gastos","item oblig") ]:
+    print(
+      "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
+      ( smaller[name]
+        [["dept","muni",money_column,"item categ"]] .
+        sort_values( ["dept","muni","item categ"] ) ) )
+    print(
+      "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
+      ( smaller[name] .
+        groupby( [ "dept","muni","item categ" ] ) .
+        agg( sum ) .
+        reset_index()
+        [["dept","muni",money_column,"item categ"]] .
+        sort_values( ["dept","muni","item categ"] ) ) )
 

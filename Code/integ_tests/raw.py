@@ -31,7 +31,7 @@ if True: # get 2018 data
                    usecols = list(col_map.keys()) + [money_column] ) .
       rename( columns = dict( col_map, **{money_column:"money"} ) ) )
     df["muni"] = df["muni"].fillna(-1)
-    return df
+    return df[["dept","muni","money","item code"]]
   ing = grab( "ingresos", "Recaudo" )
   inv = grab( "inversion", "Obligaciones" )
   fun = grab( "funcionamiento", "Obligaciones" )
@@ -54,6 +54,7 @@ for (name,source) in [
     "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
     ( df . groupby( [ "dept","muni","item code" ] ) .
       agg( sum ) .
+      reset_index() .
       sort_values( ["dept","muni","item code"] ) ) )
 
 
