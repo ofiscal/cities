@@ -7,7 +7,7 @@ if True:
   from typing import List, Set, Dict
   #
   import Code.common as c
-  import Code.integration_tests.integ_util as iu
+  import Code.sample_tables_defs as st
   import Code.series_metadata as ser
   import Code.sample_tables_defs as defs
   import Code.build.classify_budget_codes as codes
@@ -21,7 +21,7 @@ if True: # get 2018 data
   def grab( filename: str,
                 money_column: str
               ) -> pd.DataFrame:
-    return iu.geo_select(
+    return st.geo_select(
       pd.read_csv( raw_2018 + filename + ".csv",
                    usecols = list(common.keys()) + [money_column] ) .
       rename( columns = dict( common, **{money_column:"money"} ) ) )

@@ -3,25 +3,6 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
-if True: # geo-narrowing a sample
-  muni_sample = { "BOGOTÁ, D.C.",
-                  "SANTA MARTA",
-                  "FILANDIA",
-                  "VALLE DEL GUAMUEZ" }
-  #
-  dept_sample = { "ANTIOQUIA",
-                  "CESAR",
-                  "CHOCÓ",
-                  "ARAUCA" }
-  #
-  def geo_select( df : pd.DataFrame ) -> pd.DataFrame:
-    return pd.concat(
-      [ df[   df["muni"] .
-              isin( muni_sample ) ],
-        df[   pd.isnull(df["muni"] ) &
-            ( df["dept"].isin( dept_sample ) ) ] ],
-      axis = "rows" )
-
 if True: # determine which budget categories are convenient for testing,
          # i.e. have the fewest components
   if False: # research

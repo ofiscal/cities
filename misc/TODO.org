@@ -56,6 +56,9 @@ budget_4: good (consistent with budget_5)
 budget_5: good (consistent with budget_6)
 budget_6: good (consistent with budget_7)
 ** TODO more
+*** factor out functions
+select year
+select region
 *** look at gastos (code below)
   for cs in [iu.edu_codes, iu.infra_codes]:
     inv2 = (inv[ inv["item code"] .

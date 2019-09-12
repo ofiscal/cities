@@ -13,9 +13,6 @@ for s in ser.series:
       "output/budget_2_subsample/recip-1/" + s.name + ".csv",
       encoding = "utf-16" ) )
 
-for s in ser.series:
-  print( s2_dfs[s.name].columns )
-
 if True: # build tax subset
   df = s2_dfs["ingresos"]
   s2_ing = (

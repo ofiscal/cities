@@ -3,6 +3,25 @@ if True:
   import numpy as np
   import pandas as pd
 
+if True: # geo-narrowing a sample
+  muni_sample = { "BOGOTÁ, D.C.",
+                  "SANTA MARTA",
+                  "FILANDIA",
+                  "VALLE DEL GUAMUEZ" }
+  #
+  dept_sample = { "ANTIOQUIA",
+                  "CESAR",
+                  "CHOCÓ",
+                  "ARAUCA" }
+  #
+  def geo_select( df : pd.DataFrame ) -> pd.DataFrame:
+    return pd.concat(
+      [ df[   df["muni"] .
+              isin( muni_sample ) ],
+        df[   pd.isnull(df["muni"] ) &
+            ( df["dept"].isin( dept_sample ) ) ] ],
+      axis = "rows" )
+
 test_data = ( # for safety, these names are similar but intentionally not
               # identical to the ones used in production
   pd.DataFrame( {
