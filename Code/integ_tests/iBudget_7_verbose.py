@@ -2,9 +2,10 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.series_metadata as ser
-  import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
+  import Code.build.use_keys as uk
+  import Code.integ_tests.integ_util as iu
+  import Code.series_metadata as ser
 
 s7_dfs = {} # stage 7 (build/budget_7_verbose) data frames
 for s in ser.series:
@@ -16,10 +17,10 @@ if True: # build tax subset
   df = s7_dfs["ingresos"]
   s7_ing = (
     df.copy()
-    [   ( df["year"] == 2018 )
-      & (   (     df["muni"] == "SANTA MARTA" )
+    [   ( df["year"] == iu.year )
+      & (   (     df["muni"] == iu.muni )
           | (   ( df["muni"] == "dept" )
-              & ( df["dept"] == "ANTIOQUIA" ) ) ) ] )
+              & ( df["dept"] == iu.dept ) ) ) ] )
   print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
   ( s7_ing
     [["dept","muni","item categ","item recaudo"]] .

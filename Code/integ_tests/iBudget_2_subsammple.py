@@ -2,9 +2,10 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.series_metadata as ser
-  import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
+  import Code.build.use_keys as uk
+  import Code.integ_tests.integ_util as iu
+  import Code.series_metadata as ser
 
 s2_dfs = {} # stage 2 (build/budget_2_subsample) data frames
 for s in ser.series:
@@ -19,15 +20,16 @@ if True: # build tax subset
     df.copy()
     [   ( df["item code"] .
           isin( codes.of_interest["ingresos"] ) )
-      & ( df["year"] == 2018 )
-      & (   (                df["muni"] == "SANTA MARTA" )
+      & ( df["year"] == iu.year )
+      & (   (                df["muni"] == iu.muni )
           | (   ( pd.isnull( df["muni"] ) )
-              & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
+              & (            df["dept"] == iu.dept ) ) ) ] )
   s2_ing["muni"] = s2_ing["muni"].fillna(-1)
-  print( "\nDATA: budget_2_subsample:" )
+  print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
   ( s2_ing
     [["dept","muni","item code","item recaudo"]] .
     sort_values( ["dept","muni","item code"] ) )
+  print( "\nDATA: budget_2_subsample:" )
   ( s2_ing
     [["dept","muni","item code","item recaudo"]] .
     groupby( [ "dept","muni","item code" ] ) .

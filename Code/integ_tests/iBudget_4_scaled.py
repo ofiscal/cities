@@ -2,9 +2,10 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.series_metadata as ser
-  import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
+  import Code.build.use_keys as uk
+  import Code.integ_tests.integ_util as iu
+  import Code.series_metadata as ser
 
 s4_dfs = {} # stage 4 (build/budget_4_scaled) data frames
 for s in ser.series:
@@ -13,17 +14,14 @@ for s in ser.series:
       "output/budget_4_scaled/recip-1/" + s.name + ".csv",
       encoding = "utf-16" ) )
 
-for s in ser.series:
-  print( s4_dfs[s.name].columns )
-
 if True: # build tax subset
   df = s4_dfs["ingresos"]
   s4_ing = (
     df.copy()
-    [   ( df["year"] == 2018 )
-      & (   (                df["muni"] == "SANTA MARTA" )
+    [   ( df["year"] == iu.year )
+      & (   (                df["muni"] == iu.muni )
           | (   ( pd.isnull( df["muni"] ) )
-              & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
+              & (            df["dept"] == iu.dept ) ) ) ] )
   s4_ing["muni"] = s4_ing["muni"].fillna(-1)
   print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
   ( s4_ing
