@@ -26,7 +26,7 @@ if True: # get 2018 data
   def grab( filename: str,
                 money_column: str
               ) -> pd.DataFrame:
-    df = st.geo_select(
+    df = (
       pd.read_csv( raw_yr + filename + ".csv",
                    usecols = list(col_map.keys()) + [money_column] ) .
       rename( columns = dict( col_map, **{money_column:"money"} ) ) )
@@ -36,25 +36,47 @@ if True: # get 2018 data
   inv = grab( "inversion", "Obligaciones" )
   fun = grab( "funcionamiento", "Obligaciones" )
 
-smaller = {}
-for (name,source) in [
-    ("ingresos",ing),
-    ("inversion",inv),
-    ("funcionamiento",fun)
+smaller,agged = {},{}
+for (name,df) in [
+    ("ingresos"       ,ing.copy()),
+    ("inversion"      ,inv.copy()),
+    ("funcionamiento" ,fun.copy())
     ]:
-  df = ( source[ source["item code"] .
-                 isin( codes.of_interest[name] ) ] )
-  df = ( df[ (df["muni"] == iu.muni) |
-             (df["dept"] == iu.dept) ] )
+  df = ( df[ df["item code"] .
+             isin( codes.of_interest[name] ) ] )
+  df = df[ (         df["muni"] == iu.muni )
+             | (   ( df["muni"] == -1 )
+                 & ( df["dept"] == iu.dept) ) ]
   smaller[name] = df
+  agged[name] = ( df . groupby( [ "dept","muni","item code" ] ) .
+                  agg( sum ) .
+                  reset_index() )
+
+if True: # find a muni that aggregates edu or infra codes
+  edu_or_infra = {}
+  for (name,src) in [("inversion",inv),
+               ("funcionamiento",fun)]:
+    df = src.copy()
+    df["one"] = 1
+    df = df[ df["item code"] .
+             isin( set.union(
+                     codes.categs_to_code_sets[codes.edu],
+                     codes.categs_to_code_sets[codes.infra] ) ) ]
+    df = ( df . groupby( ["muni","dept","item code"] ) .
+           agg( sum ) . reset_index() )
+    edu_or_infra[name] = df
+    # The inversion data has, for all space cells in 2014,
+    # no rows with duplicate item codes. For the funcionamiento data,
+    # muni ARACATACA and dept SANTANDER (and some others) do.
+    # Run the following to see the preceding.
+    # >>> x = edu_or_infra["funcionamiento"]
+    # >>> x[ x["one"] > 1 ]
+
+for name in ["ingresos","inversion","funcionamiento"]:
   print(
     "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
-    df . sort_values( ["dept","muni","item code"] ) )
+    smaller[name] . sort_values( ["dept","muni","item code"] ) )
   print(
     "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
-    ( df . groupby( [ "dept","muni","item code" ] ) .
-      agg( sum ) .
-      reset_index() .
-      sort_values( ["dept","muni","item code"] ) ) )
-
+    agged[name] .   sort_values( ["dept","muni","item code"] ) )
 

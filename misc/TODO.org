@@ -56,7 +56,6 @@ budget_4: good (consistent with budget_5)
 budget_5: good (consistent with budget_6)
 budget_6: good (consistent with budget_7)
 ** TODO more
-*** look at gastos
 *** test changes in row numbers
 *** budget item aggregation looks good
 I compared these to the aggregate results from budget_3.
