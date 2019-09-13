@@ -16,6 +16,7 @@ if True: # build data
     df = pd.read_csv(
         "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
         encoding = "utf-16" )
+    print( len(df) )
     s7_dfs[name] = df.copy()
     df["item categ"] = ( df["item categ"] .
                          apply( lambda x: x[0:20] ) )

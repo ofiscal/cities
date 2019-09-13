@@ -57,9 +57,38 @@ budget_5: good (consistent with budget_6)
 budget_6: good (consistent with budget_7)
 ** DONE scary - regalias sum was not what I expected
 see explore/bad_regalias_sum.py
-** TODO more
-*** test changes in row numbers
-*** budget item aggregation looks good
+** DONE row numbers look good
+*** iBudget_1 has row numbers consistent with wc on the raw data
+['ingresos', 'inversion', 'funcionamiento'] ->
+993934
+1750676
+1454498
+  with the exception of about 90 missing rows already accounted for
+*** in iBudget_1p5 they shrink dramatically
+which is good because budget_1p5
+"restricts the data to the budget items of interest."
+>>> for s in ["ingresos","gastos"]:
+...   print( len(s1p5_dfs[s]) )
+...
+23692
+878518
+*** in iBudget_2_subsammple they are unchanged
+23692
+878518
+*** in iBudget_3 they shrink for gastos and not ingresos
+Which is good because the ingreso codes are not aggregated, while gastos are.
+23692
+102340
+*** iBuget_4_scaled: unchanged
+23692
+102340
+*** iBudget_5_add_regalias: about 30% more ingresos
+30496
+102340
+*** iBudget_7_verbose: unchanged
+30496
+102340
+** DONE budget item aggregation looks good
 To see why, compare these to the corresponding results from budget_3,
 which is the first data set in which the codes are aggregated into categories.
 
@@ -90,9 +119,6 @@ which is the first data set in which the codes are aggregated into categories.
     1.560000e+09            A.7
     2.992319e+10            A.9
     1.607727e+09 + 1.560000e+09 + 2.992319e+10 = 3.3090917e10
-*** Use 2013, edu (rather than infra) codes
-it requires both deflation and scaling by 1000
-And if needed, switch to a place where multiple funcionamiento codes are summed for infrastructure spending
 * TODO send tables to Manuela
 ** TODO consider the possibility that there are fewer than 5 items
 ** TODO muni code should be int, not float

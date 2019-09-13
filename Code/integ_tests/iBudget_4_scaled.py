@@ -18,6 +18,7 @@ if True: # build data
         "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
         encoding = "utf-16" ) )
     s4_dfs[name] = df.copy()
+    print( len(s4_dfs[name]) )
     df["item categ"] = ( df["item categ"] .
                          apply( lambda x: x[0:20] ) )
     df = (

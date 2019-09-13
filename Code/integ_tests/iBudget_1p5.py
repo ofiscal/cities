@@ -7,17 +7,17 @@ if True:
   import Code.integ_tests.integ_util as iu
   import Code.series_metadata as ser
 
-name_of_data_source = "budget_2_subsample"
+name_of_data_source = "budget_1p5"
 
-s2_dfs = {} # stage 2 (build/budget_2_subsample) data frames
+s1p5_dfs = {} # stage 1.5 (build/budget_1p5) data frames
 for name in ["ingresos","gastos"]:
-  s2_dfs[name] = uk.merge_geo(
+  s1p5_dfs[name] = uk.merge_geo(
     pd.read_csv(
-      "output/budget_2_subsample/recip-1/" + name + ".csv",
+      "output/budget_1p5/" + name + ".csv",
       encoding = "utf-16" ) )
 
 for s in ["ingresos","gastos"]:
-  print( len(s2_dfs[s]) )
+  print( len(s1p5_dfs[s]) )
 
 if True:
   smaller = {} # a spacetime subset of that input data
@@ -26,7 +26,7 @@ if True:
       ("gastos",set.union(
         codes.of_interest["inversion"],
         codes.of_interest["funcionamiento"] ) ) ]:
-    df = s2_dfs[name]
+    df = s1p5_dfs[name]
     smaller[name] = (
       df.copy()
       [   ( df["item code"] .

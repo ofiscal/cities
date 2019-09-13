@@ -3,7 +3,7 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
-pd.set_option('display.max_rows', 500)
+# pd.set_option('display.max_rows', 500)
 
 if True: # 2014 is nice because it requires scaling by 1000 and deflation.
   # Muni ARACATACA and dept SANTANDER are nice because both include

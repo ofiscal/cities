@@ -15,7 +15,7 @@ for s in sm.series:
       encoding = "utf-16" ) )
 
 for s in sm.series:
-  print( s1_dfs[s].columns )
+  print( len(s1_dfs[s]) )
 
 if True: # build tax subset
   df = s1_dfs["ingresos"]

@@ -5,14 +5,14 @@
 # (100, 1000) in the municipalities alone,
 # then add departments back in just before writing to disk.
 
-import os
-import pandas as pd
-import numpy as np
-
-import Code.build.budget_1p5_tests as test
-import Code.build.budget_2_subsample_defs as defs
-import Code.series_metadata as ser
-
+if True:
+  import os
+  import pandas as pd
+  import numpy as np
+  
+  import Code.build.budget_1p5_tests as test
+  import Code.build.budget_2_subsample_defs as defs
+  import Code.series_metadata as ser
 
 if not os.path.exists( defs.top_dest ):
   os.makedirs( defs.top_dest )
