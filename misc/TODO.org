@@ -47,7 +47,7 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO RESUME at Code/sample_tables_test.py
+* DONE integration tests for Code/build/budget_*.py
 ** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia
 raw: good (consistent with budget_2)
 budget_2: good (consistent with budget_3)

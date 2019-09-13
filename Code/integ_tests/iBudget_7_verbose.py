@@ -44,5 +44,9 @@ if True: # report
         agg( sum ) .
         reset_index()
         [["dept","muni",money_column,"item categ"]] .
-        sort_values( ["dept","muni","item categ"] ) ) )
+        # This line is useful when comparing against earlier products.
+          # sort_values( ["dept","muni","item categ"] ) ) )
+        # The next two lines are useful when comparing against later ones.
+          sort_values( ["dept","muni",money_column],
+                       ascending = False ) ) )
 

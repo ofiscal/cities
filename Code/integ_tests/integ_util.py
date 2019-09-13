@@ -5,13 +5,20 @@ if True:
 
 # pd.set_option('display.max_rows', 500)
 
-if True: # 2014 is nice because it requires scaling by 1000 and deflation.
-  # Muni ARACATACA and dept SANTANDER are nice because both include
-  # multiple disaggregated observations of the same education code.
-  # See integ_tests/raw.py for a proof.
-  year = 2014        # was (ala sample_tables.py): 2018
-  muni = "ARACATACA" # was (ala sample_tables.py): "SANTA MARTA"
-  dept = "SANTANDER" # was (ala sample_tables.py): "ANTIOQUIA"
+if True: # define a spacetime cell
+  if False: # values good for testing the pipeline
+    # 2014 is nice because it requires scaling by 1000 and deflation.
+    # Muni ARACATACA and dept SANTANDER are nice because both include
+    # multiple disaggregated observations of the same education code.
+    # See integ_tests/raw.py for a proof.
+    year = 2014
+    muni = "ARACATACA"
+    dept = "SANTANDER"
+  #
+  if True: # a subset of the values used in sample_tables.py
+    year = 2018
+    muni = "SANTA MARTA"
+    dept = "ANTIOQUIA"
 
 if True: # budget categories convenient for testing,
          # i.e. withthe fewest components
