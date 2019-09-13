@@ -6,6 +6,8 @@ namely "item recaudo" and "item oblig".
 What this does: This multiplies pre-2016 values by 1000,
 because (as you might guess) in the raw data,
 pre-2017 peso values are about 1000 times smaller than those post-2016.
+
+It's a long program because it then tests that the percentage change from one year to the next is well behaved, ensuring that no similar problems remain present.
 """
 
 if True:
@@ -64,3 +66,4 @@ for (file,pesos_col) in [
   df.to_csv( dest + "/" + file + ".csv" ,
              encoding="utf-16",
              index = False )
+

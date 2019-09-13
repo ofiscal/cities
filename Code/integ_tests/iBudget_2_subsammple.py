@@ -49,5 +49,7 @@ if True:
           [["dept","muni",money_column,"item code"]] .
           groupby( [ "dept","muni","item code" ] ) .
           agg( sum ) .
-          sort_values( ["dept","muni","item code"] ) ) )
+          reset_index() .
+          sort_values( ["dept","muni","item code"] )
+          [["dept","muni",money_column,"item code"]] ) )
 

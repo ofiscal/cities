@@ -67,7 +67,8 @@ if True: # find a muni that aggregates edu or infra codes
     edu_or_infra[name] = df
     # The inversion data has, for all space cells in 2014,
     # no rows with duplicate item codes. For the funcionamiento data,
-    # muni ARACATACA and dept SANTANDER (and some others) do.
+    # muni ARACATACA and dept SANTANDER (and some others) *do*
+    # have duplicate education codes -- e.g. 1.3.6.1.1.
     # Run the following to see the preceding.
     # >>> x = edu_or_infra["funcionamiento"]
     # >>> x[ x["one"] > 1 ]
@@ -78,5 +79,8 @@ for name in ["ingresos","inversion","funcionamiento"]:
     smaller[name] . sort_values( ["dept","muni","item code"] ) )
   print(
     "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
-    agged[name] .   sort_values( ["dept","muni","item code"] ) )
+    agged[name] .   sort_values( ["dept","muni","item code"] ) .
+    reset_index()
+    [["dept","muni","money","item code"]]
+  )
 
