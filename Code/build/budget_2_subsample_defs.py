@@ -20,7 +20,7 @@ def read_data( nrows = None ):
   dfs = {}
   for filename in ["ingresos","gastos"]:
     df = pd.read_csv( source + "/" + filename + ".csv",
-                      encoding = "utf-16",
+                      encoding = "utf-8",
                       nrows = nrows )
     dfs[filename] = df
   return dfs

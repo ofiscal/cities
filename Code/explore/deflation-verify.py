@@ -15,13 +15,13 @@ source_5 = "output/budget_5_add_regalias/recip-" + str(c.subsample)
 dfs5 = {}
 for s in ser.series:
   dfs5[s.name] = pd.read_csv( source_5 + "/" + s.name + ".csv",
-                              encoding = "utf-16" )
+                              encoding = "utf-8" )
 
 source_6 = "output/budget_6_deflate/recip-" + str(c.subsample)
 dfs6 = {}
 for s in ser.series:
   dfs6[s.name] = pd.read_csv( source_6 + "/" + s.name + ".csv",
-                              encoding = "utf-16" )
+                              encoding = "utf-8" )
 
 dfms = {} # m for merge
 axes = ["muni code","year","item code"]

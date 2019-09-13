@@ -20,7 +20,7 @@ if True: # read data
       pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
           + "/" + s.name + ".csv"),
-        encoding = "utf-16" ) .
+        encoding = "utf-8" ) .
       sort_values( group_vars ) )
 
 if True: # restrict to the spacetime we need
@@ -28,10 +28,16 @@ if True: # restrict to the spacetime we need
   for s in ser.series:
     df = raw[s.name]
     df = pd.concat(
-      [ df[ df["muni"].isin( { "BOGOTÁ, D.C.",
-                               "SANTA MARTA",
-                               "FILANDIA",
-                               "VALLE DEL GUAMUEZ" } ) ],
+      [ #df[ df["muni"].isin( { "BOGOTÁ, D.C.",
+        #                       "SANTA MARTA",
+        #                       "FILANDIA",
+        #                       "VALLE DEL GUAMUEZ" } ) ],
+        df[ df["muni code"] .
+            isin( { 11001,       # Bogotá D.C., Bogotá D.C.
+                    68001,       # Bucaramanga, Santander
+                    20710,       # San Alberto, Cesar
+                    81001,       # Arauca     , Arauca
+                    41298 } ) ], # Garzón     , Huila
         df[ ( df["muni code"] == -1 ) &
             ( df["dept"].isin( [ "ANTIOQUIA",
                                  "CESAR",
@@ -64,7 +70,7 @@ if True: # output two big tables
   for s in ser.series:
     items_grouped[s.name].to_csv(
       dest + "/" + s.name + ".csv",
-      encoding = "utf-16",
+      encoding = "utf-8",
       index = False )
 
 for s in ser.series: # for comparison to integ_tests/iBudget_7_verbose
@@ -75,4 +81,3 @@ for s in ser.series: # for comparison to integ_tests/iBudget_7_verbose
     [["dept","muni",s.pesos_col,"item categ"]] .
     sort_values( ["dept","muni",s.pesos_col],
                  ascending = False ) )
-

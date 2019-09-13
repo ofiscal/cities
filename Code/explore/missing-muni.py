@@ -21,7 +21,7 @@ if True: # read
   for s in file_indices:
     dfs[s] = (
       pd.read_csv( source + "/" + s + ".csv",
-                   encoding = "utf-16" ) )
+                   encoding = "utf-8" ) )
 
 if True: # print stuff
   for s in file_indices:

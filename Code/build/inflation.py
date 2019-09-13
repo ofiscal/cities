@@ -13,7 +13,8 @@ def is_after_2011(s : str) -> bool:
 def year_month_to_year(s : str) -> int:
   return int( s[:4] )
 
-deflator = pd.read_csv("data/inflation.csv",encoding="utf-16")
+deflator = pd.read_csv( "data/inflation.csv",
+                        encoding="utf-16" )
 deflator = ( deflator
              [ deflator["when"] .
                apply( is_last_month ) ] )
@@ -24,5 +25,5 @@ deflator["year"] = ( deflator["when"] .
                      apply( year_month_to_year ) )
 ( deflator[["year","deflator"]] .
   to_csv( "output/inflation.csv",
-          encoding="utf-16",
+          encoding="utf-8",
           index = False ) )

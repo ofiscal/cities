@@ -23,11 +23,11 @@ if True: # merge geo data into main data
       ["dept","muni","year",s.pesos_col,"item categ"],
       uk.merge_geo(
         pd.read_csv( source + "/" + sn + ".csv",
-                     encoding = "utf-16" )
+                     encoding = "utf-8" )
         [["muni code","dept code","year","item categ",
           s.pesos_col]] ) )
     df["muni"] = df["muni"] . fillna("dept")
     df.to_csv( dest + "/" + s.name + ".csv",
-               encoding = "utf-16",
+               encoding = "utf-8",
                index = False )
     dfs[sn] = df

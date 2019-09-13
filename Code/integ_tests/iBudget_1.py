@@ -12,7 +12,7 @@ for s in sm.series:
   s1_dfs[s] = uk.merge_geo(
     pd.read_csv(
       "output/budget_1/" + s + ".csv",
-      encoding = "utf-16" ) )
+      encoding = "utf-8" ) )
 
 for s in sm.series:
   print( len(s1_dfs[s]) )

@@ -16,7 +16,7 @@ if True: # build data
     df = uk.merge_geo(
       pd.read_csv(
         "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
-        encoding = "utf-16" ) )
+        encoding = "utf-8" ) )
     s6_dfs[name] = df.copy()
     df["item categ"] = ( df["item categ"] .
                          apply( lambda x: x[0:20] ) )

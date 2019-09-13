@@ -16,7 +16,7 @@ if True: # build data
     df = uk.merge_geo(
       pd.read_csv(
         "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
-        encoding = "utf-16" ) )
+        encoding = "utf-8" ) )
     s4_dfs[name] = df.copy()
     print( len(s4_dfs[name]) )
     df["item categ"] = ( df["item categ"] .

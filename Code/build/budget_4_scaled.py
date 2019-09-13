@@ -38,7 +38,7 @@ for (file,pesos_col) in [
     ("gastos"   ,"item oblig") ]:
   if True: # clean the data
     df = pd.read_csv( source + "/" + file + ".csv",
-                      encoding = "utf-16" )
+                      encoding = "utf-8" )
     df = correct_peso_column( pesos_col, df )
     dfs[file] = df
   if True: # add percent change across years within place-item
@@ -64,6 +64,6 @@ for (file,pesos_col) in [
         # the order of magnitude problem is solved.
     dfs_by_muni_item[file] = df_by_muni_item
   df.to_csv( dest + "/" + file + ".csv" ,
-             encoding="utf-16",
+             encoding="utf-8",
              index = False )
 

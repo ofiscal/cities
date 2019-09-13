@@ -13,7 +13,7 @@ source = "output/budget_7_verbose/recip-" + str(c.subsample)
 dfs = {}
 for s in ser.series:
   df = pd.read_csv( source + "/" + s.name + ".csv",
-                    encoding = "utf-16" )
+                    encoding = "utf-8" )
   dfs[s.name] = df
 
 for s in ser.series:

@@ -13,10 +13,10 @@ if not os.path.exists( dest ):
 dfs = {}
 for s in ser.series:
   dfs[s.name] = pd.read_csv( source + "/" + s.name + ".csv",
-                             encoding = "utf-16" )
+                             encoding = "utf-8" )
 
 deflator = pd.read_csv( "output/inflation.csv",
-                        encoding = "utf-16" )
+                        encoding = "utf-8" )
 deflator["deflator"] = ( # normalize in terms of 2018 pesos
   1 / ( deflator["deflator"] /
         float( deflator
@@ -31,4 +31,4 @@ for s in ser.series:
   dfs[s.name] = df
   df.to_csv( dest + "/" + s.name + ".csv",
              index = False,
-             encoding = "utf-16" )
+             encoding = "utf-8" )

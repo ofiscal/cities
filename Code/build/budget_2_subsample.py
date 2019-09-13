@@ -60,5 +60,5 @@ for subsample in [1000,100,10]: # smallest first, to catch errors faster
         append( dfs_dept[s] ) ) .
     to_csv(
       defs.sub_dest( subsample ) + "/" + s + ".csv",
-      encoding="utf-16",
+      encoding="utf-8",
       index = False ) )

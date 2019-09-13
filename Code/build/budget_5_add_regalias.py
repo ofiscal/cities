@@ -19,11 +19,11 @@ if True: # input
   dfsi = {}
   for s in ser.series:
     dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv",
-                               encoding = "utf-16" )
+                               encoding = "utf-8" )
   #
   regalias = (
     pd.read_csv( "output/regalias.csv",
-                 encoding="utf-16" ) .
+                 encoding="utf-8" ) .
     rename( columns = { "regalias" :
                         ser.series_dict["ingresos"].pesos_col } ) )
 
@@ -52,4 +52,4 @@ if True: # output
     dfso[s.name].to_csv(
       dest + "/" + s.name + ".csv",
       index = False,
-      encoding = "utf-16" )
+      encoding = "utf-8" )

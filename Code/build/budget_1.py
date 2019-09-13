@@ -23,5 +23,5 @@ if not os.path.exists( dest ):
   os.makedirs( dest )
 for s in sm.series:
   dfs[s].to_csv( dest + "/" + s + ".csv",
-                 encoding="utf-16",
+                 encoding="utf-8",
                  index = False )

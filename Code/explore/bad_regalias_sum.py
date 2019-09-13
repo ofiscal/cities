@@ -17,7 +17,7 @@ if True:
 
 regalias = (
     pd.read_csv( "output/regalias.csv",
-                 encoding="utf-16" ) .
+                 encoding="utf-8" ) .
     rename( columns = { "regalias" :
                         ser.series_dict["ingresos"].pesos_col } ) )
 

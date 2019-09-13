@@ -24,7 +24,7 @@ if True:
 
 if True:
   budget_key = pd.read_csv( "output/keys/budget.csv",
-                            encoding = "utf-16" )
+                            encoding = "utf-8" )
   source = "output/budget_2_subsample/recip-"      + str(c.subsample)
   dest   = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
   if not os.path.exists( dest ):
@@ -40,7 +40,7 @@ if True:
 # dfs0: read data
 for s in ["ingresos","gastos"]:
   dfs0[s] = pd.read_csv( source + "/" + s + ".csv",
-                        encoding = "utf-16" )
+                        encoding = "utf-8" )
 
 # dfs1: fill NaN values in muni with -1,
 # create "item categ" and drop "item code",
@@ -169,5 +169,5 @@ if True: # test (loosely) that it worked
 
 for s in ["ingresos","gastos"]:
   dfs2[s].to_csv( dest + "/" + s + ".csv" ,
-                  encoding="utf-16",
+                  encoding="utf-8",
                   index = False )

@@ -26,7 +26,7 @@ if not os.path.exists( dest ):
 dfs = {}
 for s in sm.series:
   dfs[s] = pd.read_csv( source + "/" + s + ".csv",
-                        encoding = "utf-16" )
+                        encoding = "utf-8" )
 
 dfs_by_muni_item = {}
 for (s, pesos_column) in [

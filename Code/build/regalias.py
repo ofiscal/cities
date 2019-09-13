@@ -12,7 +12,7 @@ wide = wide.rename( columns = {
 
 geo = (
   pd.read_csv( "output/keys/geo.csv",
-               encoding = "utf-16" ) .
+               encoding = "utf-8" ) .
   rename( columns =
           { "Cód. DANE Municipio" : "muni code",
             "Cód. DANE Departamento" : "dept code",
@@ -39,7 +39,7 @@ if False: # verify that muni codes correspond to (muni,dept) the same way
   # e.g. "don matías" v. "donmatías"
   test_match.to_csv(
     "output/explore/regalias_muni_codes.csv",
-    encoding="utf-16",
+    encoding="utf-8",
     index = False )
 
 wide = wide.merge( # add "dept code" to regalias
@@ -60,6 +60,6 @@ if True: # change from wide to long, adding a "yaer" column
     df["year"] = startYear + 1
     long = long.append(df)
   long.to_csv( "output/regalias.csv",
-               encoding="utf-16",
+               encoding="utf-8",
                index = False )
 

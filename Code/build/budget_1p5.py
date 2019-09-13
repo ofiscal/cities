@@ -21,7 +21,7 @@ if True: # input data
   dfs = {}
   for s in sm.series:
     dfs[s] = pd.read_csv( source + "/" + s + ".csv",
-                          encoding = "utf-16" )
+                          encoding = "utf-8" )
 
 if True: # Filter rows by item code.
   dfs_filt = {}
@@ -46,6 +46,6 @@ if True: # output two data sets, not three
         ("ingresos", dfs_filt["ingresos"] ),
         ("gastos",   df_gastos) ]:
     df.to_csv( dest + "/" + name + ".csv",
-               encoding="utf-16",
+               encoding="utf-8",
                index = False )
 

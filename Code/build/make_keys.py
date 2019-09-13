@@ -44,7 +44,7 @@ if not os.path.exists( "output/keys" ):
     , source_data )
   . to_csv(
     "output/keys/geo.csv",
-    encoding="utf-16",
+    encoding="utf-8",
     index = False ) )
 
 ( make_key(
@@ -53,5 +53,5 @@ if not os.path.exists( "output/keys" ):
     , source_data )
   . to_csv(
     "output/keys/budget.csv",
-    encoding="utf-16",
+    encoding="utf-8",
     index = False ) )

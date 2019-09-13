@@ -15,9 +15,9 @@ group_fields = ["year","muni code","item code"]
 dfs,dfas = ({},{})
 for s in sm.series:
   dfs[s] = pd.read_csv( disagg + "/" + s + ".csv",
-                        encoding = "utf-16" )
+                        encoding = "utf-8" )
   dfas[s] = pd.read_csv( agg + "/" + s + ".csv",
-                         encoding = "utf-16" )
+                         encoding = "utf-8" )
 
 def at_spot( spot : pd.DataFrame,
              df : pd.DataFrame ) -> pd.DataFrame:

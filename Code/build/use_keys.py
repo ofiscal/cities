@@ -11,7 +11,7 @@ if True:
 if True: # get, test data
   geo = (
     pd.read_csv( "output/keys/geo.csv",
-                 encoding = "utf-16" ) .
+                 encoding = "utf-8" ) .
     rename( columns =
             { "Cód. DANE Municipio"      : "muni code",
               "Cód. DANE Departamento"   : "dept code",

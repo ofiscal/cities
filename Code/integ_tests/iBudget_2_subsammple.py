@@ -14,7 +14,7 @@ for name in ["ingresos","gastos"]:
   s2_dfs[name] = uk.merge_geo(
     pd.read_csv(
       "output/budget_2_subsample/recip-1/" + name + ".csv",
-      encoding = "utf-16" ) )
+      encoding = "utf-8" ) )
 
 for s in ["ingresos","gastos"]:
   print( len(s2_dfs[s]) )
