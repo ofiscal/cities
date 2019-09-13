@@ -7,28 +7,41 @@ if True:
   import Code.integ_tests.integ_util as iu
   import Code.series_metadata as ser
 
-s7_dfs = {} # stage 7 (build/budget_7_verbose) data frames
-for s in ser.series:
-  s7_dfs[s.name] = pd.read_csv(
-    "output/budget_7_verbose/recip-1/" + s.name + ".csv",
-    encoding = "utf-16" )
+name_of_data_source = "budget_7_verbose"
 
-if True: # build tax subset
-  df = s7_dfs["ingresos"]
-  s7_ing = (
-    df.copy()
-    [   ( df["year"] == iu.year )
-      & (   (     df["muni"] == iu.muni )
-          | (   ( df["muni"] == "dept" )
-              & ( df["dept"] == iu.dept ) ) ) ] )
-  print( "\nThis kind of breakdown adds no extra info for ingresos, but it will for gastos." )
-  ( s7_ing
-    [["dept","muni","item categ","item recaudo"]] .
-    sort_values( ["dept","muni","item categ"] ) )
-  print( "\nDATA: budget_7_verbose" )
-  ( s7_ing
-    [["dept","muni","item categ","item recaudo"]] .
-    groupby( [ "dept","muni","item categ" ] ) .
-    agg( sum ) .
-    sort_values( ["dept","muni","item categ"] ) )
+if True: # build data
+  s7_dfs = {} # the input data
+  smaller = {} # a spacetime subset of that input data
+  for name in ["ingresos","gastos"]:
+    df = pd.read_csv(
+        "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
+        encoding = "utf-16" )
+    s7_dfs[name] = df.copy()
+    df["item categ"] = ( df["item categ"] .
+                         apply( lambda x: x[0:20] ) )
+    df = (
+      df
+      [   ( df["year"] == iu.year )
+        & (   (               df["muni"] == iu.muni )
+            | (   ( "dept" == df["muni"] )
+                & (           df["dept"] == iu.dept ) ) ) ] )
+    smaller[name] = df
+
+if True: # report
+  for (name,money_column) in [
+      ("ingresos","item recaudo"),
+      ("gastos","item oblig") ]:
+    print(
+      "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
+      ( smaller[name]
+        [["dept","muni",money_column,"item categ"]] .
+        sort_values( ["dept","muni","item categ"] ) ) )
+    print(
+      "\AGGREGATED: " + name_of_data_source + ": " + name + "\n",
+      ( smaller[name] .
+        groupby( [ "dept","muni","item categ" ] ) .
+        agg( sum ) .
+        reset_index()
+        [["dept","muni",money_column,"item categ"]] .
+        sort_values( ["dept","muni","item categ"] ) ) )
 
