@@ -164,7 +164,7 @@ if True: # write many little pivot tables, one for each place:
 ** TODO get drawStacks() to respect outer subplots
  rework this line:
    fig, (ax) = plt.subplots()
-** Emulate the graph on p.2 of the mockup pdf.
+** *BIG* Emulate the graph on p.2 of the mockup pdf.
 *** *???* If boxes are too small to fit a number, aggregate somehow.
 *** DONE Stack the boxes, with a line and no space between.
 *** legend : draw to the side, not on top of graph
@@ -181,20 +181,18 @@ if True: # write many little pivot tables, one for each place:
 **** style: Montserrat black & Montserrat light
  source code: https://github.com/JulietaUla/Montserrat
  main page: https://fonts.google.com/specimen/Montserrat
-*** Include text from an accompanying .txt file.
-** TODO build a pdf
-*** TODO use matplotlib
-*** DONE reportlab is too complex and unfree
+** DONE build a pdf
+*** use matplotlib
+*** DON'T: reportlab is too complex and unfree
  pip3 install reportlab
 **** DONE ReportLab
  https://www.reportlab.com/documentation/
 **** custom fonts in reportlab
  https://www.reportlab.com/documentation/faq/#2.6.2
-*** DONE pyfpdf appears to badly support Python 3
+*** DON'T: pyfpdf appears to badly support Python 3
  pip install --upgrade pip # afte running this, did not have pip3
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
-** wish: that I could set font only once, affecting all types of text
 * TODO fix
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
@@ -235,6 +233,8 @@ and then choose "finanzas publicas".
 see explore/negative_money.py
 In the raw data, yes,
 but not after reducing the number of rows at stage 1p5.
+* wishes
+** that I could set font only once, affecting all types of text
 * PITFALLS
 ** interpreting the data
 *** regalias is not subsampled
