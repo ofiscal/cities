@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from   matplotlib.backends.backend_pdf import PdfPages
 
 import Code.common as c
-import Code.series_metadata as ser
+import Code.metadata.two_series as ser
 import Code.draw.lib as lib
 
 

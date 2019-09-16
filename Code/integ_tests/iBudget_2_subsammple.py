@@ -5,7 +5,7 @@ if True:
   import Code.build.classify_budget_codes as codes
   import Code.build.use_keys as uk
   import Code.integ_tests.integ_util as iu
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 name_of_data_source = "budget_2_subsample"
 

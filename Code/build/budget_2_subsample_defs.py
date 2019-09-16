@@ -3,7 +3,7 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.build.sisfut_metadata as sm
+  import Code.metadata.three_series as sm
 
 
 if True: # bearings

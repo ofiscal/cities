@@ -19,7 +19,7 @@ if True:
   import Code.common as c
   import Code.util as util
   import Code.build.classify_budget_codes as codes
-  import Code.build.sisfut_metadata as sm
+  import Code.metadata.three_series as sm
 
 
 if True:

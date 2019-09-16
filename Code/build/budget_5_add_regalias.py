@@ -7,7 +7,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 if True: # bearings
   source = "output/budget_4_scaled/recip-"       + str(c.subsample)

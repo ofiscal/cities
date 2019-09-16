@@ -7,7 +7,7 @@ if True:
   #
   import Code.common as c
   import Code.util as util
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
   import Code.build.use_keys as uk
 
 if True: # merge geo data into main data

@@ -8,7 +8,7 @@ import os
 import pandas as pd
 
 import Code.common as c
-import Code.series_metadata as ser
+import Code.metadata.two_series as ser
 
 
 source_5 = "output/budget_5_add_regalias/recip-" + str(c.subsample)

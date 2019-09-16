@@ -15,7 +15,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.build.sisfut_metadata as sm
+  import Code.metadata.three_series as sm
   import Code.explore.order_of_mag_x_yrs_defs as lib
 
 

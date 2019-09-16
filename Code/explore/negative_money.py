@@ -8,7 +8,7 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.build.sisfut_metadata as sis
+  import Code.metadata.three_series as sis
   import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
 

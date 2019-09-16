@@ -1,0 +1,1 @@
+The raw data divides data into three kinds: inversion, ingresos and funcionamiento. Early in the build pipeline (specifically at stage 1p5 (1.5), inversion and funcionamiento are merged, becoming a single gastos dataset.

@@ -7,7 +7,7 @@ if True:
   import pandas as pd
   #
   import Code.build.budget_1p5_tests as tests
-  import Code.build.sisfut_metadata as sm
+  import Code.metadata.three_series as sm
   import Code.build.classify_budget_codes as cla
 
 

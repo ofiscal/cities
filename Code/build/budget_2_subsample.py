@@ -12,7 +12,7 @@ if True:
   
   import Code.build.budget_1p5_tests as test
   import Code.build.budget_2_subsample_defs as defs
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 if not os.path.exists( defs.top_dest ):
   os.makedirs( defs.top_dest )

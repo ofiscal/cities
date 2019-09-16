@@ -1,6 +1,6 @@
 from typing import List
 import pandas as pd
-import Code.build.sisfut_metadata as sm
+import Code.metadata.three_series as sm
 
 
 group_fields = [

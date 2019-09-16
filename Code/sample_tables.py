@@ -6,7 +6,7 @@ if True:
   import Code.common as c
   import Code.util as util
   import Code.sample_tables_defs as defs
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 if True:
   group_vars = ["dept", "muni", "year"]

@@ -13,7 +13,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 regalias = (
     pd.read_csv( "output/regalias.csv",

@@ -11,7 +11,7 @@ if True:
   import Code.integ_tests.integ_util as iu
   import Code.sample_tables_defs as defs
   import Code.sample_tables_defs as st
-  import Code.series_metadata as ser
+  import Code.metadata.two_series as ser
 
 
 name_of_data_source = "raw data"

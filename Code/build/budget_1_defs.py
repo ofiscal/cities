@@ -3,7 +3,7 @@ if True:
   import numpy as np
   import pandas as pd
   #
-  import Code.build.sisfut_metadata as sm
+  import Code.metadata.three_series as sm
 
 
 def collect_raw( source : str,

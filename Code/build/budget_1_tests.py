@@ -1,7 +1,7 @@
 import numpy  as np
 import pandas as pd
 
-import Code.build.sisfut_metadata as sm
+import Code.metadata.three_series as sm
 
 
 def row_numbers_raw( dfs ):
