@@ -176,22 +176,22 @@ For equal values of "muni code" and "agg budget",
 The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
 but DNP already provides an a.b value.
 Hopefully they are equal.
-** unit data tests
-*** check other aggregated sums
-e.g. T1 = T1.A + T1.B
-Good opportunity for property-based testinig.
-*** make sure we can ignore VAL
-It is the only "codigo budget" that maps to more than one "budget".
+*** unit data tests
+**** check other aggregated sums
+ e.g. T1 = T1.A + T1.B
+ Good opportunity for property-based testinig.
+**** make sure we can ignore VAL
+ It is the only "codigo budget" that maps to more than one "budget".
 
-If the "subcategory summation" check works,
-then ignore these (code, conepto) pairs, because they are redundant.
-VAL	INGRESOS TOTALES
+ If the "subcategory summation" check works,
+ then ignore these (code, conepto) pairs, because they are redundant.
+ VAL	INGRESOS TOTALES
 
-Ignore these because they are checks:
-VAL	CIFRA CONTROL
-VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
-*** "subcategory summation"
-Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
+ Ignore these because they are checks:
+ VAL	CIFRA CONTROL
+ VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
+**** "subcategory summation"
+ Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
 ** integration data tests
 Can check results at
 https://terridata.dnp.gov.co/
@@ -201,7 +201,6 @@ and then choose "finanzas publicas".
 see explore/negative_money.py
 In the raw data, yes, 
 but not after reducing the number of rows at stage 1p5.
-
 * PITFALLS interpreting the data
 ** regalias is not subsampled
 So the supposedly subsampled data at or data downstream of
@@ -273,7 +272,7 @@ no other discernible effect
    drawText( ax, lines )
 *** pdf.savefig() overrides background color in figures
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
-* internalized or stale
+* DONE
 ** how the raw data is organized
 *** isomorphisms relate some columns
 Determined via Code/bijectivity_test.py.
@@ -312,7 +311,6 @@ Municipalities are those in which the first column is 21.
   They have been deleted.
 Departments are those in which the first column is 11.
 
-* DONE
 ** build data
 *** write code (string) interpretation functions
 **** codes to aggregate

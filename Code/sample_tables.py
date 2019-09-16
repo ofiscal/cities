@@ -73,11 +73,13 @@ if True: # output two big tables
       encoding = "utf-8",
       index = False )
 
-for s in ser.series: # for comparison to integ_tests/iBudget_7_verbose
-  print(s.name)
-  df = items_grouped[s.name]
-  ( df[ ( df["muni"] == "SANTA MARTA" ) |
-        ( df["dept"] == "ANTIOQUIA"   )   ]
-    [["dept","muni",s.pesos_col,"item categ"]] .
-    sort_values( ["dept","muni",s.pesos_col],
-                 ascending = False ) )
+if False:
+  for s in ser.series: # for comparison to integ_tests/iBudget_7_verbose
+    print(s.name)
+    df = items_grouped[s.name]
+    ( df[ ( df["muni"] == "SANTA MARTA" ) |
+          ( df["dept"] == "ANTIOQUIA"   )   ]
+      [["dept","muni",s.pesos_col,"item categ"]] .
+      sort_values( ["dept","muni",s.pesos_col],
+                   ascending = False ) )
+

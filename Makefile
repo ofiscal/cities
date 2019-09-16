@@ -34,9 +34,9 @@ all: keys			\
   budget_5_add_regalias		\
   budget_6_deflate		\
   budget_7_verbose		\
-  sample_tables 		\
   output/inflation.csv		\
   output/regalias.csv
+#  sample_tables 		\
 #  pics
 
 keys =								\
@@ -184,7 +184,7 @@ $(budget_5_add_regalias):		\
   output/regalias.csv			\
   Code/build/budget_5_add_regalias.py	\
   Code/common.py			\
-  Code/two_series.py
+  Code/metadata/two_series.py
 	$(myPython) Code/build/budget_5_add_regalias.py $(ss)
 
 budget_6_deflate: $(budget_6_deflate)
@@ -193,7 +193,7 @@ $(budget_6_deflate):			\
   output/inflation.csv			\
   Code/build/budget_6_deflate.py	\
   Code/common.py			\
-  Code/two_series.py
+  Code/metadata/two_series.py
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
 
 budget_7_verbose: $(budget_7_verbose)
@@ -202,7 +202,7 @@ $(budget_7_verbose):			\
   Code/build/budget_7_verbose.py	\
   Code/common.py			\
   Code/util.py				\
-  Code/two_series.py
+  Code/metadata/two_series.py
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
 
 sample_tables: $(sample_tables)
@@ -211,7 +211,7 @@ $(sample_tables):		\
   Code/sample_tables.py		\
   Code/common.py		\
   Code/sample_tables_defs.py	\
-  Code/two_series.py
+  Code/metadata/two_series.py
 	$(myPython) Code/sample_tables.py $(ss)
 
 output/inflation.csv:				\
