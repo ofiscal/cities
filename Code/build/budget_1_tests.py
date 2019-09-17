@@ -29,8 +29,8 @@ def types_and_missings_for_raw_data( dfs ):
 #       "min"     :     df.min(), # TODO : use, somehow
 #       "max"     :     df.max(), # TODO : use, somehow
         "missing" : 1 - df.count() / len(df) } )
-    stats_ref[s] = pd.read_csv( "Code/stats/raw/" + s + ".csv",
-                             index_col = 0 )
+    stats_ref[s] = pd.read_csv( "Code/integ_tests/raw/" + s + ".csv",
+                                index_col = 0 )
     assert stats_ref[s]["dtype"]   . equals( stats[s]["dtype"]  )
     assert stats_ref[s]["missing"] . equals( stats[s]["missing"])
 

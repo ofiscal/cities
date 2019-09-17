@@ -68,13 +68,16 @@ if True: # output two big tables
   if not os.path.exists( dest ):
     os.makedirs(         dest )
   for s in ser.series:
+    items_grouped[s.name].to_excel(
+      dest + "/" + s.name + ".xlsx",
+      index = False )
     items_grouped[s.name].to_csv(
       dest + "/" + s.name + ".csv",
       encoding = "utf-8",
       index = False )
 
-if False:
-  for s in ser.series: # for comparison to integ_tests/iBudget_7_verbose
+if False: # for comparison to integ_tests/iBudget_7_verbose
+  for s in ser.series:
     print(s.name)
     df = items_grouped[s.name]
     ( df[ ( df["muni"] == "SANTA MARTA" ) |
