@@ -4,7 +4,7 @@ if True:
 
 if True: # ingest
   wide_muni = (
-    pd.read_csv( "data/regalias_muni.csv" ) .
+    pd.read_csv( "data/regalias/muni.csv" ) .
     rename( columns = {
       "cod_dane"          : "muni code",
       "periodo 2019-2020" : "2019-2020",
@@ -12,7 +12,7 @@ if True: # ingest
       "periodo 2016-2015" : "2015-2016",
       "periodo 2013-2014" : "2013-2014" } ) )
   wide_dept = (
-    pd.read_csv( "data/regalias_dept.csv" ) .
+    pd.read_csv( "data/regalias/dept.csv" ) .
     rename( columns = {
       "cod_dane"          : "5 digit dane code",
       "departamento"      : "dept",

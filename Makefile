@@ -220,8 +220,8 @@ output/inflation.csv:				\
 	$(myPython) Code/build/inflation.py
 
 output/regalias.csv:			\
-  data/regalias_muni.csv		\
-  data/regalias_dept.csv		\
+  data/regalias/muni.csv		\
+  data/regalias/dept.csv		\
   Code/build/regalias.py
 	$(myPython) Code/build/regalias.py
 
