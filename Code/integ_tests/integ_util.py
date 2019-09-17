@@ -3,7 +3,7 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
-# pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_rows', 500)
 
 if True: # define a spacetime cell
   if False: # values good for testing the pipeline
@@ -15,10 +15,14 @@ if True: # define a spacetime cell
     muni = "ARACATACA"
     dept = "SANTANDER"
   #
-  if True: # a subset of the values used in sample_tables.py
+  if False: # a subset of the values used in sample_tables.py
     year = 2018
     muni = "SANTA MARTA"
     dept = "ANTIOQUIA"
+  if True:
+    year = 2018
+    muni = "BOGOTÁ, D.C."
+    dept = "BOGOTÁ, D.C."
 
 if True: # budget categories convenient for testing,
          # i.e. withthe fewest components
