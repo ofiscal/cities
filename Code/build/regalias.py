@@ -86,3 +86,4 @@ if True: # change from wide to long, adding a "yaer" column
   long.to_csv( "output/regalias.csv",
                encoding="utf-8",
                index = False )
+

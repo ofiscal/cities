@@ -23,7 +23,10 @@ if True: # input
     pd.read_csv( "output/regalias.csv" ) .
     rename( columns = { "regalias" :
                         ser.series_dict["ingresos"].pesos_col } ) )
-  regalias      ["item categ"] = "regalias"
+  regalias["muni code"] = (
+    regalias["muni code"] .
+    fillna(-1) )
+  regalias["item categ"] = "regalias"
 
 if True: # output
   dfso = {}
