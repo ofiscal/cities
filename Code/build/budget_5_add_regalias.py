@@ -18,38 +18,23 @@ if True: # bearings
 if True: # input
   dfsi = {}
   for s in ser.series:
-    dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv",
-                               encoding = "utf-8" )
-  #
+    dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
   regalias = (
-    pd.read_csv( "output/regalias.csv",
-                 encoding="utf-8" ) .
+    pd.read_csv( "output/regalias.csv" ) .
     rename( columns = { "regalias" :
                         ser.series_dict["ingresos"].pesos_col } ) )
-
-if True: # sum muni-regalias to the dept level
-  dept_regalias = (
-    regalias . copy() .
-    groupby( ["dept code","year"] ) .
-    agg( sum ) .
-    reset_index() )
-  dept_regalias["muni code"] = -1
-
-if True:
   regalias      ["item categ"] = "regalias"
-  dept_regalias ["item categ"] = "regalias"
 
 if True: # output
   dfso = {}
   dfso["gastos"] = dfsi["gastos"]
   dfso["ingresos"] = pd.concat(
     [ dfsi["ingresos"],
-      regalias,
-      dept_regalias ],
+      regalias ],
     sort = True, # sort columns by name so they align
     axis = "rows" )
   for s in ser.series:
     dfso[s.name].to_csv(
       dest + "/" + s.name + ".csv",
-      index = False,
-      encoding = "utf-8" )
+      index = False )
+

@@ -35,8 +35,8 @@ all: keys			\
   budget_6_deflate		\
   budget_7_verbose		\
   output/inflation.csv		\
+  sample_tables 		\
   output/regalias.csv
-#  sample_tables 		\
 #  pics
 
 keys =								\
@@ -219,8 +219,9 @@ output/inflation.csv:				\
   Code/build/inflation.py
 	$(myPython) Code/build/inflation.py
 
-output/regalias.csv:				\
-  data/regalias.csv				\
+output/regalias.csv:			\
+  data/regalias_muni.csv		\
+  data/regalias_dept.csv		\
   Code/build/regalias.py
 	$(myPython) Code/build/regalias.py
 
