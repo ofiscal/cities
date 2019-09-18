@@ -7,9 +7,9 @@ if True:
   import pandas as pd
   #
   import Code.build.budget_1p5_tests as tests
-  import Code.metadata.three_series as sm
   import Code.build.classify_budget_codes as cla
-
+  import Code.metadata.terms as t
+  import Code.metadata.three_series as sm
 
 if True: # folders
   source = "output/budget_1"
@@ -37,14 +37,15 @@ if True : # verify
     assert len( dfs[s] ) < 50 * len( dfs_filt[s] )
   tests.column_names_after_agg( sm.series, dfs_filt )
 
-if True: # output two data sets, not three
-  df_gastos = pd.DataFrame.append(
-    dfs_filt["funcionamiento"],
-    dfs_filt["inversion"] )
+if True: # output two data sets, not four
+  df_gastos = pd.concat(
+    [ dfs_filt[t.funcionamiento],
+      dfs_filt[t.inversion],
+      dfs_filt[t.deuda] ],
+    axis = "rows" )
   for (name,df) in [
-        ("ingresos", dfs_filt["ingresos"] ),
-        ("gastos",   df_gastos) ]:
+        (t.ingresos, dfs_filt[t.ingresos] ),
+        (t.gastos,   df_gastos) ]:
     df.to_csv( dest + "/" + name + ".csv",
-               encoding="utf-8",
                index = False )
 

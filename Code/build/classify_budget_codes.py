@@ -62,7 +62,7 @@ if True: # define map from aggregate categories to the codes comprising them
     categs_to_codes[t.inversion][t.cult] = {"A.4", "A.5"}
     categs_to_codes[t.inversion][t.agro] = {"A.8"}
   if True: # for the deuda files
-    categs_to_codes[t.deuda][t.agro] = {"A.8"}
+    categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
   if True: # for the ingresos files
     categs_to_codes[t.ingresos][t.propios] = {"TI.A"}
     categs_to_codes[t.ingresos][t.transfer] = {"TI.A.2.6"}
@@ -101,4 +101,8 @@ of_interest = {
     for k in categs_to_codes[t.inversion].keys() ] ),
   t.ingresos : set.union( *[
     categs_to_codes[t.ingresos][k]
-    for k in categs_to_codes[t.ingresos].keys() ] ) }
+    for k in categs_to_codes[t.ingresos].keys() ] ),
+  t.deuda : set.union( *[
+    categs_to_codes[t.deuda][k]
+    for k in categs_to_codes[t.deuda].keys() ] ) }
+

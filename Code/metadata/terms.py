@@ -1,8 +1,11 @@
-if True: # some terms I don't want to misspell
+# some terms I don't want to misspell
+
+if True: # files we use
   funcionamiento = "funcionamiento"
   inversion = "inversion"
   ingresos = "ingresos"
   deuda = "deuda"
+  gastos = "gastos"
 
 if True: # our own aggregate categories
   if True: # for spending

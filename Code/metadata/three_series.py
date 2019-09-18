@@ -3,8 +3,12 @@
 # (specifically folder locations and column names).
 
 from itertools import chain
+import Code.metadata.terms as t
 
-series = ["ingresos","inversion","funcionamiento","deuda"]
+series = [t.ingresos,
+          t.inversion,
+          t.funcionamiento,
+          t.deuda]
 
 source_folder = "data/sisfut/"
 columns_peso = {
