@@ -28,3 +28,4 @@ if True: # our own aggregate categories
     transfer = "Por transferencias de la Nación"
     capital = "De capital"
     regalias = "Regalías" # unused until much further downstream
+

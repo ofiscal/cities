@@ -19,12 +19,12 @@ if True:
   import Code.common as c
   import Code.util as util
   import Code.build.classify_budget_codes as codes
+  import Code.metadata.terms as t
   import Code.metadata.four_series as sm
 
 
 if True:
-  budget_key = pd.read_csv( "output/keys/budget.csv",
-                            encoding = "utf-8" )
+  budget_key = pd.read_csv( "output/keys/budget.csv" )
   source = "output/budget_2_subsample/recip-"      + str(c.subsample)
   dest   = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
   if not os.path.exists( dest ):
@@ -38,14 +38,13 @@ if True:
 ######
 
 # dfs0: read data
-for s in ["ingresos","gastos"]:
-  dfs0[s] = pd.read_csv( source + "/" + s + ".csv",
-                        encoding = "utf-8" )
+for s in [t.ingresos,t.gastos]:
+  dfs0[s] = pd.read_csv( source + "/" + s + ".csv" )
 
 # dfs1: fill NaN values in muni with -1,
 # create "item categ" and drop "item code",
 # aggregate within spacetime-categ cells
-for s in ["ingresos","gastos"]:
+for s in [t.ingresos,t.gastos]:
   dfs1[s] = dfs0[s].copy()
   df = dfs1[s]
   if True: # manip indiv columns
@@ -113,30 +112,30 @@ if False: # TODO ? This approach, using .groupby(),
   # is more natural, and ought to give the same result as the next one,
   # in which I for-loop through all spots in spacetime and accumulate.
   # Instead it has no effect.
-  dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine here
-  dfs2 ["ingresos"] = (
-    dfs1 ["ingresos"] . copy() .
+  dfs2 [t.gastos] = dfs1[t.gastos] # pointer equality is fine here
+  dfs2 [t.ingresos] = (
+    dfs1 [t.ingresos] . copy() .
     groupby( spacetime ) .
     apply( lambda df :
            tax_categ_subtract(
-             subtract = "Por transferencias de la Nación",
-             subtract_from = "Por recursos propios",
+             subtract      = t.transfer,
+             subtract_from = t.propios,
              categ = "item categ",
              value = "item recaudo",
-             df0 = df ) ) .
+             df0   = df ) ) .
     reset_index( drop=True ) )
   if True: # test that it worked
-    before = dfs1["ingresos"].sort_values(spacetime).reset_index(drop=True)
-    after = dfs2["ingresos"].sort_values(spacetime).reset_index(drop=True)
+    before = dfs1[t.ingresos].sort_values(spacetime).reset_index(drop=True)
+    after = dfs2[t.ingresos].sort_values(spacetime).reset_index(drop=True)
     assert ( not     before["item recaudo"] .
              equals( after ["item recaudo"] ) )
     pd.concat( [before["item recaudo"],
                 after["item recaudo"]], axis = "columns" )
 
 if True:
-  dfs2 ["gastos"] = dfs1["gastos"] # pointer equality is fine for gastos;
+  dfs2 [t.gastos] = dfs1[t.gastos] # pointer equality is fine for gastos;
     # this section is only supposed to change the ingresos data
-  ing             = dfs1["ingresos"]
+  ing             = dfs1[t.ingresos]
   spots = ( ing[spacetime] .
             groupby(spacetime) .
             agg( 'first' ) .
@@ -147,17 +146,17 @@ if True:
               all( axis="columns") ]
     acc = acc.append( 
       tax_categ_subtract(
-        subtract = "Por transferencias de la Nación",
-        subtract_from = "Por recursos propios",
+        subtract      = t.transfer,
+        subtract_from = t.propios,
         categ = "item categ",
         value = "item recaudo",
-        df0 = df ) )
-  dfs2["ingresos"] = acc
+        df0   = df ) )
+  dfs2[t.ingresos] = acc
 
 if True: # test (loosely) that it worked
   acc = acc . sort_values(spacetime) . reset_index(drop=True)
   ing = ing . sort_values(spacetime) . reset_index(drop=True)
-  assert (acc["item recaudo"] < ing["item recaudo"]).any()
+  assert (acc["item recaudo"]  < ing["item recaudo"]).any()
   assert (acc["item recaudo"] <= ing["item recaudo"]).all()
   assert (         acc.drop(columns=["item recaudo"]) .
            equals( ing.drop(columns=["item recaudo"]) ) )
@@ -167,7 +166,6 @@ if True: # test (loosely) that it worked
 ###### Test, output
 ######
 
-for s in ["ingresos","gastos"]:
+for s in [t.ingresos,t.gastos]:
   dfs2[s].to_csv( dest + "/" + s + ".csv" ,
-                  encoding="utf-8",
                   index = False )

@@ -61,12 +61,12 @@ if True: # define map from aggregate categories to the codes comprising them
     categs_to_codes[t.inversion][t.pub] = {"A.3", "A.6"}
     categs_to_codes[t.inversion][t.cult] = {"A.4", "A.5"}
     categs_to_codes[t.inversion][t.agro] = {"A.8"}
-  if True: # for the deuda files
-    categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
   if True: # for the ingresos files
     categs_to_codes[t.ingresos][t.propios] = {"TI.A"}
     categs_to_codes[t.ingresos][t.transfer] = {"TI.A.2.6"}
     categs_to_codes[t.ingresos][t.capital] = {"TI.B"}
+  if True: # for the deuda files
+    categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
 
 
 if True: # the inverse map: from (spending) budget codes to our aggregate categories
@@ -76,18 +76,23 @@ if True: # the inverse map: from (spending) budget codes to our aggregate catego
     t.funcionamiento : invert_set_dict(
       categs_to_codes[t.funcionamiento] ),
     t.ingresos : invert_set_dict(
-      categs_to_codes[t.ingresos] ) }
+      categs_to_codes[t.ingresos] ),
+    t.deuda : invert_set_dict(
+      categs_to_codes[t.deuda] ) }
   assert not set.intersection(
       set( three_inverses[t.inversion]      . keys() ),
       set( three_inverses[t.funcionamiento] . keys() ),
-      set( three_inverses[t.ingresos]       . keys() ) )
+      set( three_inverses[t.ingresos]       . keys() ),
+      set( three_inverses[t.deuda]          . keys() ) )
   codes_to_categs = ( # This creates the union of the two dictioaries.
     dict(   three_inverses[t.inversion],
           **three_inverses[t.funcionamiento],
-          **three_inverses[t.ingresos] ) )
+          **three_inverses[t.ingresos],
+          **three_inverses[t.deuda] ) )
   assert codes_to_categs["A.8"]     == t.agro
   assert codes_to_categs["1.1.1.1"] == t.personal
   assert codes_to_categs["TI.B"]    == t.capital
+  assert codes_to_categs["T"]       == t.deuda_gasto
 
 categs_to_code_sets : Dict[ str, Set[str] ] = (
     invert_many_to_one_dict( codes_to_categs ) )
