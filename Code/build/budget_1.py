@@ -8,13 +8,16 @@ if True:
   import os
   import pandas as pd
   #
+  import Code.util as util
   import Code.build.budget_1_defs as defs
   import Code.build.budget_1_tests as tests
   import Code.metadata.four_series as sm
   import Code.metadata.terms as t
 
 dfs = defs.collect_raw( sm.source_folder + "original_csv" )
-dfs[t.deuda] = defs.un_latin_decimal_deuda_columns(
+dfs[t.deuda] = util.un_latin_decimal_columns(
+  list( map( lambda s: s[1],
+             sm.columns_peso[t.deuda] ) ),
   dfs[t.deuda] )
 
 tests.row_numbers_raw( dfs )

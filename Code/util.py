@@ -1,6 +1,18 @@
-import numpy as np
-import pandas as pd
+if True:
+  from typing import List, Set, Dict
+  import numpy as np
+  import pandas as pd
 
+def un_latin_decimal_columns(
+    column_names : List[str],
+    df : pd.DataFrame
+    ) -> pd.DataFrame:
+  for c in column_names:
+    df[c] = ( df[c] .
+              astype( str ) .
+              str.replace( ",", "." ) .
+              astype( float ) )
+  return df
 
 def to_front( front_columns, df ):
   """ Move some columns to the front of a data frame. """

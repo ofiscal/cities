@@ -54,6 +54,10 @@ https://sisfut.dnp.gov.co/app/reportes/categoria
 Take the top category, "T".
 ** convert things to .csv from command line, not Open Office
 "ssconvert file.xlsx file.csv"
+*** to download and convert
+Ingresos-gastos.xlsx
+regalias, dept
+regalias, muni
 ** send a few sample data points to Juan for confirmation from each data set
 One with decimal, one without, if the row has both kinds.
 *** check regalias magnitude
