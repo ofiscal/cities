@@ -13,8 +13,7 @@ s2_dfs = {} # stage 2 (build/budget_2_subsample) data frames
 for name in ["ingresos","gastos"]:
   s2_dfs[name] = uk.merge_geo(
     pd.read_csv(
-      "output/budget_2_subsample/recip-1/" + name + ".csv",
-      encoding = "utf-8" ) )
+      "output/budget_2_subsample/recip-1/" + name + ".csv" ) )
 
 for s in ["ingresos","gastos"]:
   print( len(s2_dfs[s]) )
@@ -24,6 +23,7 @@ if True:
   for (name,cs) in [
       ("ingresos",codes.of_interest["ingresos"]),
       ("gastos",set.union(
+        codes.of_interest["deuda"],
         codes.of_interest["inversion"],
         codes.of_interest["funcionamiento"] ) ) ]:
     df = s2_dfs[name]
