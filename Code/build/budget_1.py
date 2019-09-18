@@ -4,15 +4,18 @@
 ###### The unit of observation is the same, a "budget",
 ###### i.e. an item of either expenditure or income.
 
-import os
-import pandas as pd
-
-import Code.build.budget_1_defs as defs
-import Code.build.budget_1_tests as tests
-import Code.metadata.four_series as sm
-
+if True:
+  import os
+  import pandas as pd
+  #
+  import Code.build.budget_1_defs as defs
+  import Code.build.budget_1_tests as tests
+  import Code.metadata.four_series as sm
+  import Code.metadata.terms as t
 
 dfs = defs.collect_raw( sm.source_folder + "original_csv" )
+dfs[t.deuda] = defs.un_latin_decimal_deuda_columns(
+  dfs[t.deuda] )
 
 tests.row_numbers_raw( dfs )
 tests.column_names_of_raw_data( dfs )

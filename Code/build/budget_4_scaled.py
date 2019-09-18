@@ -37,13 +37,12 @@ for (file,pesos_col) in [
     ("ingresos" ,"item recaudo"),
     ("gastos"   ,"item oblig") ]:
   if True: # clean the data
-    df = pd.read_csv( source + "/" + file + ".csv",
-                      encoding = "utf-8" )
+    df = pd.read_csv( source + "/" + file + ".csv" )
     df = correct_peso_column( pesos_col, df )
     dfs[file] = df
   if True: # add percent change across years within place-item
     df_by_muni_item = (
-      df[["year",     "muni code", "dept code", "item categ",pesos_col]] .
+      df[["year",     "muni code", "dept code", "item categ", pesos_col]] .
       groupby( by = [ "muni code", "dept code", "item categ"] ) .
       apply( lambda df: lib.add_pct_change( pesos_col, df) ) .
       reset_index() )

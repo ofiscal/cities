@@ -3,6 +3,7 @@ if True:
   import numpy as np
   import pandas as pd
   #
+  import Code.metadata.terms as t
   import Code.metadata.four_series as sm
 
 
@@ -27,4 +28,14 @@ def collect_raw( source : str,
       shuttle["year"] = year
       dfs[series] = dfs[series] . append(shuttle)
   return dfs
+
+def un_latin_decimal_deuda_columns( df : pd.DataFrame ) -> pd.DataFrame:
+  peso_columns = list( map( lambda s: s[1],
+                            sm.columns_peso[t.deuda] ) )
+  for c in peso_columns:
+    df[c] = ( df[c] .
+              astype( str ) .
+              str.replace( ",", "." ) .
+              astype( float ) )
+  return df
 
