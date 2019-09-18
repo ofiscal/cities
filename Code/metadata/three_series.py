@@ -4,7 +4,7 @@
 
 from itertools import chain
 
-series = ["ingresos","inversion","funcionamiento"]
+series = ["ingresos","inversion","funcionamiento","deuda"]
 
 source_folder = "data/sisfut/"
 columns_peso = {
@@ -20,6 +20,12 @@ columns_peso = {
     , ("Obligaciones"           , "item oblig")
     , ("Pagos"                  , "item pagos") ]
   , "funcionamiento" : [
+      ("Presupuesto Inicial"    , "item init")
+    , ("Presupuesto Definitivo" , "item def")
+    , ("Compromisos"            , "item comp")
+    , ("Obligaciones"           , "item oblig")
+    , ("Pagos"                  , "item pagos") ]
+  , "deuda" : [
       ("Presupuesto Inicial"    , "item init")
     , ("Presupuesto Definitivo" , "item def")
     , ("Compromisos"            , "item comp")
@@ -61,7 +67,23 @@ column_subsets = { # Columns that we might actually use.
     , ("Concepto"                 , "item")
     # , "Código Fuente Financiación"
     # , "Fuente Financiación"
-    ] + columns_peso["funcionamiento"]
+    ] + columns_peso["funcionamiento"],
+  "deuda" : [
+    # "Código FUT"
+      ("Nombre Entidad"           , "name")
+    , ("Cód. DANE Departamento"   , "dept code")
+    , ("Nombre DANE Departamento" , "dept")
+    , ("Cód. DANE Municipio"      , "muni code")
+    , ("Nombre DANE Municipio"    , "muni")
+    , ("Código Concepto"          , "item code")
+    , ("Concepto"                 , "item")
+    # Código Tipo Deuda
+    # Tipo Deuda
+    # Código Tipo Operación
+    # Tipo Operación
+    # Código Fuente
+    # Fuente
+    ] + columns_peso["deuda"]
 }
 
 column_subsets_long, column_subsets_short = ({},{})
@@ -98,8 +120,9 @@ duplicative_columns_short_set = set(
   # chain.from_iterable concatenates these 2-element lists
   chain.from_iterable( [ [ c[0], c[1] ]
                          for c in duplicative_columns_short ] ) )
-omittable_columns_short = set( map( lambda x: x[1]
-                            , duplicative_columns_short ) )
+omittable_columns_short = set(
+  map( lambda x: x[1],
+       duplicative_columns_short ) )
 
 column_subsets_no_dups_short = {}
 column_subsets_no_dups_long = {}

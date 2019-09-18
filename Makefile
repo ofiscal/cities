@@ -43,10 +43,11 @@ keys =								\
   output/keys/budget.csv					\
   output/keys/geo.csv
 
-budget_1 =							\
-  output/budget_1/funcionamiento.csv				\
-  output/budget_1/ingresos.csv					\
-  output/budget_1/inversion.csv
+budget_1 =				\
+  output/budget_1/funcionamiento.csv	\
+  output/budget_1/ingresos.csv		\
+  output/budget_1/inversion.csv		\
+  output/budget_1/deuda.csv
 
 budget_1p5 =							\
   output/budget_1p5/ingresos.csv				\
