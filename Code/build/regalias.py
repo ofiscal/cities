@@ -1,5 +1,6 @@
 if True:
   import pandas as pd
+  import Code.util as util
   import Code.build.use_keys as uk
 
 if True: # ingest
@@ -68,6 +69,8 @@ if True: # reduce to the data we need
   wide_dept = wide_dept[["dept code"] + year_pairs]
   wide = wide_muni.append( wide_dept,
                            sort = True ) # sort columns to align
+  wide = util.un_latin_decimal_columns(
+    year_pairs, wide )
 
 if True: # change from wide to long, adding a "yaer" column
   long = pd.DataFrame()
