@@ -19,8 +19,7 @@ if True: # read data
     raw[s.name] = (
       pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
-          + "/" + s.name + ".csv"),
-        encoding = "utf-8" ) .
+          + "/" + s.name + ".csv") ) .
       sort_values( group_vars ) )
 
 if True: # restrict to the spacetime we need

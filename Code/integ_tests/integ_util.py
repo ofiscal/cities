@@ -15,11 +15,11 @@ if True: # define a spacetime cell
     muni = "ARACATACA"
     dept = "SANTANDER"
   #
-  if False: # a subset of the values used in sample_tables.py
+  if True: # a subset of the values used in sample_tables.py
     year = 2018
     muni = "SANTA MARTA"
     dept = "ANTIOQUIA"
-  if True:
+  if False:
     year = 2018
     muni = "BOGOTÁ, D.C."
     dept = "BOGOTÁ, D.C."
