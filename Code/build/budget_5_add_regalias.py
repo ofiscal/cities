@@ -19,10 +19,11 @@ if True: # input
   dfsi = {}
   for s in ser.series:
     dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
-  regalias = (
-    pd.read_csv( "output/regalias.csv" ) .
-    rename( columns = { "regalias" :
-                        ser.series_dict["ingresos"].pesos_col } ) )
+  regalias = pd.read_csv( "output/regalias.csv" )
+  if True: # define peso_cols
+    for c in s.peso_cols:
+      regalias[c] = regalias["regalias"]
+    regalias = regalias.drop( columns = ["regalias"] )
   regalias["muni code"] = (
     regalias["muni code"] .
     fillna(-1) )

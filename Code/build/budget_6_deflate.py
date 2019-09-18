@@ -12,11 +12,9 @@ if not os.path.exists( dest ):
 
 dfs = {}
 for s in ser.series:
-  dfs[s.name] = pd.read_csv( source + "/" + s.name + ".csv",
-                             encoding = "utf-8" )
+  dfs[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
 
-deflator = pd.read_csv( "output/inflation.csv",
-                        encoding = "utf-8" )
+deflator = pd.read_csv( "output/inflation.csv" )
 deflator["deflator"] = ( # normalize in terms of 2018 pesos
   1 / ( deflator["deflator"] /
         float( deflator
@@ -26,9 +24,10 @@ deflator["deflator"] = ( # normalize in terms of 2018 pesos
 for s in ser.series:
   df = dfs[s.name]
   df = df.merge( deflator, on = "year" )
-  df[s.pesos_col] = df[s.pesos_col] * df["deflator"]
+  for c in s.peso_cols:
+    df[c] = df[c] * df["deflator"]
   df = df.drop( columns = ["deflator"] )
   dfs[s.name] = df
   df.to_csv( dest + "/" + s.name + ".csv",
-             index = False,
-             encoding = "utf-8" )
+             index = False )
+

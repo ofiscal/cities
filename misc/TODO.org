@@ -48,12 +48,13 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO last-minute changes
-** add deuda as a gasto: it's a new data set
+** DONE add deuda as a gasto: it's a new data set
 https://sisfut.dnp.gov.co/app/reportes/categoria
 "FUT_SERVICIO_DEUDA"
 Take the top category, "T".
 ** convert things to .csv from command line, not Open Office
 "ssconvert file.xlsx file.csv"
+*** TODO still pending for laptop data
 *** to download and convert
 Ingresos-gastos.xlsx
 regalias, dept
@@ -63,7 +64,7 @@ One with decimal, one without, if the row has both kinds.
 *** check regalias magnitude
  Bogota should be ~3.4e12
  Tubara should be ~1.5e10
-** try using "total ingresos" instead of "recaudo", send both to Juan
+** DONE use "total ingresos" in addition to "recaudo"
 * DONE integration tests for Code/build/budget_*.py
 ** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia
 raw: good (consistent with budget_2)
@@ -253,6 +254,8 @@ but not after reducing the number of rows at stage 1p5.
 * wishes
 ** that I could set font only once, affecting all types of text
 * PITFALLS
+** modifying the code
+*** only the peso columns of interest are deflated
 ** interpreting the data
 *** regalias is not subsampled
 So the supposedly subsampled data at or data downstream of

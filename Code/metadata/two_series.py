@@ -4,17 +4,18 @@
 
 
 class seriesType:
-  def __init__(self, name, pesos_col):
+  def __init__(self, name, peso_cols):
     self.name = name
-    self.pesos_col = pesos_col
+    self.peso_cols = peso_cols
 
 ingresos = seriesType(
   name = "ingresos",
-  pesos_col = "item recaudo" )
+  peso_cols = ["item recaudo","item total"] )
 gastos = seriesType(
   name = "gastos",
-  pesos_col = "item oblig" )
+  peso_cols = ["item oblig"] )
 
 series = [ingresos,gastos]
 series_dict = { "ingresos" : ingresos,
                 "gastos"   : gastos }
+

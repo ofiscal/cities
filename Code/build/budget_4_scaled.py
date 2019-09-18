@@ -11,10 +11,12 @@ It's a long program because it then tests that the percentage change from one ye
 """
 
 if True:
+  from typing import List, Set, Dict
   import os
   import pandas as pd
   #
   import Code.common as c
+  import Code.metadata.two_series as ts
   import Code.metadata.four_series as sm
   import Code.explore.order_of_mag_x_yrs_defs as lib
 
@@ -25,26 +27,41 @@ if True:
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
-def correct_peso_column( column : str,
-                         df : pd.DataFrame ) -> pd.DataFrame:
-  """ PITFALL: Mutates its input. """
-  df.loc[ df["year"] < 2017
-          , column] *= 1000
-  return df
+if True: # function to multiply early years by 1000
+  def correct_peso_columns( cols : List[str],
+                            df : pd.DataFrame ) -> pd.DataFrame:
+    """ PITFALL: Mutates its input. """
+    for c in cols:
+      df.loc[ df["year"] < 2017,
+              c] *= 1000
+    return df
+  if True: # test it
+    x = pd.DataFrame( {"a" : [0,1,2,3,4,5],
+                       "b" : [0,1,2,3,4,5],
+                       "c" : [0,1,2,3,4,5],
+                       "year" : list( range( 2013, 2019 ) ) } )
+    assert (
+      correct_peso_columns( ["a","b"], x )
+      .equals(
+        pd.DataFrame( {
+          "a" : [0,1000,2000,3000,4,5],
+          "b" : [0,1000,2000,3000,4,5],
+          "c" : [0,1,2,3,4,5],
+          "year" : list( range( 2013, 2019 ) ) } ) ) )
 
 dfs, dfs_by_muni_item = ({},{})
-for (file,pesos_col) in [
-    ("ingresos" ,"item recaudo"),
-    ("gastos"   ,"item oblig") ]:
+for s in ts.series:
   if True: # clean the data
-    df = pd.read_csv( source + "/" + file + ".csv" )
-    df = correct_peso_column( pesos_col, df )
-    dfs[file] = df
+    df = pd.read_csv( source + "/" + s.name + ".csv" )
+    df = correct_peso_columns( s.peso_cols, df )
+    dfs[s.name] = df
   if True: # add percent change across years within place-item
     df_by_muni_item = (
-      df[["year",     "muni code", "dept code", "item categ", pesos_col]] .
+      df[["year",     "muni code", "dept code", "item categ"]
+         + s.peso_cols ] .
       groupby( by = [ "muni code", "dept code", "item categ"] ) .
-      apply( lambda df: lib.add_pct_change( pesos_col, df) ) .
+      apply( lambda df:
+             lib.add_pct_change( s.peso_cols[0], df) ) .
       reset_index() )
     for year in list( range( 2013, 2019 ) ):
       median_change = (
@@ -61,8 +78,6 @@ for (file,pesos_col) in [
         # In fact they can't be made much tighter (and still have every subsample pass).
         # Fortunately, these bounds are far more than tight enough to assure
         # the order of magnitude problem is solved.
-    dfs_by_muni_item[file] = df_by_muni_item
-  df.to_csv( dest + "/" + file + ".csv" ,
-             encoding="utf-8",
+    dfs_by_muni_item[s.name] = df_by_muni_item
+  df.to_csv( dest + "/" + s.name + ".csv",
              index = False )
-
