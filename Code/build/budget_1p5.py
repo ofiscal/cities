@@ -20,8 +20,7 @@ if True: # folders
 if True: # input data
   dfs = {}
   for s in sm.series:
-    dfs[s] = pd.read_csv( source + "/" + s + ".csv",
-                          encoding = "utf-8" )
+    dfs[s] = pd.read_csv( source + "/" + s + ".csv" )
 
 if True: # Filter rows by item code.
   dfs_filt = {}
