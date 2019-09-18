@@ -9,7 +9,7 @@ import pandas as pd
 
 import Code.build.budget_1_defs as defs
 import Code.build.budget_1_tests as tests
-import Code.metadata.three_series as sm
+import Code.metadata.four_series as sm
 
 
 dfs = defs.collect_raw( sm.source_folder + "original_csv" )
@@ -23,5 +23,5 @@ if not os.path.exists( dest ):
   os.makedirs( dest )
 for s in sm.series:
   dfs[s].to_csv( dest + "/" + s + ".csv",
-                 encoding="utf-8",
                  index = False )
+

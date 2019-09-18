@@ -108,7 +108,7 @@ pics = output/reports/done.txt
 keys: $(keys)
 $(keys):			\
   Code/build/make_keys.py	\
-  Code/metadata/three_series.py
+  Code/metadata/four_series.py
 	$(myPython) Code/build/make_keys.py
 
 budget_1: $(budget_1)
@@ -116,7 +116,8 @@ $(budget_1):					\
   Code/build/budget_1.py			\
   Code/build/budget_1_defs.py			\
   Code/build/budget_1_tests.py			\
-  Code/metadata/three_series.py
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/build/budget_1.py
 
 budget_1p5: $(budget_1p5)
@@ -125,7 +126,8 @@ $(budget_1p5):					\
   Code/build/budget_1p5.py			\
   Code/build/budget_1p5_tests.py		\
   Code/build/classify_budget_codes.py		\
-  Code/metadata/three_series.py
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/build/budget_1p5.py
 
 budget_2_subsamples: $(budget_2_subsamples)
@@ -134,18 +136,20 @@ $(budget_2_subsamples):				\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\
   Code/build/budget_1_tests.py			\
-  Code/metadata/three_series.py
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/build/budget_2_subsample.py
 
 budget_3_dept_muni_year_item: $(budget_3_dept_muni_year_item)
-$(budget_3_dept_muni_year_item):			\
-  $(budget_2_subsample)					\
-  Code/build/budget_3_dept_muni_year_item.py		\
-  Code/common.py					\
-  Code/params/cl.py					\
-  Code/params/fixed.py					\
-  Code/util.py						\
-  Code/metadata/three_series.py
+$(budget_3_dept_muni_year_item):		\
+  $(budget_2_subsample)				\
+  Code/build/budget_3_dept_muni_year_item.py	\
+  Code/common.py				\
+  Code/params/cl.py				\
+  Code/params/fixed.py				\
+  Code/util.py					\
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
 
 # TODO ? resurrect. This broke when we switched item code specs.
@@ -157,7 +161,7 @@ $(budget_3_dept_muni_year_item):			\
 #  Code/build/sanity_child_sum_is_parent.py	\
 #  Code/common.py				\
 #  Code/util.py					\
-#  Code/metadata/three_series.py
+#  Code/metadata/four_series.py
 #	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
@@ -166,7 +170,8 @@ $(explore_order_of_mag_x_yrs):			\
   Code/explore/order_of_mag_x_yrs.py		\
   Code/common.py				\
   Code/util.py					\
-  Code/metadata/three_series.py
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
 
 budget_4_scaled: $(budget_4_scaled)
@@ -176,7 +181,8 @@ $(budget_4_scaled):				\
   Code/explore/order_of_mag_x_yrs_defs.py	\
   Code/common.py				\
   Code/util.py					\
-  Code/metadata/three_series.py
+  Code/metadata/terms.py                        \
+  Code/metadata/four_series.py
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
 
 budget_5_add_regalias: $(budget_5_add_regalias)
@@ -185,6 +191,7 @@ $(budget_5_add_regalias):		\
   output/regalias.csv			\
   Code/build/budget_5_add_regalias.py	\
   Code/common.py			\
+  Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_5_add_regalias.py $(ss)
 
@@ -194,6 +201,7 @@ $(budget_6_deflate):			\
   output/inflation.csv			\
   Code/build/budget_6_deflate.py	\
   Code/common.py			\
+  Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
 
@@ -203,6 +211,7 @@ $(budget_7_verbose):			\
   Code/build/budget_7_verbose.py	\
   Code/common.py			\
   Code/util.py				\
+  Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
 
@@ -212,6 +221,7 @@ $(sample_tables):		\
   Code/sample_tables.py		\
   Code/common.py		\
   Code/sample_tables_defs.py	\
+  Code/metadata/terms.py        \
   Code/metadata/two_series.py
 	$(myPython) Code/sample_tables.py $(ss)
 

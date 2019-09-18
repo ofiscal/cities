@@ -8,7 +8,7 @@ import pandas as pd
 
 import Code.common as c
 import Code.util as u
-import Code.metadata.three_series as sm
+import Code.metadata.four_series as sm
 
 
 source       = "output/budget_3_muni_year_categ_top/recip-"    + str(c.subsample)

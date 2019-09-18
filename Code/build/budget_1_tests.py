@@ -1,7 +1,8 @@
 import numpy  as np
 import pandas as pd
 
-import Code.metadata.three_series as sm
+import Code.metadata.terms as t
+import Code.metadata.four_series as sm
 
 
 def row_numbers_raw( dfs ):
@@ -9,11 +10,12 @@ def row_numbers_raw( dfs ):
   by running `wc *file*` in data/sisfut/original_csv
   and subutracting seven (which is the number of years,
   and therefore the number of header files)."""
-  for (file,length) in [ ( "ingresos"      , 993934 ),
-                         ( "inversion"     , 1750676 ),
-                         ( "funcionamiento", 1454498 ) ]:
+  for (file,length) in [ ( t.ingresos      , 993934  ),
+                         ( t.inversion     , 1750676 ),
+                         ( t.funcionamiento, 1454498 ),
+                         ( t.deuda         , 52611   ) ]:
     assert len( dfs[file] ) == length
- 
+
 def column_names_of_raw_data( dfs ):
   for i in sm.series:
     assert ( list( dfs[i].columns ) ==
@@ -22,7 +24,8 @@ def column_names_of_raw_data( dfs ):
 
 def types_and_missings_for_raw_data( dfs ):
   stats, stats_ref = ({},{})
-  for s in ["ingresos"]:
+  for s in [t.ingresos,t.funcionamiento,t.inversion]:
+    # TODO ? Extend to include deuda file
     df = dfs[s]
     stats[s] = pd.DataFrame(
       { "dtype"   :     df.dtypes.astype( str ),

@@ -3,7 +3,8 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.metadata.three_series as sm
+  import Code.metadata.terms as t
+  import Code.metadata.four_series as sm
 
 
 if True: # bearings
@@ -18,9 +19,8 @@ if True: # bearings
 def read_data( nrows = None ):
   """Returns a dictionary of three data frames."""
   dfs = {}
-  for filename in ["ingresos","gastos"]:
+  for filename in [t.ingresos,t.gastos]:
     df = pd.read_csv( source + "/" + filename + ".csv",
-                      encoding = "utf-8",
                       nrows = nrows )
     dfs[filename] = df
   return dfs
@@ -28,7 +28,7 @@ def read_data( nrows = None ):
 def munis_unique_without_nan( dfs ):
   """Creates a pandas DataFrame that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
   munis = pd.DataFrame()
-  for s in ["ingresos","gastos"]:
+  for s in [t.ingresos,t.gastos]:
     munis = pd.concat( [ munis,
                          dfs[s] ["muni code"] ],
                        axis = "rows" )
@@ -48,7 +48,7 @@ def dfs_subset( munis_subset, dfs ):
   dfs2 = {}
   for s in dfs.keys(): # deep copy
     dfs2[s] = dfs[s].copy()
-  for filename in ["ingresos","gastos"]:
+  for filename in [t.ingresos,t.gastos]:
     dfs2[filename] = (
       dfs2[filename] .
       merge( munis_subset,

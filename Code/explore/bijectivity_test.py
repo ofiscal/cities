@@ -5,7 +5,7 @@
 
 from itertools import chain
 import pandas as pd
-import Code.metadata.three_series as sm
+import Code.metadata.four_series as sm
 
 
 ######

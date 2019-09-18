@@ -9,7 +9,7 @@ if True:
   import Code.build.budget_1p5_tests as tests
   import Code.build.classify_budget_codes as cla
   import Code.metadata.terms as t
-  import Code.metadata.three_series as sm
+  import Code.metadata.four_series as sm
 
 if True: # folders
   source = "output/budget_1"
