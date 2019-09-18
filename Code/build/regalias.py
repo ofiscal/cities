@@ -58,7 +58,6 @@ if False: # verify that muni codes correspond to (muni,dept) the same way
   # e.g. "don matías" v. "donmatías"
   test_match.to_csv(
     "output/explore/regalias_muni_codes.csv",
-    encoding="utf-8",
     index = False )
 
 if True: # reduce to the data we need
@@ -84,6 +83,5 @@ if True: # change from wide to long, adding a "yaer" column
     df["year"] = startYear + 1
     long = long.append(df)
   long.to_csv( "output/regalias.csv",
-               encoding="utf-8",
                index = False )
 
