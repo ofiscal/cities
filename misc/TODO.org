@@ -48,24 +48,23 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO last-minute changes
-** TODO check that "item recaudo", "item total", "item oblig" are not hard-coded
-** DONE add deuda as a gasto: it's a new data set
-https://sisfut.dnp.gov.co/app/reportes/categoria
-"FUT_SERVICIO_DEUDA"
-Take the top category, "T".
-** TODO Juan's check is giving a different "other" result for Antioquia
-** convert things to .csv from command line, not Open Office
+** TODO convert things to .csv from command line, not Open Office
 "ssconvert file.xlsx file.csv"
 *** TODO still pending for laptop data
 *** to download and convert
 Ingresos-gastos.xlsx
 regalias, dept
 regalias, muni
-** send a few sample data points to Juan for confirmation from each data set
-One with decimal, one without, if the row has both kinds.
-*** check regalias magnitude
- Bogota should be ~3.4e12
- Tubara should be ~1.5e10
+** TODO Juan's check is giving a different
+*** "other" result for muni spending
+*** "regalias" for various depts, but mine match his raw data
+** DONE check that "item recaudo", "item total", "item oblig" are not hard-coded
+That is, that they are accessed only through metadata.two_series,
+so that I always remember to loop across all of them.
+** DONE add deuda as a gasto: it's a new data set
+https://sisfut.dnp.gov.co/app/reportes/categoria
+"FUT_SERVICIO_DEUDA"
+Take the top category, "T".
 ** DONE use "total ingresos" in addition to "recaudo"
 * DONE integration tests for Code/build/budget_*.py
 ** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia

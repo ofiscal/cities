@@ -44,7 +44,8 @@ if True: # restrict to the spacetime we need
                                  "ARAUCA" ] ) ) ] ],
       axis = "rows" )
     df = ( df[ df["year"] == 2018 ] .
-           drop( columns = "year" ) )
+           drop( columns = "year" ) .
+           sort_values( ["dept","muni"] + s.peso_cols ) )
     spacetime_sample[s.name] = df
 
 if True: # group all but the biggest five categories
@@ -67,13 +68,14 @@ if True: # output two big tables
   if not os.path.exists( dest ):
     os.makedirs(         dest )
   for s in ser.series:
-    items_grouped[s.name].to_excel(
-      dest + "/" + s.name + ".xlsx",
-      index = False )
-    items_grouped[s.name].to_csv(
-      dest + "/" + s.name + ".csv",
-      encoding = "utf-8",
-      index = False )
+    for (source,suffix) in [ (spacetime_sample,""),
+                             (items_grouped,"_grouped") ]:
+      source[s.name].to_excel(
+        dest + "/" + s.name + suffix + ".xlsx",
+        index = False )
+      source[s.name].to_csv(
+        dest + "/" + s.name + suffix +".csv",
+        index = False )
 
 if False: # for comparison to integ_tests/iBudget_7_verbose
   for s in ser.series:
