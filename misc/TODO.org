@@ -213,6 +213,9 @@ if True: # write many little pivot tables, one for each place:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
+** incorporate period removal into the latin column fix function
+per Code/explore/csv_compare.py, from commit
+0385ec917268cf10498c9384513cc6eabcf0b33c
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
