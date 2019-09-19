@@ -57,7 +57,6 @@ regalias, dept
 regalias, muni
 ** TODO Juan's check is giving a different
 *** "other" result for muni spending
-*** "regalias" for various depts, but mine match his raw data
 ** DONE check that "item recaudo", "item total", "item oblig" are not hard-coded
 That is, that they are accessed only through metadata.two_series,
 so that I always remember to loop across all of them.
