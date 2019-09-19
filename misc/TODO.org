@@ -48,10 +48,12 @@ These are ordered by time.
   # what they've actually spent
 
 * TODO last-minute changes
+** TODO check that "item recaudo", "item total", "item oblig" are not hard-coded
 ** DONE add deuda as a gasto: it's a new data set
 https://sisfut.dnp.gov.co/app/reportes/categoria
 "FUT_SERVICIO_DEUDA"
 Take the top category, "T".
+** TODO Juan's check is giving a different "other" result for Antioquia
 ** convert things to .csv from command line, not Open Office
 "ssconvert file.xlsx file.csv"
 *** TODO still pending for laptop data

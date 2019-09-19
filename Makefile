@@ -149,7 +149,7 @@ $(budget_3_dept_muni_year_item):		\
   Code/params/fixed.py				\
   Code/util.py					\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/two_series.py
 	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
 
 # TODO ? resurrect. This broke when we switched item code specs.

@@ -13,6 +13,7 @@
 #    from TI.A (propios).
 
 if True:
+  from typing import List, Set, Dict
   import os
   import pandas as pd
   #
@@ -20,8 +21,7 @@ if True:
   import Code.util as util
   import Code.build.classify_budget_codes as codes
   import Code.metadata.terms as t
-  import Code.metadata.four_series as sm
-
+  import Code.metadata.two_series as s2
 
 if True:
   budget_key = pd.read_csv( "output/keys/budget.csv" )
@@ -31,7 +31,6 @@ if True:
     os.makedirs(         dest )
   dfs0, dfs1, dfs2 = {}, {}, {} # input, midput, output
   spacetime = ["muni code","dept code","year"]
-
 
 ######
 ###### Build
@@ -71,40 +70,31 @@ if True:
       subtract : "x",      # the categ value of rows to subtract
       subtract_from : "x", # the categ value of rows to subtract from
       categ : str, # the name of an "x"-valued column
-      value : str, # the name of a peso-valued column
+      valueCols : List[str], # the name of a peso-valued column
       df0 : pd.DataFrame # a single muni-dept-year cell
       ) -> pd.DataFrame:
     df = df0.copy()
-    subtract_vec = (df[ df[categ] == subtract ]
-                    [value] )
-    if len(subtract_vec) < 1: return df
-    assert len(subtract_vec) == 1
-    if False: # debugging
-      print( "\nOld df:\n", df )
-      print( "subtract from: ",
-             df.loc[ df[categ] == subtract_from, value ] )
-      print( "subtract: ", subtract_vec )
-      print( "result: ", (
+    for value in valueCols:
+      subtract_vec = (df[ df[categ] == subtract ]
+                      [value] )
+      if len(subtract_vec) < 1: pass
+      else:
+        assert len(subtract_vec) == 1
         df.loc[ df[categ] == subtract_from,
-                value ] -
-        float( subtract_vec ) ) )
-    df.loc[ df[categ] == subtract_from,
-            value ] = (
-      df.loc[ df[categ] == subtract_from,
-              value ] -
-      float( subtract_vec ) )
-    if False: # debugging
-      print( "New df:\n", df )
+                value ] = (
+          df.loc[ df[categ] == subtract_from,
+                  value ] -
+          float( subtract_vec ) )
     return df
   if True: # test it on fake data
     x = pd.DataFrame( { "cat" : [ "1", "2", "3"],
                         "val" : [ 11,  12,  13 ] } )
-    assert ( tax_categ_subtract( "1", "2", "cat", "val", x ) .
+    assert ( tax_categ_subtract( "1", "2", "cat", ["val"], x ) .
              # subtract val at row where cat=1 from val at row where cat=2
              equals(
                pd.DataFrame( { "cat" : ["1",  "2", "3"],
                                "val" : [ 11.0, 1.0, 13.0 ] } ) ) )
-    assert ( tax_categ_subtract( "0", "2", "cat", "val", x ) .
+    assert ( tax_categ_subtract( "0", "2", "cat", ["val"], x ) .
              # here the subtract code ("0") is not present
              equals( x ) )
 
@@ -132,7 +122,8 @@ if False: # TODO ? This approach, using .groupby(),
     pd.concat( [before["item recaudo"],
                 after["item recaudo"]], axis = "columns" )
 
-if True:
+if True: # accumulate (in acc) a data frame like df but
+         # having applied tax_categ_subtract() to each spacetime slice
   dfs2 [t.gastos] = dfs1[t.gastos] # pointer equality is fine for gastos;
     # this section is only supposed to change the ingresos data
   ing             = dfs1[t.ingresos]
@@ -149,17 +140,19 @@ if True:
         subtract      = t.transfer,
         subtract_from = t.propios,
         categ = "item categ",
-        value = "item recaudo",
+        valueCols = s2.ingresos.peso_cols,
         df0   = df ) )
   dfs2[t.ingresos] = acc
 
 if True: # test (loosely) that it worked
   acc = acc . sort_values(spacetime) . reset_index(drop=True)
   ing = ing . sort_values(spacetime) . reset_index(drop=True)
-  assert (acc["item recaudo"]  < ing["item recaudo"]).any()
-  assert (acc["item recaudo"] <= ing["item recaudo"]).all()
-  assert (         acc.drop(columns=["item recaudo"]) .
-           equals( ing.drop(columns=["item recaudo"]) ) )
+  assert ( acc.drop( columns = s2.ingresos.peso_cols ) .
+           equals(
+             ing.drop( columns = s2.ingresos.peso_cols ) ) )
+  for c in s2.ingresos.peso_cols:
+    assert (acc[c]  < ing[c]).any()
+    assert (acc[c] <= ing[c]).all()
 
 
 ######
@@ -169,3 +162,4 @@ if True: # test (loosely) that it worked
 for s in [t.ingresos,t.gastos]:
   dfs2[s].to_csv( dest + "/" + s + ".csv" ,
                   index = False )
+
