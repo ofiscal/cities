@@ -1,3 +1,6 @@
 docker run --name cities -it -v /home/jeff/cities:/mnt \
-  -p 8887:8887 -d -h 127.0.0.1                         \
-  jeffreybbrown/tax.co:2019-07-24.updates
+  -p 8886:8886 -d -h 127.0.0.1                         \
+  jeffreybbrown/tax.co:2019-09-20.pandas-0-25-1
+
+docker exec -it cities bash
+
