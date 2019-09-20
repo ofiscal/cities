@@ -16,7 +16,6 @@ for c in [ 'periodo 2019-2020',
            'periodo 2017-2018',
            'periodo 2016-2015',
            'periodo 2013-2014']:
-  juan[c] = juan[c].str.replace(".","")
   jeff = util.un_latin_decimal_columns( [c], jeff )
   juan = util.un_latin_decimal_columns( [c], juan )
 

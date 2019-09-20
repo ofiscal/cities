@@ -3,16 +3,28 @@ if True:
   import numpy as np
   import pandas as pd
 
-def un_latin_decimal_columns(
-    column_names : List[str],
-    df : pd.DataFrame
-    ) -> pd.DataFrame:
-  for c in column_names:
-    df[c] = ( df[c] .
-              astype( str ) .
-              str.replace( ",", "." ) .
-              astype( float ) )
-  return df
+if True:
+  def un_latin_decimal_columns(
+      column_names : List[str],
+      df : pd.DataFrame
+      ) -> pd.DataFrame:
+    for c in column_names:
+      df[c] = (
+        df[c] .
+        astype( str ) .
+        str.replace( ".", ""  ) . # PITFALL: The order of these
+        str.replace( ",", "." ) . # two replacements is important.
+        astype( float ) )
+    return df
+  if True: # test it
+    df = pd.DataFrame( { "a" : ["1.000,3","3,3","2.000"],
+                         "b" : ["1.000,3","3,3","2.000"],
+                         "c" : ["1.000,3","3,3","2.000"] } )
+    assert ( un_latin_decimal_columns( ["a","b"], df ) .
+             equals( pd.DataFrame(
+               { "a" : [  1000.3,  3.3,  2000 ],
+                 "b" : [  1000.3,  3.3,  2000 ],
+                 "c" : ["1.000,3","3,3","2.000"] } ) ) )
 
 def to_front( front_columns, df ):
   """ Move some columns to the front of a data frame. """

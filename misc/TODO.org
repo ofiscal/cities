@@ -47,96 +47,6 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO last-minute changes
-** TODO convert things to .csv from command line, not Open Office
-"ssconvert file.xlsx file.csv"
-*** TODO still pending for laptop data
-*** to download and convert
-Ingresos-gastos.xlsx
-regalias, dept
-regalias, muni
-** TODO Juan's check is giving a different
-*** "other" result for muni spending
-** DONE check that "item recaudo", "item total", "item oblig" are not hard-coded
-That is, that they are accessed only through metadata.two_series,
-so that I always remember to loop across all of them.
-** DONE add deuda as a gasto: it's a new data set
-https://sisfut.dnp.gov.co/app/reportes/categoria
-"FUT_SERVICIO_DEUDA"
-Take the top category, "T".
-** DONE use "total ingresos" in addition to "recaudo"
-* DONE integration tests for Code/build/budget_*.py
-** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia
-raw: good (consistent with budget_2)
-budget_2: good (consistent with budget_3)
-budget_3: good (consistent with budget_4)
-budget_4: good (consistent with budget_5)
-budget_5: good (consistent with budget_6)
-budget_6: good (consistent with budget_7)
-** scary (but fine) - regalias sum was not what I expected
-see explore/bad_regalias_sum.py
-** row numbers look good
-*** iBudget_1 has row numbers consistent with wc on the raw data
-['ingresos', 'inversion', 'funcionamiento'] ->
-993934
-1750676
-1454498
-  with the exception of about 90 missing rows already accounted for
-*** in iBudget_1p5 they shrink dramatically
-which is good because budget_1p5
-"restricts the data to the budget items of interest."
->>> for s in ["ingresos","gastos"]:
-...   print( len(s1p5_dfs[s]) )
-...
-23692
-878518
-*** in iBudget_2_subsammple they are unchanged
-23692
-878518
-*** in iBudget_3 they shrink for gastos and not ingresos
-Which is good because the ingreso codes are not aggregated, while gastos are.
-23692
-102340
-*** iBuget_4_scaled: unchanged
-23692
-102340
-*** iBudget_5_add_regalias: about 30% more ingresos
-30496
-102340
-*** iBudget_7_verbose: unchanged
-30496
-102340
-** budget item aggregation looks good
-To see why, compare these to the corresponding results from budget_3,
-which is the first data set in which the codes are aggregated into categories.
-
-2014 ARACATACA, raw data, edu codes
-    2099284.0 - A.1
-    39788.00 - 1.3.6.4.6
-        0.00 - 1.3.6.4.6
-        0.00 - 1.3.6.4.6
-    2099284.0 + 39788.00 + 0.00 + 0.00 = 2139072.0
-2014 SANTANDER, raw data, edu codes
-    6.242800e+06 - 1.3.6.1.1
-    1.219844e+06 - 1.3.6.1.1
-    1.920000e+04 - 1.3.6.1.1
-    0.000000e+00 - 1.3.6.4.6
-    2.348250e+07 - 1.3.6.4.6
-    3.659532e+06 - 1.3.6.4.6
-    429876457.0  -       A.1
-    6.242800e+06 + 1.219844e+06 + 1.920000e+04 + 0.000000e+00 + 2.348250e+07 + 3.659532e+06 + 429876457.0 = 4.64500333e8
-2018 infrastructure codes in budget_2:
-  for Antioquia:
-    '1.3.11' = 0
-    'A.15' = 6.581700e+10
-    'A.7' = 3.091706e+10
-    'A.9' = 5.013389e+11
-    6.581700e+10 + 3.091706e+10 + 5.013389e+11 = 5.9807296e11
-  for Santa Marta:
-    1.607727e+09           A.15
-    1.560000e+09            A.7
-    2.992319e+10            A.9
-    1.607727e+09 + 1.560000e+09 + 2.992319e+10 = 3.3090917e10
 * TODO draw charts
 ** TODO pivot table output code
 Something like this:
@@ -212,39 +122,12 @@ if True: # write many little pivot tables, one for each place:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
-** incorporate period removal into the latin column fix function
-per Code/explore/csv_compare.py, from commit
-0385ec917268cf10498c9384513cc6eabcf0b33c
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
 * TODO test
-** skipped
-*** check the aggregated sums
-**** how
-For equal values of "muni code" and "agg budget",
-  but distinct values of "agg budget =",
-  compare peso sums.
-**** why
-The purpose of aggregation is to sum a.b.c and a.b.d into a.b,
-but DNP already provides an a.b value.
-Hopefully they are equal.
-*** unit data tests
-**** check other aggregated sums
- e.g. T1 = T1.A + T1.B
- Good opportunity for property-based testinig.
-**** make sure we can ignore VAL
- It is the only "codigo budget" that maps to more than one "budget".
-
- If the "subcategory summation" check works,
- then ignore these (code, conepto) pairs, because they are redundant.
- VAL	INGRESOS TOTALES
-
- Ignore these because they are checks:
- VAL	CIFRA CONTROL
- VAL	CIFRAS DE CONTROL PARA LOS GASTOS DE FUNCIONAMIENTO
-**** "subcategory summation"
- Check that, e.g., T1 = T1.A.1 + T1.A.2 + T1.B
+** check my aggregated sums against DNP's own
+Good opportunity for property-based testinig.
 ** integration data tests
 Can check results at
 https://terridata.dnp.gov.co/
@@ -254,6 +137,79 @@ and then choose "finanzas publicas".
 see explore/negative_money.py
 In the raw data, yes,
 but not after reducing the number of rows at stage 1p5.
+** DONE integration tests for Code/build/budget_*.py
+*** comparing integ_tests/ for ingresos. 2018, Santa Marta and Antioquia
+ raw: good (consistent with budget_2)
+ budget_2: good (consistent with budget_3)
+ budget_3: good (consistent with budget_4)
+ budget_4: good (consistent with budget_5)
+ budget_5: good (consistent with budget_6)
+ budget_6: good (consistent with budget_7)
+*** scary (but fine) - regalias sum was not what I expected
+ see explore/bad_regalias_sum.py
+*** row numbers look good
+**** iBudget_1 has row numbers consistent with wc on the raw data
+ ['ingresos', 'inversion', 'funcionamiento'] ->
+ 993934
+ 1750676
+ 1454498
+   with the exception of about 90 missing rows already accounted for
+**** in iBudget_1p5 they shrink dramatically
+ which is good because budget_1p5
+ "restricts the data to the budget items of interest."
+ >>> for s in ["ingresos","gastos"]:
+ ...   print( len(s1p5_dfs[s]) )
+ ...
+ 23692
+ 878518
+**** in iBudget_2_subsammple they are unchanged
+ 23692
+ 878518
+**** in iBudget_3 they shrink for gastos and not ingresos
+ Which is good because the ingreso codes are not aggregated, while gastos are.
+ 23692
+ 102340
+**** iBuget_4_scaled: unchanged
+ 23692
+ 102340
+**** iBudget_5_add_regalias: about 30% more ingresos
+ 30496
+ 102340
+**** iBudget_7_verbose: unchanged
+ 30496
+ 102340
+*** budget item aggregation looks good
+ To see why, compare these to the corresponding results from budget_3,
+ which is the first data set in which the codes are aggregated into categories.
+
+ 2014 ARACATACA, raw data, edu codes
+     2099284.0 - A.1
+     39788.00 - 1.3.6.4.6
+         0.00 - 1.3.6.4.6
+         0.00 - 1.3.6.4.6
+     2099284.0 + 39788.00 + 0.00 + 0.00 = 2139072.0
+ 2014 SANTANDER, raw data, edu codes
+     6.242800e+06 - 1.3.6.1.1
+     1.219844e+06 - 1.3.6.1.1
+     1.920000e+04 - 1.3.6.1.1
+     0.000000e+00 - 1.3.6.4.6
+     2.348250e+07 - 1.3.6.4.6
+     3.659532e+06 - 1.3.6.4.6
+     429876457.0  -       A.1
+     6.242800e+06 + 1.219844e+06 + 1.920000e+04 + 0.000000e+00 + 2.348250e+07 + 3.659532e+06 + 429876457.0 = 4.64500333e8
+ 2018 infrastructure codes in budget_2:
+   for Antioquia:
+     '1.3.11' = 0
+     'A.15' = 6.581700e+10
+     'A.7' = 3.091706e+10
+     'A.9' = 5.013389e+11
+     6.581700e+10 + 3.091706e+10 + 5.013389e+11 = 5.9807296e11
+   for Santa Marta:
+     1.607727e+09           A.15
+     1.560000e+09            A.7
+     2.992319e+10            A.9
+     1.607727e+09 + 1.560000e+09 + 2.992319e+10 = 3.3090917e10
+
 * wishes
 ** that I could set font only once, affecting all types of text
 * PITFALLS
@@ -297,6 +253,15 @@ no other discernible effect
 **** pdf.savefig() overrides background color in figures
 https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
 * DONE
+** last-minute changes for Manuela
+*** check that "item recaudo", "item total", "item oblig" are not hard-coded
+ That is, that they are accessed only through metadata.two_series,
+ so that I always remember to loop across all of them.
+*** add deuda as a gasto: it's a new data set
+ https://sisfut.dnp.gov.co/app/reportes/categoria
+ "FUT_SERVICIO_DEUDA"
+ Take the top category, "T".
+*** use "total ingresos" in addition to "recaudo"
 ** how the raw data is organized
 *** isomorphisms relate some columns
 Determined via Code/bijectivity_test.py.
