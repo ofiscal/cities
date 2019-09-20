@@ -8,7 +8,7 @@ import Code.draw.lib as lib
 plt.rcParams['axes.facecolor'] = 'b'
 
 if True: # define data, title, text
-  folder = "data/example/"
+  folder = "data/fake/"
   data = pd.read_csv( folder + "numbers_to_plot.csv",
                       index_col=0 )
   with open( folder + "/title.txt", "r") as myfile:

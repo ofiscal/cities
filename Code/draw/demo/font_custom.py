@@ -18,3 +18,4 @@ ax.set_title(
 ax.set_xlabel('This, by contrast, is the default font')
 
 plt.show()
+

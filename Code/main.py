@@ -1,11 +1,12 @@
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
-from   matplotlib.backends.backend_pdf import PdfPages
-
-import Code.common as c
-import Code.metadata.two_series as ser
-import Code.draw.lib as lib
+if True:
+  import os
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  from   matplotlib.backends.backend_pdf import PdfPages
+  #
+  import Code.common as c
+  import Code.metadata.two_series as ser
+  import Code.draw.lib as lib
 
 
 source = "output/budget_7_verbose/recip-" + str(c.subsample)
@@ -39,3 +40,4 @@ for s in ser.series:
 
 with open( "output/reports/done.txt", "w" ) as f:
   f.write( "done" )
+

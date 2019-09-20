@@ -216,14 +216,14 @@ $(budget_7_verbose):			\
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
 
 sample_tables: $(sample_tables)
-$(sample_tables):		\
-  $(budget_7_verbose)		\
-  Code/sample_tables.py		\
-  Code/common.py		\
-  Code/sample_tables_defs.py	\
-  Code/metadata/terms.py        \
+$(sample_tables):			\
+  $(budget_7_verbose)			\
+  Code/common.py			\
+  Code/draw/sample_tables.py		\
+  Code/draw/sample_tables_defs.py	\
+  Code/metadata/terms.py		\
   Code/metadata/two_series.py
-	$(myPython) Code/sample_tables.py $(ss)
+	$(myPython) Code/draw/sample_tables.py $(ss)
 
 output/inflation.csv:				\
   data/inflation.csv				\

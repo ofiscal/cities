@@ -47,6 +47,7 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
+* TODO (others) -- Which gastos column do we want to use?
 * TODO draw charts
 ** TODO pivot table output code
 Something like this:
@@ -90,7 +91,7 @@ if True: # write many little pivot tables, one for each place:
 *** smaller font
 ** experiment with dimension changes (of whole page)
 ** TODO get drawStacks() to respect outer subplots
- rework this line:
+rework this line:
    fig, (ax) = plt.subplots()
 ** *BIG* Emulate the graph on p.2 of the mockup pdf.
 *** *???* If boxes are too small to fit a number, aggregate somehow.
