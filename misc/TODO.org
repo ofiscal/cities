@@ -50,8 +50,8 @@ These are ordered by time.
 * TODO (others) -- Which gastos column do we want to use?
 * TODO draw charts
 ** TODO pivot table output code
-Something like this:
-
+*** TODO for ingresos, use "total", not "recaudo"
+*** code sketch
 def output_pivot( df0 : pd.DataFrame,
                   dest_root : str ):
   df = df0.reset_index() # to restore muni code and dept code
