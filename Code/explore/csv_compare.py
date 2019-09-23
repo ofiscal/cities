@@ -4,7 +4,7 @@
 
 if True:
   import pandas as pd
-  import Code.util as util
+  import Code.util.misc as util
 
 if True:
   juan = ( pd.read_csv( "regalias_municipios.csv", sep=";" ) .

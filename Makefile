@@ -39,8 +39,8 @@ all: keys			\
   output/regalias.csv
 #  pics
 
-keys =								\
-  output/keys/budget.csv					\
+keys =				\
+  output/keys/budget.csv	\
   output/keys/geo.csv
 
 budget_1 =				\
@@ -147,7 +147,7 @@ $(budget_3_dept_muni_year_item):		\
   Code/common.py				\
   Code/params/cl.py				\
   Code/params/fixed.py				\
-  Code/util.py					\
+  Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
@@ -160,7 +160,7 @@ $(budget_3_dept_muni_year_item):		\
 #  $(budget_3_dept_muni_year_item)		\
 #  Code/build/sanity_child_sum_is_parent.py	\
 #  Code/common.py				\
-#  Code/util.py					\
+#  Code/util/misc.py				\
 #  Code/metadata/four_series.py
 #	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
@@ -169,7 +169,7 @@ $(explore_order_of_mag_x_yrs):			\
   $(budget_3_dept_muni_year_item)		\
   Code/explore/order_of_mag_x_yrs.py		\
   Code/common.py				\
-  Code/util.py					\
+  Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/four_series.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
@@ -180,7 +180,7 @@ $(budget_4_scaled):				\
   Code/build/budget_4_scaled.py			\
   Code/explore/order_of_mag_x_yrs_defs.py	\
   Code/common.py				\
-  Code/util.py					\
+  Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
@@ -210,18 +210,18 @@ $(budget_7_verbose):			\
   $(budget_6_deflate)			\
   Code/build/budget_7_verbose.py	\
   Code/common.py			\
-  Code/util.py				\
+  Code/util/misc.py			\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
 
 sample_tables: $(sample_tables)
-$(sample_tables):			\
-  $(budget_7_verbose)			\
-  Code/common.py			\
-  Code/draw/sample_tables.py		\
-  Code/draw/sample_tables_defs.py	\
-  Code/metadata/terms.py		\
+$(sample_tables):				\
+  $(budget_7_verbose)				\
+  Code/common.py				\
+  Code/draw/sample_tables.py			\
+  Code/util/aggregate_all_but_biggest.py	\
+  Code/metadata/terms.py			\
   Code/metadata/two_series.py
 	$(myPython) Code/draw/sample_tables.py $(ss)
 

@@ -47,7 +47,6 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO (others) -- Which gastos column do we want to use?
 * TODO draw charts
 ** TODO pivot table output code
 *** TODO for ingresos, use "total", not "recaudo"

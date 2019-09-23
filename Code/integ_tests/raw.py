@@ -9,8 +9,7 @@ if True:
   import Code.build.classify_budget_codes as codes
   import Code.common as c
   import Code.integ_tests.integ_util as iu
-  import Code.sample_tables_defs as defs
-  import Code.sample_tables_defs as st
+  import Code.util.aggregate_all_but_biggest as defs
   import Code.metadata.two_series as ser
 
 

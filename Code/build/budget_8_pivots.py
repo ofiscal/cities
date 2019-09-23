@@ -5,8 +5,8 @@ if True:
   #
   import Code.common as c
   import Code.metadata.terms as t
-  import Code.util as util
-  import Code.draw.sample_tables_defs as defs
+  import Code.util.misc as util
+  import Code.util.aggregate_all_but_biggest as defs
   import Code.metadata.two_series as ser
 
 if True:
