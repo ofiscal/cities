@@ -1,18 +1,14 @@
 if True:
   import os
-  import numpy as np
   import pandas as pd
   #
   import Code.common as c
-  import Code.metadata.terms as t
-  import Code.util.misc as util
   import Code.util.aggregate_all_but_biggest as defs
   import Code.metadata.two_series as ser
 
 if True:
-  group_vars = ["dept", "muni", "year"]
-  geo_vars   = ["dept", "muni", "dept code", "muni code"]
-  assert c.subsample == 1 # This program expects the full sample.
+  spacetime = ["dept", "muni", "year", "dept code", "muni code"]
+  space   = ["dept", "muni", "dept code", "muni code"]
 
 if True: # read data
   raw = {}
@@ -21,41 +17,48 @@ if True: # read data
       pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
           + "/" + s.name + ".csv") ) .
-      sort_values( group_vars ) )
+      sort_values( spacetime ) )
 
-write_pivots( dept = "AMAZONAS", muni = "LETICIA", "index_col"
+if True: # in each group, collapse all but the biggest
+  # 5 rows into one observation
+  grouped = {}
+  for s in ser.series:
+    grouped[s.name] = (
+      defs.sum_all_but_greatest_n_rows_in_groups(
+        n = 5,
+        group_vars = spacetime,
+        sort_vars = s.peso_cols,
+        meaningless_to_sum = ["item categ"],
+        df0 = raw[s.name] ) )
 
 def write_pivots( dept : str,
                   muni : str,
-                  dept_code : int,
-                  muni_code : int,
-                  index_col : str,
-                  columns_col : str,
-                  all_places : pd.DataFrame
+                  values_col : str,
+                  all_places : pd.DataFrame,
+                  filename : str
                   ) -> pd.DataFrame:
-  """ PITFALL: Does IO *and* returns a value."""
+  """ PITFALL: Writes a file *and* returns a value."""
   dest = "output/pivots/" + dept + "/" + muni
   if not os.path.exists(dest): os.makedirs(dest)
   place = ( all_places
             [ (all_places["muni"] == muni) &
               (all_places["dept"] == dept) ] .
             copy() )
-  p = place.pivot( index = index_col,
-                   columns = columns_col,
-                   values = money )
-  p.to_csv( dest + "/" + f + ".csv" )
+  p = place.pivot( index = "item categ",
+                   columns = "year",
+                   values = values_col )
+  p.to_csv( dest + "/" + filename + ".csv" )
   return p
 
-#for where in ["LETICIA"]:
-#  for (f,money) in [(t.ingresos,"item total"),
-#                    (t.gastos, "item oblig")]:
-#    dest = "output/pivots/" + where
-#    if not os.path.exists( dest ):
-#      os.makedirs( dest )
-#    df = raw[f]
-#    df = df[ df["muni"] == where ].copy()
-#    p = df.pivot( index = "item categ",
-#                  columns = "year",
-#                  values = money )
-#    p.to_csv( dest + "/" + f + ".csv" )
+for s in ser.series:
+  ( grouped[s.name] .
+    groupby( space ) .
+    apply(
+      lambda df:
+      write_pivots(
+        dept = df.iloc[0]["dept"],
+        muni = df.iloc[0]["muni"],
+        values_col = s.peso_cols[0],
+        all_places = df,
+        filename = s.name ) ) )
 

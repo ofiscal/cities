@@ -145,8 +145,6 @@ $(budget_3_dept_muni_year_item):		\
   $(budget_2_subsample)				\
   Code/build/budget_3_dept_muni_year_item.py	\
   Code/common.py				\
-  Code/params/cl.py				\
-  Code/params/fixed.py				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/two_series.py

@@ -10,7 +10,7 @@ class seriesType:
 
 ingresos = seriesType(
   name = "ingresos",
-  peso_cols = ["item recaudo","item total"] )
+  peso_cols = ["item total"] ) # used to include "item recaudo" too
 gastos = seriesType(
   name = "gastos",
   peso_cols = ["item oblig"] )

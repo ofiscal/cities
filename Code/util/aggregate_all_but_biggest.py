@@ -40,9 +40,11 @@ def sum_of_all_but_last_n_rows_in_groups(
     group_vars : List[str],
     df0 : pd.DataFrame
     ) -> pd.DataFrame:
-  """ PITFALL: Has a very similar name to a function that uses it.
-  That using function is intended to face out of this module;
-  this one would be private, if Python allowed that. """
+  """ This drops the last (not the greatest) `n` rows, and sums the rest.
+  PITFALL: Has a very similar name to a function that uses it.
+    That using function is intended to face out of this module;
+    this one would be private, if Python allowed that.
+  """
   return (
     df0.copy() .
     groupby( group_vars ) .
@@ -77,15 +79,9 @@ def sum_all_but_greatest_n_rows_in_groups(
          sort_values( group_vars + sort_vars ) )
   indiv = last_n_in_groups( n, group_vars, df )
   grouped = sum_of_all_but_last_n_rows_in_groups(
-      n, group_vars, df )
-  grouped = grouped.drop(
-    columns = set.intersection( # TODO : why do I need this hack?
-      # Dropping meaningless_to_sum seems like it should be enough;
-      # I shouldn't have to first take the intersection below.
-      # In fact, that works for the test data (in this file),
-      # but somehow on the real data (e.g. tables.py) it doesn't.
-      set(meaningless_to_sum),
-      set(grouped.columns) ) )
+    n, group_vars, df )
+  for c in meaningless_to_sum:
+    grouped[c] = "Otros"
   return ( pd.concat( [indiv, grouped],
                       sort = True ) .
            sort_values( group_vars ) )
@@ -96,12 +92,11 @@ if True: # test it
       2, ["yr","yr+1"], ["money"], ["categ"], test_data ) .
     reset_index( drop = True ) .
     equals (
-      pd.DataFrame( { "categ"  : [2,3,np.nan,
-                                  2,3,np.nan],
+      pd.DataFrame( { "categ"  : [2,3,"Otros",
+                                  2,3,"Otros"],
                       "money"  : [2,3,1,
                                 12,13,21],
                       "yr"     : [1,1,1,
                                   2,2,2],
                       "yr+1"   : [2,2,2,
                                   3,3,3] } ) ) )
-
