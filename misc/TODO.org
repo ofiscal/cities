@@ -47,23 +47,24 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* DONE ? determine the range of legend sizes
+* DONE ? determine the range of legend lengths
 ** why and how
 as a function of the n in
 "keep the biggest n expenditures per year, group the rest".
 
 The 20 smallest and biggest can be found at the command line:
-wc */*/gastos* | sort -n -r | head -n 1
-wc */*/gastos* | sort -n -r | tail -n 1
+wc */*/gastos* | sort -n -r | head -n 2
+wc */*/gastos* | sort -n -r | tail -n 2
 ** results
 top 1 from each year => min 2 rows, max 6
 top 2 from each year => min 3 rows, max 9
 top 3 from each year => min 4 rows, max 10
 top 4 from each year => min 5 rows, max 11
 top 5 from each year => min 6 rows, max 12
-* TODO are non-regalias ingresos disappearing for munis? (not depts)
-For the full sample they're not gone.
-For small samples, they're gone after budget_5 and thereafter,
+* DONE ? are non-regalias ingresos disappearing for munis? (not depts)
+** For the full sample they're not gone.
+** For small samples,
+they're gone after budget_5 and thereafter,
 but present after budget_4.
 ** some code to see the problem
 
@@ -106,39 +107,7 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO draw charts
-** TODO pivot table output code
-*** TODO for ingresos, use "total", not "recaudo"
-*** code sketch
-def output_pivot( df0 : pd.DataFrame,
-                  dest_root : str ):
-  df = df0.reset_index() # to restore muni code and dept code
-  if True: # get our bearings
-    muni_code = str( df["muni code"].iloc[0] )
-    dept_code = str( df["dept code"].iloc[0] )
-    muni      = str( df["muni"].iloc[0] )
-    dept      = str( df["dept"].iloc[0] )
-    dest = dest_root + "/" + dept_code + "_" + muni_code
-    if not os.path.exists( dest ):
-      os.makedirs(         dest )
-  if True: # output a readme that says where this is, and a pivot table
-    ( df.pivot( index = "item categ",
-                columns = "year",
-                values = s.pesos_col ) .
-      to_csv( dest + "/data.csv", # in this case we *do* want the index
-              encoding = "utf-16" ) )
-    with open( dest + "/README.txt", "w" ) as f:
-      f.write( "Dept: " + dept + "\n" +
-               "Muni: " + muni + "\n" )
-
-if True: # write many little pivot tables, one for each place:
-         # its columns are years, and its rows item categs
-  for s in ser.series:
-    df = items_grouped[s.name].copy()
-    ( df . groupby( ["dept code","muni code"] ) .
-      apply( lambda df:
-             output_pivot(
-               df0       = df,
-               dest_root = "output/sample_pivots" ) ) )
+** DONE pivot table output code
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
 *** "(upside down ?)En que se gasta el dinero mi municipio?"

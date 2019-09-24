@@ -6,6 +6,8 @@ if True:
   import Code.util.aggregate_all_but_biggest as defs
   import Code.metadata.two_series as ser
 
+assert c.subsample == 1 # This program only works on the full sample.
+
 if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
   space   = ["dept", "muni", "dept code", "muni code"]
@@ -19,8 +21,8 @@ if True: # read data
           + "/" + s.name + ".csv") ) .
       sort_values( spacetime ) )
 
-if True: # in each group, collapse all but the biggest
-  # 5 rows into one observation
+if True: # in each spacetime slice, lump all but the biggest 5
+         # expenditures into a single observation
   grouped = {}
   for s in ser.series:
     grouped[s.name] = (

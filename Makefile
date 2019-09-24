@@ -21,6 +21,7 @@ myPython=PYTHONPATH='.' python3
   budget_5_add_regalias		\
   budget_6_deflate		\
   budget_7_verbose		\
+  budget_8_pivots		\
   sample_tables 		\
   pics
 
@@ -34,6 +35,7 @@ all: keys			\
   budget_5_add_regalias		\
   budget_6_deflate		\
   budget_7_verbose		\
+  budget_8_pivots		\
   output/inflation.csv		\
   sample_tables 		\
   output/regalias.csv
@@ -95,6 +97,13 @@ budget_6_deflate =					\
 budget_7_verbose =					\
   output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
   output/budget_7_verbose/recip-$(ss)/gastos.csv
+
+# Listing one place (Honda, in Tolima)
+# is sufficient to trigger the recipe.
+# Listing every place would be tedious.
+budget_8_pivots =					\
+  output/pivots/recip-$(ss)/TOLIMA/HONDA/ingresos.csv	\
+  output/pivots/recip-$(ss)/TOLIMA/HONDA/gastos.csv
 
 sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\
@@ -212,6 +221,15 @@ $(budget_7_verbose):			\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
+
+budget_8_pivots: $(budget_8_pivots)
+$(budget_8_pivots):				\
+  $(budget_7_verbose)				\
+  Code/build/budget_8_pivots.py			\
+  Code/common.py				\
+  Code/util/aggregate_all_but_biggest.py	\
+  Code/metadata/two_series.py
+	$(myPython) Code/build/budget_8_pivots.py $(ss)
 
 sample_tables: $(sample_tables)
 $(sample_tables):				\
