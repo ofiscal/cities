@@ -38,7 +38,8 @@ def write_pivots( dept : str,
                   filename : str
                   ) -> pd.DataFrame:
   """ PITFALL: Writes a file *and* returns a value."""
-  dest = "output/pivots/" + dept + "/" + muni
+  dest = ( "output/pivots/recip-" + str(c.subsample) +
+           "/" + dept + "/" + muni )
   if not os.path.exists(dest): os.makedirs(dest)
   place = ( all_places
             [ (all_places["muni"] == muni) &

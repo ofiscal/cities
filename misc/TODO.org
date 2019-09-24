@@ -47,8 +47,25 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
-* TODO non-regalias ingresos are disappearing for munis, not departments
-It's a problem in budget_5 and thereafter, and not budget_4.
+* DONE ? determine the range of legend sizes
+** why and how
+as a function of the n in
+"keep the biggest n expenditures per year, group the rest".
+
+The 20 smallest and biggest can be found at the command line:
+wc */*/gastos* | sort -n -r | head -n 1
+wc */*/gastos* | sort -n -r | tail -n 1
+** results
+top 1 from each year => min 2 rows, max 6
+top 2 from each year => min 3 rows, max 9
+top 3 from each year => min 4 rows, max 10
+top 4 from each year => min 5 rows, max 11
+top 5 from each year => min 6 rows, max 12
+* TODO are non-regalias ingresos disappearing for munis? (not depts)
+For the full sample they're not gone.
+For small samples, they're gone after budget_5 and thereafter,
+but present after budget_4.
+** some code to see the problem
 
 if True:
   import os
