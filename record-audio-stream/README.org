@@ -1,0 +1,10 @@
+* about streamripper
+** Some nice-looking options
+*** -s : record everything to one file
+*** -m <timeout> : reconnect after <timeout> seconds of inactivity
+*** −u <useragent> : use a different name than Streamripper
+*** −−debug : save debugging information to gcs.txt
+** The manual
+https://man.cx/streamripper(1)
+** A nice introduction
+https://myubuntutech.blogspot.com/2009/05/how-to-record-streaming-net-radio-in.html
