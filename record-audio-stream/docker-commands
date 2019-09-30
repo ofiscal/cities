@@ -1,11 +1,13 @@
-docker build -f Dockerfile -t                      \
-  jeffreybbrown/record-audio-stream .              \
+docker build -f Dockerfile -t                         \
+  jeffreybbrown/record-audio-stream .                 \
   | tee logs/"build-log.`date`.txt"
 
-docker run --name record-audio-stream -it          \
-  -v /home/jeff/record-audio-stream/master:/mnt    \
-  -p 8888:9000 -d -h 127.0.0.1                     \
+docker run --name record-audio-stream -it             \
+  -v /home/jeff/cities/record-audio-stream/store:/mnt \
+  -p 8888:9000 -d -h 127.0.0.1                        \
   jeffreybbrown/record-audio-stream
 
-# docker tag jeffreybbrown/record-audio-stream:new \
+docker exec -it record-audio-stream bash
+
+# docker tag jeffreybbrown/record-audio-stream:new    \
 #   jeffreybbrown/record-audio-stream:<PUT A BETTER NAME HERE>

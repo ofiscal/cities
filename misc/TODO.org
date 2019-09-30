@@ -110,7 +110,7 @@ pd.set_option('display.max_rows', 500)
 * TODO Facebook ads
 ** will be
 a picture, and the option to click through to (the guide? more pictures and the guide?)
-** determine cost
+** TODO determine cost
 using list of munis which LC will send
 * TODO record streaming audio
 ** TODO enlist Caoba
