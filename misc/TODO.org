@@ -106,7 +106,23 @@ pd.set_option('display.max_rows', 500)
 ( raw["ingresos"]
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
+* TODO what text to add to charts?
+* TODO Facebook ads
+** will be
+a picture, and the option to click through to (the guide? more pictures and the guide?)
+** determine cost
+using list of munis which LC will send
+* TODO enlist Caoba to record streaming audio
+** talk to Fancisco
+Adri sent me contact over Whatsapp
+** Alejo has list of websites to record
 * TODO draw charts
+** TODO in flux: "salarios" category
+I sent Juan:
+"Do we need to delete the category "Salario alcalde, gobernador, concejales, diputados"? If so, what should the codes "1.1.1.12" and "1.1.1.6" fall under?"
+https://mail.google.com/mail/u/0/#search/from%3Ajuan/FMfcgxwDqxQdJsCXWHVVHWXrXHnSHWpl
+** TODO add time series charts for health, edu, security
+also seem nice: Infraestructura, pensions
 ** DONE pivot table output code
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"

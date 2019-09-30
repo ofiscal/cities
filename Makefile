@@ -125,7 +125,6 @@ $(budget_1):					\
   Code/build/budget_1.py			\
   Code/build/budget_1_defs.py			\
   Code/build/budget_1_tests.py			\
-  Code/metadata/terms.py                        \
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_1.py
 
