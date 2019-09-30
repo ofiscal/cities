@@ -54,12 +54,12 @@ if True: # define map from aggregate categories to the codes comprising them
       "1.1.4.2.1.3.1", "1.1.4.2.1.3.2", "1.1.4.2.1.4.1", "1.1.4.2.1.4.2",
       "1.1.4.3.1.1", "1.1.4.3.1.2", "1.1.4.3.2.1", "1.1.4.3.2.2",
       "1.1.4.3.3.1", "1.1.4.3.3.2", "1.1.4.3.4.1", "1.1.4.3.4.2",
+      "1.1.1.12", "1.1.1.6",
       "1.1.4.3.5.1", "1.1.4.3.5.2", "1.1.5", "1.9.1.1", "1.9.1.2"
       }
     categs_to_codes[t.funcionamiento][t.ambiental] = {"1.3.8.1","1.3.8.2","1.3.9"}
     categs_to_codes[t.funcionamiento][t.edu] = {"1.3.6.1.1", "1.3.6.4.1", "1.3.6.4.6"}
     categs_to_codes[t.funcionamiento][t.pension] = {"1.1.4.1.1.2.1","1.1.4.1.1.2.2", "1.1.4.2.1.2.1", "1.1.4.2.1.2.2", "1.3.1", "1.3.12.1", "1.3.12.2", "1.3.2", "1.3.20", "1.3.3", "1.3.4.1", "1.3.4.2", "1.3.6.4.4"}
-    categs_to_codes[t.funcionamiento][t.salario] = {"1.1.1.12", "1.1.1.6"}
     categs_to_codes[t.funcionamiento][t.segur] = {"1.3.6.7.1"}
     categs_to_codes[t.funcionamiento][t.gen] = {
       "1.10", "1.2.1.1", "1.2.1.2", "1.2.1.9",

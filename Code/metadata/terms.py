@@ -14,7 +14,6 @@ if True: # our own aggregate categories
     salud       = "Salud"
     edu         = "Educación"
     pension     = "Pensiones"
-    salario     = "Salario alcalde, gobernador, concejales, diputados"
     segur       = "Seguridad y justicia"
     gen         = "Generales funcionamiento"
     otros       = "Otros gastos sociales"
