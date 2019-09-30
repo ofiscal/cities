@@ -1,4 +1,7 @@
-### Variables
+#### #### #### ####
+#### #### #### #### Variables
+#### #### #### ####
+
 SHELL := bash
 
 subsample?=100
@@ -112,7 +115,9 @@ sample_tables =					\
 pics = output/reports/done.txt
 
 
-#### Recipes
+#### #### #### ####
+#### #### #### #### Recipes
+#### #### #### ####
 
 keys: $(keys)
 $(keys):			\
@@ -120,6 +125,9 @@ $(keys):			\
   Code/metadata/four_series.py
 	$(myPython) Code/build/make_keys.py
 
+# PITFALL: Don't include Code/metadata/terms.py;
+# it's safe to omit and causes unnecessary re-running,
+# not affordable at these early slow stages.
 budget_1: $(budget_1)
 $(budget_1):					\
   Code/build/budget_1.py			\
@@ -128,6 +136,9 @@ $(budget_1):					\
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_1.py
 
+# PITFALL: Don't include Code/metadata/terms.py;
+# it's safe to omit and causes unnecessary re-running,
+# not affordable at these early slow stages.
 budget_1p5: $(budget_1p5)
 $(budget_1p5):					\
   $(budget_1)					\
@@ -138,23 +149,27 @@ $(budget_1p5):					\
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_1p5.py
 
+# PITFALL: Don't include Code/metadata/terms.py;
+# it's safe to omit and causes unnecessary re-running,
+# not affordable at these early slow stages.
 budget_2_subsamples: $(budget_2_subsamples)
 $(budget_2_subsamples):				\
   $(budget_1p5)					\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\
   Code/build/budget_1_tests.py			\
-  Code/metadata/terms.py                        \
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_2_subsample.py
 
+# PITFALL: Don't include Code/metadata/terms.py;
+# it's safe to omit and causes unnecessary re-running,
+# not affordable at these early slow stages.
 budget_3_dept_muni_year_item: $(budget_3_dept_muni_year_item)
 $(budget_3_dept_muni_year_item):		\
   $(budget_2_subsample)				\
   Code/build/budget_3_dept_muni_year_item.py	\
   Code/common.py				\
   Code/util/misc.py				\
-  Code/metadata/terms.py                        \
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
 
