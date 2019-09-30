@@ -50,7 +50,8 @@ def write_pivots( dept : str,
   p = place.pivot( index = "item categ",
                    columns = "year",
                    values = values_col )
-  p.to_csv( dest + "/" + filename + ".csv" )
+  p.to_csv(   dest + "/" + filename + ".csv" )
+  p.to_excel( dest + "/" + filename + ".xlsx" )
   return p
 
 for s in ser.series:
