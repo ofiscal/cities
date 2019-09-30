@@ -112,9 +112,17 @@ pd.set_option('display.max_rows', 500)
 a picture, and the option to click through to (the guide? more pictures and the guide?)
 ** determine cost
 using list of munis which LC will send
-* TODO enlist Caoba to record streaming audio
-** talk to Fancisco
-Adri sent me contact over Whatsapp
+* TODO record streaming audio
+** TODO enlist Caoba
+talk to Fancisco
+  Adri sent me contact over Whatsapp
+** TODO beware dropout
+*** option: interleave processes
+Record for 2 minutes each, starting on even and odd minutes.
+Uses twice as much bandwidth.
+*** option: restart as soon as dropped out
+Requires: detecting dropout
+          saving file gracefully after dropout
 ** Alejo has list of websites to record
 * TODO draw charts
 ** TODO in flux: "salarios" category
@@ -164,11 +172,11 @@ rework this line:
  pip install --upgrade pip # afte running this, did not have pip3
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
-* TODO fix
+* ~TODO fix
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
-* TODO test
+* ~TODO test
 ** check my aggregated sums against DNP's own
 Good opportunity for property-based testinig.
 ** integration data tests
