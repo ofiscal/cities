@@ -125,10 +125,6 @@ Requires: detecting dropout
           saving file gracefully after dropout
 ** Alejo has list of websites to record
 * TODO draw charts
-** TODO in flux: "salarios" category
-I sent Juan:
-"Do we need to delete the category "Salario alcalde, gobernador, concejales, diputados"? If so, what should the codes "1.1.1.12" and "1.1.1.6" fall under?"
-https://mail.google.com/mail/u/0/#search/from%3Ajuan/FMfcgxwDqxQdJsCXWHVVHWXrXHnSHWpl
 ** TODO add time series charts for health, edu, security
 also seem nice: Infraestructura, pensions
 ** DONE pivot table output code
@@ -172,7 +168,8 @@ rework this line:
  pip install --upgrade pip # afte running this, did not have pip3
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
-* ~TODO fix
+* TODO fix
+** TODO add use_keys.py to Makefile (as a dependency)
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.

@@ -13,4 +13,5 @@ git*comment
 hopefully-ignorable/
 logs/
 output/
+record-audio-stream/store/
 temp/

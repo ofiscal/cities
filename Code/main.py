@@ -17,17 +17,18 @@ for s in ser.series:
   dfs[s.name] = df
 
 for s in ser.series:
-  print( s.name, s.pesos_col )
+  print( s.name, s.peso_cols )
+  peso_col = s.peso_cols[0]
   for muni in [15183]:
     df = dfs[s.name]
     df_muni = ( df
                 [ df["muni code"] == muni ]
-                [["year","item categ", s.pesos_col]] )
+                [["year","item categ", peso_col]] )
     df_pivot = (
       df_muni .
       pivot( index = "item categ",
              columns = "year",
-             values = s.pesos_col ) .
+             values = peso_col ) .
       fillna( 0 ) )
     df_pivot = df_pivot.astype(int) # TODO : this should happen upstream
     dest = 'output/reports/' + str(muni)

@@ -10,8 +10,7 @@ if True:
 
 if True: # get, test data
   geo = (
-    pd.read_csv( "output/keys/geo.csv",
-                 encoding = "utf-8" ) .
+    pd.read_csv( "output/keys/geo.csv" ) .
     rename( columns =
             { "Cód. DANE Municipio"      : "muni code",
               "Cód. DANE Departamento"   : "dept code",
@@ -27,6 +26,14 @@ if True: # get, test data
   assert munis.shape == (1101,2)
   assert pd.isnull(munis).any().any() == False
 
+if True:
+  depts_and_munis = (
+    pd.concat(
+      [depts,geo],
+      axis = "rows",
+      sort = True ) . # because depts.columns != munis.columns
+    fillna(-1) )
+
 def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
   return (
     df .
@@ -37,3 +44,4 @@ def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
            how = "left", # this is unnecessarily cautious,
                          # as dept is never missing
            on = ["dept code"] ) )
+
