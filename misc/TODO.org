@@ -1,7 +1,6 @@
 * notes from seminar, 2019 08 16
 ** draw a benchmark similarly to the city's report
 ** corrupt governors will suppress the mediax
-** TODO before testing the stats, just think about|share them
 ** can measure complaints of [vote buying] after election
 ** candidates might use our reports
 ** control for|stratify by reporters' sense of security
@@ -47,6 +46,9 @@ These are ordered by time.
 ("Pagos"                  , "item pagos")
   # what they've actually spent
 
+* notes from meeting, 2019 10 01
+** TODO pdf without page break
+** muni-specific pdf has a link to guide, and to all munis
 * DONE ? determine the range of legend lengths
 ** why and how
 as a function of the n in
@@ -107,9 +109,38 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO what text to add to charts?
+** Observatorio logo
+** Title: ¿En qué se gastan la plata los gobernantes de <muni name>?
+** pictures
+*** Gastos vs. average (%)
+¿Cómo se gasta la plata <muni name>,
+y cómo se compara con el promedio de <dept name>?
+*** Ingresos vs. average (%)
+¿De dónde viene la plata de <muni name>,
+y cómo se compara con el promedio de <dept name>?
+*** Gastos over time (pesos)
+¿En qué se han gastado la plata la alcaldía y el concejo de <muni name>? ¿En qué se gastaron la plata la alcaldía y el concejo anteriores? (En el 2015, hubo cambio de gobierno municipal.)
+*** Ingresos over time (pesos)
+¿De dónde se obtuvo la plata de <muni name>, en esta administración y la anterior? (En el 2015, hubo cambio de gobierno municipal.)
+** zen questions
+Como ciudadano de <muni name>, usted puede observar el desempeño del gobierno municipal mejor que nadie.
+
+¿Se están gastando adecuadamente los recursos del municipio?
+¿Qué promesas están haciendo los candidatos? Sí alcanza la plata para lo que estan prometiendo?
+¿Qué gastos habría que recortar?
+¿Qué ingresos tendrían que subir?
+
+Su voto determina en manos de quien van a quedar los recursos del municipio. ¡Vote!
+** link to guide
+Si quiere saber más sobre como se maneja la plata de un municipio,
+haga clic aquí.
+** link to all munis
+Para ver información de otros municipios,
+haga clic aquí.
 * TODO Facebook ads
 ** will be
 a picture, and the option to click through to (the guide? more pictures and the guide?)
+** TODO ask alejandro, explain incomplete is still good
 ** TODO determine cost
 using list of munis which LC will send
 * TODO record streaming audio
@@ -134,8 +165,10 @@ The bad one has none of those.
 *** where
 Code/draw/demo/plot_fake_data.py # good
 Code/main.py                     # bad
-** TODO add time series charts for health, edu, security
-also seem nice: Infraestructura, pensions
+** TODO all: decide: what kinds of charts to draw
+*** compare muni to dept average muni
+summing all four years
+*** time series
 ** DONE pivot table output code
 ** compute (muni,series)-specific titles, text, axis names
 *** "(upside down ?)Cuanto dinero recibe mi municipio?"
