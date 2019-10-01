@@ -125,6 +125,15 @@ Requires: detecting dropout
           saving file gracefully after dropout
 ** Alejo has list of websites to record
 * TODO draw charts
+** TODO bug -- demo works but main doesn't
+*** TODO this seems like the problem
+The good one has a verbal index,
+                 meaningful column names
+                 entirely numeric values
+The bad one has none of those.
+*** where
+Code/draw/demo/plot_fake_data.py # good
+Code/main.py                     # bad
 ** TODO add time series charts for health, edu, security
 also seem nice: Infraestructura, pensions
 ** DONE pivot table output code

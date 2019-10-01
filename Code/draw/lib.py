@@ -1,11 +1,11 @@
-from typing import List
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-
-import numpy as np
-import pandas as pd
-
+if True:
+  from typing import List
+  import matplotlib
+  import matplotlib.pyplot as plt
+  import matplotlib.font_manager as fm
+  #
+  import numpy as np
+  import pandas as pd
 
 def drawPage( df : pd.DataFrame,
               title : List[str],
@@ -125,6 +125,8 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
     ax.tick_params( axis='y', which='both', length=0 )
     ax.set_frame_on(False)
 
-background_color = "mediumaquamarine"
-font_black = fm.FontProperties( fname = "fonts/Montserrat_Black.ttf" )
-font_light = fm.FontProperties( fname = "fonts/Montserrat_Light.ttf" )
+if True:
+  background_color = "mediumaquamarine"
+  font_black = fm.FontProperties( fname = "fonts/Montserrat_Black.ttf" )
+  font_light = fm.FontProperties( fname = "fonts/Montserrat_Light.ttf" )
+

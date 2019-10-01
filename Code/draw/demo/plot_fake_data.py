@@ -1,9 +1,9 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from   matplotlib.backends.backend_pdf import PdfPages
-
-import Code.draw.lib as lib
-
+if True:
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  from   matplotlib.backends.backend_pdf import PdfPages
+  #
+  import Code.draw.lib as lib
 
 plt.rcParams['axes.facecolor'] = 'b'
 
