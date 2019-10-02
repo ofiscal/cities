@@ -108,9 +108,12 @@ pd.set_option('display.max_rows', 500)
 ( raw["ingresos"]
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
-* TODO : main.py
+* TODO : immediate
 ** pivots must include no NaN values
 the fillna(0) command is a temporary hack
+** add pivots in percentage terms
+but keep the pivots that are in absolute terms
+** create the average muni per dept
 * TODO what text to add to charts?
 ** Observatorio logo
 ** Title: ¿En qué se gastan la plata los gobernantes de <muni name>?
@@ -159,16 +162,7 @@ Requires: detecting dropout
           saving file gracefully after dropout
 ** Alejo has list of websites to record
 * TODO draw charts
-** TODO bug -- demo works but main doesn't
-*** TODO this seems like the problem
-The good one has a verbal index,
-                 meaningful column names
-                 entirely numeric values
-The bad one has none of those.
-*** where
-Code/draw/demo/plot_fake_data.py # good
-Code/main.py                     # bad
-** TODO all: decide: what kinds of charts to draw
+** TODO draw these kinds of charts
 *** compare muni to dept average muni
 summing all four years
 *** time series
