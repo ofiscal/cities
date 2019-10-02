@@ -1,3 +1,8 @@
+* TODO check local on Ubuntu
+Just run `locale` from bash:
+https://www.thomas-krenn.com/en/wiki/Configure_Locales_in_Ubuntu
+My NixOS system has
+  defaultLocale = "en_US.UTF-8";
 * notes from seminar, 2019 08 16
 ** draw a benchmark similarly to the city's report
 ** corrupt governors will suppress the mediax
