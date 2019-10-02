@@ -9,16 +9,18 @@ if True: # build source data set, from which both keys are built
   source_data = pd.DataFrame()
   for series in sm.series:
     for year in range( 2012, 2018+1 ):
+      filename = ( sm.source_folder + "original_csv/"
+                   + str(year) + "_" + series + ".csv" )
+      print(filename)
       shuttle = pd.read_csv(
-        ( sm.source_folder + "original_csv/"
-          + str(year) + "_" + series + ".csv" )
-        , usecols = [
-            "Cód. DANE Municipio"
-          , "Nombre DANE Municipio"
-          , "Cód. DANE Departamento"
-          , "Nombre DANE Departamento"
-          , "Código Concepto"
-          , "Concepto"
+        filename,
+        usecols = [
+          "Cód. DANE Municipio",
+          "Nombre DANE Municipio",
+          "Cód. DANE Departamento",
+          "Nombre DANE Departamento",
+          "Código Concepto",
+          "Concepto"
         ] )
       source_data = source_data.append( shuttle )
 
