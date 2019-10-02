@@ -1,6 +1,5 @@
 if True:
   import os
-  import csv
   from itertools import chain
   import pandas as pd
   import Code.metadata.terms as t
@@ -16,7 +15,6 @@ if True: # build source data set, from which both keys are built
                    + str(year) + "_" + series + ".csv" )
       shuttle = pd.read_csv(
         filename,
-        quoting=csv.QUOTE_NONE,
         usecols = [
            "Cód. DANE Municipio",
            "Nombre DANE Municipio",
@@ -60,3 +58,4 @@ if not os.path.exists( "output/keys" ):
   . to_csv(
     "output/keys/budget.csv",
     index = False ) )
+
