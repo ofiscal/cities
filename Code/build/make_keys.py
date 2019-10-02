@@ -1,27 +1,30 @@
 if True:
   import os
+  import csv
   from itertools import chain
   import pandas as pd
+  import Code.metadata.terms as t
   import Code.metadata.four_series as sm
 
 
 if True: # build source data set, from which both keys are built
   source_data = pd.DataFrame()
-  for series in sm.series:
+  for series in set.difference(
+      set(sm.series), set([t.deuda])):
     for year in range( 2012, 2018+1 ):
       filename = ( sm.source_folder + "original_csv/"
                    + str(year) + "_" + series + ".csv" )
-      print(filename)
       shuttle = pd.read_csv(
         filename,
+        quoting=csv.QUOTE_NONE,
         usecols = [
-          "Cód. DANE Municipio",
-          "Nombre DANE Municipio",
-          "Cód. DANE Departamento",
-          "Nombre DANE Departamento",
-          "Código Concepto",
-          "Concepto"
-        ] )
+           "Cód. DANE Municipio",
+           "Nombre DANE Municipio",
+           "Cód. DANE Departamento",
+           "Nombre DANE Departamento",
+           "Código Concepto",
+           "Concepto"
+         ] )
       source_data = source_data.append( shuttle )
 
 # PITFALL: If any tuple of keys in from_columns maps to more than one
