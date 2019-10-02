@@ -230,6 +230,7 @@ budget_7_verbose: $(budget_7_verbose)
 $(budget_7_verbose):			\
   $(budget_6_deflate)			\
   Code/build/budget_7_verbose.py	\
+  Code/build/use_keys.py		\
   Code/common.py			\
   Code/util/misc.py			\
   Code/metadata/terms.py                \
@@ -263,12 +264,14 @@ output/inflation.csv:				\
 output/regalias.csv:			\
   data/regalias/muni.csv		\
   data/regalias/dept.csv		\
-  Code/build/regalias.py
+  Code/build/regalias.py		\
+  Code/build/use_keys.py
 	$(myPython) Code/build/regalias.py
 
 pics: $(pics)
-$(pics):					\
-  $(budget_4_scaled)				\
+$(pics):			\
+  $(budget_4_scaled)		\
+  Code/build/use_keys.py	\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

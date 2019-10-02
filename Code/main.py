@@ -6,39 +6,31 @@ if True:
   #
   import Code.common as c
   import Code.metadata.two_series as ser
+  import Code.build.use_keys as uk
   import Code.draw.lib as lib
 
+def create_pdfs( dept : str,
+                 muni : str ):
+ folder = ( "output/pivots/recip-" + str(c.subsample) +
+            "/" + dept + "/" + muni )
+ print("folder: ", folder)
+ for file in ser.series:
+   pivot = (
+     pd.read_csv(
+       folder + "/" + file.name + ".csv",
+       index_col="item categ" ) .
+     fillna( 0 ) ) # TODO : should not be necessary.
+                   # Fix upstream, in budget_8.
+   with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
+     lib.drawPage( pivot, ["Title?"], ["Text?"] )
+     pdf.savefig( facecolor=lib.background_color )
+     plt.close()
 
-source = "output/budget_7_verbose/recip-" + str(c.subsample)
-
-dfs = {}
-for s in ser.series:
-  df = pd.read_csv( source + "/" + s.name + ".csv" )
-  dfs[s.name] = df
-
-for s in ser.series:
-  print( s.name, s.peso_cols )
-  peso_col = s.peso_cols[0]
-  for muni in [15183]:
-    df = dfs[s.name]
-    df_muni = ( df
-                [ df["muni code"] == muni ]
-                [["year","item categ", peso_col]] )
-    df_pivot = (
-      df_muni .
-      pivot( index = "item categ",
-             columns = "year",
-             values = peso_col ) .
-      fillna( 0 ) )
-    df_pivot = df_pivot.astype(int) # TODO : this should happen upstream
-    dest = 'output/reports/' + str(muni)
-    if not os.path.exists( dest ):
-      os.makedirs( dest )
-    with PdfPages( dest + "/" + s.name + ".pdf" ) as pdf:
-      lib.drawPage( df_pivot, ["Title?"], ["Text?"] )
-      pdf.savefig( facecolor=lib.background_color )
-      plt.close()
+uk.depts_and_munis.apply(
+  ( lambda row:
+    create_pdfs( row["dept"],
+                 row["muni"] ) ),
+  axis = "columns" )
 
 with open( "output/reports/done.txt", "w" ) as f:
   f.write( "done" )
-

@@ -1,8 +1,3 @@
-* TODO check local on Ubuntu
-Just run `locale` from bash:
-https://www.thomas-krenn.com/en/wiki/Configure_Locales_in_Ubuntu
-My NixOS system has
-  defaultLocale = "en_US.UTF-8";
 * notes from seminar, 2019 08 16
 ** draw a benchmark similarly to the city's report
 ** corrupt governors will suppress the mediax
@@ -113,6 +108,9 @@ pd.set_option('display.max_rows', 500)
 ( raw["ingresos"]
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
+* TODO : main.py
+** pivots must include no NaN values
+the fillna(0) command is a temporary hack
 * TODO what text to add to charts?
 ** Observatorio logo
 ** Title: ¿En qué se gastan la plata los gobernantes de <muni name>?
@@ -216,7 +214,6 @@ rework this line:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
-** TODO add use_keys.py to Makefile (as a dependency)
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
