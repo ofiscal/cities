@@ -41,8 +41,8 @@ all: keys			\
   budget_8_pivots		\
   output/inflation.csv		\
   sample_tables 		\
-  output/regalias.csv           \
-  pics
+  output/regalias.csv
+  # pics
 
 keys =				\
   output/keys/budget.csv	\

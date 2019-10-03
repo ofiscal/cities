@@ -108,15 +108,14 @@ pd.set_option('display.max_rows', 500)
 ( raw["ingresos"]
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
-* TODO : immediate
-** create the average muni per dept
-Create two new data sets, "gastos-pct" and "ingresos-pct".
-For each,
-Average the percentages.
-TRICKY: Must include all the munis for which spending in that category is 0.
-** pivots must include no NaN values
-the fillna(0) command is a temporary hack
-** add pivots in percentage terms
+* TODO : next
+** Code.build.budget_6p5_pct_and_dept_mean
+Follow header comment.
+Then incorporate into Makefile.
+** budget_8: 
+*** pivots must include no NaN values
+the fillna(0) command downstream in main.py is a temporary hack
+*** add pivots in percentage terms
 but keep the pivots that are in absolute terms
 * TODO what text to add to charts?
 ** Observatorio logo
