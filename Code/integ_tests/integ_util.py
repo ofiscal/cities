@@ -38,3 +38,4 @@ if True: # budget categories convenient for testing,
     Educación: {'1.3.6.1.1', 'A.1', '1.3.6.4.1', '1.3.6.4.6'}
     One involves multiple inversion codes and one funcionamiento code,
     and the other the reverse. """
+

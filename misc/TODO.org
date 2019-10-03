@@ -112,7 +112,7 @@ pd.set_option('display.max_rows', 500)
 ** Code.build.budget_6p5_pct_and_dept_mean
 Follow header comment.
 Then incorporate into Makefile.
-** budget_8: 
+** budget_8:
 *** pivots must include no NaN values
 the fillna(0) command downstream in main.py is a temporary hack
 *** add pivots in percentage terms
@@ -211,6 +211,18 @@ rework this line:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
+** TODO bug -- missing data
+*** the problem
+There should be at least 4 items in every spacetime cell,
+in both data sets. But there are exceptions.
+*** code to see it
+  pd.set_option('display.min_rows', 100)
+  counts = {}
+  for s in s2.series:
+    df = dfs[s.name].copy()
+    df["one"] = 1
+    df = df.groupby(spacetime).sum().reset_index()
+    df[ df["one"] < 4 ]
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.

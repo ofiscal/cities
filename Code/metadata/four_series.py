@@ -13,9 +13,9 @@ gastos_pct = seriesType(
   name = "gastos-pct",
   money_cols = ["item oblig"] )
 
-series = [ingresos,gastos,ingresos-pct,gastos-pct]
+series = [ingresos,ingresos_pct,gastos,gastos_pct]
 series_dict = { "ingresos" : ingresos,
-                "gastos"   : gastos,
                 "ingresos-pct" : ingresos_pct,
+                "gastos"   : gastos,
                 "gastos-pct" : gastos_pct }
 
