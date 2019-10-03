@@ -53,15 +53,15 @@ dfs, dfs_by_muni_item = ({},{})
 for s in ts.series:
   if True: # clean the data
     df = pd.read_csv( source + "/" + s.name + ".csv" )
-    df = correct_peso_columns( s.peso_cols, df )
+    df = correct_peso_columns( s.money_cols, df )
     dfs[s.name] = df
   if True: # add percent change across years within place-item
     df_by_muni_item = (
       df[["year",     "muni code", "dept code", "item categ"]
-         + s.peso_cols ] .
+         + s.money_cols ] .
       groupby( by = [ "muni code", "dept code", "item categ"] ) .
       apply( lambda df:
-             lib.add_pct_change( s.peso_cols[0], df) ) .
+             lib.add_pct_change( s.money_cols[0], df) ) .
       reset_index() )
     for year in list( range( 2013, 2019 ) ):
       median_change = (

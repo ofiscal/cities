@@ -20,8 +20,8 @@ if True: # input
   for s in ser.series:
     dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
   regalias = pd.read_csv( "output/regalias.csv" )
-  if True: # define peso_cols
-    for c in ser.ingresos.peso_cols:
+  if True: # define money_cols
+    for c in ser.ingresos.money_cols:
       regalias[c] = regalias["regalias"]
     regalias = regalias.drop( columns = ["regalias"] )
   regalias["item categ"] = "regalias"

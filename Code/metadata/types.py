@@ -1,5 +1,5 @@
 class seriesType:
-  def __init__(self, name, peso_cols):
+  def __init__(self, name, money_cols):
     self.name = name
-    self.peso_cols = peso_cols
+    self.money_cols = money_cols
 

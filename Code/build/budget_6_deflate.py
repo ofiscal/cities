@@ -25,7 +25,7 @@ if True: # input data
 for s in ser.series:
   df = dfs[s.name]
   df = df.merge( deflator, on = "year" )
-  for c in s.peso_cols:
+  for c in s.money_cols:
     df[c] = df[c] * df["deflator"]
   df = df.drop( columns = ["deflator"] )
   dfs[s.name] = df

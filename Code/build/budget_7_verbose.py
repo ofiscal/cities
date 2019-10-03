@@ -20,11 +20,11 @@ if True: # merge geo data into main data
   for s in ser.series:
     sn = s.name
     df = util.to_front(
-      ["dept","muni","year"] + s.peso_cols + ["item categ"],
+      ["dept","muni","year"] + s.money_cols + ["item categ"],
       uk.merge_geo(
         pd.read_csv( source + "/" + sn + ".csv" )
         [ ["muni code","dept code","year","item categ"]
-          + s.peso_cols] ) )
+          + s.money_cols] ) )
     df["muni"] = df["muni"] . fillna("dept")
     df.to_csv( dest + "/" + s.name + ".csv",
                index = False )

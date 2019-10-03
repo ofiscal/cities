@@ -29,7 +29,7 @@ if True: # in each spacetime slice, lump all but the biggest 5
       defs.sum_all_but_greatest_n_rows_in_groups(
         n = 5,
         group_vars = spacetime,
-        sort_vars = s.peso_cols,
+        sort_vars = s.money_cols,
         meaningless_to_sum = ["item categ"],
         df0 = raw[s.name] ) )
 
@@ -62,7 +62,7 @@ for s in ser.series:
       write_pivots(
         dept = df.iloc[0]["dept"],
         muni = df.iloc[0]["muni"],
-        values_col = s.peso_cols[0],
+        values_col = s.money_cols[0],
         all_places = df,
         filename = s.name ) ) )
 
