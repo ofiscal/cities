@@ -1,12 +1,4 @@
-# There are three series for each municipality:
-# ingresos, inversion and funcionamiento.
-# Each is drawn a little differently; this file specifies how.
-
-
-class seriesType:
-  def __init__(self, name, peso_cols):
-    self.name = name
-    self.peso_cols = peso_cols
+from Code.metadata.types import seriesType
 
 ingresos = seriesType(
   name = "ingresos",
