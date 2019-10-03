@@ -3,7 +3,7 @@ if True:
   from itertools import chain
   import pandas as pd
   import Code.metadata.terms as t
-  import Code.metadata.four_series as sm
+  import Code.metadata.raw_series as sm
 
 
 if True: # build source data set, from which both keys are built

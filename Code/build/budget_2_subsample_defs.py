@@ -4,7 +4,7 @@ if True:
   import numpy as np
   #
   import Code.metadata.terms as t
-  import Code.metadata.four_series as sm
+  import Code.metadata.raw_series as sm
 
 
 if True: # bearings

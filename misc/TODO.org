@@ -109,11 +109,15 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : immediate
+** create the average muni per dept
+Create two new data sets, "gastos-pct" and "ingresos-pct".
+For each,
+Average the percentages.
+TRICKY: Must include all the munis for which spending in that category is 0.
 ** pivots must include no NaN values
 the fillna(0) command is a temporary hack
 ** add pivots in percentage terms
 but keep the pivots that are in absolute terms
-** create the average muni per dept
 * TODO what text to add to charts?
 ** Observatorio logo
 ** Title: ¿En qué se gastan la plata los gobernantes de <muni name>?

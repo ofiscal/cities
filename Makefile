@@ -41,8 +41,8 @@ all: keys			\
   budget_8_pivots		\
   output/inflation.csv		\
   sample_tables 		\
-  output/regalias.csv
-#  pics
+  output/regalias.csv           \
+  pics
 
 keys =				\
   output/keys/budget.csv	\
@@ -122,7 +122,7 @@ pics = output/reports/done.txt
 keys: $(keys)
 $(keys):			\
   Code/build/make_keys.py	\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/make_keys.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -133,7 +133,7 @@ $(budget_1):					\
   Code/build/budget_1.py			\
   Code/build/budget_1_defs.py			\
   Code/build/budget_1_tests.py			\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -146,7 +146,7 @@ $(budget_1p5):					\
   Code/build/budget_1p5_tests.py		\
   Code/build/classify_budget_codes.py		\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1p5.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -158,7 +158,7 @@ $(budget_2_subsamples):				\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\
   Code/build/budget_1_tests.py			\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_2_subsample.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -182,7 +182,7 @@ $(budget_3_dept_muni_year_item):		\
 #  Code/build/sanity_child_sum_is_parent.py	\
 #  Code/common.py				\
 #  Code/util/misc.py				\
-#  Code/metadata/four_series.py
+#  Code/metadata/raw_series.py
 #	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
@@ -192,7 +192,7 @@ $(explore_order_of_mag_x_yrs):			\
   Code/common.py				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
 
 budget_4_scaled: $(budget_4_scaled)
@@ -203,7 +203,7 @@ $(budget_4_scaled):				\
   Code/common.py				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
 
 budget_5_add_regalias: $(budget_5_add_regalias)
