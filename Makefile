@@ -12,35 +12,37 @@ ss=$(strip $(subsample))
   # removes trailing space
 myPython=PYTHONPATH='.' python3
 
-.PHONY: all			\
-  keys				\
-  budget_1			\
-  budget_1p5 			\
-  budget_2_subsample		\
-  budget_2_subsamples		\
-  subsample			\
-  budget_3_dept_muni_year_item	\
-  budget_4_scaled		\
-  budget_5_add_regalias		\
-  budget_6_deflate		\
-  budget_7_verbose		\
-  budget_8_pivots		\
-  sample_tables 		\
+.PHONY: all				\
+  keys					\
+  budget_1				\
+  budget_1p5				\
+  budget_2_subsample			\
+  budget_2_subsamples			\
+  subsample				\
+  budget_3_dept_muni_year_item		\
+  budget_4_scaled			\
+  budget_5_add_regalias			\
+  budget_6_deflate			\
+  budget_6p5_cull_and_percentify	\
+  budget_7_verbose			\
+  budget_8_pivots			\
+  sample_tables				\
   pics
 
-all: keys			\
-  budget_1			\
-  budget_1p5			\
-  budget_2_subsample		\
-  budget_2_subsamples		\
-  budget_3_dept_muni_year_item	\
-  budget_4_scaled		\
-  budget_5_add_regalias		\
-  budget_6_deflate		\
-  budget_7_verbose		\
-  budget_8_pivots		\
-  output/inflation.csv		\
-  sample_tables 		\
+all: keys				\
+  budget_1				\
+  budget_1p5				\
+  budget_2_subsample			\
+  budget_2_subsamples			\
+  budget_3_dept_muni_year_item		\
+  budget_4_scaled			\
+  budget_5_add_regalias			\
+  budget_6_deflate			\
+  budget_6p5_cull_and_percentify	\
+  budget_7_verbose			\
+  budget_8_pivots			\
+  output/inflation.csv			\
+  sample_tables				\
   output/regalias.csv
   # pics
 
@@ -96,6 +98,10 @@ budget_5_add_regalias =					\
 budget_6_deflate =					\
   output/budget_6_deflate/recip-$(ss)/ingresos.csv	\
   output/budget_6_deflate/recip-$(ss)/gastos.csv
+
+budget_6p5_cull_and_percentify =					\
+  output/budget_6p5_cull_and_percentify/recip-$(ss)/ingresos.csv	\
+  output/budget_6p5_cull_and_percentify/recip-$(ss)/gastos.csv
 
 budget_7_verbose =					\
   output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
@@ -226,9 +232,19 @@ $(budget_6_deflate):			\
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
 
+budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
+$(budget_6p5_cull_and_percentify):		\
+  $(budget_6_deflate)				\
+  Code/build/budget_6p5_cull_and_percentify.py	\
+  Code/util/percentify.py			\
+  Code/common.py				\
+  Code/metadata/two_series.py			\
+  Code/metadata/four_series.py
+	$(myPython) Code/build/budget_6p5_cull_and_percentify.py $(ss)
+
 budget_7_verbose: $(budget_7_verbose)
 $(budget_7_verbose):			\
-  $(budget_6_deflate)			\
+  $(budget_6p5_cull_and_percentify)	\
   Code/build/budget_7_verbose.py	\
   Code/build/use_keys.py		\
   Code/common.py			\

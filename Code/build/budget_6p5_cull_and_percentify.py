@@ -1,11 +1,10 @@
 # PURPOSE:
+# Drop some unneeded columns, rows.
+#   TODO ? for speed, move upstream.
 # Switch from two series to four:
-#   2: gastos, ingresos
-#   4: gastos, gastos-pct, ingresos, ingresos-pct
-# Convert peso values to percentages for the -pct files.
-#   TRICKY: Must include munis which spent nothing on that item.
-# Compute an "average municipality" for each department.
-#   But only in the -pct files.
+#   Initial 2: gastos, ingresos
+#   Final 4: gastos, gastos-pct, ingresos, ingresos-pct
+#     In the -pct files, convert peso values to percentages.
 
 if True:
   import os
@@ -18,8 +17,8 @@ if True:
   import Code.metadata.four_series as s4
 
 if True: # folders
-  source = "output/budget_6_deflate/recip-"        + str(c.subsample)
-  dest   = "output/budget_6p5_dept_average/recip-" + str(c.subsample)
+  source = "output/budget_6_deflate/recip-"               + str(c.subsample)
+  dest   = "output/budget_6p5_cull_and_percentify/recip-" + str(c.subsample)
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
@@ -30,10 +29,11 @@ if True: # input data
   for s in s2.series:
     df = pd.read_csv(
       source + "/" + s.name + ".csv" )
-    df = ( df[df["year"] >= 2013]
-             # because there is no regalias data before 2013
-           [spacetime + ["item categ"] + s.money_cols] )
-             # this line drops the money columns we don't use
+    df = ( # drop some columns, rows
+      df[df["year"] >= 2013]
+        # because there is no regalias data before 2013
+      [spacetime + ["item categ"] + s.money_cols] )
+        # this line drops the money columns we don't use
     dfs[s.name] = df
 
 for s in s2.series:
@@ -55,8 +55,8 @@ for s in s2.series:
         sort_values(spacetime) .
         reset_index(drop=True) )
   assert m.columns.equals( p.columns )
-  print( "good columns" )
   assert ( m[spacetime].reset_index() .
            equals(p[spacetime].reset_index() ) )
-  print( "good index" )
 
+for s in s4.series:
+  dfs[s.name].to_csv( dest + "/" + s.name + ".csv" )

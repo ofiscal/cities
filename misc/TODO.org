@@ -109,6 +109,9 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
+** Compute an "average municipality" for each department.
+But only in the -pct files.
+TRICKY: Must include munis which spent nothing on that item.
 ** Code.build.budget_6p5_pct_and_dept_mean
 Follow header comment.
 Then incorporate into Makefile.
