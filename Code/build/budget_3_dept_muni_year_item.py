@@ -140,17 +140,17 @@ if True: # accumulate (in acc) a data frame like df but
         subtract      = t.transfer,
         subtract_from = t.propios,
         categ = "item categ",
-        valueCols = s2.ingresos.peso_cols,
+        valueCols = s2.ingresos.money_cols,
         df0   = df ) )
   dfs2[t.ingresos] = acc
 
 if True: # test (loosely) that it worked
   acc = acc . sort_values(spacetime) . reset_index(drop=True)
   ing = ing . sort_values(spacetime) . reset_index(drop=True)
-  assert ( acc.drop( columns = s2.ingresos.peso_cols ) .
+  assert ( acc.drop( columns = s2.ingresos.money_cols ) .
            equals(
-             ing.drop( columns = s2.ingresos.peso_cols ) ) )
-  for c in s2.ingresos.peso_cols:
+             ing.drop( columns = s2.ingresos.money_cols ) ) )
+  for c in s2.ingresos.money_cols:
     assert (acc[c]  < ing[c]).any()
     assert (acc[c] <= ing[c]).all()
 

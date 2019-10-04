@@ -12,37 +12,39 @@ ss=$(strip $(subsample))
   # removes trailing space
 myPython=PYTHONPATH='.' python3
 
-.PHONY: all			\
-  keys				\
-  budget_1			\
-  budget_1p5 			\
-  budget_2_subsample		\
-  budget_2_subsamples		\
-  subsample			\
-  budget_3_dept_muni_year_item	\
-  budget_4_scaled		\
-  budget_5_add_regalias		\
-  budget_6_deflate		\
-  budget_7_verbose		\
-  budget_8_pivots		\
-  sample_tables 		\
+.PHONY: all				\
+  keys					\
+  budget_1				\
+  budget_1p5				\
+  budget_2_subsample			\
+  budget_2_subsamples			\
+  subsample				\
+  budget_3_dept_muni_year_item		\
+  budget_4_scaled			\
+  budget_5_add_regalias			\
+  budget_6_deflate			\
+  budget_6p5_cull_and_percentify	\
+  budget_7_verbose			\
+  budget_8_pivots			\
+  sample_tables				\
   pics
 
-all: keys			\
-  budget_1			\
-  budget_1p5			\
-  budget_2_subsample		\
-  budget_2_subsamples		\
-  budget_3_dept_muni_year_item	\
-  budget_4_scaled		\
-  budget_5_add_regalias		\
-  budget_6_deflate		\
-  budget_7_verbose		\
-  budget_8_pivots		\
-  output/inflation.csv		\
-  sample_tables 		\
+all: keys				\
+  budget_1				\
+  budget_1p5				\
+  budget_2_subsample			\
+  budget_2_subsamples			\
+  budget_3_dept_muni_year_item		\
+  budget_4_scaled			\
+  budget_5_add_regalias			\
+  budget_6_deflate			\
+  budget_6p5_cull_and_percentify	\
+  budget_7_verbose			\
+  budget_8_pivots			\
+  output/inflation.csv			\
+  sample_tables				\
   output/regalias.csv
-#  pics
+  # pics
 
 keys =				\
   output/keys/budget.csv	\
@@ -97,6 +99,10 @@ budget_6_deflate =					\
   output/budget_6_deflate/recip-$(ss)/ingresos.csv	\
   output/budget_6_deflate/recip-$(ss)/gastos.csv
 
+budget_6p5_cull_and_percentify =					\
+  output/budget_6p5_cull_and_percentify/recip-$(ss)/ingresos.csv	\
+  output/budget_6p5_cull_and_percentify/recip-$(ss)/gastos.csv
+
 budget_7_verbose =					\
   output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
   output/budget_7_verbose/recip-$(ss)/gastos.csv
@@ -122,7 +128,7 @@ pics = output/reports/done.txt
 keys: $(keys)
 $(keys):			\
   Code/build/make_keys.py	\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/make_keys.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -133,7 +139,7 @@ $(budget_1):					\
   Code/build/budget_1.py			\
   Code/build/budget_1_defs.py			\
   Code/build/budget_1_tests.py			\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -146,7 +152,7 @@ $(budget_1p5):					\
   Code/build/budget_1p5_tests.py		\
   Code/build/classify_budget_codes.py		\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1p5.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -158,7 +164,7 @@ $(budget_2_subsamples):				\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\
   Code/build/budget_1_tests.py			\
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_2_subsample.py
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -182,7 +188,7 @@ $(budget_3_dept_muni_year_item):		\
 #  Code/build/sanity_child_sum_is_parent.py	\
 #  Code/common.py				\
 #  Code/util/misc.py				\
-#  Code/metadata/four_series.py
+#  Code/metadata/raw_series.py
 #	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
@@ -192,7 +198,7 @@ $(explore_order_of_mag_x_yrs):			\
   Code/common.py				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
 
 budget_4_scaled: $(budget_4_scaled)
@@ -203,7 +209,7 @@ $(budget_4_scaled):				\
   Code/common.py				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
-  Code/metadata/four_series.py
+  Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
 
 budget_5_add_regalias: $(budget_5_add_regalias)
@@ -226,10 +232,21 @@ $(budget_6_deflate):			\
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
 
+budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
+$(budget_6p5_cull_and_percentify):		\
+  $(budget_6_deflate)				\
+  Code/build/budget_6p5_cull_and_percentify.py	\
+  Code/util/percentify.py			\
+  Code/common.py				\
+  Code/metadata/two_series.py			\
+  Code/metadata/four_series.py
+	$(myPython) Code/build/budget_6p5_cull_and_percentify.py $(ss)
+
 budget_7_verbose: $(budget_7_verbose)
 $(budget_7_verbose):			\
-  $(budget_6_deflate)			\
+  $(budget_6p5_cull_and_percentify)	\
   Code/build/budget_7_verbose.py	\
+  Code/build/use_keys.py		\
   Code/common.py			\
   Code/util/misc.py			\
   Code/metadata/terms.py                \
@@ -263,12 +280,14 @@ output/inflation.csv:				\
 output/regalias.csv:			\
   data/regalias/muni.csv		\
   data/regalias/dept.csv		\
-  Code/build/regalias.py
+  Code/build/regalias.py		\
+  Code/build/use_keys.py
 	$(myPython) Code/build/regalias.py
 
 pics: $(pics)
-$(pics):					\
-  $(budget_4_scaled)				\
+$(pics):			\
+  $(budget_4_scaled)		\
+  Code/build/use_keys.py	\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

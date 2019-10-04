@@ -14,7 +14,7 @@
 import numpy as np
 import pandas as pd
 import Code.build.aggregation_regexes as ac
-import Code.metadata.four_series as sm
+import Code.metadata.raw_series as sm
 
 
 def get_raw_data():

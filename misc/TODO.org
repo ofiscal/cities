@@ -108,6 +108,15 @@ pd.set_option('display.max_rows', 500)
 ( raw["ingresos"]
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
+* TODO : next
+** Compute an "average municipality" for each department.
+But only in the -pct files.
+TRICKY: Must include munis which spent nothing on that item.
+** budget_8:
+*** pivots must include no NaN values
+the fillna(0) command downstream in main.py is a temporary hack
+*** add pivots in percentage terms
+but keep the pivots that are in absolute terms
 * TODO new data
 ** TODO compare wc on laptop to wc on desktop
 ** TODO compare xlsx lengths in OpenOffice to wc results on csv
@@ -149,6 +158,7 @@ a picture, and the option to click through to (the guide? more pictures and the 
 ** TODO determine cost
 using list of munis which LC will send
 * TODO record streaming audio
+** TODO ? record the browser, not the soundcard
 ** TODO enlist Caoba
 talk to Fancisco
   Adri sent me contact over Whatsapp
@@ -161,16 +171,7 @@ Requires: detecting dropout
           saving file gracefully after dropout
 ** Alejo has list of websites to record
 * TODO draw charts
-** TODO bug -- demo works but main doesn't
-*** TODO this seems like the problem
-The good one has a verbal index,
-                 meaningful column names
-                 entirely numeric values
-The bad one has none of those.
-*** where
-Code/draw/demo/plot_fake_data.py # good
-Code/main.py                     # bad
-** TODO all: decide: what kinds of charts to draw
+** TODO draw these kinds of charts
 *** compare muni to dept average muni
 summing all four years
 *** time series
@@ -216,7 +217,18 @@ rework this line:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
-** TODO add use_keys.py to Makefile (as a dependency)
+** TODO bug -- missing data
+*** the problem
+There should be at least 4 items in every spacetime cell,
+in both data sets. But there are exceptions.
+*** code to see it
+  pd.set_option('display.min_rows', 100)
+  counts = {}
+  for s in s2.series:
+    df = dfs[s.name].copy()
+    df["one"] = 1
+    df = df.groupby(spacetime).sum().reset_index()
+    df[ df["one"] < 4 ]
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
@@ -311,6 +323,11 @@ but not after reducing the number of rows at stage 1p5.
 ** modifying the code
 *** only the peso columns of interest are deflated
 ** interpreting the data
+*** PITFALL: special muni codes
+-1 = Department-level spending.
+-2 = The average muni within a department,
+     averaged across munis only
+     (i.e. excluding the observation with muni code = -1).
 *** regalias is not subsampled
 So the supposedly subsampled data at or data downstream of
   build/budget_5_deflate_and_regalias.py

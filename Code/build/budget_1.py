@@ -11,7 +11,7 @@ if True:
   import Code.util.misc as util
   import Code.build.budget_1_defs as defs
   import Code.build.budget_1_tests as tests
-  import Code.metadata.four_series as sm
+  import Code.metadata.raw_series as sm
   import Code.metadata.terms as t
 
 dfs = defs.collect_raw( sm.source_folder + "csv" )

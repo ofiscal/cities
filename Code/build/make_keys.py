@@ -1,10 +1,9 @@
 if True:
   import os
-  import csv
   from itertools import chain
   import pandas as pd
   import Code.metadata.terms as t
-  import Code.metadata.four_series as sm
+  import Code.metadata.raw_series as sm
 
 
 if True: # build source data set, from which both keys are built
@@ -59,3 +58,4 @@ if not os.path.exists( "output/keys" ):
   . to_csv(
     "output/keys/budget.csv",
     index = False ) )
+

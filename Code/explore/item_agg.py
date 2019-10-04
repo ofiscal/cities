@@ -3,7 +3,7 @@ import pandas as pd
 
 import Code.common as c
 import Code.util.misc as util
-import Code.metadata.four_series as sm
+import Code.metadata.raw_series as sm
 import Code.build.budget_3_dept_muni_year_item_defs as defs
 
 

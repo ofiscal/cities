@@ -2,7 +2,7 @@ import numpy  as np
 import pandas as pd
 
 import Code.metadata.terms as t
-import Code.metadata.four_series as sm
+import Code.metadata.raw_series as sm
 
 
 def row_numbers_raw( dfs ):

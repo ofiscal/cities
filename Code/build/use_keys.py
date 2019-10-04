@@ -31,8 +31,17 @@ if True:
     pd.concat(
       [depts,geo],
       axis = "rows",
-      sort = True ) . # because depts.columns != munis.columns
-    fillna(-1) )
+      sort = True ) ) # because depts.columns != munis.columns
+  depts_and_munis["muni"] = (
+    depts_and_munis["muni"].fillna("dept") )
+  depts_and_munis["muni code"] = (
+    depts_and_munis["muni"].fillna(-1) )
+  depts_and_munis = (
+    # For Bogotá the muni info is equal to the dept info,
+    # so including a dept observation would be redundant.
+    depts_and_munis[
+      ~ ( ( depts_and_munis["dept"] == "BOGOTÁ, D.C." ) &
+          ( depts_and_munis["muni"] == "dept" ) ) ] )
 
 def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
   return (
