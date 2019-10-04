@@ -26,7 +26,7 @@ if True: # This is like build.budget_1_defs.collect_raw
   for year in range( 2012, 2019 ):
     shuttle = (
       pd.read_csv(
-        "data/sisfut/original_csv/" + str(year) + "_funcionamiento.csv",
+        "data/sisfut/csv/" + str(year) + "_funcionamiento.csv",
         usecols = set.union(
           {"Concepto"},
           set.difference(

@@ -24,7 +24,7 @@ def get_raw_data():
     for year in range( 2012, 2018+1 ):
       shuttle = (
         pd.read_csv(
-          ( sm.source_folder + "original_csv/"
+          ( sm.source_folder + "csv/"
             + str(year) + "_" + series + ".csv" )
   #        , nrows = 20000
           , usecols = [ "Cód. DANE Municipio",

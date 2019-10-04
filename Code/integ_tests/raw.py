@@ -19,7 +19,7 @@ if True: # get 2018 data
   col_map = { "Nombre DANE Departamento" : "dept",
              "Nombre DANE Municipio" : "muni",
              "Código Concepto" : "item code" }
-  raw_yr = "data/sisfut/original_csv/" + str( iu.year ) + "_"
+  raw_yr = "data/sisfut/csv/" + str( iu.year ) + "_"
     # PITFALL: This is neither file nor folder,
     # but rather the common prefix of some files.
   def grab( filename: str,

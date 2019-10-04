@@ -7,7 +7,7 @@ import Code.metadata.four_series as sm
 
 def row_numbers_raw( dfs ):
   """That these lengths are appropriate can be verified
-  by running `wc *file*` in data/sisfut/original_csv
+  by running `wc *file*` in data/sisfut/csv
   and subutracting seven (which is the number of years,
   and therefore the number of header files)."""
   for (file,length) in [ ( t.ingresos      , 993934  ),

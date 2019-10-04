@@ -11,12 +11,11 @@ if True: # build source data set, from which both keys are built
   source_data = pd.DataFrame()
   for series in set.difference(
       set(sm.series), set([t.deuda])):
-    for year in range( 2012, 2018+1 ):
-      filename = ( sm.source_folder + "original_csv/"
+    for year in range( 2013, 2018+1 ):
+      filename = ( sm.source_folder + "csv/"
                    + str(year) + "_" + series + ".csv" )
       shuttle = pd.read_csv(
         filename,
-        quoting=csv.QUOTE_NONE,
         usecols = [
            "Cód. DANE Municipio",
            "Nombre DANE Municipio",

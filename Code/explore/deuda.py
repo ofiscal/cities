@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-source = "data/sisfut/original_csv"
+source = "data/sisfut/csv"
 late = pd.read_csv( source + "/2018_deuda.csv" )
 early = pd.read_csv( source + "/2012_deuda.csv" )
 

@@ -17,7 +17,7 @@ import Code.metadata.four_series as sm
 
 
 folder = {
-  "orig" : "data/sisfut/original_csv",
+  "orig" : "data/sisfut/csv",
   "bughunt" : "output/explore/missing_rows" }
 folder["with_index"] = folder["bughunt"] + "/with_index"
 folder["collected"] = folder["bughunt"] + "/collected"

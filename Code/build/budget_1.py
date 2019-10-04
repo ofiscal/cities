@@ -14,7 +14,7 @@ if True:
   import Code.metadata.four_series as sm
   import Code.metadata.terms as t
 
-dfs = defs.collect_raw( sm.source_folder + "original_csv" )
+dfs = defs.collect_raw( sm.source_folder + "csv" )
 dfs[t.deuda] = util.un_latin_decimal_columns(
   list( map( lambda s: s[1],
              sm.columns_peso[t.deuda] ) ),

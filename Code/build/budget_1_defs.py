@@ -13,7 +13,7 @@ def collect_raw( source : str,
   dfs = {}
   for series in sm.series:
     dfs[series] = pd.DataFrame()
-    for year in range( 2012, 2018+1 ):
+    for year in range( 2013, 2018+1 ):
       shuttle = (
         pd.read_csv(
           source + "/" + str(year) + "_" + series + ".csv",
