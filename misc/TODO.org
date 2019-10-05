@@ -126,9 +126,6 @@ AssertionError
 ** Compute an average for each (department, item-categ) pair.
 But only in the -pct files.
 TRICKY: Must include munis which spent nothing on that item.
-*** In geo.csv, count munis in dept
-Add a column for that.
-Use add_munis_in_dept_col().
 *** In budget_6p7_avg_muni.py
 **** Add muni count for each dept.
 **** For each dept,year,item-categ slice

@@ -26,6 +26,28 @@ if True: # get, test data
   assert munis.shape == (1101,2)
   assert pd.isnull(munis).any().any() == False
 
+if True: # how to add a column that counts munis in each dept
+  def add_munis_in_dept_col(
+      df : pd.DataFrame ) -> pd.DataFrame:
+    """ Adds a column indicating how many munis are in each dept. """
+    new = df[~(df["muni"]=="dept")][["dept code"]]
+    new["munis"] = 1
+    new = ( new . groupby(["dept code"]) .
+            agg({"dept code" : "first",
+                 "munis"     : sum}) .
+            reset_index(drop=True) )
+    return df.merge( new, how="left", on="dept code" )
+  if True: # test it
+    x = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
+                        "muni code" : [1,2,3,4,5,6,-1],
+                        "noise"     : [1,2,3,4,5,6,7] } )
+    y = add_munis_in_dept_col(x)
+    z = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
+                        "muni code" : [1,2,3,4,5,6,-1],
+                        "noise"     : [1,2,3,4,5,6,7],
+                        "munis"     : [1,2,2,3,3,3,3] } )
+    assert y.equals(z)
+
 if True:
   depts_and_munis = (
     pd.concat(
@@ -36,6 +58,8 @@ if True:
     depts_and_munis["muni"].fillna("dept") )
   depts_and_munis["muni code"] = (
     depts_and_munis["muni"].fillna(-1) )
+  depts_and_munis = add_munis_in_dept_col(
+    depts_and_munis )
   depts_and_munis = (
     # For Bogotá the muni info is equal to the dept info,
     # so including a dept observation would be redundant.
