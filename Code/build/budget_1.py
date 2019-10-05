@@ -14,20 +14,23 @@ if True:
   import Code.metadata.raw_series as sm
   import Code.metadata.terms as t
 
-dfs = defs.collect_raw( sm.source_folder + "csv" )
-dfs[t.deuda] = util.un_latin_decimal_columns(
-  list( map( lambda s: s[1],
-             sm.columns_peso[t.deuda] ) ),
-  dfs[t.deuda] )
+if True: # read, format
+  dfs = defs.collect_raw( sm.source_folder + "csv" )
+  dfs[t.deuda] = util.un_latin_decimal_columns(
+    list( map( lambda s: s[1],
+               sm.columns_peso[t.deuda] ) ),
+    dfs[t.deuda] )
 
-tests.row_numbers_raw( dfs )
-tests.column_names_of_raw_data( dfs )
-tests.types_and_missings_for_raw_data( dfs )
+if True: # test
+  tests.row_numbers_raw( dfs )
+  tests.column_names_of_raw_data( dfs )
+  tests.types_and_missings_for_raw_data( dfs )
 
-dest = "output/budget_1"
-if not os.path.exists( dest ):
-  os.makedirs( dest )
-for s in sm.series:
-  dfs[s].to_csv( dest + "/" + s + ".csv",
-                 index = False )
+if True: # write
+  dest = "output/budget_1"
+  if not os.path.exists( dest ):
+    os.makedirs( dest )
+  for s in sm.series:
+    dfs[s].to_csv( dest + "/" + s + ".csv",
+                   index = False )
 

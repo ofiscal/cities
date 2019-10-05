@@ -1,3 +1,5 @@
+* notes on new regalias spending data
+some is dept-level, includes missing value for muni
 * notes from seminar, 2019 08 16
 ** draw a benchmark similarly to the city's report
 ** corrupt governors will suppress the mediax
@@ -109,6 +111,22 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
+** verify desktop-laptop equivalence
+*** TODO the data is different but, I think, isomorphic
+A better test: sort the csv files, then diff.
+Difficulties:
+  preserve header column
+  deal with formatting differences (quotation marks)
+*** DONE the desktop error is the same as the laptop error
+PYTHONPATH='.' python3 Code/build/budget_1.py
+Traceback (most recent call last):
+  File "Code/build/budget_1.py", line 23, in <module>
+    tests.row_numbers_raw( dfs )
+  File "/mnt/Code/build/budget_1_tests.py", line 17, in row_numbers_raw
+    assert len( dfs[file] ) == length
+AssertionError
+** what to do about 3-4% of rows missing muni code?
+That must be dept-level data. But do we use it?
 ** Compute an "average municipality" for each department.
 But only in the -pct files.
 TRICKY: Must include munis which spent nothing on that item.

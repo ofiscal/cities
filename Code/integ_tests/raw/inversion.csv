@@ -1,11 +1,11 @@
-,dtype,min,max,missing
-name,object,ABEJORRAL,ÚTICA,0.0
-dept code,int64,5,99,0.0
-muni code,float64,5001.0,99773.0,0.0443303044081258
-item code,object,A,VAL,0.0
-item init,float64,0.0,17115030819000.0,1.7136237658865738e-06
-item def,float64,0.0,16764345183458.0,1.7136237658865738e-06
-item comp,float64,-1448076.0,14905209144624.0,0.0
-item oblig,float64,-1448076.0,12321701320354.898,1.7136237658865738e-06
-item pagos,float64,-52030960.0,12321701320354.898,6.283287141695126e-06
-year,int64,2012,2018,0.0
+,dtype,missing
+name,object,0.0
+dept code,int64,0.0
+muni code,float64,0.04419416029390644
+item code,object,0.0
+item init,float64,1.967069937824917e-06
+item def,float64,1.3113799586239594e-06
+item comp,float64,0.0
+item oblig,float64,6.556899793119797e-07
+item pagos,float64,5.245519834273793e-06
+year,int64,0.0
