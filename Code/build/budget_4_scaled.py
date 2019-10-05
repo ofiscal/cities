@@ -63,21 +63,24 @@ for s in ts.series:
       apply( lambda df:
              lib.add_pct_change( s.money_cols[0], df) ) .
       reset_index() )
-    for year in list( range( 2013, 2019 ) ):
+    for year in list( range( 2014, 2019 ) ):
+      # Skip 2013 because no year precedes it,
+      # so median change is undefined.
       median_change = (
         ( df_by_muni_item
           [df_by_muni_item["year"] == year ]
           ["pc"] ) .
         median() )
-      assert ( (median_change <  2) &
-               (median_change > -(2/3) ) )
+      assert median_change < 2
+      assert median_change > -(2/3)
         # These bounds might look pretty loose --
         # they say that in each (file,year) pair,
         # the median (across (municipality, budget item) pairs)
-        # rose by no more than 200% (i.e. tripling), and fell by no more than two-thirds.
+        # rose by no more than 300% (i.e. quadrupling), and fell by no more than two-thirds.
         # In fact they can't be made much tighter (and still have every subsample pass).
         # Fortunately, these bounds are far more than tight enough to assure
         # the order of magnitude problem is solved.
     dfs_by_muni_item[s.name] = df_by_muni_item
   df.to_csv( dest + "/" + s.name + ".csv",
              index = False )
+

@@ -46,8 +46,6 @@ for s in s2.series:
   dfs[s.name + "-pct"] = df
 
 for s in s2.series:
-  print()
-  print( s.name )
   m = ( dfs[s.name] .
         sort_values(spacetime) .
         reset_index(drop=True) )
