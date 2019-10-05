@@ -1,12 +1,5 @@
 if True:
-  import os
-  import numpy as np
   import pandas as pd
-  #
-  import Code.common as c
-  import Code.util.misc as util
-  import Code.metadata.two_series as ser
-
 
 if True: # get, test data
   geo = (
@@ -30,7 +23,7 @@ if True: # how to add a column that counts munis in each dept
   def add_munis_in_dept_col(
       df : pd.DataFrame ) -> pd.DataFrame:
     """ Adds a column indicating how many munis are in each dept. """
-    new = df[~(df["muni"]=="dept")][["dept code"]]
+    new = df[~(df["muni code"]==-1)][["dept code"]]
     new["munis"] = 1
     new = ( new . groupby(["dept code"]) .
             agg({"dept code" : "first",
@@ -57,7 +50,7 @@ if True:
   depts_and_munis["muni"] = (
     depts_and_munis["muni"].fillna("dept") )
   depts_and_munis["muni code"] = (
-    depts_and_munis["muni"].fillna(-1) )
+    depts_and_munis["muni code"].fillna(-1) )
   depts_and_munis = add_munis_in_dept_col(
     depts_and_munis )
   depts_and_munis = (
