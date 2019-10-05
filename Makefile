@@ -139,6 +139,7 @@ $(budget_1):					\
   Code/build/budget_1.py			\
   Code/build/budget_1_defs.py			\
   Code/build/budget_1_tests.py			\
+  Code/util/misc.py				\
   Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1.py
 
@@ -164,6 +165,7 @@ $(budget_2_subsamples):				\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\
   Code/build/budget_1_tests.py			\
+  Code/util/misc.py				\
   Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_2_subsample.py
 
@@ -281,6 +283,7 @@ output/regalias.csv:			\
   data/regalias/muni.csv		\
   data/regalias/dept.csv		\
   Code/build/regalias.py		\
+  Code/util/misc.py			\
   Code/build/use_keys.py
 	$(myPython) Code/build/regalias.py
 
