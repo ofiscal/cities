@@ -16,6 +16,26 @@ if True:
 
 if True: # read, format
   dfs = defs.collect_raw( sm.source_folder + "csv" )
+  dfs[t.ingresos] = util.un_latin_decimal_columns(
+    [ "item init",
+      "item def",
+      "item recaudo",
+      "item total"],
+    dfs[t.ingresos] )
+  dfs[t.inversion] = util.un_latin_decimal_columns(
+    [ "item init",
+      "item def",
+      "item comp",
+      "item oblig",
+      "item pagos" ],
+    dfs[t.inversion] )
+  dfs[t.funcionamiento] = util.un_latin_decimal_columns(
+    [ "item init",
+      "item def",
+      "item comp",
+      "item oblig",
+      "item pagos" ],
+    dfs[t.funcionamiento] )
   dfs[t.deuda] = util.un_latin_decimal_columns(
     list( map( lambda s: s[1],
                sm.columns_peso[t.deuda] ) ),

@@ -8,13 +8,18 @@ if True:
       column_names : List[str],
       df : pd.DataFrame
       ) -> pd.DataFrame:
+    """ PITFALL: Not foolproof. Theoretically a column could include
+        periods and hence be read as a float, when they were really
+        thousands separators. However, if any number had multiple periods,
+        or a comma, then it would be read as type "O" and this would work. """
     for c in column_names:
-      df[c] = (
-        df[c] .
-        astype( str ) .
-        str.replace( ".", ""  ) . # PITFALL: The order of these
-        str.replace( ",", "." ) . # two replacements is important.
-        astype( float ) )
+      if df[c].dtype == "O":
+        df[c] = (
+          df[c] .
+          astype( str ) .
+          str.replace( ".", ""  ) . # PITFALL: The order of these
+          str.replace( ",", "." ) . # two replacements is important.
+          astype( float ) )
     return df
   if True: # test it
     df = pd.DataFrame( { "a" : ["1.000,3","3,3","2.000"],
