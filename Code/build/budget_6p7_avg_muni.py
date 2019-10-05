@@ -25,7 +25,8 @@ if True: # input data
       source + "/" + s.name + ".csv" )
 
 if True: # how to add a column that counts munis in each dept
-  def add_munis_in_dept_col( df : pd.DataFrame ) -> pd.DataFrame:
+  def add_munis_in_dept_col(
+      df : pd.DataFrame ) -> pd.DataFrame:
     """ Adds a column indicating how many munis are in each dept. """
     new = df[~(df["muni code"]<0)][["dept code"]]
     new["munis"] = 1

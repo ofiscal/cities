@@ -123,10 +123,18 @@ Traceback (most recent call last):
   File "/mnt/Code/build/budget_1_tests.py", line 17, in row_numbers_raw
     assert len( dfs[file] ) == length
 AssertionError
-** Compute an "average municipality" for each department.
+** Compute an average for each (department, item-categ) pair.
 But only in the -pct files.
 TRICKY: Must include munis which spent nothing on that item.
-** budget_8:
+*** In geo.csv, count munis in dept
+Add a column for that.
+Use add_munis_in_dept_col().
+*** In budget_6p7_avg_muni.py
+**** Add muni count for each dept.
+**** For each dept,year,item-categ slice
+Compute the average spending for each money column.
+Modify that average to use the muni count for that department.
+** budget_8
 *** pivots must include no NaN values
 the fillna(0) command downstream in main.py is a temporary hack
 *** add pivots in percentage terms
