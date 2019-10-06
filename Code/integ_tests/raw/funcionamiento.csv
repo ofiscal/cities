@@ -3,9 +3,5 @@ name,object,0.0
 dept code,int64,0.0
 muni code,float64,0.049508405475462425
 item code,object,0.0
-item init,float64,0.0
-item def,float64,0.0
-item comp,float64,7.948815984315516e-07
 item oblig,float64,7.948815984315516e-07
-item pagos,float64,3.974407992046736e-06
 year,int64,0.0

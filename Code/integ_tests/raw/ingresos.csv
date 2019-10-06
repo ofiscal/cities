@@ -3,8 +3,5 @@ name,object,0.0
 dept code,int64,0.0
 muni code,float64,0.035131531656869885
 item code,object,0.0
-item init,float64,0.00048114268489207745
-item def,float64,0.000491577104564489
-item recaudo,float64,0.0005170834637635568
 item total,float64,0.0005170834637635568
 year,int64,0.0

@@ -11,35 +11,26 @@ if True:
   import Code.util.misc as util
   import Code.build.budget_1_defs as defs
   import Code.build.budget_1_tests as tests
-  import Code.metadata.raw_series as sm
+  import Code.metadata.raw_series as raw
   import Code.metadata.terms as t
 
-if True: # read, format
-  dfs = defs.collect_raw( sm.source_folder + "csv" )
-  dfs[t.ingresos] = util.un_latin_decimal_columns(
-    [ "item init",
-      "item def",
-      "item recaudo",
-      "item total"],
-    dfs[t.ingresos] )
-  dfs[t.inversion] = util.un_latin_decimal_columns(
-    [ "item init",
-      "item def",
-      "item comp",
-      "item oblig",
-      "item pagos" ],
-    dfs[t.inversion] )
-  dfs[t.funcionamiento] = util.un_latin_decimal_columns(
-    [ "item init",
-      "item def",
-      "item comp",
-      "item oblig",
-      "item pagos" ],
-    dfs[t.funcionamiento] )
-  dfs[t.deuda] = util.un_latin_decimal_columns(
-    list( map( lambda s: s[1],
-               sm.columns_peso[t.deuda] ) ),
-    dfs[t.deuda] )
+if True: # input data
+  source = "output/budget_0_collect"
+  dfs = {}
+  for s in raw.series:
+    dfs[s] = pd.read_csv( source + "/" + s + ".csv" )
+
+if True: # format
+  for s in [ t.ingresos,
+             t.inversion,
+             t.funcionamiento,
+             t.deuda]:
+    dfs[s] = (
+      util.un_latin_decimal_columns(
+        list( map( lambda pair: pair[1],
+                   raw.columns_peso[s] ) ),
+        dfs[s] ) .
+      fillna(0) )
 
 if True: # test
   tests.row_numbers_raw( dfs )
@@ -50,7 +41,7 @@ if True: # write
   dest = "output/budget_1"
   if not os.path.exists( dest ):
     os.makedirs( dest )
-  for s in sm.series:
+  for s in raw.series:
     dfs[s].to_csv( dest + "/" + s + ".csv",
                    index = False )
 

@@ -13,29 +13,29 @@ series = [t.ingresos,
 source_folder = "data/sisfut/"
 columns_peso = {
   "ingresos" : [
-      ("Presupuesto Inicial"    , "item init")
-    , ("Presupuesto Definitivo" , "item def")
-    , ("Recaudo"                , "item recaudo")
-    , ("Total Ingresos"         , "item total") ]
-  , "inversion" : [
-      ("Presupuesto Inicial"    , "item init")
-    , ("Presupuesto Definitivo" , "item def")
-    , ("Compromisos"            , "item comp")
-    , ("Obligaciones"           , "item oblig")
-    , ("Pagos"                  , "item pagos") ]
-  , "funcionamiento" : [
-      ("Presupuesto Inicial"    , "item init")
-    , ("Presupuesto Definitivo" , "item def")
-    , ("Compromisos"            , "item comp")
-    , ("Obligaciones"           , "item oblig")
-    , ("Pagos"                  , "item pagos") ]
-  , "deuda" : [
-      ("Presupuesto Inicial"    , "item init")
-    , ("Presupuesto Definitivo" , "item def")
-    , ("Compromisos"            , "item comp")
-    , ("Obligaciones"           , "item oblig")
-    , ("Pagos"                  , "item pagos") ]
-  }
+      ("Total Ingresos"         , "item total")
+    # , ("Presupuesto Definitivo" , "item def")
+    # , ("Recaudo"                , "item recaudo")
+    # , ("Presupuesto Inicial"    , "item init")
+  ], "inversion" : [
+      ("Obligaciones"           , "item oblig")
+    # , ("Presupuesto Inicial"    , "item init")
+    # , ("Presupuesto Definitivo" , "item def")
+    # , ("Compromisos"            , "item comp")
+    # , ("Pagos"                  , "item pagos")
+  ], "funcionamiento" : [
+      ("Obligaciones"           , "item oblig")
+    # , ("Presupuesto Inicial"    , "item init")
+    # , ("Presupuesto Definitivo" , "item def")
+    # , ("Compromisos"            , "item comp")
+    # , ("Pagos"                  , "item pagos")
+  ], "deuda" : [
+      ("Obligaciones"           , "item oblig")
+    # , ("Presupuesto Inicial"    , "item init")
+    # , ("Presupuesto Definitivo" , "item def")
+    # , ("Compromisos"            , "item comp")
+    # , ("Pagos"                  , "item pagos")
+  ] }
 
 column_subsets = { # Columns that we might actually use.
   "ingresos" : [

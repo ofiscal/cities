@@ -14,6 +14,7 @@ myPython=PYTHONPATH='.' python3
 
 .PHONY: all				\
   keys					\
+  budget_0_collect			\
   budget_1				\
   budget_1p5				\
   budget_2_subsample			\
@@ -30,6 +31,7 @@ myPython=PYTHONPATH='.' python3
   pics
 
 all: keys				\
+  budget_0_collect			\
   budget_1				\
   budget_1p5				\
   budget_2_subsample			\
@@ -49,6 +51,12 @@ all: keys				\
 keys =				\
   output/keys/budget.csv	\
   output/keys/geo.csv
+
+budget_0_collect =				\
+  output/budget_0_collect/funcionamiento.csv	\
+  output/budget_0_collect/ingresos.csv		\
+  output/budget_0_collect/inversion.csv		\
+  output/budget_0_collect/deuda.csv
 
 budget_1 =				\
   output/budget_1/funcionamiento.csv	\
@@ -131,15 +139,23 @@ $(keys):			\
   Code/metadata/raw_series.py
 	$(myPython) Code/build/make_keys.py
 
+budget_0_collect: $(budget_0_collect)
+$(budget_0_collect):			\
+  Code/build/budget_0_collect.py	\
+  Code/build/budget_1_defs.py		\
+  Code/metadata/raw_series.py
+	$(myPython) Code/build/budget_0_collect.py
+
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
 # not affordable at these early slow stages.
 budget_1: $(budget_1)
-$(budget_1):					\
-  Code/build/budget_1.py			\
-  Code/build/budget_1_defs.py			\
-  Code/build/budget_1_tests.py			\
-  Code/util/misc.py				\
+$(budget_1):			\
+  $(budget_0_collect)		\
+  Code/build/budget_1.py	\
+  Code/build/budget_1_defs.py	\
+  Code/build/budget_1_tests.py	\
+  Code/util/misc.py		\
   Code/metadata/raw_series.py
 	$(myPython) Code/build/budget_1.py
 
