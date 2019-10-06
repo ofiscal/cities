@@ -4,8 +4,10 @@ if True: # files we use
   funcionamiento = "funcionamiento"
   inversion      = "inversion"
   ingresos       = "ingresos"
+  ingresos_pct   = "ingresos-pct"
   deuda          = "deuda"
   gastos         = "gastos"
+  gastos_pct     = "gastos-pct"
 
 if True: # our own aggregate categories
   if True: # for spending
