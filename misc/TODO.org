@@ -126,27 +126,29 @@ Traceback (most recent call last):
   File "/mnt/Code/build/budget_1_tests.py", line 17, in row_numbers_raw
     assert len( dfs[file] ) == length
 AssertionError
-** budget_8
-*** TODO pivots must include no NaN values
-**** the fillna(0) command downstream in main.py is a temporary hack*
-**** DONE 1 - create the "top five" column
+** DONE aggregate_all_but_biggest/better.py
+*** DONE 1 - create the "top five" column
 Within each spacetime slice, sort by the money_col.
   Keep the default ascending=True, so that high values are last.
 Use .iloc to set "top five" in the last five to 1, and 0 elsewhere.
-**** DONE 2 - create the "top n" column
-***** the idea
+*** DONE 2 - create the "top n" column
+**** the idea
 Top five is created separately in each spacetime slice.
 Top n aggregates those data in a given space slice.
-***** how: given a space slice df, do this
+**** how: given a space slice df, do this
 top_rows = df[ df["top 5"] == 1 ]
 top_items = set( top_rows["item categ"].unique() )
 df["top n"] = df["item categ"] . apply( lambda row: row in top_items )
 return df
-**** DONE 3 - sums_of_all_but_top_n_in_groups()
+*** DONE 3 - sums_of_all_but_top_n_in_groups()
 Like modify sum_of_all_but_last_n_rows_in_groups.
 Rather than count n, it uses the "top n" column.
-**** TODO 4 - sum_all_but_greatest_n_rows_in_groups
+*** DONE 4 - sum_all_but_greatest_n_rows_in_groups
 Might not need any change.
+** TODO budget_8
+*** TODO pivots must include no NaN values
+**** TODO use the new library aggregate_all_but_biggest/better.py
+**** TODO the fillna(0) command downstream in main.py is a temporary hack*
 *** TODO add pivots in percentage terms
 but keep the pivots that are in absolute terms
 * TODO new data
