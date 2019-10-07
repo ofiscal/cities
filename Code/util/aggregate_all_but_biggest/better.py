@@ -53,4 +53,31 @@ if True:
     assert ( add_top_n_column(td) .
              equals( pd.concat( [td, top_n],
                                 axis = 'columns' ) ) )
+    del(td)
+
+if True:
+  def sums_of_all_but_top_n_in_groups(
+      group_vars : List[str],
+      df0 : pd.DataFrame
+      ) -> pd.DataFrame:
+    """ In each group, drops the rows marked "top n", sums the rest.
+    PITFALL: Has a very similar name to a function that uses it.
+      That using function is intended to be outward-facing.
+      This one would be private, if Python allowed that. """
+    df = df0[ df0["top n"] == 0 ].copy()
+    return ( df .
+             groupby( group_vars ) .
+             agg( sum ) .
+             reset_index() )
+  if True: # Test it
+    td0 = pd.DataFrame( { "g"     : [1,1,1,1, 2,2,2,2],
+                          "top n" : [0,0,1,1, 1,1,0,0],
+                          "v"     : [1,2,3,4, 1,2,3,4] } )
+    td1 = pd.DataFrame( { "g"     : [1, 2],
+                          "top n" : [0, 0],
+                          "v"     : [3, 7] } )
+    assert ( sums_of_all_but_top_n_in_groups( ["g"], td0 ) .
+             reset_index( drop = True ) .
+             equals( td1 ) )
+    del(td0,td1)
 
