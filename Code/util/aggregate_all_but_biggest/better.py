@@ -94,3 +94,24 @@ if True:
       equals( normalize( td1 ) ) )
     del(td0,td1)
 
+assert False == "RESUME HERE"
+def go( space_cols : List[str],
+        time_col   :      str,
+        money_col  :      str,
+        categ_col  :      str,
+        df         : pd.DataFrame
+      ) -> pd.DataFrame:
+  """ 
+  1 - In each sapcetime     slice, runs add_top_five_column().
+  2 - In each space (only!) slice, runs add_top_n_column().
+  3 - In each spacetime     slice, make an "otros" row,
+                                   via sums_of_all_but_top_n_in_groups().
+  4 - In each spacetime     slice, sorts the top n by (space,time,item categ).
+  5 - In each spacetime     slice, appends 3 to the end of 4. """
+  df1 = ( df0 . groupby( space_cols + [time_col] ) .
+          apply( lambda df:
+                 add_top_five_column( 5, money_var, df ) ) .
+          reset_index() )
+  df2 = ( df1 . groupby( space_cols ) .
+          apply( add_top_n_column ) .
+          reset_index() )
