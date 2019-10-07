@@ -111,10 +111,10 @@ pd.set_option('display.max_rows', 500)
 * TODO : next
 ** verify desktop-laptop equivalence
 *** TODO the data is different but, I think, isomorphic
-A better test: sort the csv files, then diff.
-Difficulties:
-  preserve header column
-  deal with formatting differences (quotation marks)
+A better test: From both systems,
+  create the data of interest (budget_1: collect (0) & format (1) ),
+  sort by all possible indices,
+  compare.
 *** DONE the desktop error is the same as the laptop error
 PYTHONPATH='.' python3 Code/build/budget_1.py
 Traceback (most recent call last):
@@ -123,18 +123,27 @@ Traceback (most recent call last):
   File "/mnt/Code/build/budget_1_tests.py", line 17, in row_numbers_raw
     assert len( dfs[file] ) == length
 AssertionError
-** Compute an average for each (department, item-categ) pair.
-But only in the -pct files.
-TRICKY: Must include munis which spent nothing on that item.
-*** In budget_6p7_avg_muni.py
-**** Add muni count for each dept.
-**** For each dept,year,item-categ slice
-Compute the average spending for each money column.
-Modify that average to use the muni count for that department.
 ** budget_8
-*** pivots must include no NaN values
-the fillna(0) command downstream in main.py is a temporary hack
-*** add pivots in percentage terms
+*** TODO pivots must include no NaN values
+**** the fillna(0) command downstream in main.py is a temporary hack
+**** TODO 1 - create the "top five" column
+Within each spacetime slice, sort by the money_col,
+  Keep the default ascending=True, so that high values are last.
+Use .iloc to set "top five" in the last five to 1, and 0 elsewhere.
+**** TODO 2 - create the "top n" column
+***** the idea
+Top five is created separately in each spacetime slice.
+Top n aggregates those data in a given space slice.
+***** TODO given a space slice df, do this
+top_rows = df[ df["top 5"] == 1 ]
+top_items = set( top_rows["item categ"].unique() )
+df["top n"] = df["item categ"] . apply( lambda row: row in top_items )
+return df
+**** TODO 3 - modify sum_of_all_but_last_n_rows_in_groups
+Rather than count n, it should use the "top n" column
+**** TODO 4 - sum_all_but_greatest_n_rows_in_groups
+Might not need any change.
+*** TODO add pivots in percentage terms
 but keep the pivots that are in absolute terms
 * TODO new data
 ** some rows are dept-level, includes missing value for muni
@@ -237,6 +246,18 @@ rework this line:
  seems to be working: "python3 -m pip install fpdf"
  recommended was      "python  -m pip install fpdf"
 * TODO fix
+** TODO ? some groupby.apply methods might be replaceable by groupby.agg
+*** Both accept lambda -- e.g. here:
+import pandas as pd
+x = pd.DataFrame( [[1,2],[1,3],[1,4],
+                   [2,4],[2,5]],
+                  columns = ["a","b"] )
+( x . groupby("a") .
+  agg( lambda df: df.iloc[0] ) )
+*** But agg seems to require something that returns one row
+e.g., continuing the previous example, this doesn't work:
+( x . groupby("a") .
+  agg( lambda df: df.iloc[0:2] ) )
 ** TODO bug -- missing data
 *** the problem
 There should be at least 4 items in every spacetime cell,
