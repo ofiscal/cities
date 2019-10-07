@@ -2,6 +2,7 @@ if True:
   from typing import List, Set, Dict
   import numpy as np
   import pandas as pd
+  from Code.util.normalize import normalize
 
 if True:
   def add_top_five_column(
@@ -56,28 +57,40 @@ if True:
     del(td)
 
 if True:
-  def sums_of_all_but_top_n_in_groups(
+  def sum_all_but_top_n_in_groups(
       group_vars : List[str],
+      categ_col : str,
       df0 : pd.DataFrame
       ) -> pd.DataFrame:
     """ In each group, drops the rows marked "top n", sums the rest.
-    PITFALL: Has a very similar name to a function that uses it.
+    PITFALL: Changes order of rows.
+    PITFALL: Name is very similar to that of a function that uses it.
       That using function is intended to be outward-facing.
       This one would be private, if Python allowed that. """
-    df = df0[ df0["top n"] == 0 ].copy()
-    return ( df .
-             groupby( group_vars ) .
-             agg( sum ) .
-             reset_index() )
+    df_low  = df0[ df0["top n"] == 0 ].copy()
+    df_high = df0[ df0["top n"] == 1 ].copy()
+    others = ( df_low .
+               groupby( group_vars ) .
+               agg( sum ) .
+               reset_index() )
+    others[categ_col] = "Otros"
+    return pd.concat( [df_high, others],
+                      axis = "rows" )
   if True: # Test it
     td0 = pd.DataFrame( { "g"     : [1,1,1,1, 2,2,2,2],
+                          "categ" : ["a","b","c","d",
+                                     "c","d","e","f",],
                           "top n" : [0,0,1,1, 1,1,0,0],
                           "v"     : [1,2,3,4, 1,2,3,4] } )
-    td1 = pd.DataFrame( { "g"     : [1, 2],
-                          "top n" : [0, 0],
-                          "v"     : [3, 7] } )
-    assert ( sums_of_all_but_top_n_in_groups( ["g"], td0 ) .
-             reset_index( drop = True ) .
-             equals( td1 ) )
+    td1 = pd.DataFrame( { "g"     : [1,  1,1, 2,2,  2],
+                          "categ" : ["Otros", "c","d",
+                                     "c","d", "Otros"],
+                          "top n" : [0,  1,1, 1,1,  0],
+                          "v"     : [3,  3,4, 1,2,  7] } )
+    assert (
+      normalize(
+        sum_all_but_top_n_in_groups(
+          ["g"], "categ", td0 ) ) .
+      equals( normalize( td1 ) ) )
     del(td0,td1)
 
