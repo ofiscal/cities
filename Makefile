@@ -25,6 +25,7 @@ myPython=PYTHONPATH='.' python3
   budget_5_add_regalias			\
   budget_6_deflate			\
   budget_6p5_cull_and_percentify	\
+  budget_6p7_avg_muni			\
   budget_7_verbose			\
   budget_8_pivots			\
   sample_tables				\
@@ -41,6 +42,7 @@ all: keys				\
   budget_5_add_regalias			\
   budget_6_deflate			\
   budget_6p5_cull_and_percentify	\
+  budget_6p7_avg_muni			\
   budget_7_verbose			\
   budget_8_pivots			\
   output/inflation.csv			\
@@ -110,6 +112,10 @@ budget_6_deflate =					\
 budget_6p5_cull_and_percentify =					\
   output/budget_6p5_cull_and_percentify/recip-$(ss)/ingresos.csv	\
   output/budget_6p5_cull_and_percentify/recip-$(ss)/gastos.csv
+
+budget_6p7_avg_muni =					\
+  output/budget_6p7_avg_muni/recip-$(ss)/ingresos.csv	\
+  output/budget_6p7_avg_muni/recip-$(ss)/gastos.csv
 
 budget_7_verbose =					\
   output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
@@ -260,9 +266,19 @@ $(budget_6p5_cull_and_percentify):		\
   Code/metadata/four_series.py
 	$(myPython) Code/build/budget_6p5_cull_and_percentify.py $(ss)
 
+budget_6p7_avg_muni: $(budget_6p7_avg_muni)
+$(budget_6p7_avg_muni):			\
+  $(budget_6p5_cull_and_percentify)	\
+  Code/build/budget_6p7_avg_muni.py	\
+  Code/common.py			\
+  Code/util/misc.py			\
+  Code/build/use_keys.py		\
+  Code/metadata/four_series.py
+	$(myPython) Code/build/budget_6p7_avg_muni.py $(ss)
+
 budget_7_verbose: $(budget_7_verbose)
 $(budget_7_verbose):			\
-  $(budget_6p5_cull_and_percentify)	\
+  $(budget_6p7_avg_muni)		\
   Code/build/budget_7_verbose.py	\
   Code/build/use_keys.py		\
   Code/common.py			\
