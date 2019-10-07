@@ -125,9 +125,9 @@ Traceback (most recent call last):
 AssertionError
 ** budget_8
 *** TODO pivots must include no NaN values
-**** the fillna(0) command downstream in main.py is a temporary hack
-**** TODO 1 - create the "top five" column
-Within each spacetime slice, sort by the money_col,
+**** the fillna(0) command downstream in main.py is a temporary hack*
+**** DONE 1 - create the "top five" column
+Within each spacetime slice, sort by the money_col.
   Keep the default ascending=True, so that high values are last.
 Use .iloc to set "top five" in the last five to 1, and 0 elsewhere.
 **** TODO 2 - create the "top n" column
