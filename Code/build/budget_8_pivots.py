@@ -1,9 +1,10 @@
 if True:
+  from typing import List,Set,Dict
   import os
   import pandas as pd
   #
   import Code.common as c
-  import Code.util.aggregate_all_but_biggest.gappy as defs
+  import Code.util.aggregate_all_but_biggest.better as agger
   import Code.metadata.two_series as ser
 
 assert c.subsample == 1 # This program only works on the full sample.
@@ -13,9 +14,9 @@ if True:
   space   = ["dept", "muni", "dept code", "muni code"]
 
 if True: # read data
-  raw = {}
+  ungrouped  : Dict[str, pd.DataFrame] = {}
   for s in ser.series:
-    raw[s.name] = (
+    ungrouped[s.name] = (
       pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
           + "/" + s.name + ".csv") ) .
@@ -23,15 +24,16 @@ if True: # read data
 
 if True: # in each spacetime slice, lump all but the biggest 5
          # expenditures into a single observation
-  grouped = {}
+  grouped : Dict[str, pd.DataFrame] = {}
   for s in ser.series:
     grouped[s.name] = (
-      defs.sum_all_but_greatest_n_rows_in_groups(
-        n = 5,
-        group_vars = spacetime,
-        sort_vars = s.money_cols,
-        meaningless_to_sum = ["item categ"],
-        df0 = raw[s.name] ) )
+      agger.go(
+        five = 5,
+        space_cols = ["dept","muni"],
+        time_col = "year",
+        categ_col = "item categ",
+        money_col = s.money_cols[0],
+        df = ungrouped[s.name] ) )
 
 def write_pivots( dept : str,
                   muni : str,

@@ -80,7 +80,7 @@ Output: The same, plus a new "average" muni.
     for cn in y.columns:
       assert y[cn].equals(z[cn])
 
-for s in s4.series_pct:
+for s in s4.series_pct: # add average muni to the to -pct data sets
   df = dfs[s.name]
   index_cols = ["dept code","year","item categ"]
   df = to_front(
@@ -93,7 +93,7 @@ for s in s4.series_pct:
       drop( columns = ["level_3"] ) ) )
   dfs[s.name] = df
 
-for s in s4.series_pct:
+for s in s4.series_pct: # test dimensions
   pct_series =     dfs[ s.name      ]
   non_pct_series = dfs[ s.name[:-4] ]
   nDepts = len(
