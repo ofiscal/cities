@@ -46,8 +46,8 @@ all: keys				\
   budget_7_verbose			\
   budget_8_pivots			\
   output/inflation.csv			\
-  sample_tables				\
   output/regalias.csv
+  # sample_tables
   # pics
 
 keys =				\
@@ -292,7 +292,7 @@ $(budget_8_pivots):				\
   $(budget_7_verbose)				\
   Code/build/budget_8_pivots.py			\
   Code/common.py				\
-  Code/util/aggregate_all_but_biggest/gappy.py	\
+  Code/util/aggregate_all_but_biggest/better.py	\
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_8_pivots.py $(ss)
 
@@ -301,7 +301,7 @@ $(sample_tables):				\
   $(budget_7_verbose)				\
   Code/common.py				\
   Code/draw/sample_tables.py			\
-  Code/util/aggregate_all_but_biggest.py	\
+  Code/util/aggregate_all_but_biggest/gappy.py  \
   Code/metadata/terms.py			\
   Code/metadata/two_series.py
 	$(myPython) Code/draw/sample_tables.py $(ss)
