@@ -58,11 +58,12 @@ if True:
 
 if True:
   def sum_all_but_top_n_in_groups(
-      group_vars : List[str],
+      group_cols : List[str],
       categ_col : str,
       df0 : pd.DataFrame
       ) -> pd.DataFrame:
-    """ In each group, drops the rows marked "top n", sums the rest.
+    """ In each group, aggregates rows not marked "top n"
+        into a single row called "other".
     PITFALL: Changes order of rows.
     PITFALL: Name is very similar to that of a function that uses it.
       That using function is intended to be outward-facing.
@@ -70,12 +71,17 @@ if True:
     df_low  = df0[ df0["top n"] == 0 ].copy()
     df_high = df0[ df0["top n"] == 1 ].copy()
     others = ( df_low .
-               groupby( group_vars ) .
+               groupby( group_cols ) .
                agg( sum ) .
                reset_index() )
     others[categ_col] = "Otros"
-    return pd.concat( [df_high, others],
-                      axis = "rows" )
+    return (
+      pd.concat( [ df_high, others],
+                 axis = "rows" ) .
+      sort_values(
+        group_cols +
+        [ "top n", # ensure that Others are not in the middle.
+          categ_col] ) )
   if True: # Test it
     td0 = pd.DataFrame( { "g"     : [1,1,1,1, 2,2,2,2],
                           "categ" : ["a","b","c","d",
@@ -104,9 +110,7 @@ def go( space_cols : List[str],
   """ 
   1 - In each sapcetime     slice, runs add_top_five_column().
   2 - In each space (only!) slice, runs add_top_n_column().
-  3 - In each spacetime     slice, make an "otros" row,
-                                   via sums_of_all_but_top_n_in_groups().
-  4 - In each spacetime     slice, sorts the top n by (space,time,item categ).
+  3 - In each spacetime     slice, aggregate small rows into an "otros" row.
   5 - In each spacetime     slice, appends 3 to the end of 4. """
   df1 = ( df0 . groupby( space_cols + [time_col] ) .
           apply( lambda df:
@@ -115,3 +119,5 @@ def go( space_cols : List[str],
   df2 = ( df1 . groupby( space_cols ) .
           apply( add_top_n_column ) .
           reset_index() )
+  df3 = ( df2 . groupby( space_cols + [time_col] ) .
+          apply( 

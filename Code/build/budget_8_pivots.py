@@ -3,7 +3,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.util.aggregate_all_but_biggest as defs
+  import Code.util.aggregate_all_but_biggest.gappy as defs
   import Code.metadata.two_series as ser
 
 assert c.subsample == 1 # This program only works on the full sample.

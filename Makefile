@@ -292,7 +292,7 @@ $(budget_8_pivots):				\
   $(budget_7_verbose)				\
   Code/build/budget_8_pivots.py			\
   Code/common.py				\
-  Code/util/aggregate_all_but_biggest.py	\
+  Code/util/aggregate_all_but_biggest/gappy.py	\
   Code/metadata/two_series.py
 	$(myPython) Code/build/budget_8_pivots.py $(ss)
 
