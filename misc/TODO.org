@@ -49,6 +49,9 @@ These are ordered by time.
 * notes from meeting, 2019 10 01
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
+* TODO scripts to read aloud
+** per muni, % of income from each source
+* TODO from pivots, make averages over [2016,2018]
 * DONE ? determine the range of legend lengths
 ** why and how
 as a function of the n in

@@ -32,6 +32,7 @@ if True:
 
 if True:
   def add_top_n_column(
+      categ_col : str,
       df0 : pd.DataFrame
       ) -> pd.DataFrame:
     """ Expects a space slice with a "top five" column.
@@ -39,19 +40,19 @@ if True:
     that is in the top five items for some year. """
     df = df0.copy()
     top_rows = df[ df["top five"] == 1 ]
-    top_items = set( top_rows["item categ"].unique() )
-    df["top n"] = ( df["item categ"] .
+    top_items = set( top_rows[categ_col].unique() )
+    df["top n"] = ( df[categ_col] .
                     apply( lambda cell: int( cell in top_items ) ) )
     return df
   if True: # Test it
-    td = pd.DataFrame( { "city"       : [1,1,1, 2,2,2],
-                         "item categ" : [1,2,3, 1,2,3],
-                         "top five"   : [0,0,1, 0,1,0] } )
-    top_n = pd.DataFrame( { "top n"   : [0,1,1, 0,1,1] } )
+    td = pd.DataFrame( { "city"     : [1,1,1, 2,2,2],
+                         "categ"    : [1,2,3, 1,2,3],
+                         "top five" : [0,0,1, 0,1,0] } )
+    top_n = pd.DataFrame( { "top n" : [0,1,1, 0,1,1] } )
       # In city 1, item categ 3 is top-five.
       # In city 2, item categ 2 is.
       # Therefore any row with item categ 2 or 3 is top-n.
-    assert ( add_top_n_column(td) .
+    assert ( add_top_n_column("categ", td) .
              equals( pd.concat( [td, top_n],
                                 axis = 'columns' ) ) )
     del(td)
@@ -103,29 +104,48 @@ if True:
       equals( normalize( td1 ) ) )
     del(td0,td1)
 
-def go( space_cols : List[str],
-        time_col   :      str,
-        money_col  :      str,
-        df         : pd.DataFrame
-      ) -> pd.DataFrame:
-  """ 
-  1: In each sapcetime     slice, runs add_top_five_column().
-  2: In each space (only!) slice, runs add_top_n_column().
-  3: In each spacetime     slice, gruop small rows into an "otros" row. """
-  df1 = ( df0 . coppy() .
-          groupby( space_cols + [time_col] ) .
-          apply( lambda df:
-                 add_top_five_column( 5, money_var, df ) ) .
-          reset_index() )
-  df2 = ( df1 . groupby( space_cols ) .
-          apply( add_top_n_column ) .
-          reset_index() )
-  df3 = ( df2 . groupby( space_cols + [time_col] ) .
-          apply( lambda df:
-                 sum_all_but_top_n_in_groups(
-                   space_cols + [time_col],
-                   "item categ",
-                   df ) ) .
-          reset_index() )
-  return df3
+if True:
+  def go( five       :      str,
+          space_cols : List[str],
+          time_col   :      str,
+          categ_col  :      str,
+          money_col  :      str,
+          df         : pd.DataFrame
+        ) -> pd.DataFrame:
+    """
+    1: In each sapcetime     slice, runs add_top_five_column().
+    2: In each space (only!) slice, runs add_top_n_column().
+    3: In each spacetime     slice, gruop small rows into an "otros" row. """
+    df1 = ( df . copy() .
+            groupby( space_cols + [time_col] ) .
+            apply( lambda df:
+                   add_top_five_column( five, money_col, df ) ) .
+            reset_index( drop=True ) )
+    df2 = ( df1 . groupby( space_cols ) .
+            apply( lambda df:
+                   add_top_n_column( categ_col, df ) ) .
+            reset_index( drop=True ) )
+    df3 = ( df2 . groupby( space_cols + [time_col] ) .
+            apply( lambda df:
+                   sum_all_but_top_n_in_groups(
+                     space_cols + [time_col],
+                     categ_col,
+                     df ) ) .
+            reset_index( drop=True ) )
+    return df3 . drop( columns = ["top five","top n"] )
+  if True: # test it
+    XX = "Otros"
+    tx = pd.DataFrame(
+      { "where" : [1,1,1,1,1, 1,1,1,1,1, 2,2,2,2,2, 2,2,2,2,2],
+        "when"  : [1,1,1,1,1, 2,2,2,2,2, 1,1,1,1,1, 2,2,2,2,2],
+        "categ" : [0,1,2,3,4, 0,1,2,3,4, 0,1,2,3,4, 0,1,2,3,4],
+        "cash"  : [0,1,2,3,4, 0,1,4,3,2, 5,4,3,2,1, 5,3,4,2,1] } )
+    ty = go( 2, ["where"],"when","categ","cash",tx )
+    tz = pd.DataFrame(
+      { "where" : [1,   1,1,1, 1,   1,1,1, 2,2,2,  2,  2,2,2,  2],
+        "when"  : [1,   1,1,1, 2,   2,2,2, 1,1,1,  1,  2,2,2,  2],
+        "categ" : [XX,  2,3,4, XX,  2,3,4, 0,1,2,  XX, 0,1,2,  XX],
+        "cash"  : [1,   2,3,4, 1,   4,3,2, 5,4,3,  3,  5,3,4,  3] } )
+    assert ( normalize( ty ) .
+             equals( normalize( tz ) ) )
 
