@@ -7,13 +7,13 @@ if True:
   #
   import Code.common as c
   import Code.util.misc as util
-  import Code.metadata.two_series as ser
+  import Code.metadata.four_series as ser
   import Code.build.use_keys as uk
 
 if True: # merge geo data into main data
   if True: # folders
-    source   = "output/budget_6_deflate/recip-" + str(c.subsample)
-    dest = "output/budget_7_verbose/recip-" + str(c.subsample)
+    source = "output/budget_6p7_avg_muni/recip-" + str(c.subsample)
+    dest = "output/budget_7_verbose/recip-"      + str(c.subsample)
     if not os.path.exists( dest ):
       os.makedirs(         dest )
   dfs = {}
