@@ -21,7 +21,7 @@ if True: # ingest
       "PERIODO 2018-2017" : "2017-2018",
       "periodo 2015-2016" : "2015-2016",
       "periodo 2014-2013" : "2013-2014" } ) )
-  wide_dept["muni code"] = -1
+  wide_dept["muni code"] = 0
 
 wide_muni = wide_muni.merge( # add "dept code" to regalias
   uk.geo[["muni code","dept code"]],

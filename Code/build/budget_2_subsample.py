@@ -6,6 +6,7 @@
 # then add departments back in just before writing to disk.
 
 if True:
+  from typing import Dict,Set,List
   import os
   import pandas as pd
   import numpy as np
@@ -29,11 +30,16 @@ if True:
   dfs_muni, dfs_dept = {},{}
   for s in ser.series: # deep copy
     sn = s.name
-    dfs_muni[sn] = dfs[sn] [~pd.isnull( dfs[sn]["muni code"] ) ] . copy()
-    dfs_dept[sn] = dfs[sn] [ pd.isnull( dfs[sn]["muni code"] ) ] . copy()
+    dfs_muni[sn] = dfs[sn] [ dfs[sn]["muni code"] != 0] . copy()
+    dfs_dept[sn] = dfs[sn] [ dfs[sn]["muni code"] == 0] . copy()
     assert len(dfs[sn]) == len(dfs_muni[sn]) + len(dfs_dept[sn])
+    assert len( dfs_muni[sn].index .
+                intersection(
+                  dfs_dept[sn].index ) ) == 0
+    assert len(dfs_muni[sn]) > 0
+    assert len(dfs_dept[sn]) > 0
   #
-  munis = defs.munis_unique_without_nan( dfs )
+  munis = defs.munis_unique_no_dept( dfs )
   assert (len(munis) < 1150) & (len(munis) > 1050)
   del(dfs)
 
@@ -41,7 +47,7 @@ for subsample in [1000,100,10]: # smallest first, to catch errors faster
   if not os.path.exists( defs.sub_dest( subsample ) ):
     os.makedirs(         defs.sub_dest( subsample ) )
   muni_code_subsample = defs.subsample( subsample,
-                                    munis )
+                                        munis )
   dfs_muni_subset   = defs.dfs_subset( muni_code_subsample,
                                        dfs_muni )
   test.column_names_after_agg( [t.ingresos,t.gastos],
@@ -58,9 +64,10 @@ for subsample in [1000,100,10]: # smallest first, to catch errors faster
     assert ( ( 0.5 * len(df) / subsample )
              <=      len(dfsub) )
   for s in [t.ingresos,t.gastos]:
-    ( ( dfs_muni_subset[s] .
-        append( dfs_dept[s] ) ) .
-    to_csv(
+    m = dfs_muni_subset[s]
+    d = dfs_dept       [s]
+    assert len( m.index.intersection( d.index ) ) == 0
+    m . append(d) . to_csv(
       defs.sub_dest( subsample ) + "/" + s + ".csv",
-      index = False ) )
+      index = False )
 

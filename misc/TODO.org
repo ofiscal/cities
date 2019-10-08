@@ -112,6 +112,8 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
+** TODO muni code is 0 for departments!
+But in use_keys it is set to -1.
 ** verify desktop-laptop equivalence
 *** TODO the data is different but, I think, isomorphic
 A better test: From both systems,
@@ -147,10 +149,8 @@ Rather than count n, it uses the "top n" column.
 Might not need any change.
 ** TODO budget_8
 *** TODO pivots must include no NaN values
-**** TODO use the new library aggregate_all_but_biggest/better.py
+**** DONE use the new library aggregate_all_but_biggest/better.py
 **** TODO the fillna(0) command downstream in main.py is a temporary hack*
-*** TODO add pivots in percentage terms
-but keep the pivots that are in absolute terms
 * TODO new data
 ** some rows are dept-level, includes missing value for muni
 ** TODO compare wc on laptop to wc on desktop

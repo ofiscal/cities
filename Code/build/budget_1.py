@@ -9,7 +9,6 @@ if True:
   import pandas as pd
   #
   import Code.util.misc as util
-  import Code.build.budget_1_defs as defs
   import Code.build.budget_1_tests as tests
   import Code.metadata.raw_series as raw
   import Code.metadata.terms as t
@@ -30,6 +29,9 @@ if True: # format
         list( map( lambda pair: pair[1],
                    raw.columns_peso[s] ) ),
         dfs[s] ) .
+      fillna(0) )
+    dfs[s]["muni code"] = (
+      dfs[s]["muni code"] .
       fillna(0) )
 
 if True: # test

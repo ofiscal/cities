@@ -1,4 +1,5 @@
 if True:
+  from typing import Dict,Set,List
   import os
   import pandas as pd
   import numpy as np
@@ -25,17 +26,16 @@ def read_data( nrows = None ):
     dfs[filename] = df
   return dfs
 
-def munis_unique_without_nan( dfs ):
-  """Creates a pandas DataFrame that contains every "muni code" value exactly ones, given a dictionary of three data frames."""
+def munis_unique_no_dept( dfs : Dict[str, pd.DataFrame]
+                        ) -> pd.DataFrame:
+  """Creates a pandas DataFrame that contains every "muni code" value exactly once, omitting 0 (because 0 represents a dept, not a muni)."""
   munis = pd.DataFrame()
   for s in [t.ingresos,t.gastos]:
     munis = pd.concat( [ munis,
                          dfs[s] ["muni code"] ],
                        axis = "rows" )
   munis.columns = ["muni code"]
-  munis = munis[
-    ~ pd.isnull(
-      munis["muni code"] ) ]
+  munis = munis[ munis["muni code"] != 0 ] # drop dept-level observations
   return ( munis .
            drop_duplicates() )
 
@@ -49,10 +49,10 @@ def dfs_subset( munis_subset, dfs ):
   for s in dfs.keys(): # deep copy
     dfs2[s] = dfs[s].copy()
   for filename in [t.ingresos,t.gastos]:
-    dfs2[filename] = (
-      dfs2[filename] .
-      merge( munis_subset,
-             how = "inner",
-             on = "muni code" ) )
+    df = dfs2[filename]
+    df = df[ df["muni code"] .
+             isin( set(
+               munis_subset["muni code"] ) ) ]
+    dfs2[filename] = df
   return dfs2
 

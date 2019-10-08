@@ -6,7 +6,7 @@
 #    triple identifies exactly one row -- but sometimes it does not,
 #    because spending on an item can be divided by fuente and ejecutor,
 #    as demonstrated in explore/duplicate_rows.py.
-#  (2) Replace missing muni values with -1,
+#  (2) Replace missing muni values with 0,
 #    because rows with a missing group variable disappear
 #    upon using pandas.DataFrame.groupby().
 #  (3) Subtract ingresos category TI.A.2.6 (transferencias)
@@ -40,7 +40,7 @@ if True:
 for s in [t.ingresos,t.gastos]:
   dfs0[s] = pd.read_csv( source + "/" + s + ".csv" )
 
-# dfs1: fill NaN values in muni with -1,
+# dfs1: fill NaN values in muni with 0,
 # create "item categ" and drop "item code",
 # aggregate within spacetime-categ cells
 for s in [t.ingresos,t.gastos]:
@@ -48,7 +48,7 @@ for s in [t.ingresos,t.gastos]:
   df = dfs1[s]
   if True: # manip indiv columns
     df["muni code"] = ( df["muni code"] .
-                        fillna(-1) )
+                        fillna(0) )
     df["item categ"] = (
       df["item code"] .
       astype(str) .

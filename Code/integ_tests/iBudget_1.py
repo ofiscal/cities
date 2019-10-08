@@ -14,8 +14,13 @@ for s in sm.series:
     pd.read_csv(
       "output/budget_1/" + s + ".csv") )
 
-for s in sm.series:
-  print( len(s1_dfs[s]) )
+assert len( s1_dfs["ingresos"] )       == (862536 -6)
+assert len( s1_dfs["inversion"] )      == (1525207 -6 -90)
+  # I checked these 90 missing rows
+  # (see Code/explore/find_missing_rows.py)
+  # and they involve no codes that we need.
+assert len( s1_dfs["funcionamiento"] ) == (1258055 -6)
+assert len( s1_dfs["deuda"] )          == (44870 -6)
 
 if True: # build tax subset
   df = s1_dfs["ingresos"]

@@ -38,7 +38,7 @@ Output: The same, plus a new "average" muni.
         Average is only over munis; it omits the dept row.
 """
     df = ( df0.copy()
-           [df0["muni code"] != -1] .
+           [df0["muni code"] != 0] .
           reset_index() )
     assert len(df) > 0
       # Fails if dept has no muni-level info.
@@ -59,7 +59,7 @@ Output: The same, plus a new "average" muni.
              drop(columns = ["index"] ) )
   if True: # test it
     # Department 99 has 4 municipalities.
-    x = pd.DataFrame( [ [99, -1, 1, 2, 1],
+    x = pd.DataFrame( [ [99,  0, 1, 2, 1],
                         [99,  1, 1, 65, 2],
                         [99,  2, 5, 15, 3] ],
                       columns = ["dept code", "muni code",
@@ -69,7 +69,7 @@ Output: The same, plus a new "average" muni.
       # average money=(1+5) / 4,
       # average cash=(15+65) / 4,
       # and is otherwise just like the muni with code 1.
-                          [99, -1, 1,    2, 1],
+                          [99,  0, 1,    2, 1],
                           [99,  1, 1,   65, 2],
                           [99,  2, 5,   15, 3] ],
                         columns = ["dept code", "muni code",

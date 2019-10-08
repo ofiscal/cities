@@ -23,7 +23,8 @@ if True: # how to add a column that counts munis in each dept
   def add_munis_in_dept_col(
       df : pd.DataFrame ) -> pd.DataFrame:
     """ Adds a column indicating how many munis are in each dept. """
-    new = df[~(df["muni code"]==-1)][["dept code"]]
+    new = ( df[df["muni code"]!=0]
+              [["dept code"]] )
     new["munis"] = 1
     new = ( new . groupby(["dept code"]) .
             agg({"dept code" : "first",
@@ -32,11 +33,11 @@ if True: # how to add a column that counts munis in each dept
     return df.merge( new, how="left", on="dept code" )
   if True: # test it
     x = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
-                        "muni code" : [1,2,3,4,5,6,-1],
+                        "muni code" : [1,2,3,4,5,6, 0],
                         "noise"     : [1,2,3,4,5,6,7] } )
     y = add_munis_in_dept_col(x)
     z = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
-                        "muni code" : [1,2,3,4,5,6,-1],
+                        "muni code" : [1,2,3,4,5,6, 0],
                         "noise"     : [1,2,3,4,5,6,7],
                         "munis"     : [1,2,2,3,3,3,3] } )
     assert y.equals(z)
@@ -50,7 +51,7 @@ if True:
   depts_and_munis["muni"] = (
     depts_and_munis["muni"].fillna("dept") )
   depts_and_munis["muni code"] = (
-    depts_and_munis["muni code"].fillna(-1) )
+    depts_and_munis["muni code"].fillna(0) )
   depts_and_munis = add_munis_in_dept_col(
     depts_and_munis )
   depts_and_munis = (
