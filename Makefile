@@ -142,14 +142,17 @@ keys: $(keys)
 $(keys):			\
   Code/build/make_keys.py	\
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/make_keys.py
+	date
 
 budget_0_collect: $(budget_0_collect)
 $(budget_0_collect):			\
   Code/build/budget_0_collect.py	\
-  Code/build/budget_1_defs.py		\
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/budget_0_collect.py
+	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
@@ -158,11 +161,12 @@ budget_1: $(budget_1)
 $(budget_1):			\
   $(budget_0_collect)		\
   Code/build/budget_1.py	\
-  Code/build/budget_1_defs.py	\
   Code/build/budget_1_tests.py	\
   Code/util/misc.py		\
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/budget_1.py
+	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
@@ -175,7 +179,9 @@ $(budget_1p5):					\
   Code/build/classify_budget_codes.py		\
   Code/metadata/terms.py                        \
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/budget_1p5.py
+	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
@@ -188,7 +194,9 @@ $(budget_2_subsamples):				\
   Code/build/budget_1_tests.py			\
   Code/util/misc.py				\
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/budget_2_subsample.py
+	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
@@ -200,7 +208,9 @@ $(budget_3_dept_muni_year_item):		\
   Code/common.py				\
   Code/util/misc.py				\
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
+	date
 
 # TODO ? resurrect. This broke when we switched item code specs.
 # In the new method we never create top, child and categ columns;
@@ -222,7 +232,9 @@ $(explore_order_of_mag_x_yrs):			\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
+	date
 
 budget_4_scaled: $(budget_4_scaled)
 $(budget_4_scaled):				\
@@ -233,7 +245,9 @@ $(budget_4_scaled):				\
   Code/util/misc.py				\
   Code/metadata/terms.py                        \
   Code/metadata/raw_series.py
+	date
 	$(myPython) Code/build/budget_4_scaled.py $(ss)
+	date
 
 budget_5_add_regalias: $(budget_5_add_regalias)
 $(budget_5_add_regalias):		\
@@ -243,7 +257,9 @@ $(budget_5_add_regalias):		\
   Code/common.py			\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/build/budget_5_add_regalias.py $(ss)
+	date
 
 budget_6_deflate: $(budget_6_deflate)
 $(budget_6_deflate):			\
@@ -253,7 +269,9 @@ $(budget_6_deflate):			\
   Code/common.py			\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/build/budget_6_deflate.py $(ss)
+	date
 
 budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
 $(budget_6p5_cull_and_percentify):		\
@@ -263,7 +281,9 @@ $(budget_6p5_cull_and_percentify):		\
   Code/common.py				\
   Code/metadata/two_series.py			\
   Code/metadata/four_series.py
+	date
 	$(myPython) Code/build/budget_6p5_cull_and_percentify.py $(ss)
+	date
 
 budget_6p7_avg_muni: $(budget_6p7_avg_muni)
 $(budget_6p7_avg_muni):			\
@@ -273,7 +293,9 @@ $(budget_6p7_avg_muni):			\
   Code/util/misc.py			\
   Code/build/use_keys.py		\
   Code/metadata/four_series.py
+	date
 	$(myPython) Code/build/budget_6p7_avg_muni.py $(ss)
+	date
 
 budget_7_verbose: $(budget_7_verbose)
 $(budget_7_verbose):			\
@@ -284,7 +306,9 @@ $(budget_7_verbose):			\
   Code/util/misc.py			\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/build/budget_7_verbose.py $(ss)
+	date
 
 budget_8_pivots: $(budget_8_pivots)
 $(budget_8_pivots):				\
@@ -293,7 +317,9 @@ $(budget_8_pivots):				\
   Code/common.py				\
   Code/util/aggregate_all_but_biggest/better.py	\
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/build/budget_8_pivots.py $(ss)
+	date
 
 sample_tables: $(sample_tables)
 $(sample_tables):				\
@@ -303,12 +329,16 @@ $(sample_tables):				\
   Code/util/aggregate_all_but_biggest/gappy.py  \
   Code/metadata/terms.py			\
   Code/metadata/two_series.py
+	date
 	$(myPython) Code/draw/sample_tables.py $(ss)
+	date
 
 output/inflation.csv:				\
   data/inflation.csv				\
   Code/build/inflation.py
+	date
 	$(myPython) Code/build/inflation.py
+	date
 
 output/regalias.csv:			\
   data/regalias/muni.csv		\
@@ -316,7 +346,9 @@ output/regalias.csv:			\
   Code/build/regalias.py		\
   Code/util/misc.py			\
   Code/build/use_keys.py
+	date
 	$(myPython) Code/build/regalias.py
+	date
 
 pics: $(pics)
 $(pics):			\
