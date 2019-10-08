@@ -6,7 +6,8 @@ if True:
   #
   import Code.common as c
   import Code.util.aggregate_all_but_biggest.better as agger
-  import Code.metadata.two_series as ser
+    # "aggregator"
+  import Code.metadata.four_series as s4
 
 dest_root = "output/pivots/recip-" + str(c.subsample)
 
@@ -15,8 +16,8 @@ if True:
   space     = ["dept", "muni",         "dept code", "muni code"]
 
 if True: # read data
-  ungrouped  : Dict[str, pd.DataFrame] = {}
-  for s in ser.series:
+  ungrouped : Dict[str, pd.DataFrame] = {}
+  for s in s4.series:
     ungrouped[s.name] = (
       pd.read_csv(
         ( "output/budget_7_verbose/recip-" + str(c.subsample)
@@ -26,11 +27,12 @@ if True: # read data
 if True: # in each spacetime slice, lump all but the biggest 5
          # expenditures into a single observation
   grouped : Dict[str, pd.DataFrame] = {}
-  for s in ser.series:
+  for s in s4.series:
     grouped[s.name] = (
       agger.go(
         five = 5,
-        space_cols = ["dept","muni"],
+        space_cols = space, # PITFALL: include (dept code,muni code),
+          # not just (muni,dept), to avoid summing the codes.
         time_col = "year",
         categ_col = "item categ",
         money_col = s.money_cols[0],
@@ -56,7 +58,7 @@ def write_pivots( dept : str,
   p.to_excel( dest + "/" + filename + ".xlsx" )
   return p
 
-for s in ser.series:
+for s in s4.series:
   ( grouped[s.name] .
     groupby( space ) .
     apply(
