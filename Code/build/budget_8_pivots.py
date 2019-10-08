@@ -1,17 +1,18 @@
 if True:
   from typing import List,Set,Dict
   import os
+  from pathlib import Path
   import pandas as pd
   #
   import Code.common as c
   import Code.util.aggregate_all_but_biggest.better as agger
   import Code.metadata.two_series as ser
 
-assert c.subsample == 1 # This program only works on the full sample.
+dest_root = "output/pivots/recip-" + str(c.subsample)
 
 if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
-  space   = ["dept", "muni", "dept code", "muni code"]
+  space     = ["dept", "muni",         "dept code", "muni code"]
 
 if True: # read data
   ungrouped  : Dict[str, pd.DataFrame] = {}
@@ -42,8 +43,7 @@ def write_pivots( dept : str,
                   filename : str
                   ) -> pd.DataFrame:
   """ PITFALL: Writes a file *and* returns a value."""
-  dest = ( "output/pivots/recip-" + str(c.subsample) +
-           "/" + dept + "/" + muni )
+  dest = ( dest_root + "/" + dept + "/" + muni )
   if not os.path.exists(dest): os.makedirs(dest)
   place = ( all_places
             [ (all_places["muni"] == muni) &
@@ -67,4 +67,7 @@ for s in ser.series:
         values_col = s.money_cols[0],
         all_places = df,
         filename = s.name ) ) )
+
+( Path( dest_root + "/" + "timestamp" ) .
+  touch() )
 

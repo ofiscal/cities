@@ -125,8 +125,7 @@ budget_7_verbose =					\
 # is sufficient to trigger the recipe.
 # Listing every place would be tedious.
 budget_8_pivots =					\
-  output/pivots/recip-$(ss)/TOLIMA/HONDA/ingresos.csv	\
-  output/pivots/recip-$(ss)/TOLIMA/HONDA/gastos.csv
+  output/pivots/recip-$(ss)/timestamp
 
 sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\

@@ -18,8 +18,31 @@ if True: # bearings
 if True: # input
   dfsi = {}
   for s in ser.series:
-    dfsi[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
+    dfsi[s.name] = pd.read_csv(
+      source + "/" + s.name + ".csv" )
   regalias = pd.read_csv( "output/regalias.csv" )
+
+if True: # adjust regalias
+  if c.subsample > 1: # discard some regalias rows if needed
+    if True: # find all the relevant (dept,muni) pairs.
+      df = dfsi[s.name] # for extracting (dept, muni) pairs,
+                        # any member of dfsi is equivalent
+      places = set(
+        df[["dept code","muni code"]] .
+        groupby( ["dept code","muni code"] ) .
+        apply( lambda df: df.iloc[0] ) .
+        reset_index( drop=True ) .
+        apply( lambda row: ( row["dept code"],
+                             row["muni code"] ),
+               axis = "columns" ) )
+    if True: # discard irrelevant regalias observations
+      regalias["keeper"] = (
+        regalias.apply( ( lambda row:
+                          (row["dept code"], row["muni code"])
+                          in places ),
+                        axis = "columns" ) )
+      regalias = regalias[ regalias["keeper"] ]
+      regalias = regalias.drop( columns = "keeper" )
   if True: # define money_cols
     for c in ser.ingresos.money_cols:
       regalias[c] = regalias["regalias"]
