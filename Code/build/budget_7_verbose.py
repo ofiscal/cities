@@ -26,7 +26,10 @@ if True: # merge geo data into main data
         pd.read_csv( source + "/" + sn + ".csv" )
         [ ["muni code","dept code","year","item categ"]
           + s.money_cols] ) )
-    df["muni"] = df["muni"] . fillna("dept")
+    df.loc[ df["muni code"] == 0,
+            "muni" ] = "dept"
+    df.loc[ df["muni code"] == -2,
+            "muni" ] = "promedio"
     df.to_csv( dest + "/" + s.name + ".csv",
                index = False )
     dfs[sn] = df
