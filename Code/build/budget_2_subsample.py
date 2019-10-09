@@ -32,19 +32,18 @@ if True:
   depts_df = uk.depts[["dept code"]]
   depts_df["muni code"] = 0
 
-for subsample in [1000,100,10]: # smallest first, to catch errors faster
+for subsample in [1000, 100, 10]: # smallest first, to catch errors faster
   if not os.path.exists( defs.sub_dest( subsample ) ):
     os.makedirs(         defs.sub_dest( subsample ) )
   if True: # build `places` : Set[ (dept code, muni code) ]
     munis_df_subsample = defs.subsample( subsample,
                                          munis_df )
-    depts_df_subsample = defs.subsample( subsample,
-                                         depts_df )
-    places = pd.concat(
-      [ munis_df_subsample,
-        depts_df_subsample,
-        pd.DataFrame( { "dept code" : [5],      # to ensure there's at least one
-                        "muni code" : [0] } ) ] ) # department-level observation
+    depts_df_subsample = defs.subsample(
+      min(subsample,30), # to ensure there is at least one
+      depts_df )
+    places = pd.concat( [
+        munis_df_subsample,
+        depts_df_subsample ] )
   for s in s2.series:
     df = dfs[s.name]
     df = df.merge( places,
@@ -53,4 +52,3 @@ for subsample in [1000,100,10]: # smallest first, to catch errors faster
     df . to_csv( ( defs.sub_dest( subsample ) +
                    "/" + s.name + ".csv" ),
                  index = False )
-

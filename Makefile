@@ -17,7 +17,7 @@ myPython=PYTHONPATH='.' python3
   budget_0_collect			\
   budget_1				\
   budget_1p5				\
-  budget_2_subsamples			\
+  budget_2_subsample			\
   subsample				\
   budget_3_dept_muni_year_item		\
   budget_4_scaled			\
@@ -34,7 +34,7 @@ all: keys				\
   budget_0_collect			\
   budget_1				\
   budget_1p5				\
-  budget_2_subsamples			\
+  budget_2_subsample			\
   budget_3_dept_muni_year_item		\
   budget_4_scaled			\
   budget_5_add_regalias			\
@@ -68,7 +68,7 @@ budget_1p5 =							\
   output/budget_1p5/ingresos.csv				\
   output/budget_1p5/gastos.csv
 
-budget_2_subsamples =						\
+budget_2_subsample =						\
   output/budget_2_subsample/recip-10/ingresos.csv		\
   output/budget_2_subsample/recip-10/gastos.csv			\
   output/budget_2_subsample/recip-100/ingresos.csv		\
@@ -180,8 +180,8 @@ $(budget_1p5):					\
 # PITFALL: Don't include Code/metadata/terms.py;
 # it's safe to omit and causes unnecessary re-running,
 # not affordable at these early slow stages.
-budget_2_subsamples: $(budget_2_subsamples)
-$(budget_2_subsamples):				\
+budget_2_subsample: $(budget_2_subsample)
+$(budget_2_subsample):				\
   $(budget_1p5)					\
   Code/build/budget_2_subsample.py		\
   Code/build/budget_2_subsample_defs.py		\

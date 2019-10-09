@@ -69,8 +69,8 @@ Output: The same, plus a new "average" muni.
                                  "money","cash","pecan"] )
     y = ( pd.DataFrame( [ [99, -2, 1.5, 20, 2],
       # The previous row (the only new one) has
-      # average money=(1+5) / 4  (because dept 99 has 4 munis)
-      # average cash=(15+65) / 4 (because dept 99 has 4 munis)
+      # average money = (1+5)   / 4 (because dept 99 has 4 munis)
+      # average cash  = (15+65) / 4 (because dept 99 has 4 munis)
       # and is otherwise just like the muni with code 1.
                           [99,  0, 1,    2, 1],
                           [99,  1, 1,   65, 2],
@@ -82,6 +82,7 @@ Output: The same, plus a new "average" muni.
           reset_index(drop=True) )
     for cn in y.columns:
       assert y[cn].equals(z[cn])
+    del(x,y,z)
 
 for s in s2.series: # add average muni to the to -pct data sets
   index_cols = ["dept code","year","item categ"]
@@ -96,17 +97,23 @@ for s in s2.series: # add average muni to the to -pct data sets
       reset_index() .
       drop( columns = ["level_3"] ) ) )
 
-for s in s4.series_pct: # test dimensions
-  pct_series =     dfs1[ s.name      ]
-  non_pct_series = dfs1[ s.name[:-4] ]
-  nDepts = len(
-    pct_series .
-    groupby( ["dept code","year","item categ"] ) .
-    apply( lambda _: () ) )
-  assert len(pct_series) == nDepts + len(non_pct_series)
-  assert pct_series.columns.equals(
-     non_pct_series.columns )
- 
+if True: # tests
+  assert dfs0["gastos"]   .equals( dfs1["gastos"] )
+  assert dfs0["ingresos"] .equals( dfs1["ingresos"] )
+  for s in s4.series_pct: # test dimensions
+    pct_series =     dfs1[ s.name      ]
+    non_pct_series = dfs1[ s.name[:-4] ]
+    assert pct_series.columns.equals(
+       non_pct_series.columns )
+    if c.subsample <= 10:
+      # If there are depts in the sample with no muni-level info,
+      # this test will fail -- and that's probably true in the small samples.
+      nDepts = len(
+        pct_series .
+        groupby( ["dept code","year","item categ"] ) .
+        apply( lambda _: () ) )
+      assert len(pct_series) == nDepts + len(non_pct_series)
+
 for s in s4.series:
   dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )
 
