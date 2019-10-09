@@ -10,20 +10,23 @@ if True:
   import Code.common as c
   from Code.util.misc import to_front
   import Code.build.use_keys as uk
+  import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
 
 if True: # folders
-  source = "output/budget_6p5_cull_and_percentify/recip-" + str(c.subsample)
-  dest   = "output/budget_6p7_avg_muni/recip-"            + str(c.subsample)
+  source = ( "output/budget_6p5_cull_and_percentify/recip-"
+             + str(c.subsample) )
+  dest   = ( "output/budget_6p7_avg_muni/recip-"
+             + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
 if True: # input data
   geo = ( uk.depts_and_munis
          [["dept code","muni code","muni count"]] )
-  dfs = {}
+  dfs0, dfs1 = {}, {} # input, output
   for s in s4.series:
-    dfs[s.name] = pd.read_csv(
+    dfs0[s.name] = pd.read_csv(
       source + "/" + s.name + ".csv" )
 
 if True: # define how to compute the average non-dept muni
@@ -40,9 +43,10 @@ Output: The same, plus a new "average" muni.
     df = ( df0.copy()
            [df0["muni code"] != 0] .
           reset_index() )
-    assert len(df) > 0
-      # Fails if dept has no muni-level info.
-      # (Bogotá comes close: it has no "dept"-level info.)
+    if len(df) == 0: return df0
+      # If there is no muni-level info, only dept-level
+      # (true in some subsamples), leave the input unchanged;
+      # don't try to add an average municipality.
     munis_in_dept = int(
         geo.loc[ ( geo       ["dept code"] ==
                    df.iloc[0]["dept code"] ),
@@ -80,10 +84,11 @@ Output: The same, plus a new "average" muni.
     for cn in y.columns:
       assert y[cn].equals(z[cn])
 
-for s in s4.series_pct: # add average muni to the to -pct data sets
-  df = dfs[s.name]
+for s in s2.series: # add average muni to the to -pct data sets
   index_cols = ["dept code","year","item categ"]
-  df = to_front(
+  df = dfs0[s.name].copy()
+  dfs1[s.name] = df
+  dfs1[s.name + "-pct"] = to_front(
     ["dept code","muni code"],
     ( df . groupby( index_cols ) .
       apply( lambda df:
@@ -91,11 +96,10 @@ for s in s4.series_pct: # add average muni to the to -pct data sets
              drop( columns = index_cols ) ) .
       reset_index() .
       drop( columns = ["level_3"] ) ) )
-  dfs[s.name] = df
 
 for s in s4.series_pct: # test dimensions
-  pct_series =     dfs[ s.name      ]
-  non_pct_series = dfs[ s.name[:-4] ]
+  pct_series =     dfs1[ s.name      ]
+  non_pct_series = dfs1[ s.name[:-4] ]
   nDepts = len(
     pct_series .
     groupby( ["dept code","year","item categ"] ) .
@@ -105,5 +109,5 @@ for s in s4.series_pct: # test dimensions
      non_pct_series.columns )
  
 for s in s4.series:
-  dfs[s.name].to_csv( dest + "/" + s.name + ".csv" )
+  dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )
 
