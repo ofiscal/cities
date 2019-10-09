@@ -49,9 +49,6 @@ These are ordered by time.
 * notes from meeting, 2019 10 01
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
-* TODO integ test bad
-** subtracting transfers does not seem to work
-compare tests for stage 2 to tests for stage 3
 * TODO scripts to read aloud
 ** per muni, % of income from each source
 * TODO from pivots, make averages over [2016,2018]
