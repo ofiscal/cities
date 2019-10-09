@@ -62,7 +62,6 @@ Output: The same, plus a new "average" muni.
                        sort=True ) . # because unequal column orders
              drop(columns = ["index"] ) )
   if True: # test it
-    # Department 99 has 4 municipalities.
     x = pd.DataFrame( [ [99,  0, 1, 2, 1],
                         [99,  1, 1, 65, 2],
                         [99,  2, 5, 15, 3] ],
@@ -70,8 +69,8 @@ Output: The same, plus a new "average" muni.
                                  "money","cash","pecan"] )
     y = ( pd.DataFrame( [ [99, -2, 1.5, 20, 2],
       # The previous row (the only new one) has
-      # average money=(1+5) / 4,
-      # average cash=(15+65) / 4,
+      # average money=(1+5) / 4  (because dept 99 has 4 munis)
+      # average cash=(15+65) / 4 (because dept 99 has 4 munis)
       # and is otherwise just like the muni with code 1.
                           [99,  0, 1,    2, 1],
                           [99,  1, 1,   65, 2],
