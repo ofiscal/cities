@@ -7,7 +7,7 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.min_rows', 500)
 
 if True: # define a spacetime cell
-  if False: # values good for testing the pipeline
+  if True: # values good for testing the pipeline
     # 2014 is nice because it requires scaling by 1000 and deflation.
     # Muni ARACATACA and dept SANTANDER are nice because both include
     # multiple disaggregated observations of the same education code.
@@ -16,7 +16,7 @@ if True: # define a spacetime cell
     muni = "ARACATACA"
     dept = "SANTANDER"
   #
-  if True: # a subset of the values used in sample_tables.py
+  if False: # a subset of the values used in sample_tables.py
     year = 2018
     muni = "SANTA MARTA"
     dept = "ANTIOQUIA"
@@ -24,6 +24,11 @@ if True: # define a spacetime cell
     year = 2018
     muni = "BOGOTÁ, D.C."
     dept = "BOGOTÁ, D.C."
+
+# muni code         muni  dept code       dept
+#   47001.0  SANTA MARTA         47  MAGDALENA
+#                         dept code       dept
+#                                 5  ANTIOQUIA
 
 if True: # budget categories convenient for testing,
          # i.e. with the fewest components

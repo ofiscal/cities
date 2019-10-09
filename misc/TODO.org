@@ -112,6 +112,9 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
+** TODO integ tests
+Are consistent through stage 6.
+Next are some missing intermediate stages.
 ** TODO muni code is 0 for departments!
 But in use_keys it is set to -1.
 ** verify desktop-laptop equivalence

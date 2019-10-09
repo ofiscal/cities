@@ -31,7 +31,7 @@ if True: # build data
 
 if True: # report
   for (name,money_column) in [
-      ("ingresos","item recaudo"),
+      ("ingresos","item total"),
       ("gastos","item oblig") ]:
     print(
       "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
@@ -46,4 +46,13 @@ if True: # report
         reset_index()
         [["dept","muni",money_column,"item categ"]] .
         sort_values( ["dept","muni","item categ"] ) ) )
+    print(
+      ( "\AGGREGATED over categs: " + name_of_data_source +
+        ": " + name + "\n" ),
+      ( smaller[name] .
+        groupby( [ "dept","muni" ] ) .
+        agg( sum ) .
+        reset_index()
+        [["dept","muni",money_column]] .
+        sort_values( ["dept","muni"] ) ) )
 

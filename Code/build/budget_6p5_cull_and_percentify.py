@@ -1,6 +1,7 @@
 # PURPOSE:
-# Drop some unneeded columns, rows.
-#   TODO ? for speed, move upstream.
+#   (1) Cull: This is obsolete
+#     This program used to drop some unneeded columns, rows.
+#     Now that happens upstream.
 # Switch from two series to four:
 #   Initial 2: gastos, ingresos
 #   Final 4: gastos, gastos-pct, ingresos, ingresos-pct
@@ -29,10 +30,11 @@ if True: # input data
   for s in s2.series:
     df = pd.read_csv(
       source + "/" + s.name + ".csv" )
-    df = ( # drop some columns, rows
+    df = ( # drop some columns, rows. OBSOLETE --
+           # those are now already dropped upstream.
       df[df["year"] >= 2013]
         # because there is no regalias data before 2013
-      [spacetime + ["item categ"] + s.money_cols] )
+           [spacetime + ["item categ"] + s.money_cols] )
         # this line drops the money columns we don't use
     dfs[s.name] = df
 
@@ -59,4 +61,3 @@ for s in s2.series:
 for s in s4.series:
   dfs[s.name].to_csv( dest + "/" + s.name + ".csv",
                       index = False )
-
