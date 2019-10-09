@@ -39,7 +39,7 @@ if True:
       smaller[name]["muni"].fillna(-1) )
   if True:
     for (name,money_column) in [
-        ("ingresos","item recaudo"),
+        ("ingresos","item total"),
         ("gastos","item oblig") ]:
       print(
         "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",

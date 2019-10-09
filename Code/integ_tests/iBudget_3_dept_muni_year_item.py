@@ -13,8 +13,8 @@ smaller = {} # a spacetime subset of that input data
 for name in ["ingresos","gastos"]:
   df = uk.merge_geo(
     pd.read_csv(
-      "output/" + name_of_data_source + "/recip-1/" + name + ".csv",
-      encoding = "utf-8" ) )
+      "output/" + name_of_data_source +
+      "/recip-1/" + name + ".csv" )
   s3_dfs[name] = df
   print( len(s3_dfs[name]) )
   df["item categ"] = (
@@ -30,7 +30,7 @@ for name in ["ingresos","gastos"]:
 
 if True: # report
   for (name,money_column) in [
-      ("ingresos","item recaudo"),
+      ("ingresos","item total"),
       ("gastos","item oblig") ]:
     print(
       "\DISAGGREGATED: " + name_of_data_source + ": " + name + "\n",
