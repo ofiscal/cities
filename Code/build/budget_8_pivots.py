@@ -5,8 +5,8 @@ if True:
   import pandas as pd
   #
   import Code.common as c
-  import Code.util.aggregate_all_but_biggest.better as agger
-    # "aggregator"
+  import Code.util.aggregate_all_but_biggest.better \
+    as agger # "aggregator"
   import Code.metadata.four_series as s4
 
 dest_root = "output/pivots/recip-" + str(c.subsample)

@@ -44,8 +44,7 @@ for s in [t.ingresos,t.gastos]:
 # create "item categ" and drop "item code",
 # aggregate within spacetime-categ cells
 for s in [t.ingresos,t.gastos]:
-  dfs1[s] = dfs0[s].copy()
-  df = dfs1[s]
+  df = dfs0[s].copy()
   if True: # manip indiv columns
     df["muni code"] = ( df["muni code"] .
                         fillna(0) )

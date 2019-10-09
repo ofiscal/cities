@@ -25,21 +25,21 @@ if True: # how to add a column that counts munis in each dept
     """ Adds a column indicating how many munis are in each dept. """
     new = ( df[df["muni code"]!=0]
               [["dept code"]] )
-    new["munis"] = 1
+    new["muni count"] = 1
     new = ( new . groupby(["dept code"]) .
             agg({"dept code" : "first",
-                 "munis"     : sum}) .
+                 "muni count"     : sum}) .
             reset_index(drop=True) )
     return df.merge( new, how="left", on="dept code" )
   if True: # test it
-    x = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
-                        "muni code" : [1,2,3,4,5,6, 0],
-                        "noise"     : [1,2,3,4,5,6,7] } )
+    x = pd.DataFrame( { "dept code"  : [1,11,11,22,22,22,22],
+                        "muni code"  : [1,2,3,4,5,6, 0],
+                        "noise"      : [1,2,3,4,5,6,7] } )
     y = add_munis_in_dept_col(x)
-    z = pd.DataFrame( { "dept code" : [1,11,11,22,22,22,22],
-                        "muni code" : [1,2,3,4,5,6, 0],
-                        "noise"     : [1,2,3,4,5,6,7],
-                        "munis"     : [1,2,2,3,3,3,3] } )
+    z = pd.DataFrame( { "dept code"  : [1,11,11,22,22,22,22],
+                        "muni code"  : [1,2,3,4,5,6, 0],
+                        "noise"      : [1,2,3,4,5,6,7],
+                        "muni count" : [1,2,2,3,3,3,3] } )
     assert y.equals(z)
 
 if True:
@@ -62,13 +62,14 @@ if True:
           ( depts_and_munis["muni"] == "dept" ) ) ] )
 
 def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
+  # Left-merge because we're only trying to add information to df,
+  # and munis or depts might contain places not in df.
   return (
     df .
     merge( munis,
-           how = "left", # b/c muni code is can be missing (for dept data)
+           how = "left",
            on = ["muni code"] ) .
     merge( depts,
-           how = "left", # this is unnecessarily cautious,
-                         # as dept is never missing
+           how = "left",
            on = ["dept code"] ) )
 

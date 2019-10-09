@@ -4,6 +4,7 @@ if True:
   from typing import List, Set, Dict
 
 pd.set_option('display.max_rows', 500)
+pd.set_option('display.min_rows', 500)
 
 if True: # define a spacetime cell
   if False: # values good for testing the pipeline

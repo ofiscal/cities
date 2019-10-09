@@ -32,7 +32,7 @@ if True:
   depts_df = uk.depts[["dept code"]]
   depts_df["muni code"] = 0
 
-for subsample in [1000,100,10]: #,100,10]: # smallest first, to catch errors faster
+for subsample in [1000,100,10]: # smallest first, to catch errors faster
   if not os.path.exists( defs.sub_dest( subsample ) ):
     os.makedirs(         defs.sub_dest( subsample ) )
   if True: # build `places` : Set[ (dept code, muni code) ]
