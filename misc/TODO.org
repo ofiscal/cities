@@ -112,6 +112,11 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
+** TODO fix dimensions test at end of stage 6p7
+Keep every muni for with non-dept data.
+Group by (dept,year,item categ).
+Count the number of rows in that -- call it N.
+Number of rows in pct file should be N greater than the non-pct file.
 ** TODO integ tests
 *** for stages
 Have tested through 6p5, and they're good.
