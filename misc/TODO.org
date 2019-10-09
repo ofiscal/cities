@@ -112,14 +112,13 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
-** TODO integ tests
+** TODO ? integ tests
 *** for stages
-Have tested through 6p5, and they're good.
-Can't write test for 6p7, or test beyond it, until have fixed 6p7.
+Have tested through 6p7, and they're good.
+Previously (before inserting 6p5, 6p7) had tested all 8,
+and they were good.
 *** for subsamples
 Verify each is a proper subspace of the full data set.
-** TODO muni code is 0 for departments!
-But in use_keys it is set to -1.
 ** verify desktop-laptop equivalence
 *** TODO the data is different but, I think, isomorphic
 A better test: From both systems,
@@ -154,6 +153,9 @@ Rather than count n, it uses the "top n" column.
 *** DONE 4 - sum_all_but_greatest_n_rows_in_groups
 Might not need any change.
 ** TODO budget_8
+*** TODO ? in subsamples, why are there so many dept folders in pivots/?
+The pdfs are drawn correctly only for things in the sample,
+but those pivots exist even for things not in the sample.
 *** TODO pivots must include no NaN values
 **** DONE use the new library aggregate_all_but_biggest/better.py
 **** TODO the fillna(0) command downstream in main.py is a temporary hack*

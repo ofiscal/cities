@@ -32,6 +32,8 @@ The answer is that there are two `(dept code, year, item categ)` triples for whi
 88552         99        0.0  2016  Servicio de la deuda  1.099429e+08
 ```
 
+(Dept 88 = San Andrés, and dept 99 = Vichada.)
+
 Therefore there was no average computed for those two `(dept,year,categ)` triples.
 
 We can verify that those are the only two `(dept,year,categ)` triples for which no muni was computed by doing the following:

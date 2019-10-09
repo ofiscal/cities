@@ -44,9 +44,9 @@ all: keys				\
   budget_7_verbose			\
   budget_8_pivots			\
   output/inflation.csv			\
-  output/regalias.csv
+  output/regalias.csv			\
+  pics
   # sample_tables
-  # pics
 
 keys =				\
   output/keys/budget.csv	\
@@ -119,13 +119,13 @@ budget_7_verbose =					\
 # is sufficient to trigger the recipe.
 # Listing every place would be tedious.
 budget_8_pivots =					\
-  output/pivots/recip-$(ss)/timestamp
+  output/pivots/recip-$(ss)/timestamp-for-pivot-tables
 
 sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\
   output/sample_tables/recip-$(ss)/gastos.csv
 
-pics = output/reports/done.txt
+pics = output/pivots/recip-$(ss)/timestamp-for-pdfs
 
 
 #### #### #### ####

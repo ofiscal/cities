@@ -24,15 +24,16 @@ if True: # read data
           + "/" + s.name + ".csv") ) .
       sort_values( spacetime ) )
 
-if True: # in each spacetime slice, lump all but the biggest 5
-         # expenditures into a single observation
+if True: # in each spacetime slice, lump every expenditure which is
+         # not among the top five expenditures for some year
+         # into a single observation
   grouped : Dict[str, pd.DataFrame] = {}
   for s in s4.series:
     grouped[s.name] = (
       agger.go(
         five = 5,
         space_cols = space, # PITFALL: include (dept code,muni code),
-          # not just (muni,dept), to avoid summing the codes.
+          # not just (dept,muni), to avoid summing the codes.
         time_col = "year",
         categ_col = "item categ",
         money_col = s.money_cols[0],
@@ -70,6 +71,6 @@ for s in s4.series:
         all_places = df,
         filename = s.name ) ) )
 
-( Path( dest_root + "/" + "timestamp" ) .
+( Path( dest_root + "/" + "timestamp-for-pivot-tables" ) .
   touch() )
 

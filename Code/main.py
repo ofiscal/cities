@@ -1,37 +1,54 @@
 if True:
   import os
+  from pathlib import Path
   import pandas as pd
   import matplotlib.pyplot as plt
   from   matplotlib.backends.backend_pdf import PdfPages
   #
   import Code.common as c
-  import Code.metadata.two_series as ser
+  import Code.metadata.terms as t
+  import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
   import Code.draw.lib as lib
 
+root = "output/pivots/recip-" + str(c.subsample)
+
+if True: # create geo indices to loop over
+  geo = uk.merge_geo(
+    pd.read_csv(
+      ( "output/budget_6p7_avg_muni/recip-" + str(c.subsample) +
+        "/" + "gastos-pct.csv" ),
+      usecols = ['dept code', 'muni code'] ) .
+    drop_duplicates() .
+    reset_index( drop=True ) .
+    sort_values( ["dept code","muni code"] ) )
+  geo.loc[ geo["muni code"]==0,
+           "muni" ] = "dept"
+  geo.loc[ geo["muni code"]==-2,
+           "muni" ] = "promedio"
+
 def create_pdfs( dept : str,
                  muni : str ):
- folder = ( "output/pivots/recip-" + str(c.subsample) +
-            "/" + dept + "/" + muni )
+ folder = ( root + "/" + dept + "/" + muni )
  print("folder: ", folder)
- for file in ser.series:
+ for file in ( s4.series_pct
+               if muni == "promedio"
+               else s4.series ):
    pivot = (
      pd.read_csv(
        folder + "/" + file.name + ".csv",
-       index_col="item categ" ) .
-     fillna( 0 ) ) # TODO : should not be necessary.
-                   # Fix upstream, in budget_8.
+       index_col="item categ" ) )
    with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
      lib.drawPage( pivot, ["Title?"], ["Text?"] )
      pdf.savefig( facecolor=lib.background_color )
      plt.close()
 
-uk.depts_and_munis.apply(
+geo.apply(
   ( lambda row:
-    create_pdfs( row["dept"],
-                 row["muni"] ) ),
+    create_pdfs( dept = row["dept"],
+                 muni = row["muni"] ) ),
   axis = "columns" )
 
-with open( "output/reports/done.txt", "w" ) as f:
-  f.write( "done" )
+( Path( root + "/" + "timestamp-for-pdfs" ) .
+  touch() )
 
