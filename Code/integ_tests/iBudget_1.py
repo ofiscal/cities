@@ -3,13 +3,14 @@ if True:
   import numpy as np
   #
   import Code.metadata.terms as t
-  import Code.metadata.raw_series as sm
+  import Code.metadata.raw_series as raw
   import Code.build.use_keys as uk
   import Code.build.classify_budget_codes as codes
+  import Code.integ_tests.integ_util as iutil
 
 
 s1_dfs = {} # stage 1 (build/budget_1) data frames
-for s in sm.series:
+for s in raw.series:
   s1_dfs[s] = uk.merge_geo(
     pd.read_csv(
       "output/budget_1/" + s + ".csv") )
@@ -32,7 +33,7 @@ if True: # build tax subset
       & (   (                df["muni"] == "SANTA MARTA" )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
-  s1_ing["muni"] = s1_ing["muni"].fillna(-1)
+  s1_ing["muni"] = s1_ing["muni"].fillna("dept")
   print( "\nSTAGE 1:" )
   ( s1_ing
     [["dept","muni","item code","item recaudo"]] .
@@ -44,6 +45,7 @@ if True: # build tax subset
     sort_values( ["dept","muni","item code"] ) )
 
 for f in [t.inversion,t.funcionamiento,t.deuda]: # build gastos subsets
+  print( "\n", f )
   df = s1_dfs[f]
   s1_ing = (
     df.copy()
@@ -53,8 +55,7 @@ for f in [t.inversion,t.funcionamiento,t.deuda]: # build gastos subsets
       & (   (                df["muni"] == "SANTA MARTA" )
           | (   ( pd.isnull( df["muni"] ) )
               & (            df["dept"] == "ANTIOQUIA" ) ) ) ] )
-  s1_ing["muni"] = s1_ing["muni"].fillna(-1)
-  print( "\n", f )
+  s1_ing["muni"] = s1_ing["muni"].fillna(0)
   print( "\nSTAGE 1:" )
   ( s1_ing
     [["dept","muni","item code","item oblig"]] .

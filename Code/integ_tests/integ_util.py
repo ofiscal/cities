@@ -26,7 +26,7 @@ if True: # define a spacetime cell
     dept = "BOGOTÁ, D.C."
 
 if True: # budget categories convenient for testing,
-         # i.e. withthe fewest components
+         # i.e. with the fewest components
   if True: # results
     infra_codes = {'A.15', '1.3.11', 'A.7', 'A.9'}
     edu_codes = {'1.3.6.1.1', 'A.1', '1.3.6.4.1', '1.3.6.4.6'}

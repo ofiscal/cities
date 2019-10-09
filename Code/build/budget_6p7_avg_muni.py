@@ -20,7 +20,7 @@ if True: # folders
 
 if True: # input data
   geo = ( uk.depts_and_munis
-         [["dept code","muni code","munis"]] )
+         [["dept code","muni code","muni count"]] )
   dfs = {}
   for s in s4.series:
     dfs[s.name] = pd.read_csv(
@@ -46,7 +46,7 @@ Output: The same, plus a new "average" muni.
     munis_in_dept = int(
         geo.loc[ ( geo       ["dept code"] ==
                    df.iloc[0]["dept code"] ),
-                 "munis" ] .
+                 "muni count" ] .
         head(1) )
     avg = df.iloc[0] . copy()
     avg["muni code"] = -2 # TODO ? Ugly.
