@@ -102,18 +102,17 @@ if True: # tests
   assert dfs0["ingresos"] .equals( dfs1["ingresos"] )
   for s in s4.series_pct: # test dimensions
     pct_series =     dfs1[ s.name      ]
-    non_pct_series = dfs1[ s.name[:-4] ]
+    non_pct_series = dfs1[ s.name[:-4] ] # drop the "-pct" suffix
     assert pct_series.columns.equals(
        non_pct_series.columns )
-    nDepts = len(
+    nAverages = len(
       non_pct_series
-      [ non_pct_series["muni code"] != 0 ] . # TODO ! Why needed?
-        # In TODO.org, see the line that reads:
-        # mystery: why does muni code=0 need dropping in full sample in 6p7?
+      [ non_pct_series["muni code"] != 0 ] .
+         # The logic behind needing to include the preceding line
+         # is complicated; see budget_6p7_avg_muni.md
       groupby( ["dept code","year","item categ"] ) .
       apply( lambda _: () ) )
-    assert len(pct_series) == nDepts + len(non_pct_series)
-
+    assert len(pct_series) == nAverages + len(non_pct_series)
 
 for s in s4.series:
   dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )

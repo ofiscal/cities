@@ -112,37 +112,6 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO : next
-** TODO mystery: why does muni code=0 need dropping in full sample in 6p7?
-*** the relevant line in budget_6p7_avg_muni.py
-      [ non_pct_series["muni code"] != 0 ] . # TODO ! Why needed?
-*** to find the weird depts
-After running 6p7, try this:
-n = non_pct_series
-depts0 = ( non_pct_series .
-           groupby( ["dept code","year","item categ"] ) .
-           agg('first') .
-           reset_index()
-           [["dept code","muni code"]] )
-depts1 = ( non_pct_series
-           [ non_pct_series["muni code"] != 0 ] .
-           groupby( ["dept code","year","item categ"] ) .
-           agg('first') .
-           reset_index()
-           [["dept code","muni code"]] )
-len(depts0)
-len(depts1)
-( pd.concat( # Rows in depts1 and not depts0
-    [depts1, depts0, depts0] ) .
-  drop_duplicates( keep = False ) ) # keep no dups, not even the 1st
-
-( pd.concat( # Rows in dept0 and not depts1x
-  [depts0, depts1, depts1] ) .
-  drop_duplicates( keep = False ) ) # keep no dups, not even the 1st
-*** the weird depts
-For these we have muni data but no dept data.
-      dept code  muni code
-850          25    25019.0
-1476         66    66045.0
 ** TODO integ tests
 *** for stages
 Have tested through 6p5, and they're good.
