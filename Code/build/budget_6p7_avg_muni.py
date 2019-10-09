@@ -105,14 +105,15 @@ if True: # tests
     non_pct_series = dfs1[ s.name[:-4] ]
     assert pct_series.columns.equals(
        non_pct_series.columns )
-    if c.subsample <= 10:
-      # If there are depts in the sample with no muni-level info,
-      # this test will fail -- and that's probably true in the small samples.
-      nDepts = len(
-        pct_series .
-        groupby( ["dept code","year","item categ"] ) .
-        apply( lambda _: () ) )
-      assert len(pct_series) == nDepts + len(non_pct_series)
+    nDepts = len(
+      non_pct_series
+      [ non_pct_series["muni code"] != 0 ] . # TODO ! Why needed?
+        # In TODO.org, see the line that reads:
+        # mystery: why does muni code=0 need dropping in full sample in 6p7?
+      groupby( ["dept code","year","item categ"] ) .
+      apply( lambda _: () ) )
+    assert len(pct_series) == nDepts + len(non_pct_series)
+
 
 for s in s4.series:
   dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )
