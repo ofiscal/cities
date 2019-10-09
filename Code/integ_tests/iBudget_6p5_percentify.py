@@ -49,3 +49,17 @@ if True: # report
         [["dept","muni",money_column,"item categ"]] .
         sort_values( ["dept","muni","item categ"] ) ) )
 
+if True: # report on averages in a few categories
+  for (name,categ) in [
+      ("ingresos-pct" ,"Por recursos propios"),
+      ("gastos-pct"   ,"Salud") ]:
+    df = s6p5_dfs[name].copy()
+    df = ( df
+           [ ( df["item categ"] == categ ) &
+             ( df["year"] == iu.year ) &
+             ( df["dept"] == iu.dept ) ] )
+    if name == "ingresos-pct":
+      df = df.drop( columns = ["muni","dept"] )
+    print(
+      "ALL MUNIS, " + categ + " only: " + name_of_data_source + ": " + name + "\n",
+      df )

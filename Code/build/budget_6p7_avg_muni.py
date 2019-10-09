@@ -86,16 +86,18 @@ Output: The same, plus a new "average" muni.
 
 for s in s2.series: # add average muni to the to -pct data sets
   index_cols = ["dept code","year","item categ"]
-  df = dfs0[s.name].copy()
-  dfs1[s.name] = df
-  dfs1[s.name + "-pct"] = to_front(
-    ["dept code","muni code"],
-    ( df . groupby( index_cols ) .
-      apply( lambda df:
-             prepend_avg_muni( index_cols, s.money_cols, df ) .
-             drop( columns = index_cols ) ) .
-      reset_index() .
-      drop( columns = ["level_3"] ) ) )
+  if True: # simply copy the peso (not %)-valued data sets
+    dfs1[s.name] = dfs0[s.name]
+  if True: # handle the %-valued data sets
+    df = dfs0[s.name + "-pct"]
+    dfs1[s.name + "-pct"] = to_front(
+      ["dept code","muni code"],
+      ( df . groupby( index_cols ) .
+        apply( lambda df:
+               prepend_avg_muni( index_cols, s.money_cols, df ) .
+               drop( columns = index_cols ) ) .
+        reset_index() .
+        drop( columns = ["level_3"] ) ) )
 
 if True: # tests
   assert dfs0["gastos"]   .equals( dfs1["gastos"] )

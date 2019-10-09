@@ -7,7 +7,11 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.min_rows', 500)
 
 if True: # define a spacetime cell
-  if True: # values good for testing the pipeline
+  if True: # VICHADA is nice because it only has 4 municipalities
+    year = 2018
+    muni = "CUMARIBO"
+    dept = "VICHADA"
+  if False: # values good for testing the pipeline
     # 2014 is nice because it requires scaling by 1000 and deflation.
     # Muni ARACATACA and dept SANTANDER are nice because both include
     # multiple disaggregated observations of the same education code.
