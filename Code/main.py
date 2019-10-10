@@ -1,12 +1,11 @@
 if True:
   import os
-  from pathlib import Path
+  from   pathlib import Path
   import pandas as pd
   import matplotlib.pyplot as plt
   from   matplotlib.backends.backend_pdf import PdfPages
   #
   import Code.common as c
-  import Code.metadata.terms as t
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
   import Code.draw.lib as lib

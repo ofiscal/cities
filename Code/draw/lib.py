@@ -25,16 +25,16 @@ def drawPage( df : pd.DataFrame,
 def drawText( ax, # : matplotlib.axes.SubplotBase
               title : List[str],
               text : List[str] ):
-  plt.text( 0.5, 0.9
-          , "".join( title )
-          , color = 'k'
-          , fontproperties = font_black
-          , horizontalalignment="center" )
-  plt.text( 0, 0.5
-          , "".join( text )
-          , color = 'k'
-          , fontproperties = font_light
-          , verticalalignment="center" )
+  plt.text( 0.5, 0.9,
+            "".join( title ),
+            color = 'k',
+            fontproperties = font_thick,
+            horizontalalignment="center" )
+  plt.text( 0, 0.5,
+            "".join( text ),
+            color = 'k',
+            fontproperties = font_thin,
+            verticalalignment="center" )
   ax.axis( 'off' )
 
 def drawStacks( ax, # : matplotlib.axes.SubplotBase
@@ -61,25 +61,24 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
       middle = (bottom + top) / 2
       for cn in range( nCols ): # plot amounts over each box
         # todo ? speed: use pd.Seeries.iteritems()
-        ax.text( float( cn )
-               , middle.iloc[cn]
-               , df.iloc[ rn, cn ] # what we're printing
-               , fontsize = 10
-               , verticalalignment = 'center'
-               , horizontalalignment = 'center'
-               , color = 'w'
-               , fontproperties = font_light )
+        ax.text( float( cn ),
+                 middle.iloc[cn],
+                 df.iloc[ rn, cn ], # what we're printing
+                 verticalalignment = 'center',
+                 horizontalalignment = 'center',
+                 color = 'w',
+                 fontproperties = font_thin,
+                 fontsize = 6 )
     for cn in range( nCols ): # plot totals above each column
         total = df.iloc[:,cn].sum()
-        ax.text( float( cn )
-               , total + 1
-               , total
-               , fontsize = 10
-               , verticalalignment = 'center'
-               , horizontalalignment = 'center'
-               , color = 'w'
-               , fontproperties = font_light )
-
+        ax.text( float( cn ),
+                 total + 1,
+                 total,
+                 verticalalignment = 'center',
+                 horizontalalignment = 'center',
+                 color = 'w',
+                 fontproperties = font_thin,
+                 fontsize = 6 )
     plt.rcParams['axes.titlepad'] = 10
     chartBox = ax.get_position()
     ax.set_position([ chartBox.x0
@@ -89,7 +88,7 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
 
     leg = ax.legend( plots
                    , reversed( df.index ) # to match the order of `plots`
-                   , prop = font_light
+                   , prop = font_thin
                    , facecolor = background_color
                    , shadow=True
             # Next arguments: draw the legend to the right of the plot, ala
@@ -107,19 +106,19 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
     # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
     ax.set_title( "Cool stuff"
                 , color = 'k'
-                , fontproperties = font_black )
+                , fontproperties = font_thick )
     ax.set_xlabel( "Year"
                  , color = 'k'
-                 , fontproperties = font_light )
+                 , fontproperties = font_thin )
     ax.set_ylabel( 'Real spending (2019 pesos)'
                  , color = 'k'
-                 , fontproperties = font_light )
+                 , fontproperties = font_thin )
 
     plt.xticks( xvals, df.columns )
     plt.setp( ax.get_xticklabels()
             , visible = True
             , color = 'k'
-            , fontproperties = font_light )
+            , fontproperties = font_thin )
     plt.setp( ax.get_yticklabels(), visible = False )
     ax.tick_params( axis='x', which='both', length=0 )
     ax.tick_params( axis='y', which='both', length=0 )
@@ -127,6 +126,8 @@ def drawStacks( ax, # : matplotlib.axes.SubplotBase
 
 if True:
   background_color = "mediumaquamarine"
-  font_black = fm.FontProperties( fname = "fonts/Montserrat_Black.ttf" )
-  font_light = fm.FontProperties( fname = "fonts/Montserrat_Light.ttf" )
+  font_thick = fm.FontProperties(
+    fname = "fonts/Montserrat_Black.ttf" )
+  font_thin = fm.FontProperties(
+    fname = "fonts/Montserrat_Light.ttf" )
 

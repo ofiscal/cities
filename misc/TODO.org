@@ -50,15 +50,14 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
-** TODO from pivots, make averages over [2016,2018]
-That's the period for which we have data for each mayor's last terms.
 ** TODO draw charts
 *** TODO shrink numbers
 **** fewer digits
 **** smaller font
 *** TODO draw these kinds of charts
 **** TODO compare muni to dept average muni
- summing all four years
+ summing years 2016-2018
+ (from pivots, make averages over [2016,2018])
 **** time series
 *** compute (muni,series)-specific titles, text, axis names
 **** "(upside down ?)Cuanto dinero recibe mi municipio?"
