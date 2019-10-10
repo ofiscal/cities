@@ -14,8 +14,8 @@ if True:
 root = "output/pivots/recip-" + str(c.subsample)
 
 if True: # create geo indices to loop over
-  geo = uk.merge_geo(
-    pd.read_csv(
+  geo = uk.merge_geo( # Using stage 6p7 rather than 7 because
+    pd.read_csv(      # they are equivalent and it's smaller
       ( "output/budget_6p7_avg_muni/recip-" + str(c.subsample) +
         "/" + "gastos-pct.csv" ),
       usecols = ['dept code', 'muni code'] ) .
