@@ -66,11 +66,11 @@ def add_plots( nCols : int,
       # of middle and top for row = 0.
     else:      bottom = df.iloc[0:rn,:].sum()
     top =      bottom + df.iloc[  rn,:]
-    plots.insert( 0 # prepend => legend items in the right order
-                , ax.bar( xvals # plot stack of bar charts
-                        , df.iloc[rn,:]
-                        , width = [ 0.8 for i in range( nCols ) ]
-                        , bottom = bottom ) )
+    plots.insert( 0, # prepend => legend items in the right order
+                  ax.bar( xvals, # plot stack of bar charts
+                          df.iloc[rn,:],
+                          width = [ 0.8 for i in range( nCols ) ],
+                          bottom = bottom ) )
     middle = (bottom + top) / 2
     for cn in range( nCols ): # plot amounts over each box
       # todo ? speed: use pd.Seeries.iteritems()
@@ -100,10 +100,10 @@ def add_legend(
     df : pd.DataFrame ):
   plt.rcParams['axes.titlepad'] = 10
   chartBox = ax.get_position()
-  ax.set_position([ chartBox.x0
-                  , chartBox.y0
-                  , chartBox.width*0.6
-                  , chartBox.height ])
+  ax.set_position([ chartBox.x0,
+                    chartBox.y0,
+                    chartBox.width*0.6,
+                    chartBox.height ])
   leg = ax.legend(
     plots,
     reversed( df.index ), # to match the order of `plots`
@@ -124,21 +124,21 @@ def add_outer_labels( ax : mplot.axes.SubplotBase,
   """Give vertical axis a label, no ticks, no tick labels. Based on
 stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
-  ax.set_title( "Cool stuff"
-              , color = 'k'
-              , fontproperties = font_thick )
-  ax.set_xlabel( "Year"
-               , color = 'k'
-               , fontproperties = font_thin )
-  ax.set_ylabel( 'Real spending (2019 pesos)'
-               , color = 'k'
-               , fontproperties = font_thin )
+  ax.set_title( "Cool stuff",
+                color = 'k',
+                fontproperties = font_thick )
+  ax.set_xlabel( "Year",
+                 color = 'k',
+                 fontproperties = font_thin )
+  ax.set_ylabel( 'Real spending (2019 pesos)',
+                 color = 'k',
+                 fontproperties = font_thin )
 
   plt.xticks( xvals, df.columns )
-  plt.setp( ax.get_xticklabels()
-          , visible = True
-          , color = 'k'
-          , fontproperties = font_thin )
+  plt.setp( ax.get_xticklabels(),
+            visible = True,
+            color = 'k',
+            fontproperties = font_thin )
   plt.setp( ax.get_yticklabels(), visible = False )
   ax.tick_params( axis='x', which='both', length=0 )
   ax.tick_params( axis='y', which='both', length=0 )
