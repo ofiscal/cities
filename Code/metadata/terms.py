@@ -11,7 +11,7 @@ if True: # files we use
 
 if True: # our own aggregate categories
   if True: # for spending
-    personal    = "Generales de personal"
+    personal    = "Salarios de funcionarios"
     ambiental   = "Ambiental"
     salud       = "Salud"
     edu         = "Educación"
@@ -20,13 +20,13 @@ if True: # our own aggregate categories
     gen         = "Generales funcionamiento"
     otros       = "Otros gastos sociales"
     infra       = "Infraestructura y vivienda"
-    pub         = "Servicios publicos"
+    pub         = "Servicios públicos"
     cult        = "Deporte, recreación, cultura"
     agro        = "Agropecuario"
-    deuda_gasto = "Servicio de la deuda"
+    deuda_gasto = "Pago de la deuda"
   if True: # for income
-    propios     = "Por recursos propios"
-    transfer    = "Transferencias de la Nación"
-    capital     = "De capital"
+    propios     = "Impuestos y otros recursos propios*"
+    transfer    = "Transferencias del Gobierno Nacional"
+    capital     = """Dinero sobrante de\naños anteriores y\notros ingresos financieros*"""
     regalias    = "Regalías" # unused until much further downstream
 

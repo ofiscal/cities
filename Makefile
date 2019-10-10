@@ -346,7 +346,7 @@ output/regalias.csv:			\
 
 pics: $(pics)
 $(pics):			\
-  $(budget_4_scaled)		\
+  $(budget_8_pivots)		\
   Code/build/use_keys.py	\
   Code/draw/lib.py		\
   Code/main.py

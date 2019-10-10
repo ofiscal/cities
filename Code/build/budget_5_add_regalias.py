@@ -7,6 +7,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
+  import Code.metadata.terms as t
   import Code.metadata.two_series as ser
 
 if True: # bearings
@@ -47,7 +48,7 @@ if True: # adjust regalias
     for c in ser.ingresos.money_cols:
       regalias[c] = regalias["regalias"]
     regalias = regalias.drop( columns = ["regalias"] )
-  regalias["item categ"] = "regalias"
+  regalias["item categ"] = t.regalias
 
 if True: # output
   dfso = {}
