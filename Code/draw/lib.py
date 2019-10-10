@@ -81,8 +81,9 @@ def add_plots( nCols : int,
       # todo ? speed: use pd.Seeries.iteritems()
       ax.text( float( cn ),
                middle.iloc[cn],
-               abbrev.show_brief( df.iloc[ rn, cn ], # what we're printing
-                                  commas ),
+               abbrev.show_brief( # what we're printing
+                 df.iloc[ rn, cn ],
+                 commas ),
                verticalalignment = 'center',
                horizontalalignment = 'center',
                color = 'w',
@@ -92,7 +93,8 @@ def add_plots( nCols : int,
       total = df.iloc[:,cn].sum()
       ax.text( float( cn ),
                total + 1,
-               total,
+               abbrev.show_brief( # what we're printing
+                 total, commas ),
                verticalalignment = 'center',
                horizontalalignment = 'center',
                color = 'w',
