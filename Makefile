@@ -348,8 +348,9 @@ pics: $(pics)
 $(pics):			\
   $(budget_4_scaled)		\
   Code/build/use_keys.py	\
-  Code/draw/lib.py	\
+  Code/draw/lib.py		\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)
 	date
+

@@ -1,6 +1,9 @@
+# PITFALL: Matplotlib is very imperative,
+# so the order of function calls matters greatly.
+
 if True:
-  from typing import List
-  import matplotlib
+  from typing import List, Set, Dict
+  import matplotlib as mplot
   import matplotlib.pyplot as plt
   import matplotlib.font_manager as fm
   #
@@ -22,7 +25,7 @@ def drawPage( df : pd.DataFrame,
   ax = plt.subplot( 2, 1, 2 )
   drawStacks( ax, df )
 
-def drawText( ax, # : matplotlib.axes.SubplotBase
+def drawText( ax : mplot.axes.SubplotBase,
               title : List[str],
               text : List[str] ):
   plt.text( 0.5, 0.9,
@@ -37,92 +40,109 @@ def drawText( ax, # : matplotlib.axes.SubplotBase
             verticalalignment="center" )
   ax.axis( 'off' )
 
-def drawStacks( ax, # : matplotlib.axes.SubplotBase
+def drawStacks( ax : mplot.axes.SubplotBase,
                 df : pd.DataFrame ):
-  nCols = len( df.columns )
-  nRows = len( df.index )
-  xvals = np.arange( nCols )
+  nCols : int = len( df.columns )
+  nRows : int = len( df.index )
+  xvals : np.ndarray = np.arange( nCols )
 
-  if True: # draw stuff
-    plots = []
-    for rn in range( nRows ):
-      # bottom, top are both series describing that row's bars
-      if rn < 1: bottom = [0. for i in range( nCols )]
-        # TODO ? I would like to wrap the above list in pd.Series(),
-        # but doing that generates weird errors, and changes the dimensions
-        # of middle and top for row = 0.
-      else:      bottom = df.iloc[0:rn,:].sum()
-      top =      bottom + df.iloc[  rn,:]
-      plots.insert( 0 # prepend => legend items in the right order
-                  , ax.bar( xvals # plot stack of bar charts
-                          , df.iloc[rn,:]
-                          , width = [ 0.8 for i in range( nCols ) ]
-                          , bottom = bottom ) )
-      middle = (bottom + top) / 2
-      for cn in range( nCols ): # plot amounts over each box
-        # todo ? speed: use pd.Seeries.iteritems()
-        ax.text( float( cn ),
-                 middle.iloc[cn],
-                 df.iloc[ rn, cn ], # what we're printing
-                 verticalalignment = 'center',
-                 horizontalalignment = 'center',
-                 color = 'w',
-                 fontproperties = font_thin,
-                 fontsize = 6 )
-    for cn in range( nCols ): # plot totals above each column
-        total = df.iloc[:,cn].sum()
-        ax.text( float( cn ),
-                 total + 1,
-                 total,
-                 verticalalignment = 'center',
-                 horizontalalignment = 'center',
-                 color = 'w',
-                 fontproperties = font_thin,
-                 fontsize = 6 )
-    plt.rcParams['axes.titlepad'] = 10
-    chartBox = ax.get_position()
-    ax.set_position([ chartBox.x0
-                    , chartBox.y0
-                    , chartBox.width*0.6
-                    , chartBox.height ])
+  plots = add_plots( nCols, nRows, xvals,
+                     ax, df )
+  add_legend      (ax, plots, df)
+  add_outer_labels(ax, xvals, df)
 
-    leg = ax.legend( plots
-                   , reversed( df.index ) # to match the order of `plots`
-                   , prop = font_thin
-                   , facecolor = background_color
-                   , shadow=True
-            # Next arguments: draw the legend to the right of the plot, ala
-            # https://pythonspot.com/matplotlib-legend/
-                    , loc = 'upper center'
-                    , bbox_to_anchor = ( 1.45, 0.8 )
-                    , ncol = 1 )
-    plt.setp( leg.get_texts()
-            , color = 'k' )
+def add_plots( nCols : int,
+               nRows : int,
+               xvals : np.ndarray,
+               ax : mplot.axes.SubplotBase,
+               df : pd.DataFrame
+             ) -> List[mplot.container.Container]:
+  plots = [] # This is what gets returned.
+  for rn in range( nRows ):
+    # bottom, top are both series describing that row's bars
+    if rn < 1: bottom = [0. for i in range( nCols )]
+      # TODO ? I would like to wrap the above list in pd.Series(),
+      # but doing that generates weird errors, and changes the dimensions
+      # of middle and top for row = 0.
+    else:      bottom = df.iloc[0:rn,:].sum()
+    top =      bottom + df.iloc[  rn,:]
+    plots.insert( 0 # prepend => legend items in the right order
+                , ax.bar( xvals # plot stack of bar charts
+                        , df.iloc[rn,:]
+                        , width = [ 0.8 for i in range( nCols ) ]
+                        , bottom = bottom ) )
+    middle = (bottom + top) / 2
+    for cn in range( nCols ): # plot amounts over each box
+      # todo ? speed: use pd.Seeries.iteritems()
+      ax.text( float( cn ),
+               middle.iloc[cn],
+               df.iloc[ rn, cn ], # what we're printing
+               verticalalignment = 'center',
+               horizontalalignment = 'center',
+               color = 'w',
+               fontproperties = font_thin,
+               fontsize = 6 )
+  for cn in range( nCols ): # plot totals above each column
+      total = df.iloc[:,cn].sum()
+      ax.text( float( cn ),
+               total + 1,
+               total,
+               verticalalignment = 'center',
+               horizontalalignment = 'center',
+               color = 'w',
+               fontproperties = font_thin,
+               fontsize = 6 )
+  return plots
 
-    del( bottom, chartBox, leg, plots )
+def add_legend(
+    ax : mplot.axes.SubplotBase,
+    plots : List[mplot.container.Container], # list of bar charts
+    df : pd.DataFrame ):
+  plt.rcParams['axes.titlepad'] = 10
+  chartBox = ax.get_position()
+  ax.set_position([ chartBox.x0
+                  , chartBox.y0
+                  , chartBox.width*0.6
+                  , chartBox.height ])
+  leg = ax.legend(
+    plots,
+    reversed( df.index ), # to match the order of `plots`
+    prop = font_thin,
+    facecolor = background_color,
+    shadow=True,
+        # Next arguments: draw the legend to the right of the plot, ala
+        # https://pythonspot.com/matplotlib-legend/
+    loc = 'upper center',
+    bbox_to_anchor = ( 1.45, 0.8 ),
+    ncol = 1 )
+  plt.setp( leg.get_texts(),
+            color = 'k' )
 
-  if True: # add (outer) labels
-    # Vertical axis needs a label, but no ticks, and no tick labels. Based on
-    # https://stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
-    ax.set_title( "Cool stuff"
-                , color = 'k'
-                , fontproperties = font_thick )
-    ax.set_xlabel( "Year"
-                 , color = 'k'
-                 , fontproperties = font_thin )
-    ax.set_ylabel( 'Real spending (2019 pesos)'
-                 , color = 'k'
-                 , fontproperties = font_thin )
+def add_outer_labels( ax : mplot.axes.SubplotBase,
+                      xvals : np.ndarray,
+                      df : pd.DataFrame ):
+  """Give vertical axis a label, no ticks, no tick labels. Based on
+stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
+"""
+  ax.set_title( "Cool stuff"
+              , color = 'k'
+              , fontproperties = font_thick )
+  ax.set_xlabel( "Year"
+               , color = 'k'
+               , fontproperties = font_thin )
+  ax.set_ylabel( 'Real spending (2019 pesos)'
+               , color = 'k'
+               , fontproperties = font_thin )
 
-    plt.xticks( xvals, df.columns )
-    plt.setp( ax.get_xticklabels()
-            , visible = True
-            , color = 'k'
-            , fontproperties = font_thin )
-    plt.setp( ax.get_yticklabels(), visible = False )
-    ax.tick_params( axis='x', which='both', length=0 )
-    ax.tick_params( axis='y', which='both', length=0 )
-    ax.set_frame_on(False)
+  plt.xticks( xvals, df.columns )
+  plt.setp( ax.get_xticklabels()
+          , visible = True
+          , color = 'k'
+          , fontproperties = font_thin )
+  plt.setp( ax.get_yticklabels(), visible = False )
+  ax.tick_params( axis='x', which='both', length=0 )
+  ax.tick_params( axis='y', which='both', length=0 )
+  ax.set_frame_on(False)
 
 if True:
   background_color = "mediumaquamarine"
