@@ -51,9 +51,19 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO draw charts
-*** TODO shrink numbers
-**** fewer digits
+*** DONE shrink numbers
 **** smaller font
+**** write functions to abbreviate numbers
+Find the max number in the table.
+Find how many commas would be in it
+  Code.draw.shrink_numbers.commas
+Determine the units for the chart
+  Code.draw.shrink_numbers.units
+Print each number to 3 significant digits, like this:
+  Code.draw.shrink_numbers.show_brief
+**** show numbers with abbreviation functions main.py
+**** add units to the charts
+e.g. "millones de pesos" if that's appropriate
 *** TODO draw these kinds of charts
 **** TODO compare muni to dept average muni
  summing years 2016-2018

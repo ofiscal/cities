@@ -5,7 +5,6 @@ def commas( f: float ) -> int:
 if it were printed in the United States style."""
   return ( 0 if abs(f) < 1
            else m.floor( m.log(abs(f)) / m.log(10) / 3))
-
 if True: # test it
   assert commas(0.99) == 0
   assert commas(0.001) == 0

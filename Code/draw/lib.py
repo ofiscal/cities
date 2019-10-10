@@ -6,9 +6,9 @@ if True:
   import matplotlib as mplot
   import matplotlib.pyplot as plt
   import matplotlib.font_manager as fm
-  #
   import numpy as np
   import pandas as pd
+  import Code.draw.shorten_numbers as abbrev
 
 def drawPage( df : pd.DataFrame,
               title : List[str],
@@ -42,18 +42,23 @@ def drawText( ax : mplot.axes.SubplotBase,
 
 def drawStacks( ax : mplot.axes.SubplotBase,
                 df : pd.DataFrame ):
-  nCols : int = len( df.columns )
-  nRows : int = len( df.index )
-  xvals : np.ndarray = np.arange( nCols )
-
-  plots = add_plots( nCols, nRows, xvals,
-                     ax, df )
-  add_legend      (ax, plots, df)
-  add_outer_labels(ax, xvals, df)
+  if True: # the dimensions and contents of the data
+    nCols : int = len( df.columns )
+    nRows : int = len( df.index )
+    xvals : np.ndarray = np.arange( nCols )
+  if True: # how to show numbers
+    commas = abbrev.commas( df.max().max() )
+    units = abbrev.units( commas )
+  if True: # procedures
+    plots = add_plots( # PITFALL: side effects *and* a return value
+      nCols, nRows, xvals, commas, ax, df )
+    add_legend      (ax, plots, df)
+    add_outer_labels(ax, xvals, units, df)
 
 def add_plots( nCols : int,
                nRows : int,
                xvals : np.ndarray,
+               commas : int,
                ax : mplot.axes.SubplotBase,
                df : pd.DataFrame
              ) -> List[mplot.container.Container]:
@@ -72,11 +77,12 @@ def add_plots( nCols : int,
                           width = [ 0.8 for i in range( nCols ) ],
                           bottom = bottom ) )
     middle = (bottom + top) / 2
-    for cn in range( nCols ): # plot amounts over each box
+    for cn in range( nCols ): # plot amounts in each box
       # todo ? speed: use pd.Seeries.iteritems()
       ax.text( float( cn ),
                middle.iloc[cn],
-               df.iloc[ rn, cn ], # what we're printing
+               abbrev.show_brief( df.iloc[ rn, cn ], # what we're printing
+                                  commas ),
                verticalalignment = 'center',
                horizontalalignment = 'center',
                color = 'w',
@@ -120,6 +126,7 @@ def add_legend(
 
 def add_outer_labels( ax : mplot.axes.SubplotBase,
                       xvals : np.ndarray,
+                      units : str,
                       df : pd.DataFrame ):
   """Give vertical axis a label, no ticks, no tick labels. Based on
 stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
@@ -130,7 +137,7 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
   ax.set_xlabel( "Year",
                  color = 'k',
                  fontproperties = font_thin )
-  ax.set_ylabel( 'Real spending (2019 pesos)',
+  ax.set_ylabel( units,
                  color = 'k',
                  fontproperties = font_thin )
 
