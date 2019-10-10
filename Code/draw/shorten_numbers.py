@@ -3,9 +3,12 @@ import math as m
 def commas( f: float ) -> int:
   """How many commas it would have, \
 if it were printed in the United States style."""
-  return ( 0 if f == 0
+  return ( 0 if abs(f) < 1
            else m.floor( m.log(abs(f)) / m.log(10) / 3))
+
 if True: # test it
+  assert commas(0.99) == 0
+  assert commas(0.001) == 0
   assert commas(999) == 0
   assert commas(1001) == 1
   assert commas(1e6-1) == 1
