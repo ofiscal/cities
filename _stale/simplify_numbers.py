@@ -1,6 +1,8 @@
+# OBSOLETE. I accidentally wrote this functionality twice.
+# The second time it was simpler, so that's what's being used.
+
 import pandas as pd
 from math import (log,floor)
-
 
 ### Functions for hiding "comma places"
 #
