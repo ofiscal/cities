@@ -8,12 +8,14 @@ if True:
   import Code.build.classify_budget_codes as codes
   import Code.build.use_keys as uk
 
+name_of_data_source = "budget_0_collect"
+
 if True:
   s0_dfs = {} # stage 0 frames
   for s in raw.series:
     s0_dfs[s] = uk.merge_geo(
-      pd.read_csv(
-        "output/budget_0_collect/" + s + ".csv") )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/" + s + ".csv") )
 
 def money_col( str ):
   if str == "ingresos":

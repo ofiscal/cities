@@ -12,9 +12,9 @@ s3_dfs = {} # stage 3 (build/budget_3_dept_muni_year_item) data frames
 smaller = {} # a spacetime subset of that input data
 for name in ["ingresos","gastos"]:
   df = uk.merge_geo(
-    pd.read_csv(
-      "output/" + name_of_data_source +
-      "/recip-1/" + name + ".csv" ) )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/recip-" + str(iu.subsample) +
+                   "/" + name + ".csv" ) )
   s3_dfs[name] = df
   print( len(s3_dfs[name]) )
   df["item categ"] = (

@@ -3,11 +3,17 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
+subsample = 1
+
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.min_rows', 500)
 
 if True: # define a spacetime cell
-  if True: # VICHADA is nice because it only has 4 municipalities
+  if True: # This is the only dept with a "promedio" in the 1/1000 sample
+    year = 2017
+    muni = "VILLAPINZÓN"
+    dept = "CUNDINAMARCA"
+  if False: # VICHADA is nice because it only has 4 municipalities
     year = 2018
     muni = "CUMARIBO"
     dept = "VICHADA"
@@ -19,7 +25,6 @@ if True: # define a spacetime cell
     year = 2014
     muni = "ARACATACA"
     dept = "SANTANDER"
-  #
   if False: # a subset of the values used in sample_tables.py
     year = 2018
     muni = "SANTA MARTA"

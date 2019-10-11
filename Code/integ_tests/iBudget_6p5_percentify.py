@@ -2,6 +2,7 @@ if True:
   import pandas as pd
   import numpy as np
   #
+  import Code.metadata.terms as t
   import Code.build.classify_budget_codes as codes
   import Code.build.use_keys as uk
   import Code.integ_tests.integ_util as iu
@@ -16,7 +17,8 @@ if True: # build data
     name = s.name
     df = uk.merge_geo(
       pd.read_csv( "output/" + name_of_data_source +
-                   "/recip-1/" + name + ".csv" ) )
+                   "/recip-" + str(iu.subsample) +
+                   "/" + name + ".csv" ) )
     s6p5_dfs[name] = df.copy()
     df["item categ"] = ( df["item categ"] .
                          apply( lambda x: x[0:20] ) )
@@ -26,7 +28,8 @@ if True: # build data
         & (   (                df["muni"] == iu.muni )
             | (   ( pd.isnull( df["muni"] ) )
                 & (            df["dept"] == iu.dept ) ) ) ] )
-    df["muni"] = df["muni"].fillna(-1)
+    df.loc[ df["muni code"]==0,
+            "muni" ] = "dept"
     smaller[name] = df
 
 if True: # report
@@ -51,8 +54,8 @@ if True: # report
 
 if True: # report on averages in a few categories
   for (name,categ) in [
-      ("ingresos-pct" ,"Por recursos propios"),
-      ("gastos-pct"   ,"Salud") ]:
+      ("ingresos-pct" ,t.propios),
+      ("gastos-pct"   ,t.salud) ]:
     df = s6p5_dfs[name].copy()
     df = ( df
            [ ( df["item categ"] == categ ) &

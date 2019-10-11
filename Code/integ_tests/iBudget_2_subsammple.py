@@ -12,8 +12,9 @@ name_of_data_source = "budget_2_subsample"
 s2_dfs = {} # stage 2 (build/budget_2_subsample) data frames
 for name in ["ingresos","gastos"]:
   s2_dfs[name] = uk.merge_geo(
-    pd.read_csv(
-      "output/budget_2_subsample/recip-1/" + name + ".csv" ) )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/recip-" + str(iu.subsample) +
+                   "/" + name + ".csv" ) )
 
 for s in ["ingresos","gastos"]:
   print( len(s2_dfs[s]) )

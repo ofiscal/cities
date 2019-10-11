@@ -12,8 +12,8 @@ name_of_data_source = "budget_1p5"
 s1p5_dfs = {} # stage 1.5 (build/budget_1p5) data frames
 for name in ["ingresos","gastos"]:
   s1p5_dfs[name] = uk.merge_geo(
-    pd.read_csv(
-      "output/budget_1p5/" + name + ".csv" ) )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/" + name + ".csv" ) )
 
 for s in ["ingresos","gastos"]:
   print( len(s1p5_dfs[s]) )

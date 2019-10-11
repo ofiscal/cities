@@ -71,7 +71,10 @@ https://matplotlib.org/3.1.1/tutorials/advanced/transforms_tutorial.html
 *** TODO compare muni to dept average muni
 **** spec
 summing years 2016-2018
-**** TODO what's wrong with the average muni tables?
+**** DONE PITFALL: In subsamples, average muni looks wrong
+That's because the total number of munis in a department
+is calculated from reality, not the subsample.
+Hence the divisor is too big, and the resulting percentages too small.
 **** TODO build tables
 For all real and promedio munis:
   From time-series %-valued pivot tables, make averages over [2016,2018].

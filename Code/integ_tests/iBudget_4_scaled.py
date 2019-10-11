@@ -14,9 +14,9 @@ if True: # build data
   smaller = {} # a spacetime subset of that input data
   for name in ["ingresos","gastos"]:
     df = uk.merge_geo(
-      pd.read_csv(
-        "output/" + name_of_data_source +
-        "/recip-1/" + name + ".csv" ) )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/recip-" + str(iu.subsample) +
+                   "/" + name + ".csv" ) )
     s4_dfs[name] = df.copy()
     print( len(s4_dfs[name]) )
     df["item categ"] = ( df["item categ"] .

@@ -13,8 +13,9 @@ if True: # build data
   s7_dfs = {} # the input data
   smaller = {} # a spacetime subset of that input data
   for name in ["ingresos","gastos"]:
-    df = pd.read_csv(
-        "output/" + name_of_data_source + "/recip-1/" + name + ".csv" )
+      pd.read_csv( "output/" + name_of_data_source +
+                   "/recip-" + str(iu.subsample) +
+                   "/" + name + ".csv" ) )
     print( len(df) )
     s7_dfs[name] = df.copy()
     df["item categ"] = ( df["item categ"] .
