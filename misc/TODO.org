@@ -78,7 +78,7 @@ Hence the divisor is too big, and the resulting percentages too small.
 **** TODO build tables
 For all real and promedio munis:
   From time-series %-valued pivot tables, make averages over [2016,2018].
-  For gastos, keep the top five, lump the rest into "other".
+  For gastos, keep the top gastos, lump the rest into "other".
     Since there is no year axis to worry about, this should be easier
     than it was for the pivots.
 **** TODO draw bar charts
