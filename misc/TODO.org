@@ -68,11 +68,22 @@ e.g. "millones de pesos" if that's appropriate
 ax.transAxes(_, transform=ax.transData)
 https://matplotlib.org/3.1.1/tutorials/advanced/transforms_tutorial.html
 **** draw only when space permits
-*** TODO draw these kinds of charts
-**** TODO compare muni to dept average muni
- summing years 2016-2018
- (from pivots, make averages over [2016,2018])
-**** time series
+*** TODO compare muni to dept average muni
+**** spec
+summing years 2016-2018
+**** TODO what's wrong with the average muni tables?
+**** TODO build tables
+For all real and promedio munis:
+  From time-series %-valued pivot tables, make averages over [2016,2018].
+  For gastos, keep the top five, lump the rest into "other".
+    Since there is no year axis to worry about, this should be easier
+    than it was for the pivots.
+**** TODO draw bar charts
+Muni on left, average on right, paired by spending item.
+Legend above.
+Labels centered between each pair of bars.
+Percentage axis.
+Totals above each bar.
 *** compute (muni,series)-specific titles, text, axis names
 **** "(upside down ?)Cuanto dinero recibe mi municipio?"
 **** "(upside down ?)En que se gasta el dinero mi municipio?"

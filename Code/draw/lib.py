@@ -64,26 +64,23 @@ def add_plots( nCols : int,
              ) -> List[mplot.container.Container]:
   plots = [] # This is what gets returned.
   for rn in range( nRows ):
-    # bottom, top are both series describing that row's bars
-    if rn < 1: bottom = [0. for i in range( nCols )]
-      # TODO ? I would like to wrap the above list in pd.Series(),
-      # but doing that generates weird errors, and changes the dimensions
-      # of middle and top for row = 0.
-    else:      bottom = df.iloc[0:rn,:].sum()
-    height = df.iloc[  rn,:]
-    top = bottom + height
+    if True: # these three series describe a row's bars
+      if rn < 1: bottom = df.iloc[0,   :]*0 # just a row of zeros
+      else:      bottom = df.iloc[0:rn,:].sum()
+      height = df.iloc[  rn,:]
+      top = bottom + height
     plots.insert( 0, # prepend => legend items in the right order
                   ax.bar( xvals, # plot stack of bar charts
                           height,
                           width = [ 0.8 for i in range( nCols ) ],
                           bottom = bottom ) )
     middle = (bottom + top) / 2
+    enough_to_print = float( ax.transData.inverted().transform(
+                               ax.transAxes.transform(( 0,0.2 )) )
+                             [1] )
     for cn in range( nCols ): # plot amounts in each box
       # todo ? speed: use pd.Seeries.iteritems()
-      room = ( # convert height from data coords to screen coords
-        ax.transData.transform(( 0, height[cn] ))
-        [1] )
-      if room > 120:
+      if height[cn] > enough_to_print:
         ax.text( float( cn ),
                  middle.iloc[cn],
                  abbrev.show_brief( # what we're printing
@@ -137,8 +134,10 @@ def add_legend(
       size = 7),
     facecolor = background_color,
     shadow=True,
-        # Next arguments: draw the legend to the right of the plot, ala
-        # https://pythonspot.com/matplotlib-legend/
+
+    # The next arguments:
+    # draw the legend to the right of the plot, ala
+    # https://pythonspot.com/matplotlib-legend/
     loc = 'upper center',
     bbox_to_anchor = ( 1.45, 0.8 ),
     ncol = 1 )
