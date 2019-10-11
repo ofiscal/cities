@@ -51,7 +51,7 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO draw charts
-*** TODO shrink numbers
+*** DONE shrink numbers
 **** smaller font
 **** write functions to abbreviate numbers
 Find the max number in the table.
@@ -64,10 +64,10 @@ Print each number to 3 significant digits, like this:
 **** show numbers with abbreviation functions main.py
 **** add units to the charts
 e.g. "millones de pesos" if that's appropriate
-**** TODO shift the image of the sum in screen coordinates
+**** shift the image of the sum in screen coordinates
 ax.transAxes(_, transform=ax.transData)
 https://matplotlib.org/3.1.1/tutorials/advanced/transforms_tutorial.html
-**** TODO draw only when space permits
+**** draw only when space permits
 *** TODO draw these kinds of charts
 **** TODO compare muni to dept average muni
  summing years 2016-2018

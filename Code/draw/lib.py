@@ -70,25 +70,30 @@ def add_plots( nCols : int,
       # but doing that generates weird errors, and changes the dimensions
       # of middle and top for row = 0.
     else:      bottom = df.iloc[0:rn,:].sum()
-    top =      bottom + df.iloc[  rn,:]
+    height = df.iloc[  rn,:]
+    top = bottom + height
     plots.insert( 0, # prepend => legend items in the right order
                   ax.bar( xvals, # plot stack of bar charts
-                          df.iloc[rn,:],
+                          height,
                           width = [ 0.8 for i in range( nCols ) ],
                           bottom = bottom ) )
     middle = (bottom + top) / 2
     for cn in range( nCols ): # plot amounts in each box
       # todo ? speed: use pd.Seeries.iteritems()
-      ax.text( float( cn ),
-               middle.iloc[cn],
-               abbrev.show_brief( # what we're printing
-                 df.iloc[ rn, cn ],
-                 commas ),
-               verticalalignment = 'center',
-               horizontalalignment = 'center',
-               color = 'w',
-               fontproperties = font_thin,
-               fontsize = 6 )
+      room = ( # convert height from data coords to screen coords
+        ax.transData.transform(( 0, height[cn] ))
+        [1] )
+      if room > 120:
+        ax.text( float( cn ),
+                 middle.iloc[cn],
+                 abbrev.show_brief( # what we're printing
+                   df.iloc[ rn, cn ],
+                   commas ),
+                 verticalalignment = 'center',
+                 horizontalalignment = 'center',
+                 color = 'w',
+                 fontproperties = font_thin,
+                 fontsize = 6 )
   for cn in range( nCols ): # plot totals above each column
     total = df.iloc[:,cn].sum()
     buffer = ( # Convert 0.04 from axes coords to screen coords,
