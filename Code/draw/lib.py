@@ -90,16 +90,21 @@ def add_plots( nCols : int,
                fontproperties = font_thin,
                fontsize = 6 )
   for cn in range( nCols ): # plot totals above each column
-      total = df.iloc[:,cn].sum()
-      ax.text( float( cn ),
-               total + 1,
-               abbrev.show_brief( # what we're printing
-                 total, commas ),
-               verticalalignment = 'center',
-               horizontalalignment = 'center',
-               color = 'w',
-               fontproperties = font_thin,
-               fontsize = 6 )
+    total = df.iloc[:,cn].sum()
+    buffer = ( # Convert 0.04 from axes coords to screen coords,
+               # and then from screen coords to data coords.
+      ax.transData.inverted().transform(
+        ax.transAxes.transform( (0,0.04) ) )
+      [1] )
+    ax.text( float( cn ),
+             total + buffer,
+             abbrev.show_brief( # what we're printing
+               total, commas ),
+             verticalalignment = 'center',
+             horizontalalignment = 'center',
+             color = 'w',
+             fontproperties = font_thin,
+             fontsize = 6 )
   return plots
 
 def add_legend(
