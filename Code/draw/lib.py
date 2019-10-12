@@ -15,7 +15,8 @@ def drawPage( df : pd.DataFrame,
               text : List[str] ):
   df = df . iloc[::-1] # Revserse column order.
     # In the bar chart, each row is drawn on top of the previous one.
-    # This reversal causes earlier ("higher") rows to be drawn above later ones,
+    # This reversal causes earlier ("higher")
+    # rows to be drawn above later ones,
     # which means vertical order of items in the chart corresponds to
     # the vertical order of items in the data file.
     # It's a nuance the chart would still make sense without.
@@ -64,23 +65,37 @@ def add_plots( nCols : int,
              ) -> List[mplot.container.Container]:
   plots = [] # This is what gets returned.
   for rn in range( nRows ):
-    if True: # these three series describe a row's bars
+    if True: # PITFALL: while "bottom" is absolute,
+             # "height" is relative to "bottom".
       if rn < 1: bottom = df.iloc[0,   :]*0 # just a row of zeros
       else:      bottom = df.iloc[0:rn,:].sum()
       height = df.iloc[  rn,:]
-      top = bottom + height
     plots.insert( 0, # prepend => legend items in the right order
                   ax.bar( xvals, # plot stack of bar charts
                           height,
                           width = [ 0.8 for i in range( nCols ) ],
                           bottom = bottom ) )
+  for rn in range( nRows ):
+    # The computation of bottom and height is equal to
+    # that iin the previous loop. They cannot be joined, though,
+    # because it would ruin the `*_in_axes` variables below,
+    # because each time the first loop calls ax.bar(),
+    # the vertical range of the image changes;
+    if True:
+      if rn < 1: bottom = df.iloc[0,   :]*0 # just a row of zeros
+      else:      bottom = df.iloc[0:rn,:].sum()
+      height = df.iloc[  rn,:]
+      top = bottom + height
     middle = (bottom + top) / 2
     enough_to_print = float( ax.transData.inverted().transform(
                                ax.transAxes.transform(( 0,0.2 )) )
                              [1] )
+    floor = ax.transData.transform(( 0, 0 ))[1]
     for cn in range( nCols ): # plot amounts in each box
-      # todo ? speed: use pd.Seeries.iteritems()
-      if height[cn] > enough_to_print:
+      height_in_axes = ( ax.transAxes.inverted().transform(
+                           ax.transData.transform(( 0, height[cn] )) )
+                         [1] )
+      if height_in_axes > 0.05:
         ax.text( float( cn ),
                  middle.iloc[cn],
                  abbrev.show_brief( # what we're printing
@@ -91,6 +106,7 @@ def add_plots( nCols : int,
                  color = 'w',
                  fontproperties = font_thin,
                  fontsize = 6 )
+  floor = ax.transData.transform(( 0, 0 ))[1]
   for cn in range( nCols ): # plot totals above each column
     total = df.iloc[:,cn].sum()
     buffer = ( # Convert 0.04 from axes coords to screen coords,
@@ -106,7 +122,7 @@ def add_plots( nCols : int,
              horizontalalignment = 'center',
              color = 'w',
              fontproperties = font_thin,
-             fontsize = 6 )
+             fontsize = 8 )
   return plots
 
 def add_legend(

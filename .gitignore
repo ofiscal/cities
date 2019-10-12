@@ -1,7 +1,7 @@
 *~
 .emacs.desktop*
 Code/TAGS
-Code/temp.py
+Code/temp*.py
 Untitled*.ipynb
 __pycache__/
 clone/
