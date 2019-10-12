@@ -9,7 +9,6 @@ if True:
   #
   import Code.common as c
   from Code.util.misc import to_front
-  import Code.build.use_keys as uk
   import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
 
@@ -22,12 +21,25 @@ if True: # folders
     os.makedirs(         dest )
 
 if True: # input data
-  geo = ( uk.depts_and_munis
-         [["dept code","muni code","muni count"]] )
   dfs0, dfs1 = {}, {} # input, output
   for s in s4.series:
     dfs0[s.name] = pd.read_csv(
       source + "/" + s.name + ".csv" )
+
+if True: # count munis per department
+  # PITFALL: The number depends on the subsample size being used.
+  # That's why we can't just use the data from build.use_keys.geo
+  pre_muni_counts = (
+    dfs0[s.name]
+    [["dept code","muni code"]] .
+    drop_duplicates()
+    [ dfs0[s.name]["muni code"] > 0 ] ) # discard dept-level rows
+  pre_muni_counts["count"] = 1
+  muni_counts = (
+    pre_muni_counts .
+    drop( columns = "muni code" ) .
+    groupby( "dept code" ) .
+    agg('sum') )
 
 if True: # define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell
@@ -48,10 +60,8 @@ Output: The same, plus a new "average" muni.
       # (true in some subsamples), leave the input unchanged;
       # don't try to add an average municipality.
     munis_in_dept = int(
-        geo.loc[ ( geo       ["dept code"] ==
-                   df.iloc[0]["dept code"] ),
-                 "muni count" ] .
-        head(1) )
+      muni_counts.loc[
+        df.iloc[0]["dept code"] ] )
     avg = df.iloc[0] . copy()
     avg["muni code"] = -2 # TODO ? Ugly.
     avg[money_cols] = ( # The missing-rows-aware mean.
@@ -61,7 +71,10 @@ Output: The same, plus a new "average" muni.
                        axis="rows",
                        sort=True ) . # because unequal column orders
              drop(columns = ["index"] ) )
-  if True: # test it
+  if c.subsample==1: # PITFALL: This test only works if subsample is 1.
+    # That's because the number of munis in the department,
+    # and whether dept 99 is even in the sample,
+    # depends on the subsample.
     x = pd.DataFrame( [ [99,  0, 1, 2, 1],
                         [99,  1, 1, 65, 2],
                         [99,  2, 5, 15, 3] ],
