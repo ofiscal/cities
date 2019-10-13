@@ -75,11 +75,13 @@ Output: The same, plus a new "average" muni.
     avg[money_cols] = ( # The missing-rows-aware mean.
       df[money_cols] . sum() /
       munis_in_dept )
-    return ( pd.concat( [ pd.DataFrame([avg]),
+    res = ( pd.concat( [ pd.DataFrame([avg]),
                          df0],
                        axis="rows",
                        sort=True ) . # because unequal column orders
-             drop(columns = ["index"] ) )
+            drop(columns = ["index"] ) )
+    res["munis in dept"] = munis_in_dept
+    return res
   if True:
     x = pd.DataFrame( [ [99,  0, 1, 2, 1],
                         [99,  1, 1, 65, 2],
@@ -124,15 +126,16 @@ for s in s2.series: # add average muni to the to -pct data sets
         reset_index() .
         drop( columns = ["dc","level_3"] ) ) )
 
-
 if True: # tests
   assert dfs0["gastos"]   .equals( dfs1["gastos"] )
   assert dfs0["ingresos"] .equals( dfs1["ingresos"] )
   for s in s4.series_pct: # test dimensions
     pct_series =     dfs1[ s.name      ]
     non_pct_series = dfs1[ s.name[:-4] ] # drop the "-pct" suffix
-    assert pct_series.columns.equals(
-       non_pct_series.columns )
+    assert ( pct_series.columns .
+             drop( "munis in dept") .
+             equals(
+               non_pct_series.columns ) )
     nAverages = len(
       non_pct_series
       [ non_pct_series["muni code"] != 0 ] .
