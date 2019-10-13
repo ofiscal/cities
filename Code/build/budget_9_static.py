@@ -86,17 +86,63 @@ if testing:
 
 def static_avg_with_otros(
     filename : str,
+    money_col : str,
     dept_code : int,
     sm : pd.DataFrame # result of calling static_muni()
-    ) -> pd.DataFrame:
+    ) -> pd.Series:
   """ Only needed for gastos data sets."""
   top_rows = sm.index.drop( "Otros" )
-  df = static_muni( filename, dept_code, -2 )
-  df_top = df.loc[top_rows]
-  df_bottom = pd.Series( [ df . copy() .
-                           drop( index = top_rows ) .
-                           sum() ],
-                         index = ["Otros"] )
-  return ( pd.concat( [df_top,df_bottom] ) .
-           loc[df.index] ) # reorder
+  avg = static_avg( filename, money_col, dept_code )
+  avg_top = avg.loc[top_rows]
+  avg_bottom = ( pd.Series( [ avg . copy() .
+                              drop( index = top_rows ) .
+                              sum() ],
+                            index = ["Otros"] ) .
+                 fillna(0) )
+  return ( pd.concat( [avg_top,avg_bottom] ) )
+#           loc[avg.index] )
+
+if testing: # Test by hand
+  static_avg_with_otros(
+    "gastos-pct",
+    "item oblig",
+    25,
+    static_muni( "gastos-pct", 25, 25873 ) )
+
+def static_muni_pair(
+    filename : str,
+    money_col : str,
+    dept_code : int,
+    muni_code : int,
+    ) -> pd.DataFrame:
+  m = static_muni(
+    filename, dept_code, muni_code )
+  m_name = str( geo[geo["muni code"]==muni_code]["muni"].iloc[0] )
+  d_name = str( geo[geo["muni code"]==muni_code]["dept"].iloc[0] )
+  a = ( ( static_avg_with_otros(
+            filename, money_col, dept_code, m ) )
+        if filename == "gastos-pct"
+        else static_avg(
+            filename, money_col, dept_code ) )
+  return pd.DataFrame(
+    { m_name                  : m,
+      "promedio en " + d_name : a } )
+
+if testing:
+  static_muni_pair( "gastos-pct", "item oblig", 25, 25873 )
+  static_muni_pair( "ingresos-pct", "item total", 25, 25873 )
+
+for s in s4.series_pct:
+  ( geo[geo["muni code"] > 0] .
+      # exclude rows about depts or average munis
+    apply(
+      ( lambda row:
+        static_muni_pair( s.name,
+                          s.money_cols[0],
+                          row["dept code"],
+                          row["muni code"] ) .
+        to_csv( by_place_root + "/" + row["dept"] + "/" +
+                row["muni"] + "/" + s.name + "-compare.csv" ) ),
+      axis = "columns" ) )
+
 
