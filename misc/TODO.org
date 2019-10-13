@@ -81,7 +81,7 @@ For all real and promedio munis:
   For gastos, keep the top gastos, lump the rest into "other".
     Since there is no year axis to worry about, this should be easier
     than it was for the pivots.
-**** TODO draw bar charts
+**** TODO draw paired bar charts
 Muni on left, average on right, paired by spending item.
 Legend above.
 Labels centered between each pair of bars.

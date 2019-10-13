@@ -8,6 +8,7 @@ if True:
   import pandas as pd
   #
   import Code.common as c
+  import Code.metadata.terms as t
   from Code.util.misc import to_front
   import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
@@ -32,20 +33,30 @@ if True: # count munis per department
   pre_muni_counts = (
     dfs0[s.name]
     [["dept code","muni code"]] .
-    drop_duplicates()
-    [ dfs0[s.name]["muni code"] > 0 ] ) # discard dept-level rows
+    drop_duplicates() )
+  pre_muni_counts = ( # discard dept-level rows
+    pre_muni_counts .
+    loc [ dfs0[s.name]["muni code"] > 0 ] )
   pre_muni_counts["count"] = 1
   muni_counts = (
     pre_muni_counts .
     drop( columns = "muni code" ) .
     groupby( "dept code" ) .
     agg('sum') )
+  def get_muni_count( dc : int ) -> int:
+    return (
+      int( muni_counts.loc[
+        df["dc"].iloc[0] ] )
+      if dc in muni_counts.index
+      else 1 ) # TODO ? ugly, ought to be Optional.
+               # (Fails for depts with only dept-level info.)
 
 if True: # define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell
   def prepend_avg_muni( index_cols : List[str],
                         money_cols : List[str],
-                        df0 : pd.DataFrame
+                        munis_in_dept : int,
+                        df0 : pd.DataFrame,
                       ) -> pd.DataFrame:
     """
 Input: A slice with constant (dept,year,item categ).
@@ -59,22 +70,17 @@ Output: The same, plus a new "average" muni.
       # If there is no muni-level info, only dept-level
       # (true in some subsamples), leave the input unchanged;
       # don't try to add an average municipality.
-    munis_in_dept = int(
-      muni_counts.loc[
-        df.iloc[0]["dept code"] ] )
     avg = df.iloc[0] . copy()
     avg["muni code"] = -2 # TODO ? Ugly.
     avg[money_cols] = ( # The missing-rows-aware mean.
-        df[money_cols] . sum() / munis_in_dept )
+      df[money_cols] . sum() /
+      munis_in_dept )
     return ( pd.concat( [ pd.DataFrame([avg]),
                          df0],
                        axis="rows",
                        sort=True ) . # because unequal column orders
              drop(columns = ["index"] ) )
-  if c.subsample==1: # PITFALL: This test only works if subsample is 1.
-    # That's because the number of munis in the department,
-    # and whether dept 99 is even in the sample,
-    # depends on the subsample.
+  if True:
     x = pd.DataFrame( [ [99,  0, 1, 2, 1],
                         [99,  1, 1, 65, 2],
                         [99,  2, 5, 15, 3] ],
@@ -91,26 +97,33 @@ Output: The same, plus a new "average" muni.
                         columns = ["dept code", "muni code",
                                    "money","cash","pecan"] ) .
           astype(float) )
-    z = ( prepend_avg_muni( ["dept code"], ["money","cash"], x) .
+    z = ( prepend_avg_muni( ["dept code"], ["money","cash"], 4, x) .
           reset_index(drop=True) )
     for cn in y.columns:
       assert y[cn].equals(z[cn])
     del(x,y,z)
 
+index_cols = ["dept code","year","item categ"]
 for s in s2.series: # add average muni to the to -pct data sets
-  index_cols = ["dept code","year","item categ"]
-  if True: # simply copy the peso (not %)-valued data sets
-    dfs1[s.name] = dfs0[s.name]
+  dfs1[s.name] = ( # handle the peso-valued data sets
+    dfs0[s.name] )
   if True: # handle the %-valued data sets
     df = dfs0[s.name + "-pct"]
+    df["dc"] = df["dept code"] # TODO ? ugly
     dfs1[s.name + "-pct"] = to_front(
       ["dept code","muni code"],
       ( df . groupby( index_cols ) .
         apply( lambda df:
-               prepend_avg_muni( index_cols, s.money_cols, df ) .
+               prepend_avg_muni(
+                 index_cols,
+                 s.money_cols,
+                 get_muni_count(
+                   df["dc"].iloc[0] ),
+                 df ) .
                drop( columns = index_cols ) ) .
         reset_index() .
-        drop( columns = ["level_3"] ) ) )
+        drop( columns = ["dc","level_3"] ) ) )
+
 
 if True: # tests
   assert dfs0["gastos"]   .equals( dfs1["gastos"] )

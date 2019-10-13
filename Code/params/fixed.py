@@ -1,4 +1,4 @@
 # PITFALL: Don't include this in the Makefile.
 
-subsample = 1000
+subsample = 100
 
