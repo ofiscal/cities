@@ -44,12 +44,10 @@ if True: # count munis per department
     groupby( "dept code" ) .
     agg('sum') )
   def get_muni_count( dc : int ) -> int:
-    return (
-      int( muni_counts.loc[
-        df["dc"].iloc[0] ] )
-      if dc in muni_counts.index
-      else 1 ) # TODO ? ugly, ought to be Optional.
-               # (Fails for depts with only dept-level info.)
+    return ( int( muni_counts.loc[ dc ] )
+             if dc in muni_counts.index
+             else 1 ) # TODO ? ugly, ought to be Optional.
+    # (Would return Nothing for depts with only dept-level info.)
 
 if True: # define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell
