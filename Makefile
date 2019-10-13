@@ -27,6 +27,7 @@ myPython=PYTHONPATH='.' python3
   budget_6p7_avg_muni			\
   budget_7_verbose			\
   budget_8_pivots			\
+  budget_9_static_compare		\
   sample_tables				\
   pics
 
@@ -43,6 +44,7 @@ all: keys				\
   budget_6p7_avg_muni			\
   budget_7_verbose			\
   budget_8_pivots			\
+  budget_9_static_compare		\
   output/inflation.csv			\
   output/regalias.csv			\
   pics
@@ -120,6 +122,9 @@ budget_7_verbose =					\
 # Listing every place would be tedious.
 budget_8_pivots =					\
   output/pivots/recip-$(ss)/timestamp-for-pivot-tables
+
+budget_9_static_compare =				\
+  output/pivots/recip-$(ss)/timestamp-for-static-compare
 
 sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\
@@ -315,6 +320,17 @@ $(budget_8_pivots):				\
 	$(myPython) Code/build/budget_8_pivots.py $(ss)
 	date
 
+budget_9_static_compare: $(budget_9_static_compare)
+$(budget_9_static_compare):			\
+  $(budget_7_verbose)				\
+  $(budget_8_pivots)				\
+  Code/build/budget_9_static_compare.py		\
+  Code/common.py				\
+  Code/metadata/four_series.py
+	date
+	$(myPython) Code/build/budget_9_static_compare.py $(ss)
+	date
+
 sample_tables: $(sample_tables)
 $(sample_tables):				\
   $(budget_7_verbose)				\
@@ -347,6 +363,7 @@ output/regalias.csv:			\
 pics: $(pics)
 $(pics):			\
   $(budget_8_pivots)		\
+  $(budget_9_static_compare)	\
   Code/build/use_keys.py	\
   Code/draw/lib.py		\
   Code/main.py

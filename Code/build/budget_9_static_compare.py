@@ -13,7 +13,7 @@ if True:
   import Code.metadata.terms as t
   import Code.metadata.four_series as s4
 
-testing = True if c.subsample > 10 else False
+testing = True if c.subsample == 100 else False
 
 if True:
   monolith_root = "output/budget_7_verbose/recip-" + str(c.subsample)
@@ -198,4 +198,7 @@ for s in s4.series_pct:
         to_csv( by_place_root + "/" + row["dept"] + "/" +
                 row["muni"] + "/" + s.name + "-compare.csv" ) ),
       axis = "columns" ) )
+
+( Path( by_place_root + "/" + "timestamp-for-static-compare" ) .
+  touch() )
 
