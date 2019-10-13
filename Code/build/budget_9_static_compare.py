@@ -51,9 +51,9 @@ def static_muni( filename : str,
            iloc[0] )
   fn = ( by_place_root + "/" + d + "/" + m +
          "/" + filename + ".csv" )
-  df = pd.read_csv( fn,
-    index_col="item categ" )
-  assert ~ pd.isnull(df).any().any()
+  df = ( pd.read_csv( fn,
+                      index_col="item categ" ) .
+         fillna(0) )
   df.columns = list( map( int,
                           map( float, df.columns ) ) )
   return ( df[[2016,2017,2018]] .
@@ -83,15 +83,14 @@ def static_avg( filename : str,
   df = df [ (df["dept code"]==dept_code) &
             (df["muni code"] > 0) & # exclude dept-level info
             (df["year"] >= 2016) ] . copy()
-  ms = df["munis in dept"].iloc[0] # .iloc[0] is fine, because
-                                   # |munis| is constant in df
+  muni_years = df["muni-years in dept"].iloc[0]
+    # .iloc[0] is fine, becaused |muni-years| is constant in df
   df = df[["item categ",money_col]]
   dg = ( df .
          groupby( "item categ" ) .
          agg( 'sum' ) .
          reset_index() )
-  res = ( dg[ money_col ] /
-          float(3 * ms) ) # three because there are three years
+  res = dg[ money_col ] / muni_years
   res.index = dg["item categ"]
   return res
 
@@ -105,25 +104,28 @@ if testing: # PITFALL: Theese numbers cannot simply be read off
   df = df [ (df["dept code"]==dc) &
             (df["muni code"] > 0) & # exclude dept-level info
             (df["year"] >= 2016) ] . copy()
+  df[["dept","muni","year","item categ"]]
+  #
   df_readable = df.copy()
   df_readable["item categ"] = df["item categ"] . apply(
     lambda s: s[:10] )
-  df_readable[["dept","muni","year","item categ"]]
   df_readable.drop( columns = ["dept","muni"] )
-  df["munis in dept"].describe()
-  ms = df["munis in dept"].iloc[0] # .iloc[0] is fine, because
-                                   # |munis| is constant in df
+  df_readable.drop( columns = ["dept","muni",
+                               "munis in dept","muni-years in dept"] )
+  #
+  df.describe().transpose()
+  muni_years = df["muni-years in dept"].iloc[0]
+  #
   df = df[["item categ",money_col]]
-  dg = ( df .
-         groupby( "item categ" ) .
-         agg( 'sum' ) .
-         reset_index() )
-  test = ( dg[ money_col ] /
-          float(3 * ms) ) # three because there are three years
-  test.index = dg["item categ"]
+  test = ( ( ( df .
+               groupby( "item categ" ) .
+               agg( 'sum' ) ) /
+             muni_years )
+           [money_col] )
   func = ( static_avg( filename, money_col, dc ) .
            drop( columns = ["dept code","dept"] ) )
-  res = pd.concat( [test,func], axis = "columns" )
+  res = pd.concat( [test,func],
+                   axis = "columns" )
   res.columns = ["test","func"]
   res
 
@@ -156,7 +158,8 @@ if testing: # Test by hand
                                 dc,
                                 sm )
   res = pd.concat( [sm,sa,sawo],
-                   axis = "columns" )
+                   axis = "columns",
+                   sort = True )
   res.columns = ["sa","sm","sawo"]
   res
 
@@ -171,6 +174,7 @@ def static_muni_pair( filename : str,
                 ["muni"].iloc[0] )
   d_name = str( geo[geo["muni code"]==muni_code]
                 ["dept"].iloc[0] )
+  print( d_name, str(dept_code), m_name, str(muni_code) )
   a = ( static_avg_with_otros(
           filename, money_col, dept_code, m )
         if filename == "gastos-pct"
