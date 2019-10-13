@@ -19,13 +19,16 @@ if True: # folders
 if True: # merge geo data into main data
   dfs = {}
   for s in s4.series:
+    extra_columns = ( ["munis in dept"]
+                      if s.name[-4:] == "-pct"
+                      else [] )
     sn = s.name
     df = util.to_front(
       ["dept","muni","year"] + s.money_cols + ["item categ"],
       uk.merge_geo(
         pd.read_csv( source + "/" + sn + ".csv" )
         [ ["muni code","dept code","year","item categ"]
-          + s.money_cols] ) )
+          + extra_columns + s.money_cols] ) )
     df.loc[ df["muni code"] == 0,
             "muni" ] = "dept"
     df.loc[ df["muni code"] == -2,
