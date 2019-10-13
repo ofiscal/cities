@@ -19,7 +19,7 @@ if True: # folders
 if True: # merge geo data into main data
   dfs = {}
   for s in s4.series:
-    extra_columns = ( ["munis in dept"]
+    extra_columns = ( ["munis in dept","muni-years in dept"]
                       if s.name[-4:] == "-pct"
                       else [] )
     sn = s.name

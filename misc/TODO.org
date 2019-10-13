@@ -50,6 +50,12 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
+** TODO count, use muni-years, not just munis
+*** why
+Because not every muni has every year.
+This means those counts must be separate across ingresos and gastos.
+*** DONE count them
+*** TODO use them in stage 9 (static compare)
 ** TODO draw charts
 *** DONE shrink numbers
 **** smaller font

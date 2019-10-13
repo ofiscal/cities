@@ -30,23 +30,51 @@ if True: # input data
 if True: # count munis per department
   # PITFALL: The number depends on the subsample size being used.
   # That's why we can't just use the data from build.use_keys.geo
-  pre_muni_counts = (
-    dfs0[s.name]
-    [["dept code","muni code"]] .
-    drop_duplicates() )
-  pre_muni_counts = ( # discard dept-level rows
-    pre_muni_counts .
-    loc [ dfs0[s.name]["muni code"] > 0 ] )
-  pre_muni_counts["count"] = 1
-  muni_counts = (
-    pre_muni_counts .
-    drop( columns = "muni code" ) .
-    groupby( "dept code" ) .
-    agg('sum') )
-  def get_muni_count( dc : int ) -> int:
-    return ( int( muni_counts.loc[ dc ] )
+  # PITFALL: Not every muni has data for every year in every file.
+  # That's why there are two data sets, one for ingresos and one for gastos,
+  # and why we count muni-years as well as munis.
+  # PITFALL: Later (in stage 9, "static compare")
+  # we take the average of years > 2015,
+  # which is why we only count those years here.
+  counts = {}
+  for s in s4.series_pct:
+    pre_counts = (
+      dfs0[s.name]
+      [["dept code","muni code","year"]] )
+    pre_counts = ( # discard dept-level rows
+      pre_counts . loc[
+        pre_counts["muni code"] > 0 ] )
+    pre_counts["count"] = 1
+    muni_counts = (
+      pre_counts
+      [["dept code","muni code","count"]] .
+      drop_duplicates() .
+      groupby( "dept code" ) .
+      agg('sum')
+      ["count"] )
+    muni_year_counts = (
+      pre_counts
+      [pre_counts["year"] > 2015]
+      [["dept code","muni code","year","count"]] .
+      drop_duplicates() .
+      groupby( ["dept code"] ) .
+      agg('sum')
+      ["count"] )
+    counts[s.name] = pd.concat( [ muni_counts,
+                                  muni_year_counts],
+                                axis = "columns" )
+    counts[s.name].columns = ["munis","muni-years"]
+  def get_muni_count( fn, dc : int ) -> int:
+    return ( int( counts[fn] .
+                  loc[ dc, "munis" ] )
              if dc in muni_counts.index
              else 1 ) # TODO ? ugly, ought to be Optional.
+    # (Would return Nothing for depts with only dept-level info.)
+  def get_muni_year_count( fn, dc : int ) -> int:
+    return ( int( counts[fn] .
+                  loc[ dc, "muni-years" ] )
+             if dc in muni_counts.index
+             else 3 ) # TODO ? ugly, ought to be Optional.
     # (Would return Nothing for depts with only dept-level info.)
 
 if True: # define how to compute the average non-dept muni
@@ -54,6 +82,7 @@ if True: # define how to compute the average non-dept muni
   def prepend_avg_muni( index_cols : List[str],
                         money_cols : List[str],
                         munis_in_dept : int,
+                        muni_years_in_dept : int,
                         df0 : pd.DataFrame,
                       ) -> pd.DataFrame:
     """
@@ -79,6 +108,7 @@ Output: The same, plus a new "average" muni.
                        sort=True ) . # because unequal column orders
             drop(columns = ["index"] ) )
     res["munis in dept"] = munis_in_dept
+    res["muni-years in dept"] = muni_years_in_dept
     return res
   if True:
     x = pd.DataFrame( [ [99,  0, 1, 2, 1],
@@ -97,7 +127,7 @@ Output: The same, plus a new "average" muni.
                         columns = ["dept code", "muni code",
                                    "money","cash","pecan"] ) .
           astype(float) )
-    z = ( prepend_avg_muni( ["dept code"], ["money","cash"], 4, x) .
+    z = ( prepend_avg_muni( ["dept code"], ["money","cash"], 4, 8, x) .
           reset_index(drop=True) )
     for cn in y.columns:
       assert y[cn].equals(z[cn])
@@ -107,18 +137,19 @@ index_cols = ["dept code","year","item categ"]
 for s in s2.series: # add average muni to the to -pct data sets
   dfs1[s.name] = ( # handle the peso-valued data sets
     dfs0[s.name] )
+  spct = s.name + "-pct"
   if True: # handle the %-valued data sets
-    df = dfs0[s.name + "-pct"]
+    df = dfs0[ spct ]
     df["dc"] = df["dept code"] # TODO ? ugly
-    dfs1[s.name + "-pct"] = to_front(
+    dfs1[spct] = to_front(
       ["dept code","muni code"],
       ( df . groupby( index_cols ) .
         apply( lambda df:
                prepend_avg_muni(
                  index_cols,
                  s.money_cols,
-                 get_muni_count(
-                   df["dc"].iloc[0] ),
+                 get_muni_count(      spct, df["dc"].iloc[0] ),
+                 get_muni_year_count( spct, df["dc"].iloc[0] ),
                  df ) .
                drop( columns = index_cols ) ) .
         reset_index() .
@@ -131,7 +162,8 @@ if True: # tests
     pct_series =     dfs1[ s.name      ]
     non_pct_series = dfs1[ s.name[:-4] ] # drop the "-pct" suffix
     assert ( pct_series.columns .
-             drop( "munis in dept") .
+             drop( ["munis in dept",
+                    "muni-years in dept"] ) .
              equals(
                non_pct_series.columns ) )
     nAverages = len(
