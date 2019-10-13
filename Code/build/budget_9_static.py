@@ -13,7 +13,7 @@ if True:
   import Code.metadata.terms as t
   import Code.metadata.four_series as s4
 
-testing = True
+testing = True if c.subsample > 10 else False
 
 if True:
   monolith_root = "output/budget_7_verbose/recip-" + str(c.subsample)
@@ -53,26 +53,41 @@ def static_muni( filename : str,
          "/" + filename + ".csv" )
   df = pd.read_csv( fn,
     index_col="item categ" )
+  assert ~ pd.isnull(df).any().any()
   df.columns = list( map( int,
                           map( float, df.columns ) ) )
   return ( df[[2016,2017,2018]] .
-           sum( axis="columns" ) )
+           mean( axis="columns" ) )
 
 if testing: # Test by hand
-  static_muni( "gastos-pct", 25, 25873 )
+  dc = 25
+  mc = 25873
+  d = monolith["gastos-pct"]
+  d = ( d[ ( d["dept code"] ==dc    ) &
+           ( d["muni code"] == mc) &
+           ( d["year"]      >= 2016 ) ] )
+  d = d . drop( columns = ["dept","muni"] )
+  d = ( d[ ( d["item categ"] == "Salud" ) ] .
+        copy() )
+  d["item categ"] = ( d["item categ"] .
+                      apply( lambda s: s[:10] ) )
+  d
+  d["item oblig"].mean()
+  static_muni( "gastos-pct", 25, mc )
 
 def static_avg( filename : str,
                 money_col : str,
                 dept_code : int,
               ) -> pd.Series:
-  df = monolith[filename] . copy()
+  df = monolith[filename]
   df = df [ (df["dept code"]==dept_code) &
             (df["muni code"] > 0) & # exclude dept-level info
-            (df["year"] >= 2016) ]
-  ms = df["munis in dept"].iloc[0]
-  df = df.drop( columns = "munis in dept" )
+            (df["year"] >= 2016) ] . copy()
+  ms = df["munis in dept"].iloc[0] # .iloc[0] is fine, because
+                                   # |munis| is constant in df
+  df = df[["item categ",money_col]]
   dg = ( df .
-         groupby( ["dept code","dept","item categ"] ) .
+         groupby( "item categ" ) .
          agg( 'sum' ) .
          reset_index() )
   res = ( dg[ money_col ] /
@@ -80,9 +95,37 @@ def static_avg( filename : str,
   res.index = dg["item categ"]
   return res
 
-if testing:
-  ( static_avg( "gastos-pct", "item oblig", 25 ) .
-    drop( columns = ["dept code","dept"] ) )
+if testing: # PITFALL: Theese numbers cannot simply be read off
+  # the time-series charts; they require averaging  the last three years
+  # for every muni in the dept, and then averaging those.
+  dc = 19
+  filename = "gastos-pct"
+  money_col = "item oblig"
+  df = monolith[filename]
+  df = df [ (df["dept code"]==dc) &
+            (df["muni code"] > 0) & # exclude dept-level info
+            (df["year"] >= 2016) ] . copy()
+  df_readable = df.copy()
+  df_readable["item categ"] = df["item categ"] . apply(
+    lambda s: s[:10] )
+  df_readable[["dept","muni","year","item categ"]]
+  df_readable.drop( columns = ["dept","muni"] )
+  df["munis in dept"].describe()
+  ms = df["munis in dept"].iloc[0] # .iloc[0] is fine, because
+                                   # |munis| is constant in df
+  df = df[["item categ",money_col]]
+  dg = ( df .
+         groupby( "item categ" ) .
+         agg( 'sum' ) .
+         reset_index() )
+  test = ( dg[ money_col ] /
+          float(3 * ms) ) # three because there are three years
+  test.index = dg["item categ"]
+  func = ( static_avg( filename, money_col, dc ) .
+           drop( columns = ["dept code","dept"] ) )
+  res = pd.concat( [test,func], axis = "columns" )
+  res.columns = ["test","func"]
+  res
 
 def static_avg_with_otros(
     filename : str,
@@ -90,7 +133,7 @@ def static_avg_with_otros(
     dept_code : int,
     sm : pd.DataFrame # result of calling static_muni()
     ) -> pd.Series:
-  """ Only needed for gastos data sets."""
+  """ Like `static_avg()`, but lumps together every row not in the `sm` argument. Only for gastos data sets only."""
   top_rows = sm.index.drop( "Otros" )
   avg = static_avg( filename, money_col, dept_code )
   avg_top = avg.loc[top_rows]
@@ -99,38 +142,49 @@ def static_avg_with_otros(
                               sum() ],
                             index = ["Otros"] ) .
                  fillna(0) )
-  return ( pd.concat( [avg_top,avg_bottom] ) )
-#           loc[avg.index] )
+  return pd.concat( [avg_top, avg_bottom] )
 
 if testing: # Test by hand
-  static_avg_with_otros(
-    "gastos-pct",
-    "item oblig",
-    25,
-    static_muni( "gastos-pct", 25, 25873 ) )
+  dc = 25
+  mc = 25873
+  sm = static_muni( "gastos-pct", dc, mc )
+  sa = static_avg( "gastos-pct",
+                   "item oblig",
+                   dc )
+  sawo = static_avg_with_otros( "gastos-pct",
+                                "item oblig",
+                                dc,
+                                sm )
+  res = pd.concat( [sm,sa,sawo],
+                   axis = "columns" )
+  res.columns = ["sa","sm","sawo"]
+  res
 
-def static_muni_pair(
-    filename : str,
-    money_col : str,
-    dept_code : int,
-    muni_code : int,
-    ) -> pd.DataFrame:
+def static_muni_pair( filename : str,
+                      money_col : str,
+                      dept_code : int,
+                      muni_code : int
+                    ) -> pd.DataFrame:
   m = static_muni(
     filename, dept_code, muni_code )
-  m_name = str( geo[geo["muni code"]==muni_code]["muni"].iloc[0] )
-  d_name = str( geo[geo["muni code"]==muni_code]["dept"].iloc[0] )
-  a = ( ( static_avg_with_otros(
-            filename, money_col, dept_code, m ) )
+  m_name = str( geo[geo["muni code"]==muni_code]
+                ["muni"].iloc[0] )
+  d_name = str( geo[geo["muni code"]==muni_code]
+                ["dept"].iloc[0] )
+  a = ( static_avg_with_otros(
+          filename, money_col, dept_code, m )
         if filename == "gastos-pct"
         else static_avg(
-            filename, money_col, dept_code ) )
+               filename, money_col, dept_code ) )
   return pd.DataFrame(
     { m_name                  : m,
       "promedio en " + d_name : a } )
 
 if testing:
+  ing = static_muni_pair( "ingresos-pct", "item total", 25, 25873 )
+  ing.index = map( lambda s: s[:20], ing.index )
+  ing
   static_muni_pair( "gastos-pct", "item oblig", 25, 25873 )
-  static_muni_pair( "ingresos-pct", "item total", 25, 25873 )
 
 for s in s4.series_pct:
   ( geo[geo["muni code"] > 0] .
@@ -144,5 +198,4 @@ for s in s4.series_pct:
         to_csv( by_place_root + "/" + row["dept"] + "/" +
                 row["muni"] + "/" + s.name + "-compare.csv" ) ),
       axis = "columns" ) )
-
 
