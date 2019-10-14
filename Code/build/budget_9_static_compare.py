@@ -42,6 +42,7 @@ def static_muni( filename : str,
                  dept_code : int,
                  muni_code : int
                ) -> pd.Series:
+  """Average a muni's values over years after 2015."""
   assert muni_code > 0
   d = str( geo.loc[ geo["muni code"]==muni_code,
                     "dept" ] .
@@ -54,9 +55,10 @@ def static_muni( filename : str,
   df = ( pd.read_csv( fn,
                       index_col="item categ" ) .
          fillna(0) )
-  df.columns = list( map( int,
-                          map( float, df.columns ) ) )
-  return ( df[[2016,2017,2018]] .
+  df.columns = list( map( lambda s: round( float(s) ),
+                          df.columns ) )
+  return ( df[ filter( lambda c: c > 2015,
+                       df.columns ) ] .
            mean( axis="columns" ) )
 
 if testing: # Test by hand
@@ -174,7 +176,7 @@ def static_muni_pair( filename : str,
                 ["muni"].iloc[0] )
   d_name = str( geo[geo["muni code"]==muni_code]
                 ["dept"].iloc[0] )
-  print( d_name, str(dept_code), m_name, str(muni_code) )
+  print( str(dept_code), d_name, str(muni_code), m_name, filename )
   a = ( static_avg_with_otros(
           filename, money_col, dept_code, m )
         if filename == "gastos-pct"

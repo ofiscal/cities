@@ -50,12 +50,12 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
-** TODO count, use muni-years, not just munis
+** DONE count, use muni-years, not just munis
 *** why
 Because not every muni has every year.
 This means those counts must be separate across ingresos and gastos.
-*** DONE count them
-*** TODO use them in stage 9 (static compare)
+*** count them
+*** use them in stage 9 (static compare)
 ** TODO draw charts
 *** DONE shrink numbers
 **** smaller font
@@ -81,7 +81,7 @@ summing years 2016-2018
 That's because the total number of munis in a department
 is calculated from reality, not the subsample.
 Hence the divisor is too big, and the resulting percentages too small.
-**** TODO build tables
+**** DONE build tables
 For all real and promedio munis:
   From time-series %-valued pivot tables, make averages over [2016,2018].
   For gastos, keep the top gastos, lump the rest into "other".
@@ -230,6 +230,9 @@ pd.set_option('display.max_rows', 500)
   [              spacetime + ["item categ","item total"]] .
   sort_values(   spacetime + ["item categ","item total"] ) )
 * TODO ? investigate
+** TODO : verify muni-year count for a department that was missing a year
+missing 2018 for some data set:
+CHOCÓ 27 ALTO BAUDÓ 27025.0
 ** TODO ? integ tests
 *** for stages
 Have tested through 6p7, and they're good.
