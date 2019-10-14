@@ -11,7 +11,9 @@ if True:
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
   import Code.draw.time_series as ts
+  import Code.draw.pairs as pairs
   import Code.draw.style as style
+  import Code.draw.newlines as newlines
 
 root = "output/pivots/recip-" + str(c.subsample)
 
@@ -59,16 +61,22 @@ def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
   print("folder: ", folder)
-  for file in s4.series:
-    pivot = (
-      pd.read_csv(
-        folder + "/" + file.name + ".csv",
-        index_col="item categ" ) )
-    with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
-      drawPage( pivot,
+  for  (file,                   insertNewlines, index_col,    drawChart) in [
+       ("ingresos-pct-compare", True,           0,            pairs.drawPairs),
+       ("gastos-pct-compare",   True,           0,            pairs.drawPairs),
+       ("ingresos",             False,          "item categ", ts.drawStacks),
+       ("gastos",               False,          "item categ", ts.drawStacks) ]:
+    df = pd.read_csv(
+      folder + "/" + file + ".csv",
+      index_col = index_col )
+    if insertNewlines:
+      df.index = list( map( lambda s: newlines.remap[s],
+                            df.index ) )
+    with PdfPages( folder + "/" + file + ".pdf" ) as pdf:
+      drawPage( df,
                 ["Title?"],
                 ["Text?"],
-                ts.drawStacks )
+                drawChart )
       pdf.savefig( facecolor=style.background_color )
       plt.close()
 
