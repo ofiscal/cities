@@ -3,7 +3,7 @@ PITFALL
 This only corrects the peso-valued columns we are interested in --
 namely "item recaudo" and "item oblig".
 
-What this does: This multiplies pre-2016 values by 1000,
+What this does: This multiplies pre-2017 values by 1000,
 because (as you might guess) in the raw data,
 pre-2017 peso values are about 1000 times smaller than those post-2016.
 
