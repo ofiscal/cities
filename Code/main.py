@@ -36,7 +36,7 @@ def drawText( ax : mplot.axes.SubplotBase,
               title : List[str],
               text : List[str] ):
   plt.text( 0.5, 0.9,
-            "".join( title ),
+            "\n".join( title ),
             color = 'k',
             fontproperties = style.font_thick,
             horizontalalignment="center" )
@@ -85,11 +85,18 @@ def create_pdf( dept : str,
   print("folder: ", folder)
   with PdfPages( folder + "/report.pdf" ) as pdf:
     drawTitlePage( muni, pdf )
-    for  (file,                insertNewlines, index_col,    drawChart) in [
-         ("ingresos-pct-compare", True,        0,            pairs.drawPairs),
-         ("gastos-pct-compare",   True,        0,            pairs.drawPairs),
-         ("ingresos",             False,       "item categ", ts.drawStacks),
-         ("gastos",               False,       "item categ", ts.drawStacks) ]:
+    for  (file, insertNewlines, title, text, index_col, drawChart) in [
+         ( "ingresos-pct-compare", True,
+           ["¿De dónde viene la plata de Caucasia",
+            "y cómo se compara con el promedio de Antioquia?"],
+           ["Se muestra el acumulado de los ingresos de esta administración (2015 a 2018) en cada sector."],
+           0,            pairs.drawPairs),
+         ( "gastos-pct-compare",   True, [], [],
+           0,            pairs.drawPairs),
+         ( "ingresos",             False, [], [],
+           "item categ", ts.drawStacks),
+         ( "gastos",               False, [], [],
+           "item categ", ts.drawStacks) ]:
       df = pd.read_csv(
         folder + "/" + file + ".csv",
         index_col = index_col )
@@ -97,8 +104,8 @@ def create_pdf( dept : str,
         df.index = list( map( lambda s: newlines.remap[s],
                               df.index ) )
       drawPageWithChart( df,
-                         ["Title?"],
-                         ["Text?"],
+                         title,
+                         text,
                          pdf,
                          drawChart )
 
