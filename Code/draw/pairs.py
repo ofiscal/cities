@@ -34,6 +34,9 @@ if True: # draw
                         fontsize = 6 )
   ax.legend( (p0[0], p1[0]),
              (df.columns[0], df.columns[1]))
+  plt.grid( True,
+            axis="y",
+            color="orange" )
   ax.autoscale_view()
 
 plt.savefig( "output/a-city-comparison.png" )
