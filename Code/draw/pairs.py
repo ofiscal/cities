@@ -7,6 +7,7 @@ if True:
   import pandas as pd
   #
   import Code.draw.newlines as newlines
+  import matplotlib.ticker as ticker
 
 if True: # read, tweak data
   df = pd.read_csv(
@@ -31,7 +32,11 @@ if True: # draw
     ax.set_title('Title')
     ax.set_xticks(ind + width / 2)
     ax.set_xticklabels( df.index,
-                        fontsize = 6 )
+                        fontsize = 7 )
+    ax.yaxis.set_major_formatter(
+      # https://stackoverflow.com/questions/31357611/format-y-axis-as-percent#comment68265158_35446404
+      ticker.FuncFormatter('{0:.0%}'.format ) )
+
   ax.legend( (p0[0], p1[0]),
              (df.columns[0], df.columns[1]))
   plt.grid( True,
