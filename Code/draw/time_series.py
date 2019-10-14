@@ -14,6 +14,13 @@ if True:
 
 def drawStacks( ax : mplot.axes.SubplotBase,
                 df : pd.DataFrame ):
+  df = df . iloc[::-1] # Revserse column order.
+    # In the bar chart, each row is drawn on top of the previous one.
+    # This reversal causes earlier ("higher")
+    # rows to be drawn above later ones,
+    # which means vertical order of items in the chart corresponds to
+    # the vertical order of items in the data file.
+    # It's a nuance the chart would still make sense without.
   if True: # the dimensions and contents of the data
     nCols : int = len( df.columns )
     nRows : int = len( df.index )

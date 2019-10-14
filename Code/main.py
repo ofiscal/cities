@@ -48,21 +48,14 @@ def drawText( ax : mplot.axes.SubplotBase,
 def drawPage( df : pd.DataFrame,
               title : List[str],
               text : List[str] ):
-  df = df . iloc[::-1] # Revserse column order.
-    # In the bar chart, each row is drawn on top of the previous one.
-    # This reversal causes earlier ("higher")
-    # rows to be drawn above later ones,
-    # which means vertical order of items in the chart corresponds to
-    # the vertical order of items in the data file.
-    # It's a nuance the chart would still make sense without.
   plt.subplots( 2, 1, facecolor = style.background_color )
   ax = plt.subplot( 2, 1, 1 )
   drawText( ax, title, text )
   ax = plt.subplot( 2, 1, 2 )
   ts.drawStacks( ax, df )
 
-def create_pdfs( dept : str,
-                 muni : str ):
+def create_pdf( dept : str,
+                muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
   print("folder: ", folder)
   for file in ( s4.series_pct
@@ -79,8 +72,8 @@ def create_pdfs( dept : str,
 
 geo.apply(
   ( lambda row:
-    create_pdfs( dept = row["dept"],
-                 muni = row["muni"] ) ),
+    create_pdf( dept = row["dept"],
+                muni = row["muni"] ) ),
   axis = "columns" )
 
 ( Path( root + "/" + "timestamp-for-pdfs" ) .
