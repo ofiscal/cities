@@ -8,7 +8,7 @@ if True:
   import Code.common as c
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
-  import Code.draw.lib as lib
+  import Code.draw.time_series as ts
 
 root = "output/pivots/recip-" + str(c.subsample)
 
@@ -21,26 +21,27 @@ if True: # create geo indices to loop over
     drop_duplicates() .
     reset_index( drop=True ) .
     sort_values( ["dept code","muni code"] ) )
-  geo.loc[ geo["muni code"]==0,
-           "muni" ] = "dept"
-  geo.loc[ geo["muni code"]==-2,
-           "muni" ] = "promedio"
+  geo = geo[ geo["muni code"] > 0 ]
+  # geo.loc[ geo["muni code"]==0,
+  #          "muni" ] = "dept"
+  # geo.loc[ geo["muni code"]==-2,
+  #          "muni" ] = "promedio"
 
 def create_pdfs( dept : str,
                  muni : str ):
- folder = ( root + "/" + dept + "/" + muni )
- print("folder: ", folder)
- for file in ( s4.series_pct
-               if muni == "promedio"
-               else s4.series ):
-   pivot = (
-     pd.read_csv(
-       folder + "/" + file.name + ".csv",
-       index_col="item categ" ) )
-   with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
-     lib.drawPage( pivot, ["Title?"], ["Text?"] )
-     pdf.savefig( facecolor=lib.background_color )
-     plt.close()
+  folder = ( root + "/" + dept + "/" + muni )
+  print("folder: ", folder)
+  for file in ( s4.series_pct
+                if muni == "promedio"
+                else s4.series ):
+    pivot = (
+      pd.read_csv(
+        folder + "/" + file.name + ".csv",
+        index_col="item categ" ) )
+    with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
+      ts.drawPage( pivot, ["Title?"], ["Text?"] )
+      pdf.savefig( facecolor=ts.background_color )
+      plt.close()
 
 geo.apply(
   ( lambda row:

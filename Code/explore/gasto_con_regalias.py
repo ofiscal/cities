@@ -56,8 +56,12 @@ long_observed = (
     years_observed["one"] > 5 ] .
   reset_index() ) # we need the index to be a column too
 long_observed.index = long_observed["muni code"]
-( long_observed .
+
+all_muni_sums_over_time = (
+  long_observed .
   apply( ( lambda row:
            muni_sums_over_time( row["muni code"] ) ),
          axis = "columns" ) )
+
+# all_muni_sums_over_time.to_excel( "muni sums by year.xlsx" ) )
 

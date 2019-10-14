@@ -365,7 +365,7 @@ $(pics):			\
   $(budget_8_pivots)		\
   $(budget_9_static_compare)	\
   Code/build/use_keys.py	\
-  Code/draw/lib.py		\
+  Code/draw/time_series.py	\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

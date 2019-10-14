@@ -162,11 +162,13 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
   Para ver información de otros municipios,
   haga clic aquí.
 ** TODO new data
-*** TODO find which money-value column to use from Juan
+*** DONE find which money-value column to use from Juan
+ "Valor Total Pagado Vigencia Con Regalías" : "item oblig"
 *** TODO compare means for that money-valued column by year
 Ask Juan if he gets the same; if so, it's being read correctly.
 *** TODO determine whether to deflate, and whether to scale pre-2017 years
-as needed the other files
+Definitely deflate.
+1000x adjustment not clear.
 *** TODO process through budget_1p5
 Thereafter there are only two series, ingresos and gastos.
 *** stale
