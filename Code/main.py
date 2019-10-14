@@ -47,21 +47,44 @@ def drawText( ax : mplot.axes.SubplotBase,
             verticalalignment="center" )
   ax.axis( 'off' )
 
-def drawPage( df : pd.DataFrame,
-              title : List[str],
-              text : List[str],
-              drawChart ): # a callback
+def drawTitlePage( muni : str,
+                   pdf ):
+  plt.subplots( 2, 1, facecolor = style.background_color )
+  ax = plt.subplot( 1, 1, 1 )
+  text = [ "¿En qué se gasta",
+           "la plata",
+           muni + "?" ]
+  plt.text( 0.5, 0.5,
+            "\n".join( text ),
+            transform = ax.transAxes,
+            color = 'k',
+            fontproperties = style.font_thick,
+            fontsize = 30,
+            verticalalignment="center",
+            horizontalalignment="center")
+  ax.axis( 'off' )
+  pdf.savefig( facecolor=style.background_color )
+  plt.close()
+
+def drawPageWithChart( df : pd.DataFrame,
+                       title : List[str],
+                       text : List[str],
+                       pdf,
+                       drawChart ): # a callback
   plt.subplots( 2, 1, facecolor = style.background_color )
   ax = plt.subplot( 2, 1, 1 )
   drawText( ax, title, text )
   ax = plt.subplot( 2, 1, 2 )
   drawChart( ax, df )
+  pdf.savefig( facecolor=style.background_color )
+  plt.close()
 
 def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
   print("folder: ", folder)
   with PdfPages( folder + "/report.pdf" ) as pdf:
+    drawTitlePage( muni, pdf )
     for  (file,                insertNewlines, index_col,    drawChart) in [
          ("ingresos-pct-compare", True,        0,            pairs.drawPairs),
          ("gastos-pct-compare",   True,        0,            pairs.drawPairs),
@@ -73,12 +96,11 @@ def create_pdf( dept : str,
       if insertNewlines:
         df.index = list( map( lambda s: newlines.remap[s],
                               df.index ) )
-      drawPage( df,
-                ["Title?"],
-                ["Text?"],
-                drawChart )
-      pdf.savefig( facecolor=style.background_color )
-      plt.close()
+      drawPageWithChart( df,
+                         ["Title?"],
+                         ["Text?"],
+                         pdf,
+                         drawChart )
 
 geo.apply(
   ( lambda row:

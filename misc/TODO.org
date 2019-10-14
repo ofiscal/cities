@@ -56,8 +56,8 @@ Because not every muni has every year.
 This means those counts must be separate across ingresos and gastos.
 *** count them
 *** use them in stage 9 (static compare)
-** TODO draw charts
-*** DONE shrink numbers
+** draw charts
+*** shrink numbers
 **** smaller font
 **** write functions to abbreviate numbers
 Find the max number in the table.
@@ -74,25 +74,24 @@ e.g. "millones de pesos" if that's appropriate
 ax.transAxes(_, transform=ax.transData)
 https://matplotlib.org/3.1.1/tutorials/advanced/transforms_tutorial.html
 **** draw only when space permits
-*** TODO compare muni to dept average muni
+*** compare muni to dept average muni
 **** spec
 summing years 2016-2018
-**** DONE PITFALL: In subsamples, average muni looks wrong
+**** PITFALL: In subsamples, average muni looks wrong
 That's because the total number of munis in a department
 is calculated from reality, not the subsample.
 Hence the divisor is too big, and the resulting percentages too small.
-**** DONE build tables
+**** build tables
 For all real and promedio munis:
   From time-series %-valued pivot tables, make averages over [2016,2018].
   For gastos, keep the top gastos, lump the rest into "other".
     Since there is no year axis to worry about, this should be easier
     than it was for the pivots.
-**** TODO draw paired bar charts
+**** draw paired bar charts
  Muni on left, average on right, paired by spending item.
  Legend above.
  Labels centered between each pair of bars.
  Percentage axis.
- Totals above each bar.
 *** compute (muni,series)-specific titles, text, axis names
 **** "(upside down ?)Cuanto dinero recibe mi municipio?"
 **** "(upside down ?)En que se gasta el dinero mi municipio?"
@@ -118,7 +117,7 @@ For all real and promedio munis:
 ***** style: Montserrat black & Montserrat light
   source code: https://github.com/JulietaUla/Montserrat
   main page: https://fonts.google.com/specimen/Montserrat
-*** DONE build a pdf
+*** build a pdf
 **** use matplotlib
 **** DON'T: reportlab is too complex and unfree
   pip3 install reportlab
@@ -161,6 +160,10 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 **** link to all munis
   Para ver información de otros municipios,
   haga clic aquí.
+*** TODO text
+*** TODO colors
+*** TODO scale percentages by total
+*** TODO Totals above each bar.
 ** TODO new data
 *** DONE find which money-value column to use from Juan
  "Valor Total Pagado Vigencia Con Regalías" : "item oblig"
@@ -177,7 +180,6 @@ Thereafter there are only two series, ingresos and gastos.
 **** TODO compare xlsx lengths in OpenOffice to wc results on csv
 **** TODO update team about new data differences, if extant.
   It might bear on what we've published.
-** TODO ? scale percentages by total
 * TODO scripts to read aloud
 ** per muni, % of income from each source
 * DONE ? determine the range of legend lengths
