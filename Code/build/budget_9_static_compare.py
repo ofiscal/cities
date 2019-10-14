@@ -57,9 +57,22 @@ def static_muni( filename : str,
          fillna(0) )
   df.columns = list( map( lambda s: round( float(s) ),
                           df.columns ) )
-  return ( df[ filter( lambda c: c > 2015,
-                       df.columns ) ] .
-           mean( axis="columns" ) )
+  ser = ( df[ filter( lambda c: c > 2015,
+                      df.columns ) ] .
+          mean( axis="columns" ) .
+          sort_values( ascending=False ) )
+  if filename == "ingresos-pct": return ser
+  else: # lump all but the top five gastos
+        # together under "Otros"
+    ser_otros     = pd.Series( ser.loc["Otros"] )
+    ser           = ser . drop( index="Otros" )
+    ser_top       = ser . iloc[0:5]
+    ser_new_otros = pd.Series(
+      pd.concat( [ ser . iloc[5:],
+                   ser_otros ] ) .
+      sum() )
+    ser_new_otros.index = ["Otros"]
+    return pd.concat( [ser_top, ser_new_otros] )
 
 if testing: # Test by hand
   dc = 25
@@ -77,6 +90,7 @@ if testing: # Test by hand
   d["item oblig"].mean()
   static_muni( "gastos-pct", 25, mc )
 
+
 def static_avg( filename : str,
                 money_col : str,
                 dept_code : int,
@@ -87,8 +101,7 @@ def static_avg( filename : str,
             (df["year"] >= 2016) ] . copy()
   muni_years = df["muni-years in dept"].iloc[0]
     # .iloc[0] is fine, becaused |muni-years| is constant in df
-  df = df[["item categ",money_col]]
-  dg = ( df .
+  dg = ( df[["item categ",money_col]] .
          groupby( "item categ" ) .
          agg( 'sum' ) .
          reset_index() )
