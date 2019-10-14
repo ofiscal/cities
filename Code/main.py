@@ -61,18 +61,18 @@ def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
   print("folder: ", folder)
-  for  (file,                   insertNewlines, index_col,    drawChart) in [
-       ("ingresos-pct-compare", True,           0,            pairs.drawPairs),
-       ("gastos-pct-compare",   True,           0,            pairs.drawPairs),
-       ("ingresos",             False,          "item categ", ts.drawStacks),
-       ("gastos",               False,          "item categ", ts.drawStacks) ]:
-    df = pd.read_csv(
-      folder + "/" + file + ".csv",
-      index_col = index_col )
-    if insertNewlines:
-      df.index = list( map( lambda s: newlines.remap[s],
-                            df.index ) )
-    with PdfPages( folder + "/" + file + ".pdf" ) as pdf:
+  with PdfPages( folder + "/report.pdf" ) as pdf:
+    for  (file,                insertNewlines, index_col,    drawChart) in [
+         ("ingresos-pct-compare", True,        0,            pairs.drawPairs),
+         ("gastos-pct-compare",   True,        0,            pairs.drawPairs),
+         ("ingresos",             False,       "item categ", ts.drawStacks),
+         ("gastos",               False,       "item categ", ts.drawStacks) ]:
+      df = pd.read_csv(
+        folder + "/" + file + ".csv",
+        index_col = index_col )
+      if insertNewlines:
+        df.index = list( map( lambda s: newlines.remap[s],
+                              df.index ) )
       drawPage( df,
                 ["Title?"],
                 ["Text?"],
