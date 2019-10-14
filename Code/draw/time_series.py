@@ -8,38 +8,9 @@ if True:
   import matplotlib.font_manager as fm
   import numpy as np
   import pandas as pd
+  #
+  import Code.draw.style as style
   import Code.draw.shorten_numbers as abbrev
-
-def drawPage( df : pd.DataFrame,
-              title : List[str],
-              text : List[str] ):
-  df = df . iloc[::-1] # Revserse column order.
-    # In the bar chart, each row is drawn on top of the previous one.
-    # This reversal causes earlier ("higher")
-    # rows to be drawn above later ones,
-    # which means vertical order of items in the chart corresponds to
-    # the vertical order of items in the data file.
-    # It's a nuance the chart would still make sense without.
-  plt.subplots( 2, 1, facecolor = background_color )
-  ax = plt.subplot( 2, 1, 1 )
-  drawText( ax, title, text )
-  ax = plt.subplot( 2, 1, 2 )
-  drawStacks( ax, df )
-
-def drawText( ax : mplot.axes.SubplotBase,
-              title : List[str],
-              text : List[str] ):
-  plt.text( 0.5, 0.9,
-            "".join( title ),
-            color = 'k',
-            fontproperties = font_thick,
-            horizontalalignment="center" )
-  plt.text( 0, 0.5,
-            "".join( text ),
-            color = 'k',
-            fontproperties = font_thin,
-            verticalalignment="center" )
-  ax.axis( 'off' )
 
 def drawStacks( ax : mplot.axes.SubplotBase,
                 df : pd.DataFrame ):
@@ -104,7 +75,7 @@ def add_plots( nCols : int,
                  verticalalignment = 'center',
                  horizontalalignment = 'center',
                  color = 'w',
-                 fontproperties = font_thin,
+                 fontproperties = style.font_thin,
                  fontsize = 6 )
   floor = ax.transData.transform(( 0, 0 ))[1]
   for cn in range( nCols ): # plot totals above each column
@@ -121,7 +92,7 @@ def add_plots( nCols : int,
              verticalalignment = 'center',
              horizontalalignment = 'center',
              color = 'w',
-             fontproperties = font_thin,
+             fontproperties = style.font_thin,
              fontsize = 8 )
   return plots
 
@@ -148,7 +119,7 @@ def add_legend(
         # in particular using a huge font size.
       fname = "fonts/Montserrat_Light.ttf",
       size = 7),
-    facecolor = background_color,
+    facecolor = style.background_color,
     shadow=True,
 
     # The next arguments:
@@ -169,28 +140,21 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
   ax.set_title( "Cool stuff",
                 color = 'k',
-                fontproperties = font_thick )
+                fontproperties = style.font_thick )
   ax.set_xlabel( "Year",
                  color = 'k',
-                 fontproperties = font_thin )
+                 fontproperties = style.font_thin )
   ax.set_ylabel( units,
                  color = 'k',
-                 fontproperties = font_thin )
+                 fontproperties = style.font_thin )
 
   plt.xticks( xvals, df.columns )
   plt.setp( ax.get_xticklabels(),
             visible = True,
             color = 'k',
-            fontproperties = font_thin )
+            fontproperties = style.font_thin )
   plt.setp( ax.get_yticklabels(), visible = False )
   ax.tick_params( axis='x', which='both', length=0 )
   ax.tick_params( axis='y', which='both', length=0 )
   ax.set_frame_on(False)
-
-if True:
-  background_color = "mediumaquamarine"
-  font_thick = fm.FontProperties(
-    fname = "fonts/Montserrat_Black.ttf" )
-  font_thin = fm.FontProperties(
-    fname = "fonts/Montserrat_Light.ttf" )
 

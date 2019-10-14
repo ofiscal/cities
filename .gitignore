@@ -5,6 +5,7 @@ Code/temp*.py
 Untitled*.ipynb
 __pycache__/
 clone/
+data/gasto-con-regalias
 data/regions/source_material
 data/sisfut/csv
 data/sisfut/orig-xlsx

@@ -88,11 +88,11 @@ For all real and promedio munis:
     Since there is no year axis to worry about, this should be easier
     than it was for the pivots.
 **** TODO draw paired bar charts
-Muni on left, average on right, paired by spending item.
-Legend above.
-Labels centered between each pair of bars.
-Percentage axis.
-Totals above each bar.
+ Muni on left, average on right, paired by spending item.
+ Legend above.
+ Labels centered between each pair of bars.
+ Percentage axis.
+ Totals above each bar.
 *** compute (muni,series)-specific titles, text, axis names
 **** "(upside down ?)Cuanto dinero recibe mi municipio?"
 **** "(upside down ?)En que se gasta el dinero mi municipio?"
