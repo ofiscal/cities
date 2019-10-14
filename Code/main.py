@@ -47,26 +47,28 @@ def drawText( ax : mplot.axes.SubplotBase,
 
 def drawPage( df : pd.DataFrame,
               title : List[str],
-              text : List[str] ):
+              text : List[str],
+              drawChart ): # a callback
   plt.subplots( 2, 1, facecolor = style.background_color )
   ax = plt.subplot( 2, 1, 1 )
   drawText( ax, title, text )
   ax = plt.subplot( 2, 1, 2 )
-  ts.drawStacks( ax, df )
+  drawChart( ax, df )
 
 def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
   print("folder: ", folder)
-  for file in ( s4.series_pct
-                if muni == "promedio"
-                else s4.series ):
+  for file in s4.series:
     pivot = (
       pd.read_csv(
         folder + "/" + file.name + ".csv",
         index_col="item categ" ) )
     with PdfPages( folder + "/" + file.name + ".pdf" ) as pdf:
-      drawPage( pivot, ["Title?"], ["Text?"] )
+      drawPage( pivot,
+                ["Title?"],
+                ["Text?"],
+                ts.drawStacks )
       pdf.savefig( facecolor=style.background_color )
       plt.close()
 
