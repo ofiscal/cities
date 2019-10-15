@@ -51,13 +51,13 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
                         text : List[str] ):
   plt.text( 0.5, 0.9,
             "\n".join( title ),
-            color = 'k',
+            color = design.orange,
             fontproperties = design.font_thick,
             fontsize = design.sizeText_chartPage,
             horizontalalignment="center" )
   plt.text( 0, 0.5,
             "\n".join( text ),
-            color = 'k',
+            color = design.orange,
             fontproperties = design.font_thin,
             fontsize = design.sizeText_chartBody,
             verticalalignment="center" )
@@ -95,7 +95,7 @@ def drawZenQuestions( muni : str,
     "\n".join(
       [ "Como ciudadano de " + muni + ", usted puede observar",
         "el desempeño del gobierno municipal mejor que nadie." ] ),
-    color = 'k',
+    color = design.orange,
     fontproperties = design.font_thick,
     fontsize = design.sizeText_zenPageTitle,
     horizontalalignment="center" )
@@ -112,7 +112,7 @@ def drawZenQuestions( muni : str,
         "¿Qué gastos habría que recortar?",
         "",
         "¿Qué ingresos tendrían que subir?" ] ),
-    color = 'k',
+    color = design.orange,
     fontproperties = design.font_thin,
     fontsize = design.sizeText_zenPageBody,
     verticalalignment="center" )
@@ -120,13 +120,13 @@ def drawZenQuestions( muni : str,
   plt.text(
     0, 0.1,
     "Su voto determina quien va a manejar los recursos del municipio. ¡Vote!",
-    color = 'k',
+    color = design.teal,
     fontproperties = design.font_thin,
     fontsize = design.sizeText_zenPageBody,
     verticalalignment="center" )
 
   ax.axis( 'off' )
-  pdf.savefig( facecolor=design.background_color )
+  pdf.savefig( facecolor = "white" )
   plt.close()
 
 def drawLastPage( pdf ):
