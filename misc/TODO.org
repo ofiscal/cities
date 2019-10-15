@@ -158,6 +158,8 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 Rename San Andrés to that.
 Bring capital letters to lowercase.
 Test with the longest muni and dept names.
+  Norte de Santander          : longest dept name
+  Villa de San Diego de Ubate : longest muni name
 *** DONE icon
 *** TODO last page
 inc. links
