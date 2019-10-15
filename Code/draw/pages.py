@@ -3,6 +3,7 @@ if True:
   import pandas as pd
   import matplotlib as mplot
   import matplotlib.pyplot as plt
+  import matplotlib.image as mpimg
   #
   import Code.common as c
   import Code.draw.chart.time_series as ts
@@ -12,20 +13,33 @@ if True:
 
 def drawTitlePage( muni : str,
                    pdf ):
-  plt.subplots( 2, 1, facecolor = design.background_color )
-  ax = plt.subplot( 1, 1, 1 )
+  # The figure is divided into 4 rows (and 1 column).
+  # The first row goes to the image;
+  # the rest, to the text.
+  fig = plt.figure(
+    constrained_layout=False,
+    facecolor = design.background_color)
+  grid = fig.add_gridspec(nrows=4, ncols=1)
+
+  ax1 = fig.add_subplot(grid[0, :])
+  ax1.axis( 'off' )
+  img = mpimg.imread('design/Logo_Ofiscal_blanco_horiz.png')
+  imgplot = ax1.imshow( img )
+  plt.imshow(img)
+
+  ax2 = fig.add_subplot(grid[1:, :])
+  ax2.axis( 'off' )
   plt.text(
     0.5, 0.5,
     "\n".join(
       [ "¿En qué se gasta", "la plata",
         muni + "?" ]),
-    transform = ax.transAxes,
+    transform = ax2.transAxes,
     color = 'k',
     fontproperties = design.font_thick,
     fontsize = 30,
     verticalalignment="center",
     horizontalalignment="center")
-  ax.axis( 'off' )
   pdf.savefig( facecolor=design.background_color )
   plt.close()
 
