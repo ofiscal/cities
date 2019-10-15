@@ -41,7 +41,7 @@ def drawTitlePage( muni : str,
     transform = ax2.transAxes,
     color = design.orange,
     fontproperties = design.font_thick,
-    fontsize = design.titleFontSize,
+    fontsize = design.sizeText_title,
     verticalalignment="center",
     horizontalalignment="center")
   pdf.savefig( facecolor = design.dark_blue )
@@ -54,13 +54,13 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
             "\n".join( title ),
             color = 'k',
             fontproperties = design.font_thick,
-            fontsize = design.chartPageTitleFontSize,
+            fontsize = design.sizeText_chartPage,
             horizontalalignment="center" )
   plt.text( 0, 0.5,
             "\n".join( text ),
             color = 'k',
             fontproperties = design.font_thin,
-            fontsize = design.chartPageBodyTextSize,
+            fontsize = design.sizeText_chartBody,
             verticalalignment="center" )
   ax.axis( 'off' )
 
@@ -99,7 +99,7 @@ def drawZenQuestions( muni : str,
         "el desempeño del gobierno municipal mejor que nadie." ] ),
     color = 'k',
     fontproperties = design.font_thick,
-    fontsize = design.zenPageTitleFontSize,
+    fontsize = design.sizeText_zenPageTitle,
     horizontalalignment="center" )
 
   plt.text(
@@ -116,7 +116,7 @@ def drawZenQuestions( muni : str,
         "¿Qué ingresos tendrían que subir?" ] ),
     color = 'k',
     fontproperties = design.font_thin,
-    fontsize = design.zenPageBodyFontSize,
+    fontsize = design.sizeText_zenPageBody,
     verticalalignment="center" )
 
   plt.text(
@@ -124,7 +124,7 @@ def drawZenQuestions( muni : str,
     "Su voto determina quien va a manejar los recursos del municipio. ¡Vote!",
     color = 'k',
     fontproperties = design.font_thin,
-    fontsize = design.zenPageBodyFontSize,
+    fontsize = design.sizeText_zenPageBody,
     verticalalignment="center" )
 
   ax.axis( 'off' )

@@ -154,7 +154,7 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 **** link to all munis
   Para ver información de otros municipios,
   haga clic aquí.
-*** TODO shorten names
+*** DONE shorten names
 Rename San Andrés to that.
 Bring capital letters to lowercase.
 Test with the longest muni and dept names.

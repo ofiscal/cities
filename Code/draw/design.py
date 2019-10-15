@@ -10,16 +10,16 @@ scale_font = 4
   # By always scaling fonts by the following parameter,
   # we won't have to adjust every font separately
   # after each change to the default figure size.
-titleFontSize = 60 * scale_font
-tickLabelSize = 7 * scale_font
-legendFontSize = 7 * scale_font
-chartPageTitleFontSize = 14 * scale_font
-chartPageBodyTextSize = 8 * scale_font
-zenPageTitleFontSize = 14 * scale_font
-zenPageBodyFontSize = 10 * scale_font
-lineWidth = 0.5 * scale_font
-fontSizeInBars = 6 * scale_font
-fontSizeAboveBars = 8 * scale_font
+sizeText_title = 60 * scale_font
+sizeText_tickLabel = 7 * scale_font
+sizeText_legend = 7 * scale_font
+sizeText_chartPage = 14 * scale_font
+sizeText_chartBody = 8 * scale_font
+sizeText_zenPageTitle = 14 * scale_font
+sizeText_zenPageBody = 10 * scale_font
+sizeText_inBars = 6 * scale_font
+sizeText_aboveBars = 8 * scale_font
+sizeLineWidth = 0.5 * scale_font
 
 # colors
 background_color = "mediumaquamarine"

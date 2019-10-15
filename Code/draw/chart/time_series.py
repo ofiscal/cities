@@ -82,7 +82,7 @@ def add_plots( nCols : int,
                  horizontalalignment = 'center',
                  color = 'w',
                  fontproperties = design.font_thin,
-                 fontsize = design.fontSizeInBars )
+                 fontsize = design.sizeText_inBars )
   for cn in range( nCols ): # plot totals above each column
     total = df.iloc[:,cn].sum()
     buffer = ( # Convert 0.04 from axes coords to screen coords,
@@ -98,7 +98,7 @@ def add_plots( nCols : int,
              horizontalalignment = 'center',
              color = 'w',
              fontproperties = design.font_thin,
-             fontsize = design.fontSizeAboveBars )
+             fontsize = design.sizeText_aboveBars )
   return plots
 
 def add_legend(
@@ -122,7 +122,7 @@ def add_legend(
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
       fname = "design/Montserrat_Light.ttf",
-      size = design.legendFontSize ),
+      size = design.sizeText_legend ),
     facecolor = design.background_color,
     shadow=True,
 
@@ -161,6 +161,6 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
     # (`style` defaults to "scientific").
   for tick in ( ax.xaxis.get_major_ticks() +
                 ax.yaxis.get_major_ticks() ):
-      tick.label.set_fontsize( design.tickLabelSize )
+      tick.label.set_fontsize( design.sizeText_tickLabel )
   ax.set_frame_on(False)
 
