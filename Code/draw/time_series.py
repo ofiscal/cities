@@ -9,7 +9,7 @@ if True:
   import numpy as np
   import pandas as pd
   #
-  import Code.draw.style as style
+  import Code.draw.design as design
   import Code.draw.shorten_numbers as abbrev
 
 def drawStacks( ax : mplot.axes.SubplotBase,
@@ -82,7 +82,7 @@ def add_plots( nCols : int,
                  verticalalignment = 'center',
                  horizontalalignment = 'center',
                  color = 'w',
-                 fontproperties = style.font_thin,
+                 fontproperties = design.font_thin,
                  fontsize = 6 )
   floor = ax.transData.transform(( 0, 0 ))[1]
   for cn in range( nCols ): # plot totals above each column
@@ -99,7 +99,7 @@ def add_plots( nCols : int,
              verticalalignment = 'center',
              horizontalalignment = 'center',
              color = 'w',
-             fontproperties = style.font_thin,
+             fontproperties = design.font_thin,
              fontsize = 8 )
   return plots
 
@@ -124,9 +124,9 @@ def add_legend(
         # and then replace the above `prop = fm.FontProperties(...)` call
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
-      fname = "fonts/Montserrat_Light.ttf",
+      fname = "design/Montserrat_Light.ttf",
       size = 7),
-    facecolor = style.background_color,
+    facecolor = design.background_color,
     shadow=True,
 
     # The next arguments:
@@ -147,19 +147,19 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
   ax.set_title( "Cool stuff",
                 color = 'k',
-                fontproperties = style.font_thick )
+                fontproperties = design.font_thick )
   ax.set_xlabel( "Year",
                  color = 'k',
-                 fontproperties = style.font_thin )
+                 fontproperties = design.font_thin )
   ax.set_ylabel( units,
                  color = 'k',
-                 fontproperties = style.font_thin )
+                 fontproperties = design.font_thin )
 
   plt.xticks( xvals, df.columns )
   plt.setp( ax.get_xticklabels(),
             visible = True,
             color = 'k',
-            fontproperties = style.font_thin )
+            fontproperties = design.font_thin )
   plt.setp( ax.get_yticklabels(), visible = False )
   ax.tick_params( axis='x', which='both', length=0 )
   ax.tick_params( axis='y', which='both', length=0 )
