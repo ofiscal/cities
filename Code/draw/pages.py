@@ -14,17 +14,17 @@ def drawTitlePage( muni : str,
                    pdf ):
   plt.subplots( 2, 1, facecolor = design.background_color )
   ax = plt.subplot( 1, 1, 1 )
-  text = [ "¿En qué se gasta",
-           "la plata",
-           muni + "?" ]
-  plt.text( 0.5, 0.5,
-            "\n".join( text ),
-            transform = ax.transAxes,
-            color = 'k',
-            fontproperties = design.font_thick,
-            fontsize = 30,
-            verticalalignment="center",
-            horizontalalignment="center")
+  plt.text(
+    0.5, 0.5,
+    "\n".join(
+      [ "¿En qué se gasta", "la plata",
+        muni + "?" ]),
+    transform = ax.transAxes,
+    color = 'k',
+    fontproperties = design.font_thick,
+    fontsize = 30,
+    verticalalignment="center",
+    horizontalalignment="center")
   ax.axis( 'off' )
   pdf.savefig( facecolor=design.background_color )
   plt.close()
@@ -56,3 +56,45 @@ def drawPageWithChart( df : pd.DataFrame,
   drawChart( ax, df )
   pdf.savefig( facecolor=design.background_color )
   plt.close()
+
+def drawZenQuestions( muni : str,
+                      pdf ):
+  plt.subplots( 2, 1, facecolor = design.background_color )
+  ax = plt.subplot( 1, 1, 1 )
+
+  plt.text(
+    0.5, 0.9,
+    "\n".join(
+      [ "Como ciudadano de " + muni + ", usted puede observar",
+        "el desempeño del gobierno municipal mejor que nadie." ] ),
+    color = 'k',
+    fontproperties = design.font_thick,
+    horizontalalignment="center" )
+
+  plt.text(
+    0, 0.5,
+    "\n".join(
+      [ "¿Se están gastando adecuadamente los recursos del municipio?",
+        "",
+        "¿Qué promesas están haciendo los candidatos?",
+        "",
+        "¿Sí alcanza la plata para lo que están prometiendo?",
+        "",
+        "¿Qué gastos habría que recortar?",
+        "",
+        "¿Qué ingresos tendrían que subir?" ] ),
+    color = 'k',
+    fontproperties = design.font_thin,
+    verticalalignment="center" )
+
+  plt.text(
+    0, 0.1,
+    "Su voto determina quien va a manejar los recursos del municipio. ¡Vote!",
+    color = 'k',
+    fontproperties = design.font_thin,
+    verticalalignment="center" )
+
+  ax.axis( 'off' )
+  pdf.savefig( facecolor=design.background_color )
+  plt.close()
+  

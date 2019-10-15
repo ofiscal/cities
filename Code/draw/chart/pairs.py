@@ -4,11 +4,12 @@
 if True:
   import matplotlib as mplot
   import matplotlib.pyplot as plt
+  import matplotlib.ticker as ticker
   import numpy as np
   import pandas as pd
 
   import Code.draw.text.newlines as newlines
-  import matplotlib.ticker as ticker
+  import Code.draw.design as design
 
 def drawPairs( ax : mplot.axes.SubplotBase,
                df : pd.DataFrame ):
@@ -17,7 +18,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
     muni = df.iloc[:,0]
     avg  = df.iloc[:,1]
     ind = np.arange(len(df)) # the x locations for the groups
-    width = 0.35             # the width of the bars
+    width = 0.2              # the width of the bars
   
   if True: # bars
     p0 = ax.bar(ind, muni, width, bottom=0)
@@ -35,8 +36,11 @@ def drawPairs( ax : mplot.axes.SubplotBase,
               color="orange" )
   
   ax.legend( (p0[0], p1[0]),
-             (df.columns[0], df.columns[1]))
-  ax.set_title('Title')
+             (df.columns[0], df.columns[1]),
+             facecolor = design.background_color,
+             shadow=True )
+
+  ax.set_frame_on(False)
   ax.autoscale_view()
 
 testing = False

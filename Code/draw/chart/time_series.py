@@ -51,7 +51,7 @@ def add_plots( nCols : int,
     plots.insert( 0, # prepend => legend items in the right order
                   ax.bar( xvals, # plot stack of bar charts
                           height,
-                          width = [ 0.8 for i in range( nCols ) ],
+                          width = [ 0.3 for i in range( nCols ) ],
                           bottom = bottom ) )
   for rn in range( nRows ):
     # The computation of bottom and height is equal to
@@ -68,7 +68,6 @@ def add_plots( nCols : int,
     enough_to_print = float( ax.transData.inverted().transform(
                                ax.transAxes.transform(( 0,0.2 )) )
                              [1] )
-    floor = ax.transData.transform(( 0, 0 ))[1]
     for cn in range( nCols ): # plot amounts in each box
       height_in_axes = ( ax.transAxes.inverted().transform(
                            ax.transData.transform(( 0, height[cn] )) )
@@ -84,7 +83,6 @@ def add_plots( nCols : int,
                  color = 'w',
                  fontproperties = design.font_thin,
                  fontsize = 6 )
-  floor = ax.transData.transform(( 0, 0 ))[1]
   for cn in range( nCols ): # plot totals above each column
     total = df.iloc[:,cn].sum()
     buffer = ( # Convert 0.04 from axes coords to screen coords,
@@ -145,9 +143,6 @@ def add_outer_labels( ax : mplot.axes.SubplotBase,
   """Give vertical axis a label, no ticks, no tick labels. Based on
 stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
-  ax.set_title( "Cool stuff",
-                color = 'k',
-                fontproperties = design.font_thick )
   ax.set_xlabel( "Year",
                  color = 'k',
                  fontproperties = design.font_thin )

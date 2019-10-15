@@ -51,6 +51,7 @@ def create_pdf( dept : str,
                               df.index ) )
       pages.drawPageWithChart(
         df, title, text, pdf, drawChart )
+    pages.drawZenQuestions( muni, pdf )
 
 root = "output/pivots/recip-" + str(c.subsample)
 
