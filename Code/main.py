@@ -17,17 +17,18 @@ if True:
 def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
-  # muni_short = "Villa de San Diego de Ubate" # longest, and too long
-  # muni_short = "San José de Miranda" # 19 characters, too long
-  muni_short = "Barranca de Upía"
-  dept_short = "Norte de Santander" # fits fine
-  # muni_short = shorten_names.munis[muni]
-  # dept_short = shorten_names.depts[dept]
-
   print("folder: ", folder)
 
+  muni_short = shorten_names.munis[muni]
+  dept_short = shorten_names.depts[dept]
+  muni_split = (
+    shorten_names.split_at_middlest_space(
+      muni_short)
+    if len(muni_short) > 15
+    else muni_short )
+
   with PdfPages( folder + "/report.pdf" ) as pdf:
-    pages.drawTitlePage( muni_short, pdf )
+    pages.drawTitlePage( muni_split, pdf )
     for  (file, insertNewlines, title, text, index_col, drawChart) in [
          ( "ingresos-pct-compare", True,
            ["¿De dónde viene la plata de " + muni_short,
@@ -87,4 +88,3 @@ geo.apply(
 
 ( Path( root + "/" + "timestamp-for-pdfs" ) .
   touch() )
-
