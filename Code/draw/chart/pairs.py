@@ -5,6 +5,7 @@ if True:
   import matplotlib as mplot
   import matplotlib.pyplot as plt
   import matplotlib.ticker as ticker
+  import matplotlib.font_manager as fm
   import numpy as np
   import pandas as pd
 
@@ -36,10 +37,21 @@ def drawPairs( ax : mplot.axes.SubplotBase,
               linewidth="0.5",
               color="orange" )
   
-  ax.legend( (p0[0], p1[0]),
-             (df.columns[0], df.columns[1]),
-             facecolor = design.background_color,
-             shadow=True )
+  ax.legend(
+    (p0[0], p1[0]),
+    (df.columns[0], df.columns[1]),
+    prop = fm.FontProperties( # PITFALL: This cannot be simplified.
+        # Incredibly, if we first define
+        #     def font_light_func( size : int ):
+        #       fm.FontProperties( fname = "fonts/Montserrat_Light.ttf",
+        #                          size = size )
+        # and then replace the above `prop = fm.FontProperties(...)` call
+        # with `prop = font_light_func(6)`, it behaves differently,
+        # in particular using a huge font size.
+      fname = "design/Montserrat_Light.ttf",
+      size = 7),
+    facecolor = design.background_color,
+    shadow=True )
 
   ax.set_frame_on(False)
   ax.autoscale_view()
