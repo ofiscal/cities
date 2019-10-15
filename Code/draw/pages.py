@@ -81,7 +81,7 @@ def drawPageWithChart( df : pd.DataFrame,
   ax1 = fig.add_subplot(grid[0, :])
   drawTextAboveChart( ax1, title, text )
   ax2 = fig.add_subplot(grid[1:, :])
-  drawChart( ax2, df )
+  drawChart( ax2, background_color, df )
 
   pdf.savefig( facecolor=background_color )
   plt.close()

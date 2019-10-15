@@ -13,6 +13,7 @@ if True:
   import Code.draw.design as design
 
 def drawPairs( ax : mplot.axes.SubplotBase,
+               background_color : str,
                df : pd.DataFrame ):
 
   if True: # definitions
@@ -53,7 +54,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
         # in particular using a huge font size.
       fname = "design/Montserrat_Light.ttf",
       size = design.sizeText_legend ),
-    facecolor = design.background_color,
+    facecolor = background_color,
     shadow=True )
 
   ax.set_frame_on(False)

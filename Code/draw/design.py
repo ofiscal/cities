@@ -12,7 +12,7 @@ scale_font = 4
   # after each change to the default figure size.
 sizeText_title = 60 * scale_font
 sizeText_tickLabel = 7 * scale_font
-sizeText_legend = 7 * scale_font
+sizeText_legend = 9 * scale_font
 sizeText_chartPage = 16 * scale_font
 sizeText_chartBody = 12 * scale_font
 sizeText_zenPageTitle = 18 * scale_font

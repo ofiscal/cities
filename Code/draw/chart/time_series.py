@@ -13,6 +13,7 @@ if True:
   import Code.draw.text.shorten_numbers as abbrev
 
 def drawStacks( ax : mplot.axes.SubplotBase,
+                background_color : str,
                 df : pd.DataFrame ):
   df = df . iloc[::-1] # Revserse column order.
     # In the bar chart, each row is drawn on top of the previous one.
@@ -31,7 +32,7 @@ def drawStacks( ax : mplot.axes.SubplotBase,
   if True: # procedures
     plots = add_plots( # PITFALL: side effects *and* a return value
       nCols, nRows, xvals, commas, ax, df )
-    add_legend      (ax, plots, df)
+    add_legend      (ax, background_color, plots, df)
     add_outer_labels(ax, xvals, units, df)
 
 def add_plots( nCols : int,
@@ -103,6 +104,7 @@ def add_plots( nCols : int,
 
 def add_legend(
     ax : mplot.axes.SubplotBase,
+    background_color : str,
     plots : List[mplot.container.Container], # list of bar charts
     df : pd.DataFrame ):
   chartBox = ax.get_position()
@@ -123,7 +125,7 @@ def add_legend(
         # in particular using a huge font size.
       fname = "design/Montserrat_Light.ttf",
       size = design.sizeText_legend ),
-    facecolor = design.background_color,
+    facecolor = background_color,
     shadow=True,
 
     # The next arguments:
