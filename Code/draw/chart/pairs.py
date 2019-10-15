@@ -7,7 +7,7 @@ if True:
   import numpy as np
   import pandas as pd
 
-  import Code.draw.newlines as newlines
+  import Code.draw.text.newlines as newlines
   import matplotlib.ticker as ticker
 
 def drawPairs( ax : mplot.axes.SubplotBase,

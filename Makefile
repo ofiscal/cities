@@ -361,11 +361,14 @@ output/regalias.csv:			\
 	date
 
 pics: $(pics)
-$(pics):			\
-  $(budget_8_pivots)		\
-  $(budget_9_static_compare)	\
-  Code/build/use_keys.py	\
-  Code/draw/time_series.py	\
+$(pics):				\
+  $(budget_8_pivots)			\
+  $(budget_9_static_compare)		\
+  Code/build/use_keys.py		\
+  Code/draw/chart/time_series.py	\
+  Code/draw/chart/pairs.py		\
+  Code/draw/text/newlines.py		\
+  Code/draw/pages.py			\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

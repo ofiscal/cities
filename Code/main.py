@@ -7,10 +7,10 @@ if True:
   import Code.common as c
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
-  import Code.draw.time_series as ts
+  import Code.draw.chart.time_series as ts
   import Code.draw.pages as pages
-  import Code.draw.pairs as pairs
-  import Code.draw.newlines as newlines
+  import Code.draw.chart.pairs as pairs
+  import Code.draw.text.newlines as newlines
 
 
 def create_pdf( dept : str,

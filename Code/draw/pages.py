@@ -5,8 +5,8 @@ if True:
   import matplotlib.pyplot as plt
   #
   import Code.common as c
-  import Code.draw.time_series as ts
-  import Code.draw.pairs as pairs
+  import Code.draw.chart.time_series as ts
+  import Code.draw.chart.pairs as pairs
   import Code.draw.design as design
 
 

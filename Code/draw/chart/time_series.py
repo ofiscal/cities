@@ -10,7 +10,7 @@ if True:
   import pandas as pd
   #
   import Code.draw.design as design
-  import Code.draw.shorten_numbers as abbrev
+  import Code.draw.text.shorten_numbers as abbrev
 
 def drawStacks( ax : mplot.axes.SubplotBase,
                 df : pd.DataFrame ):
