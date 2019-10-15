@@ -160,6 +160,7 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 **** link to all munis
   Para ver información de otros municipios,
   haga clic aquí.
+*** TODO rename San Andrés to that
 *** TODO text
 *** TODO colors
 *** TODO scale percentages by total
