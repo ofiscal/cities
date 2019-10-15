@@ -21,8 +21,7 @@ def drawTitlePage( muni : str,
   # The first row goes to the image;
   # the rest, to the text.
   fig = plt.figure(
-    constrained_layout=False,
-    facecolor = design.background_color)
+    constrained_layout = False )
   grid = fig.add_gridspec(nrows=4, ncols=1)
 
   ax1 = fig.add_subplot(grid[0, :])
@@ -75,8 +74,7 @@ def drawPageWithChart( df : pd.DataFrame,
   # and the top one to the text. See
   # https://matplotlib.org/tutorials/intermediate/gridspec.html
   fig = plt.figure(
-    constrained_layout=False,
-    facecolor = design.background_color)
+    constrained_layout = False )
   grid = fig.add_gridspec(nrows=4, ncols=1)
 
   ax1 = fig.add_subplot(grid[0, :])
@@ -129,5 +127,61 @@ def drawZenQuestions( muni : str,
 
   ax.axis( 'off' )
   pdf.savefig( facecolor=design.background_color )
+  plt.close()
+
+def drawLastPage( pdf ):
+  fig = plt.figure(
+    constrained_layout = False )
+  grid = fig.add_gridspec(nrows=3, ncols=1)
+
+  ax0 = fig.add_subplot(grid[0])
+  ax0.axis("off")
+  plt.text(
+    0.5, 0.8,
+    "Si quiere saber más sobre como se maneja la plata de un municipio, haga clic aquí.",
+    color = design.orange,
+    fontproperties = design.font_thick,
+    fontsize = design.sizeText_lastPageAbove,
+    horizontalalignment="center" )
+  plt.text(
+    0.5, 0.6,
+    "Para ver información de otros municipios, haga clic aquí.",
+    color = design.orange,
+    fontproperties = design.font_thick,
+    fontsize = design.sizeText_lastPageAbove,
+    horizontalalignment="center" )
+  plt.text(
+    0.5, 0.4,
+    "Si tiene alguna pregunta o comentario, por favor escríbanos a ofiscal@javeriana.edu.co o visite www.ofiscal.org",
+    color = design.light_blue,
+    fontproperties = design.font_thick,
+    fontsize = design.sizeText_lastPageAbove,
+    horizontalalignment="center" )
+
+  ax1 = fig.add_subplot(grid[1])
+  ax1.axis( 'off' )
+  img = mpimg.imread('design/Logo_Ofiscal_blanco_horiz.png')
+  imgplot = ax1.imshow( img )
+  plt.imshow(img)
+
+  ax2 = fig.add_subplot(grid[2])
+  ax2.axis( 'off' )
+  plt.text(
+    0.5, 0.0,
+    "\n".join( [
+      "*","",
+      "“Salarios de funcionarios” corresponde a los Gastos Generales de Personal","",
+      "“Dinero sobrante de años anteriores y otros ingresos financieros” corresponde a los Recursos de Capital del municipio","",
+      "“Impuestos y otros recursospropios” corresponde a los Recursos Propios del municipio","",
+      "“Pagodela deuda” corresponde al Servicio a la deuda","",
+      "Ladiferencia entre losingresos y los gastosse debe a que en la estimacióndegastos anuales de las entidades",
+      " territoriales usamos los datos de gastos reportados como ejecutados.El dinero que no seejecuta",
+      "generalmente es devuelto a la SecretaríadeHacienda o se pone en una reserva para el siguiente año."] ),
+    color = "white",
+    fontproperties = design.font_thin,
+    fontsize = design.sizeText_lastPageAbove,
+    horizontalalignment="center" )
+
+  pdf.savefig( facecolor=design.dark_blue )
   plt.close()
 

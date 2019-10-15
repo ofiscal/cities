@@ -161,14 +161,15 @@ Test with the longest muni and dept names.
   Norte de Santander          : longest dept name
   Villa de San Diego de Ubate : longest muni name
 *** DONE icon
-*** TODO last page
-inc. links
 *** TODO scale percentages by total
 *** TODO totals above each bar
 *** TODO colors
 *** TODO page dimensions, border
 512 to 1024 before margin
 margin is 85 more in each dimension
+*** TODO ? urls
+plt.subplot, and plt.text, both have "url" arguments. neither is working.
+file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
 ** TODO new data
 *** DONE find which money-value column to use from Juan
  "Valor Total Pagado Vigencia Con Regalías" : "item oblig"

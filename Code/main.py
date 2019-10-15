@@ -33,7 +33,7 @@ def create_pdf( dept : str,
          ( "ingresos-pct-compare", True,
            ["¿De dónde viene la plata de " + muni_short,
             "y cómo se compara con el promedio de " + dept_short + "?"],
-           ["Se muestra el acumulado de los ingresos de esta" +
+           ["Se muestra el acumulado de los ingresos de esta " +
             "administración (2015 a 2018) en cada sector."],
            0,            pairs.drawPairs),
          ( "gastos-pct-compare",   True,
@@ -62,6 +62,7 @@ def create_pdf( dept : str,
       pages.drawPageWithChart(
         df, title, text, pdf, drawChart )
     pages.drawZenQuestions( muni_short, pdf )
+    pages.drawLastPage( pdf )
 
 root = "output/pivots/recip-" + str(c.subsample)
 

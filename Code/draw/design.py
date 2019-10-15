@@ -17,6 +17,8 @@ sizeText_chartPage = 14 * scale_font
 sizeText_chartBody = 8 * scale_font
 sizeText_zenPageTitle = 14 * scale_font
 sizeText_zenPageBody = 10 * scale_font
+sizeText_lastPageAbove = 8 * scale_font
+sizeText_lastPageBelow = 6 * scale_font
 sizeText_inBars = 6 * scale_font
 sizeText_aboveBars = 8 * scale_font
 sizeLineWidth = 0.5 * scale_font
@@ -24,6 +26,7 @@ sizeLineWidth = 0.5 * scale_font
 # colors
 background_color = "mediumaquamarine"
 dark_blue = "#2f399b"
+light_blue = "#8bc2c3"
 orange = "#d8841c"
 
 # fonts
