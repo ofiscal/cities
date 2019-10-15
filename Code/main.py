@@ -8,38 +8,42 @@ if True:
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
   import Code.draw.chart.time_series as ts
-  import Code.draw.pages as pages
   import Code.draw.chart.pairs as pairs
+  import Code.draw.pages as pages
+  import Code.draw.text.shorten_names as shorten_names
   import Code.draw.text.newlines as newlines
 
 
 def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
+  muni_short = shorten_names.munis[muni]
+  dept_short = shorten_names.depts[dept]
   print("folder: ", folder)
+
   with PdfPages( folder + "/report.pdf" ) as pdf:
-    pages.drawTitlePage( muni, pdf )
+    pages.drawTitlePage( muni_short, pdf )
     for  (file, insertNewlines, title, text, index_col, drawChart) in [
          ( "ingresos-pct-compare", True,
-           ["¿De dónde viene la plata de " + muni,
-            "y cómo se compara con el promedio de " + dept + "?"],
+           ["¿De dónde viene la plata de " + muni_short,
+            "y cómo se compara con el promedio de " + dept_short + "?"],
            ["Se muestra el acumulado de los ingresos de esta" +
             "administración (2015 a 2018) en cada sector."],
            0,            pairs.drawPairs),
          ( "gastos-pct-compare",   True,
-           ["¿Cómo se gasta* la plata " + muni,
-            "y cómo se compara con el promedio de " + dept + "?"],
+           ["¿Cómo se gasta* la plata " + muni_short,
+            "y cómo se compara con el promedio de " + dept_short + "?"],
            ["Se muestra el acumulado de los ingresos de esta" +
             "administración (2015 a 2018) en cada sector."],
            0,            pairs.drawPairs),
          ( "ingresos",             False,
-           ["¿De dónde se obtuvo la plata de " + muni,
+           ["¿De dónde se obtuvo la plata de " + muni_short,
             "en esta administración y en la anterior?"],
            ["En el 2015 hubo cambio de gobierno municipal."],
            "item categ", ts.drawStacks),
          ( "gastos",               False,
            ["¿En qué se han gastado* la plata la alcaldía y el concejo",
-            "de " + muni +"? ¿En qué se gastaron la plata la alcaldía",
+            "de " + muni_short +"? ¿En qué se gastaron la plata la alcaldía",
             "y el concejo anteriores?"],
            ["En el 2015 hubo cambio de gobierno municipal."],
            "item categ", ts.drawStacks) ]:
@@ -51,7 +55,7 @@ def create_pdf( dept : str,
                               df.index ) )
       pages.drawPageWithChart(
         df, title, text, pdf, drawChart )
-    pages.drawZenQuestions( muni, pdf )
+    pages.drawZenQuestions( muni_short, pdf )
 
 root = "output/pivots/recip-" + str(c.subsample)
 
