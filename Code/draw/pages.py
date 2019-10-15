@@ -49,11 +49,21 @@ def drawPageWithChart( df : pd.DataFrame,
                        text : List[str],
                        pdf,
                        drawChart ): # a callback
-  plt.subplots( 2, 1, facecolor = design.background_color )
-  ax = plt.subplot( 2, 1, 1 )
-  drawTextAboveChart( ax, title, text )
-  ax = plt.subplot( 2, 1, 2 )
-  drawChart( ax, df )
+
+  # Create a 4-row, 1-column grid over the figure.
+  # The bottom three rows will go to the chart,
+  # and the top one to the text. See
+  # https://matplotlib.org/tutorials/intermediate/gridspec.html
+  fig = plt.figure(
+    constrained_layout=False,
+    facecolor = design.background_color)
+  grid = fig.add_gridspec(nrows=4, ncols=1)
+
+  ax1 = fig.add_subplot(grid[0, :])
+  drawTextAboveChart( ax1, title, text )
+  ax2 = fig.add_subplot(grid[1:, :])
+  drawChart( ax2, df )
+
   pdf.savefig( facecolor=design.background_color )
   plt.close()
 
@@ -97,4 +107,4 @@ def drawZenQuestions( muni : str,
   ax.axis( 'off' )
   pdf.savefig( facecolor=design.background_color )
   plt.close()
-  
+

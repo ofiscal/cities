@@ -105,7 +105,6 @@ def add_legend(
     ax : mplot.axes.SubplotBase,
     plots : List[mplot.container.Container], # list of bar charts
     df : pd.DataFrame ):
-  plt.rcParams['axes.titlepad'] = 10
   chartBox = ax.get_position()
   ax.set_position([ chartBox.x0,
                     chartBox.y0,
@@ -143,9 +142,6 @@ def add_outer_labels( ax : mplot.axes.SubplotBase,
   """Give vertical axis a label, no ticks, no tick labels. Based on
 stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
-  ax.set_xlabel( "Year",
-                 color = 'k',
-                 fontproperties = design.font_thin )
   ax.set_ylabel( units,
                  color = 'k',
                  fontproperties = design.font_thin )
