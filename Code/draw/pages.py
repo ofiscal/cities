@@ -36,6 +36,7 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
             "\n".join( title ),
             color = 'k',
             fontproperties = design.font_thick,
+            fontsize=14,
             horizontalalignment="center" )
   plt.text( 0, 0.5,
             "\n".join( text ),
@@ -79,6 +80,7 @@ def drawZenQuestions( muni : str,
         "el desempeño del gobierno municipal mejor que nadie." ] ),
     color = 'k',
     fontproperties = design.font_thick,
+    fontsize = 14,
     horizontalalignment="center" )
 
   plt.text(

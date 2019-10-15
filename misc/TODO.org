@@ -160,11 +160,15 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 **** link to all munis
   Para ver información de otros municipios,
   haga clic aquí.
-*** TODO rename San Andrés to that
-*** TODO text
-*** TODO colors
+*** TODO shorten names
+Rename San Andrés to that.
+Bring capital letters to lowercase.
+Test with the longest muni and dept names.
+*** TODO icon
+*** TODO last page
 *** TODO scale percentages by total
-*** TODO Totals above each bar.
+*** TODO totals above each bar
+*** TODO colors
 ** TODO new data
 *** DONE find which money-value column to use from Juan
  "Valor Total Pagado Vigencia Con Regalías" : "item oblig"
