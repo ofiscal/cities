@@ -13,6 +13,10 @@ if True:
 
 def drawTitlePage( muni : str,
                    pdf ):
+  # The default figure size has to be increased in order for .png import
+  # not to be horribly grainy.
+  plt.rcParams.update({'figure.figsize': (38,24)})
+
   # The figure is divided into 4 rows (and 1 column).
   # The first row goes to the image;
   # the rest, to the text.
@@ -37,7 +41,7 @@ def drawTitlePage( muni : str,
     transform = ax2.transAxes,
     color = design.orange,
     fontproperties = design.font_thick,
-    fontsize = 30,
+    fontsize = design.titleFontSize,
     verticalalignment="center",
     horizontalalignment="center")
   pdf.savefig( facecolor = design.dark_blue )
@@ -50,12 +54,13 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
             "\n".join( title ),
             color = 'k',
             fontproperties = design.font_thick,
-            fontsize=14,
+            fontsize = design.chartPageTitleFontSize,
             horizontalalignment="center" )
   plt.text( 0, 0.5,
             "\n".join( text ),
             color = 'k',
             fontproperties = design.font_thin,
+            fontsize = design.chartPageBodyTextSize,
             verticalalignment="center" )
   ax.axis( 'off' )
 
@@ -94,7 +99,7 @@ def drawZenQuestions( muni : str,
         "el desempeño del gobierno municipal mejor que nadie." ] ),
     color = 'k',
     fontproperties = design.font_thick,
-    fontsize = 14,
+    fontsize = design.zenPageTitleFontSize,
     horizontalalignment="center" )
 
   plt.text(
@@ -111,6 +116,7 @@ def drawZenQuestions( muni : str,
         "¿Qué ingresos tendrían que subir?" ] ),
     color = 'k',
     fontproperties = design.font_thin,
+    fontsize = design.zenPageBodyFontSize,
     verticalalignment="center" )
 
   plt.text(
@@ -118,6 +124,7 @@ def drawZenQuestions( muni : str,
     "Su voto determina quien va a manejar los recursos del municipio. ¡Vote!",
     color = 'k',
     fontproperties = design.font_thin,
+    fontsize = design.zenPageBodyFontSize,
     verticalalignment="center" )
 
   ax.axis( 'off' )

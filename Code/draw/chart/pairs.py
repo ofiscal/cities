@@ -26,16 +26,19 @@ def drawPairs( ax : mplot.axes.SubplotBase,
     p1 = ax.bar(ind + width, avg, width, bottom=0)
 
   if True: # grid (and grid text)
+    ax.set_axisbelow(True) # to keep grid lines behind bars
     ax.set_xticks(ind + width / 2)
-    ax.set_xticklabels( df.index,
-                        fontsize = 7 )
+    ax.set_xticklabels( df.index )
+    for tick in ( ax.xaxis.get_major_ticks() +
+                  ax.yaxis.get_major_ticks() ):
+      tick.label.set_fontsize( design.tickLabelSize )
     ax.yaxis.set_major_formatter(
       # https://stackoverflow.com/questions/31357611/format-y-axis-as-percent#comment68265158_35446404
       ticker.FuncFormatter('{0:.0%}'.format ) )
     plt.grid( True, # add horizontal lines
               axis="y",
-              linewidth="0.5",
-              color="orange" )
+              linewidth = design.lineWidth,
+              color = design.orange )
   
   ax.legend(
     (p0[0], p1[0]),
@@ -49,7 +52,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
       fname = "design/Montserrat_Light.ttf",
-      size = 7),
+      size = design.legendFontSize ),
     facecolor = design.background_color,
     shadow=True )
 
