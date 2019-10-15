@@ -35,12 +35,12 @@ def drawTitlePage( muni : str,
       [ "¿En qué se gasta", "la plata",
         muni + "?" ]),
     transform = ax2.transAxes,
-    color = 'k',
+    color = design.orange,
     fontproperties = design.font_thick,
     fontsize = 30,
     verticalalignment="center",
     horizontalalignment="center")
-  pdf.savefig( facecolor=design.background_color )
+  pdf.savefig( facecolor = design.dark_blue )
   plt.close()
 
 def drawTextAboveChart( ax : mplot.axes.SubplotBase,
