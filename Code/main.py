@@ -17,8 +17,13 @@ if True:
 def create_pdf( dept : str,
                 muni : str ):
   folder = ( root + "/" + dept + "/" + muni )
-  muni_short = shorten_names.munis[muni]
-  dept_short = shorten_names.depts[dept]
+  # muni_short = "Villa de San Diego de Ubate" # longest, and too long
+  # muni_short = "San José de Miranda" # 19 characters, too long
+  muni_short = "Barranca de Upía"
+  dept_short = "Norte de Santander" # fits fine
+  # muni_short = shorten_names.munis[muni]
+  # dept_short = shorten_names.depts[dept]
+
   print("folder: ", folder)
 
   with PdfPages( folder + "/report.pdf" ) as pdf:
