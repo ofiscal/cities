@@ -154,5 +154,10 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
   plt.setp( ax.get_yticklabels(), visible = False )
   ax.tick_params( axis='x', which='both', length=0 )
   ax.tick_params( axis='y', which='both', length=0 )
+  ax.ticklabel_format( axis="y", style="plain" )
+    # TRICKY: Even though the y-ticks are assigned `visible=False`,
+    # a unit value for them (e.g. 1e10) will still appear
+    # above the y-axis unless silenced by setting `style="plain"`
+    # (`style` defaults to "scientific").
   ax.set_frame_on(False)
 
