@@ -36,7 +36,7 @@ def create_pdf( dept : str,
         df.index = list( map( lambda s: newlines.remap[s],
                               df.index ) )
       pages.drawPageWithChart(
-        df, page.title, page.text, pdf, page.drawChart )
+        df, page.background_color, page.title, page.text, pdf, page.drawChart )
     pages.drawZenQuestions( muni_short, pdf )
     pages.drawLastPage( pdf )
 

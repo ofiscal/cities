@@ -2,10 +2,14 @@ if True:
   from typing import List
   import Code.draw.chart.time_series as ts
   import Code.draw.chart.pairs as pairs
+  import Code.draw.design as design
 
 class chartPage:
-  def __init__(self,file, insertNewlines, title, text, index_col, drawChart):
+  def __init__(self,
+               file, background_color, insertNewlines,
+               title, text, index_col, drawChart):
     self.file = file
+    self.background_color = background_color
     self.insertNewlines = insertNewlines
     self.title = title
     self.text = text
@@ -16,6 +20,7 @@ def page1( muni_short : str,
            dept_short : str ) -> chartPage:
   return chartPage(
     file = "ingresos-pct-compare",
+    background_color = "white",
     insertNewlines = True,
     title = ["¿De dónde viene la plata de " + muni_short,
              "y cómo se compara con el promedio de " + dept_short + "?"],
@@ -28,6 +33,7 @@ def page2( muni_short : str,
            dept_short : str ) -> chartPage:
   return chartPage(
     file = "gastos-pct-compare",
+    background_color = design.dark_blue,
     insertNewlines = True,
     title = ["¿Cómo se gasta* la plata " + muni_short,
              "y cómo se compara con el promedio de " + dept_short + "?"],
@@ -39,6 +45,7 @@ def page2( muni_short : str,
 def page3( muni_short : str ) ->  chartPage:
   return chartPage(
     file = "ingresos",
+    background_color = "white",
     insertNewlines = False,
     title = ["¿De dónde se obtuvo la plata de " + muni_short,
              "en esta administración y en la anterior?"],
@@ -49,6 +56,7 @@ def page3( muni_short : str ) ->  chartPage:
 def page4( muni_short : str ) ->  chartPage:
   return chartPage(
     file = "gastos",
+    background_color = design.dark_blue,
     insertNewlines =False,
     title = ["¿En qué se han gastado* la plata la alcaldía y el concejo",
               "de " + muni_short +"? ¿En qué se gastaron la plata la alcaldía",

@@ -64,6 +64,7 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
   ax.axis( 'off' )
 
 def drawPageWithChart( df : pd.DataFrame,
+                       background_color : str,
                        title : List[str],
                        text : List[str],
                        pdf,
@@ -82,7 +83,7 @@ def drawPageWithChart( df : pd.DataFrame,
   ax2 = fig.add_subplot(grid[1:, :])
   drawChart( ax2, df )
 
-  pdf.savefig( facecolor=design.background_color )
+  pdf.savefig( facecolor=background_color )
   plt.close()
 
 def drawZenQuestions( muni : str,
