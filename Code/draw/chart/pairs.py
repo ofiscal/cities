@@ -33,6 +33,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
       ticker.FuncFormatter('{0:.0%}'.format ) )
     plt.grid( True, # add horizontal lines
               axis="y",
+              linewidth="0.5",
               color="orange" )
   
   ax.legend( (p0[0], p1[0]),
