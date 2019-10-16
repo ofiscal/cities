@@ -77,7 +77,7 @@ def add_plots(
       height_in_axes = ( ax.transAxes.inverted().transform(
                            ax.transData.transform(( 0, height[cn] )) )
                          [1] )
-      if height_in_axes > 0.04:
+      if height_in_axes > 0.025:
         ax.text( float( cn ) + 1.2 * design.sizeBarWidth,
                  middle.iloc[cn],
                  abbrev.show_brief( # what we're printing
