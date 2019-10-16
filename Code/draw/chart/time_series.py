@@ -46,6 +46,7 @@ def add_plots(
     df : pd.DataFrame
     ) -> List[mplot.container.Container]:
   plots = [] # This is what gets returned.
+  totals = df.sum().reset_index(drop=True)
   for rn in range( nRows ):
     if True: # PITFALL: while "bottom" is absolute,
              # "height" is relative to "bottom".
@@ -89,16 +90,15 @@ def add_plots(
                  fontproperties = design.font_thin,
                  fontsize = design.sizeText_inBars )
   for cn in range( nCols ): # plot totals above each column
-    total = df.iloc[:,cn].sum()
     buffer = ( # Convert 0.04 from axes coords to screen coords,
                # and then from screen coords to data coords.
       ax.transData.inverted().transform(
         ax.transAxes.transform( (0,0.04) ) )
       [1] )
     ax.text( float( cn ),
-             total + buffer,
+             totals[cn] + buffer,
              abbrev.show_brief( # what we're printing
-               total, commas ),
+               totals[cn], commas ),
              verticalalignment = 'center',
              horizontalalignment = 'center',
              color = design.orange,

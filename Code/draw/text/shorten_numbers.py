@@ -28,7 +28,7 @@ if True: # test it
   assert units( commas(1234567) ) == "millones de 2018 pesos"
 
 def show_brief( f : float,
-                  commas : int ) -> str:
+                commas : int ) -> str:
   return ( "{0:.3g}" .
            format( f / 10**(3*commas) ) )
 if True: # test it
