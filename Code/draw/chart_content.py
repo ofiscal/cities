@@ -37,7 +37,7 @@ def page2( muni_short : str,
     insertNewlines = True,
     title = ["¿Cómo se gasta* la plata " + muni_short,
              "y cómo se compara con el promedio de " + dept_short + "?"],
-    text = ["Se muestra el acumulado de los ingresos de esta" +
+    text = ["Se muestra el acumulado de los ingresos de esta " +
             "administración (2015 a 2018) en cada sector."],
     index_col = 0,
     drawChart = pairs.drawPairs)

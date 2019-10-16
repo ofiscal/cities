@@ -370,6 +370,7 @@ $(pics):				\
   Code/draw/text/newlines.py		\
   Code/draw/pages.py			\
   Code/draw/design.py			\
+  Code/draw/chart_content.py		\
   Code/main.py
 	date
 	$(myPython) Code/main.py $(ss)

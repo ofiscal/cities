@@ -161,7 +161,9 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
     fontproperties = design.font_thin,
     fontsize = design.sizeText_tickLabel )
 
-  plt.xticks( xvals, df.columns )
+  plt.xticks( xvals,
+              list( map( lambda s: int( float( s ) ),
+                         df.columns ) ) )
   plt.setp( ax.get_xticklabels(),
             visible = True,
             color = 'k',
