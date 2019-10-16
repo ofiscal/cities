@@ -50,6 +50,14 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
+** TODO generate radio scripts
+** TODO ? urls in pdfs
+Including a URL in the text itself makes it clickable.
+
+plt.subplot, and plt.text, both have "url" arguments. neither is working.
+file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
+** TODO serve the data
+** TODO generate pictures for Facebook ads
 ** draw charts
 *** shrink numbers
 **** smaller font
@@ -123,7 +131,7 @@ For all real and promedio munis:
   pip install --upgrade pip # afte running this, did not have pip3
   seems to be working: "python3 -m pip install fpdf"
   recommended was      "python  -m pip install fpdf"
-** TODO match latest spec
+** DONE match latest spec
 https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrPlVNmDXGc
 *** was: add text to pdfs
 **** Observatorio logo
@@ -154,26 +162,23 @@ https://mail.google.com/mail/u/0/#search/from%3Amanuela/FMfcgxwDrbzNHKThbjHjzZrP
 **** link to all munis
   Para ver información de otros municipios,
   haga clic aquí.
-*** DONE shorten names
+*** shorten names
 Rename San Andrés to that.
 Bring capital letters to lowercase.
 Test with the longest muni and dept names.
   Norte de Santander          : longest dept name
   Villa de San Diego de Ubate : longest muni name
-*** DONE icon
-*** DONE use a class to describe chart pages
+*** icon
+*** use a class to describe chart pages
 for looping over in main.py
-*** DONE at sides put percentages, not absolute values
-*** TODO write percentages above paired bars
-*** DONE totals above each bar
-*** DONE colors
-*** DONE page dimensions, border
+*** at sides put percentages, not absolute values
+*** write percentages above paired bars
+*** totals above each bar
+*** colors
+*** page dimensions, border
 512 to 1024 before margin
 margin is 85 more in each dimension
-*** TODO ? urls
-plt.subplot, and plt.text, both have "url" arguments. neither is working.
-file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
-** TODO new data
+** (abandoned) new data
 *** DONE find which money-value column to use from Juan
  "Valor Total Pagado Vigencia Con Regalías" : "item oblig"
 *** TODO compare means for that money-valued column by year
