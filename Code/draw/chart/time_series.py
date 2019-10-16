@@ -31,17 +31,20 @@ def drawStacks( ax : mplot.axes.SubplotBase,
     units = abbrev.units( commas )
   if True: # procedures
     plots = add_plots( # PITFALL: side effects *and* a return value
+      background_color,
       nCols, nRows, xvals, commas, ax, df )
     add_legend      (ax, background_color, plots, df)
     add_outer_labels(ax, xvals, units, df)
 
-def add_plots( nCols : int,
-               nRows : int,
-               xvals : np.ndarray,
-               commas : int,
-               ax : mplot.axes.SubplotBase,
-               df : pd.DataFrame
-             ) -> List[mplot.container.Container]:
+def add_plots(
+    background_color : str,
+    nCols : int,
+    nRows : int,
+    xvals : np.ndarray,
+    commas : int,
+    ax : mplot.axes.SubplotBase,
+    df : pd.DataFrame
+    ) -> List[mplot.container.Container]:
   plots = [] # This is what gets returned.
   for rn in range( nRows ):
     if True: # PITFALL: while "bottom" is absolute,
@@ -49,11 +52,12 @@ def add_plots( nCols : int,
       if rn < 1: bottom = df.iloc[0,   :]*0 # just a row of zeros
       else:      bottom = df.iloc[0:rn,:].sum()
       height = df.iloc[  rn,:]
-    plots.insert( 0, # prepend => legend items in the right order
-                  ax.bar( xvals, # plot stack of bar charts
-                          height,
-                          width = [ 0.3 for i in range( nCols ) ],
-                          bottom = bottom ) )
+    plots.insert(
+      0, # prepend => legend items in the right order
+      ax.bar( xvals, # plot stack of bar charts
+              height,
+              width = [ design.sizeBarWidth for i in range( nCols ) ],
+              bottom = bottom ) )
   for rn in range( nRows ):
     # The computation of bottom and height is equal to
     # that iin the previous loop. They cannot be joined, though,
@@ -73,15 +77,15 @@ def add_plots( nCols : int,
       height_in_axes = ( ax.transAxes.inverted().transform(
                            ax.transData.transform(( 0, height[cn] )) )
                          [1] )
-      if height_in_axes > 0.05:
-        ax.text( float( cn ),
+      if height_in_axes > 0.04:
+        ax.text( float( cn ) + 1.2 * design.sizeBarWidth,
                  middle.iloc[cn],
                  abbrev.show_brief( # what we're printing
                    df.iloc[ rn, cn ],
                    commas ),
                  verticalalignment = 'center',
                  horizontalalignment = 'center',
-                 color = 'w',
+                 color = design.against( background_color ),
                  fontproperties = design.font_thin,
                  fontsize = design.sizeText_inBars )
   for cn in range( nCols ): # plot totals above each column
@@ -97,7 +101,7 @@ def add_plots( nCols : int,
                total, commas ),
              verticalalignment = 'center',
              horizontalalignment = 'center',
-             color = 'w',
+             color = design.against( background_color ),
              fontproperties = design.font_thin,
              fontsize = design.sizeText_aboveBars )
   return plots
@@ -123,7 +127,7 @@ def add_legend(
         # and then replace the above `prop = fm.FontProperties(...)` call
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
-      fname = "design/Montserrat_Light.ttf",
+      fname = "design/Montserrat_Black.ttf",
       size = design.sizeText_legend ),
     facecolor = background_color,
     shadow=True,
@@ -134,8 +138,9 @@ def add_legend(
     loc = 'upper center',
     bbox_to_anchor = ( 1.45, 0.8 ),
     ncol = 1 )
-  plt.setp( leg.get_texts(),
-            color = 'k' )
+  for text in leg.get_texts():
+    text.set_color(
+      design.against( background_color ) )
 
 def add_outer_labels( ax : mplot.axes.SubplotBase,
                       xvals : np.ndarray,
@@ -164,5 +169,6 @@ stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
   for tick in ( ax.xaxis.get_major_ticks() +
                 ax.yaxis.get_major_ticks() ):
       tick.label.set_fontsize( design.sizeText_tickLabel )
+      tick.label.set_color( design.orange )
   ax.set_frame_on(False)
 

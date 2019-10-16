@@ -161,7 +161,7 @@ Test with the longest muni and dept names.
   Norte de Santander          : longest dept name
   Villa de San Diego de Ubate : longest muni name
 *** DONE icon
-*** TODO use a class to describe chart pages
+*** DONE use a class to describe chart pages
 for looping over in main.py
 *** TODO scale percentages by total
 *** TODO totals above each bar

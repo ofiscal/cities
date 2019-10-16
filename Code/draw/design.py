@@ -11,17 +11,18 @@ scale_font = 4
   # we won't have to adjust every font separately
   # after each change to the default figure size.
 sizeText_title = 60 * scale_font
-sizeText_tickLabel = 7 * scale_font
-sizeText_legend = 9 * scale_font
+sizeText_tickLabel = 10 * scale_font
+sizeText_legend = 8 * scale_font
 sizeText_chartPage = 16 * scale_font
 sizeText_chartBody = 12 * scale_font
 sizeText_zenPageTitle = 18 * scale_font
 sizeText_zenPageBody = 15 * scale_font
 sizeText_lastPageAbove = 8 * scale_font
 sizeText_lastPageBelow = 6 * scale_font
-sizeText_inBars = 6 * scale_font
+sizeText_inBars = 9 * scale_font
 sizeText_aboveBars = 8 * scale_font
 sizeLineWidth = 0.5 * scale_font
+sizeBarWidth = 0.3
 
 # colors
 background_color = "mediumaquamarine"
@@ -29,6 +30,12 @@ dark_blue = "#2f399b"
 light_blue = "#8bc2c3"
 teal = "#4196a2"
 orange = "#d8841c"
+
+def against(color): # for draw/design.py
+  if color == dark_blue: return "white"
+  if color == "white": return "black"
+  raise ValueError( "Color to show against " + color + " is undefined." )
+
 
 # fonts
 font_thick = fm.FontProperties(

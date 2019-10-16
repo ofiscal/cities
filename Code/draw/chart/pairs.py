@@ -33,6 +33,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
     for tick in ( ax.xaxis.get_major_ticks() +
                   ax.yaxis.get_major_ticks() ):
       tick.label.set_fontsize( design.sizeText_tickLabel )
+      tick.label.set_color( design.orange )
     ax.yaxis.set_major_formatter(
       # https://stackoverflow.com/questions/31357611/format-y-axis-as-percent#comment68265158_35446404
       ticker.FuncFormatter('{0:.0%}'.format ) )
@@ -41,7 +42,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
               linewidth = design.sizeLineWidth,
               color = design.orange )
   
-  ax.legend(
+  leg = ax.legend(
     (p0[0], p1[0]),
     (df.columns[0], df.columns[1]),
     prop = fm.FontProperties( # PITFALL: This cannot be simplified.
@@ -52,10 +53,13 @@ def drawPairs( ax : mplot.axes.SubplotBase,
         # and then replace the above `prop = fm.FontProperties(...)` call
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
-      fname = "design/Montserrat_Light.ttf",
+      fname = "design/Montserrat_Black.ttf",
       size = design.sizeText_legend ),
     facecolor = background_color,
     shadow=True )
+  for text in leg.get_texts():
+    text.set_color(
+      design.against( background_color ) )
 
   ax.set_frame_on(False)
   ax.autoscale_view()
