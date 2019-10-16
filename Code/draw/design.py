@@ -41,5 +41,5 @@ def against(color): # for draw/design.py
 font_thick = fm.FontProperties(
   fname = "design/Montserrat_Black.ttf" )
 font_thin = fm.FontProperties(
-  fname = "design/Montserrat_Light.ttf" )
+  fname = "design/Montserrat_Medium.ttf" )
 

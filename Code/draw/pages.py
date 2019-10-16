@@ -120,7 +120,9 @@ def drawZenQuestions( muni : str,
 
   plt.text(
     0, 0.1,
-    "Su voto determina quien va a manejar los recursos del municipio. ¡Vote!",
+    "\n".join([
+      "Su voto determina quien va a manejar los recursos del municipio.",
+      "Vote a conciencia."]),
     color = design.teal,
     fontproperties = design.font_thin,
     fontsize = design.sizeText_zenPageBody,

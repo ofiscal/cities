@@ -53,7 +53,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
         # and then replace the above `prop = fm.FontProperties(...)` call
         # with `prop = font_light_func(6)`, it behaves differently,
         # in particular using a huge font size.
-      fname = "design/Montserrat_Black.ttf",
+      fname = "design/Montserrat_Medium.ttf",
       size = design.sizeText_legend ),
     facecolor = background_color,
     shadow=True )
