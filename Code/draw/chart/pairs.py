@@ -49,7 +49,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
                  + "%"),
                verticalalignment = 'center',
                horizontalalignment = 'center',
-               color = design.orange,
+               color = design.against( background_color ),
                fontproperties = design.font_thin,
                fontsize = design.sizeText_aboveBars )
 

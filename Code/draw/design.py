@@ -20,7 +20,7 @@ sizeText_zenPageBody = 15 * scale_font
 sizeText_lastPageAbove = 8 * scale_font
 sizeText_lastPageBelow = 6 * scale_font
 sizeText_inBars = 6 * scale_font
-sizeText_aboveBars = 10 * scale_font
+sizeText_aboveBars = 8 * scale_font
 sizeLineWidth = 0.5 * scale_font
 sizeBarWidth = 0.3
 
