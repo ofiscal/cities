@@ -35,3 +35,10 @@ if True: # test it
   assert show_brief(9876,   1) == "9.88"
   assert show_brief(123456, 2) == "0.123"
 
+def show_brief_with_units( f : float ):
+  cs = commas(f)
+  return ( show_brief( f,cs ) +
+           " " + units(cs) )
+if True: # test it
+  assert show_brief_with_units( 217e5 ) == "21.7 millones de 2018 pesos"
+
