@@ -27,7 +27,7 @@ sizeBarWidth = 0.3
 # colors
 background_color = "mediumaquamarine"
 dark_blue = "#2f399b"
-light_blue = "#8bc2c3"
+light_blue = "#6ec4c5"
 teal = "#4196a2"
 orange = "#d8841c"
 
