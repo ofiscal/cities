@@ -51,6 +51,8 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO generate radio scripts
+*** TODO generate additional, totally-disaggregated spending-pct charts
+that don't lump anything into Otros
 ** DONE change charts, data
 Averages are only 2016-2018.
 Line should read "el 1 de enero de 2016 hubo cambio"
