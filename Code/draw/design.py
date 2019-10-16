@@ -34,7 +34,8 @@ orange = "#d8841c"
 def against(color): # for draw/design.py
   if color == dark_blue: return "white"
   if color == "white": return "black"
-  raise ValueError( "Color to show against " + color + " is undefined." )
+  raise ValueError( "The color to show against a " + color +
+                    " background is undefined." )
 
 
 # fonts
