@@ -49,7 +49,7 @@ def page3( muni_short : str ) ->  chartPage:
     insertNewlines = False,
     title = ["¿De dónde se obtuvo la plata de " + muni_short,
              "en esta administración y en la anterior?"],
-    text = ["En el 2015 hubo cambio de gobierno municipal."],
+    text = ["El 1 de enero de 2016 hubo cambio de gobierno municipal."],
     index_col = "item categ",
     drawChart = ts.drawStacks)
 
@@ -61,7 +61,7 @@ def page4( muni_short : str ) ->  chartPage:
     title = ["¿En qué se han gastado* la plata la alcaldía y el concejo",
               "de " + muni_short +"? ¿En qué se gastaron la plata la alcaldía",
               "y el concejo anteriores?"],
-    text =  ["En el 2015 hubo cambio de gobierno municipal."],
+    text = ["El 1 de enero de 2016 hubo cambio de gobierno municipal."],
     index_col = "item categ",
     drawChart = ts.drawStacks)
 
