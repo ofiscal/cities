@@ -164,7 +164,7 @@ Test with the longest muni and dept names.
 *** DONE use a class to describe chart pages
 for looping over in main.py
 *** TODO scale percentages by total
-*** TODO totals above each bar
+*** DONE totals above each bar
 *** TODO colors
 *** TODO page dimensions, border
 512 to 1024 before margin

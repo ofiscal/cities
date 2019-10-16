@@ -101,7 +101,7 @@ def add_plots(
                total, commas ),
              verticalalignment = 'center',
              horizontalalignment = 'center',
-             color = design.against( background_color ),
+             color = design.orange,
              fontproperties = design.font_thin,
              fontsize = design.sizeText_aboveBars )
   return plots
@@ -149,9 +149,13 @@ def add_outer_labels( ax : mplot.axes.SubplotBase,
   """Give vertical axis a label, no ticks, no tick labels. Based on
 stackoverflow.com/questions/29988241/python-hide-ticks-but-show-tick-labels
 """
-  ax.set_ylabel( units,
-                 color = 'k',
-                 fontproperties = design.font_thin )
+  ax.set_ylabel(
+    units,
+    color = design.orange,
+    # PITFALL: If fontsize precedes fontproperties,
+    # it gets clobbered.
+    fontproperties = design.font_thin,
+    fontsize = design.sizeText_tickLabel )
 
   plt.xticks( xvals, df.columns )
   plt.setp( ax.get_xticklabels(),
