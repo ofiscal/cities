@@ -1,17 +1,16 @@
 if True:
-  from typing import List, Set, Dict
+  from   typing import List, Set, Dict
   from   pathlib import Path
   import pandas as pd
   from   matplotlib.backends.backend_pdf import PdfPages
   #
   import Code.common as c
   import Code.metadata.four_series as s4
-  import Code.build.use_keys as uk
   import Code.draw.pages as pages
   import Code.draw.text.shorten_names as shorten_names
   import Code.draw.text.newlines as newlines
   import Code.draw.chart_content as chart_content
-
+  from   Code.main.geo import geo
 
 def create_pdf( dept : str,
                 muni : str ):
@@ -42,17 +41,6 @@ def create_pdf( dept : str,
 
 root = "output/pivots/recip-" + str(c.subsample)
 
-if True: # create geo indices to loop over
-  geo = uk.merge_geo( # Using stage 6p7 rather than 7 because
-    pd.read_csv(      # they are equivalent and it's smaller
-      ( "output/budget_6p7_avg_muni/recip-" + str(c.subsample) +
-        "/" + "gastos-pct.csv" ),
-      usecols = ['dept code', 'muni code'] ) .
-    drop_duplicates() .
-    reset_index( drop=True ) .
-    sort_values( ["dept code","muni code"] ) )
-  geo = geo[ geo["muni code"] > 0 ]
-
 geo.apply(
   ( lambda row:
     create_pdf( dept = row["dept"],
@@ -61,3 +49,4 @@ geo.apply(
 
 ( Path( root + "/" + "timestamp-for-pdfs" ) .
   touch() )
+
