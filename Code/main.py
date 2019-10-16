@@ -52,10 +52,6 @@ if True: # create geo indices to loop over
     reset_index( drop=True ) .
     sort_values( ["dept code","muni code"] ) )
   geo = geo[ geo["muni code"] > 0 ]
-  # geo.loc[ geo["muni code"]==0,
-  #          "muni" ] = "dept"
-  # geo.loc[ geo["muni code"]==-2,
-  #          "muni" ] = "promedio"
 
 geo.apply(
   ( lambda row:
