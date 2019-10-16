@@ -46,8 +46,9 @@ def add_plots(
     df : pd.DataFrame
     ) -> List[mplot.container.Container]:
   plots = [] # This is what gets returned.
-  totals = df.sum().reset_index(drop=True)
-  for rn in range( nRows ):
+  totals = df.sum()
+
+  for rn in range( nRows ): # draw bars
     if True: # PITFALL: while "bottom" is absolute,
              # "height" is relative to "bottom".
       if rn < 1: bottom = df.iloc[0,   :]*0 # just a row of zeros
@@ -59,7 +60,8 @@ def add_plots(
               height,
               width = [ design.sizeBarWidth for i in range( nCols ) ],
               bottom = bottom ) )
-  for rn in range( nRows ):
+
+  for rn in range( nRows ): # plot percentages next to each bar
     # The computation of bottom and height is equal to
     # that iin the previous loop. They cannot be joined, though,
     # because it would ruin the `*_in_axes` variables below,
@@ -74,21 +76,23 @@ def add_plots(
     enough_to_print = float( ax.transData.inverted().transform(
                                ax.transAxes.transform(( 0,0.2 )) )
                              [1] )
-    for cn in range( nCols ): # plot amounts in each box
+    for cn in range( nCols ):
       height_in_axes = ( ax.transAxes.inverted().transform(
                            ax.transData.transform(( 0, height[cn] )) )
                          [1] )
       if height_in_axes > 0.025:
         ax.text( float( cn ) + 1.2 * design.sizeBarWidth,
                  middle.iloc[cn],
-                 abbrev.show_brief( # what we're printing
-                   df.iloc[ rn, cn ],
-                   commas ),
+                 ( abbrev.show_brief( # what we're printing
+                     100 * df.iloc[ rn, cn ] / totals[cn],
+                     0 )
+                   + "%"),
                  verticalalignment = 'center',
                  horizontalalignment = 'center',
                  color = design.against( background_color ),
                  fontproperties = design.font_thin,
                  fontsize = design.sizeText_inBars )
+
   for cn in range( nCols ): # plot totals above each column
     buffer = ( # Convert 0.04 from axes coords to screen coords,
                # and then from screen coords to data coords.
