@@ -371,8 +371,8 @@ $(pics):				\
   Code/draw/pages.py			\
   Code/draw/design.py			\
   Code/draw/chart_content.py		\
-  Code/main.py
+  Code/main/pdfs.py
 	date
-	$(myPython) Code/main.py $(ss)
+	$(myPython) Code/main/pdfs.py $(ss)
 	date
 
