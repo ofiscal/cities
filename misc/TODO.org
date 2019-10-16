@@ -51,11 +51,9 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO generate radio scripts
-** TODO ! are the averages only over 2015-2018?
-** TODO asking team
-"En el 2015 hubo cambio de gobierno municipal," is ambiguous. Should I change it to "A finales de 2015"?
-
-Also, the text you gave me says that we're showing averages (in the paired bar charts) from 2015 to 2018. But I could have sworn someone said that I should drop 2015 from that data. Which is it?
+** DONE change charts, data
+Averages are only 2016-2018.
+Line should read "el 1 de enero de 2016 hubo cambio"
 ** TODO ? urls in pdfs
 Including a URL in the text itself makes it clickable.
 

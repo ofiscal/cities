@@ -10,7 +10,9 @@ if True:
   import Code.draw.text.shorten_names as shorten_names
   import Code.draw.text.newlines as newlines
   import Code.draw.chart_content as chart_content
-  from   Code.main.geo import geo
+  from   Code.main.geo import depts_and_munis
+
+root = "output/pivots/recip-" + str(c.subsample)
 
 def create_pdf( dept : str,
                 muni : str ):
@@ -39,9 +41,7 @@ def create_pdf( dept : str,
     pages.drawZenQuestions( muni_short, pdf )
     pages.drawLastPage( pdf )
 
-root = "output/pivots/recip-" + str(c.subsample)
-
-geo.apply(
+depts_and_munis.apply(
   ( lambda row:
     create_pdf( dept = row["dept"],
                 muni = row["muni"] ) ),
