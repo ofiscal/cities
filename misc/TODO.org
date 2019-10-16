@@ -163,7 +163,7 @@ Test with the longest muni and dept names.
 *** DONE icon
 *** DONE use a class to describe chart pages
 for looping over in main.py
-*** TODO at sides put percentages, not absolute values
+*** DONE at sides put percentages, not absolute values
 *** TODO write percentages above paired bars
 *** DONE totals above each bar
 *** DONE colors

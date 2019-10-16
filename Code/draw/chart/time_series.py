@@ -101,7 +101,7 @@ def add_plots(
       [1] )
     ax.text( float( cn ),
              totals[cn] + buffer,
-             abbrev.show_brief( # what we're printing
+             "$" + abbrev.show_brief( # what we're printing
                totals[cn], commas ),
              verticalalignment = 'center',
              horizontalalignment = 'center',

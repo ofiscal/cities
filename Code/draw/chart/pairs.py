@@ -9,22 +9,49 @@ if True:
   import numpy as np
   import pandas as pd
 
-  import Code.draw.text.newlines as newlines
-  import Code.draw.design as design
+  import Code.draw.design               as design
+  import Code.draw.text.newlines        as newlines
+  import Code.draw.text.shorten_numbers as abbrev
 
 def drawPairs( ax : mplot.axes.SubplotBase,
                background_color : str,
                df : pd.DataFrame ):
 
+  # The muni is in the first column, and the dept average in the second.
+  muni_col = 0
+  avg_col = 1
+  totals = df.sum()
+
   if True: # definitions
-    muni = df.iloc[:,0]
-    avg  = df.iloc[:,1]
-    ind = np.arange(len(df)) # the x locations for the groups
-    width = 0.2              # the width of the bars
-  
+    muni = df.iloc[:,muni_col]
+    avg  = df.iloc[:,avg_col]
+    ind = np.arange(len(df))    # the x locations for the groups
+    width = design.sizeBarWidth # the width of the bars
+
   if True: # bars
     p0 = ax.bar(ind, muni, width, bottom=0)
     p1 = ax.bar(ind + width, avg, width, bottom=0)
+
+  for (geo, x_shift) in [ # plot totals above each column
+      (muni_col, 0),
+      (avg_col, width) ]:
+    for budget in range(len(df)):
+      y_shift = ( # Convert 0.04 from axes coords to screen coords,
+                  # and then from screen coords to data coords.
+        ax.transData.inverted().transform(
+          ax.transAxes.transform( (0,0.04) ) )
+        [1] )
+      ax.text( budget + x_shift,
+               df.iloc[budget,geo] + y_shift,
+               ( abbrev.show_brief( # what we're printing
+                   100 * df.iloc[budget,geo] / totals[geo],
+                   0 )
+                 + "%"),
+               verticalalignment = 'center',
+               horizontalalignment = 'center',
+               color = design.orange,
+               fontproperties = design.font_thin,
+               fontsize = design.sizeText_aboveBars )
 
   if True: # grid (and grid text)
     ax.set_axisbelow(True) # to keep grid lines behind bars
