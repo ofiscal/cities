@@ -38,10 +38,10 @@ geo = ( # geo indices of interest
   [space] .
   drop_duplicates() )
 
-def static_muni( filename : str,
-                 dept_code : int,
-                 muni_code : int
-               ) -> pd.Series:
+def static_muni_ungrouped( filename : str,
+                           dept_code : int,
+                           muni_code : int
+                         ) -> pd.Series:
   """Average a muni's values over years after 2015."""
   assert muni_code > 0
   d = str( geo.loc[ geo["muni code"]==muni_code,
@@ -61,7 +61,13 @@ def static_muni( filename : str,
                       df.columns ) ] .
           mean( axis="columns" ) .
           sort_values( ascending=False ) )
-  if filename == "ingresos-pct": return ser
+  return ser
+
+def group_small_if_needed( filename : str,
+                           ser : pd.Series
+                         ) -> pd.Series:
+  if filename == "ingresos-pct":
+    return ser
   else: # lump all but the top five gastos
         # together under "Otros"
     ser_otros     = pd.Series( ser.loc["Otros"] )
@@ -74,10 +80,21 @@ def static_muni( filename : str,
     ser_new_otros.index = ["Otros"]
     return pd.concat( [ser_top, ser_new_otros] )
 
+def static_muni( filename : str,
+                 dept_code : int,
+                 muni_code : int
+               ) -> pd.Series:
+  return group_small_if_needed(
+    filename,
+    static_muni_ungrouped( filename,
+                           dept_code,
+                           muni_code ) )
+
 if testing: # Test by hand
+  filename = "gastos-pct"
   dc = 25
   mc = 25873
-  d = monolith["gastos-pct"]
+  d = monolith[filename]
   d = ( d[ ( d["dept code"] ==dc    ) &
            ( d["muni code"] == mc) &
            ( d["year"]      >= 2016 ) ] )
@@ -88,8 +105,8 @@ if testing: # Test by hand
                       apply( lambda s: s[:10] ) )
   d
   d["item oblig"].mean()
-  static_muni( "gastos-pct", 25, mc )
-
+  static_muni_ungrouped( filename, 25, mc )
+  static_muni( filename, 25, mc )
 
 def static_avg( filename : str,
                 money_col : str,
@@ -205,6 +222,11 @@ if testing:
   ing
   static_muni_pair( "gastos-pct", "item oblig", 25, 25873 )
 
+def series_to_frame( ser : pd.Series ) -> pd.DataFrame:
+  df = pd.DataFrame( ser )
+  df.columns = ["promedio 2016-2018"]
+  return df
+
 for s in s4.series_pct:
   ( geo[geo["muni code"] > 0] .
       # exclude rows about depts or average munis
@@ -217,6 +239,19 @@ for s in s4.series_pct:
         to_csv( by_place_root + "/" + row["dept"] + "/" +
                 row["muni"] + "/" + s.name + "-compare.csv" ) ),
       axis = "columns" ) )
+
+  if s.name == t.gastos_pct:
+    ( geo[geo["muni code"] > 0] .
+        # exclude rows about depts or average munis
+      apply(
+        ( lambda row:
+          series_to_frame(
+            static_muni_ungrouped( s.name,
+                                   row["dept code"],
+                                   row["muni code"] ) ) .
+          to_csv( by_place_root + "/" + row["dept"] + "/" +
+                  row["muni"] + "/" + s.name + "-ungrouped.csv" ) ),
+        axis = "columns" ) )
 
 ( Path( by_place_root + "/" + "timestamp-for-static-compare" ) .
   touch() )

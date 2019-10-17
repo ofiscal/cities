@@ -59,6 +59,9 @@ Line should read "el 1 de enero de 2016 hubo cambio"
 ** TODO ? urls in pdfs
 Including a URL in the text itself makes it clickable.
 
+Guide: https://docs.wixstatic.com/ugd/afdece_e2f13bf8ba7b4adbb83da10fbc01afa5.pdf
+Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
+
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
 ** TODO serve the data
