@@ -3,7 +3,7 @@ if True:
   import pandas as pd
   from typing import List, Set, Dict
 
-subsample = 1
+subsample = 100
 
 pd.set_option('display.max_rows', 200)
 pd.set_option('display.min_rows', 200)

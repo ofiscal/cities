@@ -61,6 +61,13 @@ Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
+** TODO BUG : most paired gastos in Otros
+Villapinzon, Cundinamarca, 1/100 sample
+It's good at stage 7 (grouped), bad at stage 8 (disagg by place)
+Stage 8 is good.
+gastos-pct-ungrouped.csv is good, but -compare is not.
+The bug is somewhere after static_muni_ungrouped() and not after
+static_muni_pair().
 ** TODO upload full set of pdfs
 ** TODO check stages 6p7, 8, 9
 Better would be to fill the space early,
