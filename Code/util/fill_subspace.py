@@ -19,7 +19,7 @@ creates a set of rows with every possible combination."""
   acc = axes[0]
   for ax in axes[1:]:
     acc = acc.merge( ax, how="outer", on="const" )
-  return acc
+  return acc . drop( columns = "const" )
 
 powerset( # demo; no time to formalize
   ["a","b"],
@@ -47,16 +47,3 @@ fill_space( # the spot (a,b)=(2,3) should appear,
                   'b' : [3,4,4],
                   'v' : [1,2,3] } ) )
 
-                  
-
-###
-
-abc = pd.DataFrame( [[1,2,3],[4,5,6],[7,8,9]],
-                     columns = ["a","b","c"] )
-fill_subspace( ["a"], None, abc )
-
-x = pd.DataFrame( {"x":[1,2,3]} )
-y = pd.DataFrame( {"y":[1,2,3]} )
-for d in [x,y]: d["one"] = 1
-
-x.merge(y,how="outer",on="one")
