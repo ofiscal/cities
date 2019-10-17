@@ -24,3 +24,27 @@ if True: # test it
     columns = ["moon","helium","art"] )
   assert y.equals(z)
 
+def percentify_columns_by_groups(
+    by : List[str], # group by these
+    cols : List[str], # percentify these
+    df : pd.DataFrame
+    ) -> pd.DataFrame:
+  return ( df . groupby( by ) .
+           apply( lambda df :
+                  percentify_columns( cols, df ) ) )
+
+if True: # test it
+  x = pd.DataFrame( {
+    "g" : [1,1,2,2],
+    "v" : [1,4,1,9] } )
+  should_be = pd.DataFrame( {
+    "g" : [1,1,2,2],
+    "v" : [1/5,4/5,1/10,9/10] } )
+  really_is = (
+    percentify_columns_by_groups(
+      by = ["g"],
+      cols = ["v"],
+      df = x ) .
+    reset_index( drop = True ) )
+  assert should_be.equals( really_is )
+
