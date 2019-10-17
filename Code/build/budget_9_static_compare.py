@@ -12,6 +12,7 @@ if True:
   import Code.common as c
   import Code.metadata.terms as t
   import Code.metadata.four_series as s4
+  import Code.util.fill_subspace as fill
 
 testing = True if c.subsample == 100 else False
 
@@ -44,24 +45,40 @@ def static_muni_ungrouped( filename : str,
                          ) -> pd.Series:
   """Average a muni's values over years after 2015."""
   assert muni_code > 0
+  money_col = ( "item total"
+                if filename == t.ingresos_pct
+                else "item oblig" )
   d = str( geo.loc[ geo["muni code"]==muni_code,
                     "dept" ] .
            iloc[0] )
   m = str( geo.loc[ geo["muni code"]==muni_code,
                     "muni" ] .
            iloc[0] )
-  fn = ( by_place_root + "/" + d + "/" + m +
-         "/" + filename + ".csv" )
-  df = ( pd.read_csv( fn,
-                      index_col="item categ" ) .
-         fillna(0) )
-  df.columns = list( map( lambda s: round( float(s) ),
-                          df.columns ) )
-  ser = ( df[ filter( lambda c: c > 2015,
-                      df.columns ) ] .
-          mean( axis="columns" ) .
-          sort_values( ascending=False ) )
-  return ser
+  df = monolith[filename]
+  df = ( df[ (df["dept code"]==dept_code) &
+             (df["muni code"]==muni_code) &
+             (df["year"] > 2015) ]
+         [[ "year", "item categ",money_col ]] .
+         copy() )
+  df = fill.fill_space( ["year","item categ"],
+                        [money_col],
+                        df )
+  df = ( df[["item categ",money_col]] .
+         groupby( ["item categ"] ) .
+         agg( 'mean' )
+         [money_col] .
+         sort_values() )
+  return df
+
+if testing:
+  dc, mc = 25, 25214 # Cota, in Cundinamarca
+  fn = "gastos-pct"
+  df = monolith[fn]
+  df = df[ (df["dept code"]==dc) &
+           (df["muni code"]==mc) &
+           (df["year"] > 2015) ]
+  (df . groupby( "item categ" ) . agg("mean") )["item oblig"]
+  static_muni_ungrouped( fn, dc, mc )
 
 def group_small_if_needed( filename : str,
                            ser : pd.Series
@@ -70,13 +87,9 @@ def group_small_if_needed( filename : str,
     return ser
   else: # lump all but the top five gastos
         # together under "Otros"
-    ser_otros     = pd.Series( ser.loc["Otros"] )
-    ser           = ser . drop( index="Otros" )
     ser_top       = ser . iloc[0:5]
     ser_new_otros = pd.Series(
-      pd.concat( [ ser . iloc[5:],
-                   ser_otros ] ) .
-      sum() )
+        ser . iloc[5:] . sum() )
     ser_new_otros.index = ["Otros"]
     return pd.concat( [ser_top, ser_new_otros] )
 

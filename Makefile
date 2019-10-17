@@ -134,7 +134,7 @@ sample_tables =					\
 
 pics = output/pivots/recip-$(ss)/timestamp-for-pdfs
 
-radio = output/pivots/recip-$(ss)/timestamp-for-radio
+radio = output/radio/recip-$(ss)/timestamp-for-radio
 
 
 #### #### #### ####
