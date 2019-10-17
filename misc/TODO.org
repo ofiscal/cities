@@ -53,7 +53,7 @@ These are ordered by time.
 ** DONE flatten pdfs
 send pdfs to one folder, not a tree
 change names
-** TODO ? urls in pdfs
+** DONE urls in pdfs
 Including a URL in the text itself makes it clickable.
 
 Guide: https://docs.wixstatic.com/ugd/afdece_e2f13bf8ba7b4adbb83da10fbc01afa5.pdf

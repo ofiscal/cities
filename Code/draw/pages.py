@@ -140,22 +140,29 @@ def drawLastPage( pdf ):
   ax0 = fig.add_subplot(grid[0])
   ax0.axis("off")
   plt.text(
-    0.5, 0.8,
-    "Si quiere saber más sobre como se maneja la plata de un municipio, haga clic aquí.",
+    0.5, 0.9,
+    "\n".join(
+      [ "Si quiere saber más sobre como se maneja la plata de un municipio, vitite",
+        "https://docs.wixstatic.com/ugd/afdece_e2f13bf8ba7b4adbb83da10fbc01afa5.pdf" ] ),
     color = design.orange,
     fontproperties = design.font_thick,
     fontsize = design.sizeText_lastPageAbove,
     horizontalalignment="center" )
   plt.text(
     0.5, 0.6,
-    "Para ver información de otros municipios, haga clic aquí.",
+    "\n".join(
+      [ "Para ver información de otros municipios, visite",
+        "http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/"] ),
     color = design.orange,
     fontproperties = design.font_thick,
     fontsize = design.sizeText_lastPageAbove,
     horizontalalignment="center" )
   plt.text(
-    0.5, 0.4,
-    "Si tiene alguna pregunta o comentario, por favor escríbanos a ofiscal@javeriana.edu.co o visite www.ofiscal.org",
+    0.5, 0.2,
+    "\n".join(
+      [ "Si tiene alguna pregunta o comentario. por favor",
+        "escríbanos a ofiscal@javeriana.edu.co",
+        "o visite www.ofiscal.org" ] ),
     color = design.light_blue,
     fontproperties = design.font_thick,
     fontsize = design.sizeText_lastPageAbove,

@@ -88,4 +88,3 @@ depts_and_munis.apply(
 
 ( Path( dest_root + "/" + "timestamp-for-radio" ) .
   touch() )
-
