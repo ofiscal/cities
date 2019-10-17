@@ -50,12 +50,9 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
-** TODO generate radio scripts
-*** TODO generate additional, totally-disaggregated spending-pct charts
-that don't lump anything into Otros
-** DONE change charts, data
-Averages are only 2016-2018.
-Line should read "el 1 de enero de 2016 hubo cambio"
+** DONE flatten pdfs
+send pdfs to one folder, not a tree
+change names
 ** TODO ? urls in pdfs
 Including a URL in the text itself makes it clickable.
 
@@ -64,8 +61,18 @@ Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
-** TODO serve the data
+** TODO upload full set of pdfs
+** TODO check stages 6p7, 8, 9
+Better would be to fill the space early,
+and ditch the "munis in dept", "muni-years in dept" counts.
 ** TODO generate pictures for Facebook ads
+** TODO generate radio scripts
+*** TODO generate additional, totally-disaggregated spending-pct charts
+that don't lump anything into Otros
+** DONE change charts, data
+Averages are only 2016-2018.
+Line should read "el 1 de enero de 2016 hubo cambio"
+** TODO serve the data
 ** draw charts
 *** shrink numbers
 **** smaller font

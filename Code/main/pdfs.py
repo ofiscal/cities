@@ -1,4 +1,5 @@
 if True:
+  import os
   from   typing import List, Set, Dict
   from   pathlib import Path
   import pandas as pd
@@ -12,12 +13,17 @@ if True:
   import Code.draw.chart_content as chart_content
   from   Code.main.geo import depts_and_munis
 
-root = "output/pivots/recip-" + str(c.subsample)
+source_root = "output/pivots/recip-" + str(c.subsample)
+dest        = "output/pdfs/recip-"   + str(c.subsample)
 
 def create_pdf( dept : str,
-                muni : str ):
-  folder = ( root + "/" + dept + "/" + muni )
-  print("folder: ", folder)
+                muni : str,
+                muni_code : int ):
+  if True: # folders
+    source = ( source_root + "/" + dept + "/" + muni )
+    if not os.path.exists( dest ):
+      os.makedirs( dest )
+    print("folder: ", source)
 
   muni_short = shorten_names.munis[muni]
   dept_short = shorten_names.depts[dept]
@@ -27,11 +33,13 @@ def create_pdf( dept : str,
     if len(muni_short) > 15
     else muni_short )
 
-  with PdfPages( folder + "/report.pdf" ) as pdf:
+  with PdfPages(
+      dest + "/" + dept_short + "_" + muni_short + "_" +
+      str(muni_code) + ".pdf" ) as pdf:
     pages.drawTitlePage( muni_split, pdf )
     for page in chart_content.pages( muni_short, dept_short):
       df = pd.read_csv(
-        folder + "/" + page.file + ".csv",
+        source + "/" + page.file + ".csv",
         index_col = page.index_col )
       if page.insertNewlines:
         df.index = list( map( lambda s: newlines.remap[s],
@@ -43,10 +51,11 @@ def create_pdf( dept : str,
 
 depts_and_munis.apply(
   ( lambda row:
-    create_pdf( dept = row["dept"],
-                muni = row["muni"] ) ),
+    create_pdf( dept      =      row["dept"],
+                muni      =      row["muni"],
+                muni_code = int( row["muni code"] ) ) ),
   axis = "columns" )
 
-( Path( root + "/" + "timestamp-for-pdfs" ) .
+( Path( dest + "/" + "timestamp-for-pdfs" ) .
   touch() )
 

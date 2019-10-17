@@ -29,7 +29,7 @@ myPython=PYTHONPATH='.' python3
   budget_8_pivots			\
   budget_9_static_compare		\
   sample_tables				\
-  pics					\
+  pdfs					\
   radio
 
 all: keys				\
@@ -48,7 +48,7 @@ all: keys				\
   budget_9_static_compare		\
   output/inflation.csv			\
   output/regalias.csv			\
-  pics					\
+  pdfs					\
   radio
   # sample_tables
 
@@ -132,7 +132,7 @@ sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\
   output/sample_tables/recip-$(ss)/gastos.csv
 
-pics = output/pivots/recip-$(ss)/timestamp-for-pdfs
+pdfs = output/pdfs/recip-$(ss)/timestamp-for-pdfs
 
 radio = output/radio/recip-$(ss)/timestamp-for-radio
 
@@ -364,8 +364,8 @@ output/regalias.csv:			\
 	$(myPython) Code/build/regalias.py
 	date
 
-pics: $(pics)
-$(pics):				\
+pdfs: $(pdfs)
+$(pdfs):				\
   $(budget_8_pivots)			\
   $(budget_9_static_compare)		\
   Code/build/use_keys.py		\
