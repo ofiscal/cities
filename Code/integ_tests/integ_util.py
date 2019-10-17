@@ -5,8 +5,8 @@ if True:
 
 subsample = 100
 
-pd.set_option('display.max_rows', 200)
-pd.set_option('display.min_rows', 200)
+pd.set_option('display.max_rows', 100)
+pd.set_option('display.min_rows', 100)
 
 if True: # define a spacetime cell
   if True: # This is the only dept with a "promedio" in the 1/1000 sample

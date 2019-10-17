@@ -71,7 +71,7 @@ def static_muni_ungrouped( filename : str,
   return df
 
 if testing:
-  dc, mc = 25, 25214 # Cota, in Cundinamarca
+  dc, mc = 25, 25873 # Villapinzón, in Cundinamarca
   fn = "gastos-pct"
   df = monolith[fn]
   df = df[ (df["dept code"]==dc) &
@@ -87,6 +87,7 @@ def group_small_if_needed( filename : str,
     return ser
   else: # lump all but the top five gastos
         # together under "Otros"
+    ser = ser.sort_values( ascending = False )
     ser_top       = ser . iloc[0:5]
     ser_new_otros = pd.Series(
         ser . iloc[5:] . sum() )
@@ -108,10 +109,13 @@ if testing: # Test by hand
   dc = 25
   mc = 25873
   d = monolith[filename]
-  d = ( d[ ( d["dept code"] ==dc    ) &
+  d = ( d[ ( d["dept code"] == dc) &
            ( d["muni code"] == mc) &
            ( d["year"]      >= 2016 ) ] )
-  d = d . drop( columns = ["dept","muni"] )
+  d = ( d . drop( columns = ["dept","muni"] ) .
+        rename(
+          columns = {"munis in dept":"ms",
+                     "muni-years in dept" : "mys" } ) )
   d = ( d[ ( d["item categ"] == "Salud" ) ] .
         copy() )
   d["item categ"] = ( d["item categ"] .
