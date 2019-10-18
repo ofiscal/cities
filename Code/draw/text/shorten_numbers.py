@@ -37,8 +37,9 @@ if True: # test it
 
 def show_brief_with_units( f : float ):
   cs = commas(f)
-  return ( show_brief( f,cs ) +
-           " " + units(cs) )
+  return ( ( show_brief( f,cs ) +
+             " " + units(cs) ) .
+           replace( " 2018", "" ) )
 if True: # test it
-  assert show_brief_with_units( 217e5 ) == "21.7 millones de 2018 pesos"
+  assert show_brief_with_units( 217e5 ) == "21.7 millones de pesos"
 

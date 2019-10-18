@@ -26,32 +26,40 @@ def write_script(
     ingresos_recent_pct : pd.DataFrame,
     gastos_recent_pct   : pd.DataFrame ):
   print( dept + " / " + muni )
-  total_muni_income_2018 = str( round(
-    ingresos_all_years["2018.0"].sum() ) )
-  fraction_income_transfers_after_2015 = str(
-    100 * ingresos_recent_pct[ t.transfer ] )
-  fraction_income_regalias_after_2015 = str(
-    100 * ingresos_recent_pct[ t.regalias ] )
-  fraction_income_taxes_after_2015 = str(
-    100 * ingresos_recent_pct[ t.propios ] )
-  fraction_spending_health_after_2015 = str(
-    100 * gastos_recent_pct[ t.salud ] )
-  fraction_spending_health_after_2015 = str(
-    100 * gastos_recent_pct[ t.salud ] )
-  fraction_spending_housing_after_2015 = str(
-    100 * gastos_recent_pct[ t.infra ] )
-  fraction_spending_edu_after_2015 = str(
-    100 * gastos_recent_pct[ t.edu ] )
+  total_muni_income_2018 = (
+    abbrev.show_brief_with_units( round(
+      ingresos_all_years["2018.0"].sum() ) ) )
+  fraction_income_transfers_after_2015 = abbrev.show_brief(
+    100 * ingresos_recent_pct[ t.transfer ], 0 )
+  fraction_income_regalias_after_2015 = abbrev.show_brief(
+    100 * ingresos_recent_pct[ t.regalias ], 0 )
+  fraction_income_taxes_after_2015 = abbrev.show_brief(
+    100 * ingresos_recent_pct[ t.propios ], 0 )
+  fraction_spending_health_after_2015 = abbrev.show_brief(
+    100 * gastos_recent_pct[ t.salud ], 0 )
+  fraction_spending_health_after_2015 = abbrev.show_brief(
+    100 * gastos_recent_pct[ t.salud ], 0 )
+  fraction_spending_housing_after_2015 = abbrev.show_brief(
+    100 * gastos_recent_pct[ t.infra ], 0 )
+  fraction_spending_edu_after_2015 = abbrev.show_brief(
+    100 * gastos_recent_pct[ t.edu ], 0 )
+
+  print( "\n",
+         total_muni_income_2018, "\n",
+         fraction_income_transfers_after_2015, "\n",
+         fraction_income_regalias_after_2015, "\n",
+         fraction_income_taxes_after_2015, "\n",
+         fraction_spending_health_after_2015, "\n",
+         fraction_spending_health_after_2015, "\n",
+         fraction_spending_housing_after_2015, "\n",
+         fraction_spending_edu_after_2015, "\n" )
 
   dest = dest_folder( dept, muni )
   if not os.path.exists( dest ):
     os.makedirs( dest )
 
-  with open( dest + "/radio.md", "w" ) as f:
+  with open( dest + "/radio.txt", "w" ) as f:
     f.write( "\n\n".join( [
-      str( ingresos_all_years ),
-      str( ingresos_recent_pct ),
-      str( gastos_recent_pct ),
       "Píldora municipal para " + muni + ", " + dept + "(Código DANE: " + str(muni_code) + ")",
       "Recuerde: su voto determina en manos de quién van a quedar los recursos de " + muni + ". Por eso es importante que conozca de dónde viene la plata su municipio y cómo la gastan sus gobernantes.",
       "Mi nombre es Luis Carlos Reyes y soy el director del Observatorio Fiscal de la Universidad Javeriana. Con el fin de que usted pueda conocer cómo se usan los recursos de su municipio, el Observatorio ha preparado un análisis de lo que pasa con este dinero, para que usted evalúe el uso que la alcaldía y el concejo municipal les dan a los recursos públicos.",
@@ -88,3 +96,4 @@ depts_and_munis.apply(
 
 ( Path( dest_root + "/" + "timestamp-for-radio" ) .
   touch() )
+
