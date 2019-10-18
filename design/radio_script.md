@@ -1,3 +1,5 @@
+PITFALL: One paragraph in this file is obsolete. (It is marked "PITFALL".)
+
 Píldora municipal para [[MUNICIPALITY NAME]],  [[DEPARTMENT]] (Código DANE: [[MUNICIPALITY DANE CODE]] ) 
 
 Recuerde: su voto determina en manos de quién van a quedar los recursos de [[MUNICIPALITY NAME]]. Por eso es importante que conozca de dónde viene la plata su municipio y cómo la gastan sus gobernantes. 
@@ -10,6 +12,7 @@ Durante este gobierno, el [[MUNICIPALITY’S PERCENTAGE OF TRANSFERENCIAS DEL GO
 
 Además, alrededor de [[PERCENTAGE OF TAX INCOME 2015-2018, NO % SIGN]] de cada 100 pesos que le entraron a [[MUNICIPALITY NAME]] vienen de impuestos que pueden ser aumentados o reducidos por el alcalde y el Concejo, como el impuesto predial que se les puede cobrar a los dueños de fincas y casas, o el ICA que se les puede cobrar a los negocios. El concejo municipal y el alcalde pueden decidir si subir o bajar estos impuestos 
 
+PITFALL: THIS PARAGRAPH IS OBSOLETE
 En el Observatorio Fiscal de la Universidad Javeriana nuestra tarea es que tenga insumos suficientes para definir su voto, y apoyarlo con su tarea de conocer cómo se reparte la torta de los ingresos en su municipio. Así que aquí le contamos que el principal gasto de [[MUNICIPALITY NAME]] durante esta administración ha sido en salud, pues se ha invertido un [[MUNICIPALITY SHARE OF SPENDING IN HEALTH 2015-2018]] del presupuesto del municipio; se ha invertido el [[MUNICIPALITY SHARE OF SPENDING IN HOUSING 2015-2018]] en infraestructura y vivienda, y el [[MUNICIPALITY SHARE OF SPENDING IN EDUCATION 2015-2018]] en educación.
 
 Como ciudadano de [[MUNICIPALITY NAME]], usted conoce mejor que nadie si estos recursos se están empleando adecuadamente. ¿Qué promesas están haciendo los candidatos? ¿Sí alcanza la plata para lo que están prometiendo? ¿Qué gastos tendrían que recortar para financiar lo que prometen, o qué impuestos tendrían que subir? Su voto define cómo se manejarán los recursos de su municipio. Exíjales cuentas claras a los candidatos al concejo y a la alcaldía este 27 de octubre y, ante todo, vote.
