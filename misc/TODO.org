@@ -53,10 +53,10 @@ These are ordered by time.
 ** DONE flatten pdfs
 send pdfs to one folder, not a tree
 change names
-** DONE urls in pdfs
+** TODO urls in pdfs
 Including a URL in the text itself makes it clickable.
 
-Guide: https://docs.wixstatic.com/ugd/afdece_e2f13bf8ba7b4adbb83da10fbc01afa5.pdf
+Guide (NEW): https://docs.wixstatic.com/ugd/e33cdb_53da4c35b3d04a678740f752719371e3.pdf
 Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 
 plt.subplot, and plt.text, both have "url" arguments. neither is working.

@@ -1,4 +1,4 @@
-#### #### #### ####
+### #### #### ####
 #### #### #### #### Variables
 #### #### #### ####
 
@@ -29,7 +29,8 @@ myPython=PYTHONPATH='.' python3
   budget_8_pivots			\
   budget_9_static_compare		\
   sample_tables				\
-  pdfs					\
+  reports				\
+  facebook_ads				\
   radio
 
 all: keys				\
@@ -48,7 +49,8 @@ all: keys				\
   budget_9_static_compare		\
   output/inflation.csv			\
   output/regalias.csv			\
-  pdfs					\
+  reports				\
+  facebook_ads				\
   radio
   # sample_tables
 
@@ -132,8 +134,8 @@ sample_tables =					\
   output/sample_tables/recip-$(ss)/ingresos.csv	\
   output/sample_tables/recip-$(ss)/gastos.csv
 
-pdfs = output/pdfs/recip-$(ss)/timestamp-for-pdfs
-
+reports = output/reports/recip-$(ss)/timestamp-for-reports
+facebook_ads = output/facebook_ads/recip-$(ss)/timestamp-for-facebook-ads
 radio = output/radio/recip-$(ss)/timestamp-for-radio
 
 
@@ -364,8 +366,8 @@ output/regalias.csv:			\
 	$(myPython) Code/build/regalias.py
 	date
 
-pdfs: $(pdfs)
-$(pdfs):				\
+reports: $(reports)
+$(reports):				\
   $(budget_8_pivots)			\
   $(budget_9_static_compare)		\
   Code/build/use_keys.py		\
@@ -375,9 +377,25 @@ $(pdfs):				\
   Code/draw/pages.py			\
   Code/draw/design.py			\
   Code/draw/chart_content.py		\
-  Code/main/pdfs.py
+  Code/main/reports.py
 	date
-	$(myPython) Code/main/pdfs.py $(ss)
+	$(myPython) Code/main/reports.py $(ss)
+	date
+
+facebook_ads: $(facebook_ads)
+$(facebook_ads):			\
+  $(budget_8_pivots)			\
+  $(budget_9_static_compare)		\
+  Code/build/use_keys.py		\
+  Code/draw/chart/time_series.py	\
+  Code/draw/chart/pairs.py		\
+  Code/draw/text/newlines.py		\
+  Code/draw/pages.py			\
+  Code/draw/design.py			\
+  Code/draw/chart_content.py		\
+  Code/main/facebook_ads.py
+	date
+	$(myPython) Code/main/facebook_ads.py $(ss)
 	date
 
 radio: $(radio)

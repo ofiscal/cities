@@ -13,8 +13,8 @@ if True:
   import Code.draw.chart_content as chart_content
   from   Code.main.geo import depts_and_munis
 
-source_root = "output/pivots/recip-" + str(c.subsample)
-dest_folder = "output/pdfs/recip-"   + str(c.subsample)
+source_root = "output/pivots/recip-"  + str(c.subsample)
+dest_folder = "output/reports/recip-" + str(c.subsample)
 
 def create_pdf( dept : str,
                 muni : str,
@@ -57,6 +57,6 @@ depts_and_munis.apply(
                 muni_code = int( row["muni code"] ) ) ),
   axis = "columns" )
 
-( Path( dest_folder + "/" + "timestamp-for-pdfs" ) .
+( Path( dest_folder + "/" + "timestamp-for-reports" ) .
   touch() )
 
