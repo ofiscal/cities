@@ -11,11 +11,14 @@ if True:
   import Code.draw.design as design
 
 
+def set_page_size():
+  """The default figure size has to be increased
+in order for .png import not to be horribly grainy."""
+  plt.rcParams.update({'figure.figsize': (38,24)})
+
 def drawTitlePage( muni : str,
                    pdf ):
-  # The default figure size has to be increased in order for .png import
-  # not to be horribly grainy.
-  plt.rcParams.update({'figure.figsize': (38,24)})
+  set_page_size()
 
   # The figure is divided into 4 rows (and 1 column).
   # The first row goes to the image;
@@ -63,12 +66,14 @@ def drawTextAboveChart( ax : mplot.axes.SubplotBase,
             verticalalignment="center" )
   ax.axis( 'off' )
 
-def drawPageWithChart( df : pd.DataFrame,
-                       background_color : str,
-                       title : List[str],
-                       text : List[str],
-                       pdf,
-                       drawChart ): # a callback
+def drawPageWithChart(
+    df : pd.DataFrame,
+    background_color : str,
+    title : List[str],
+    text : List[str],
+    pdf, # PITFALL: Can be None, in which case user must
+         # save and close the figure outside of this function.
+    drawChart ): # a callback
 
   # Create a 4-row, 1-column grid over the figure.
   # The bottom three rows will go to the chart,
@@ -78,13 +83,18 @@ def drawPageWithChart( df : pd.DataFrame,
     constrained_layout = False )
   grid = fig.add_gridspec(nrows=4, ncols=1)
 
-  ax1 = fig.add_subplot(grid[0, :])
+  ax1 = fig.add_subplot( grid[0, :] )
   drawTextAboveChart( ax1, title, text )
-  ax2 = fig.add_subplot(grid[1:, :])
+  ax2 = fig.add_subplot( grid[1:, :] )
   drawChart( ax2, background_color, df )
 
-  pdf.savefig( facecolor=background_color )
-  plt.close()
+  if pdf == None: # PITFALL: In this case the user must save and close
+                  # the figure after calling this function.
+    fig.patch.set_facecolor(background_color)
+
+  else:
+    pdf.savefig( facecolor=background_color )
+    plt.close()
 
 def drawZenQuestions( muni : str,
                       pdf ):
@@ -143,7 +153,7 @@ def drawLastPage( pdf ):
     0.5, 0.9,
     "\n".join(
       [ "Si quiere saber más sobre como se maneja la plata de un municipio, vitite",
-        "https://docs.wixstatic.com/ugd/afdece_e2f13bf8ba7b4adbb83da10fbc01afa5.pdf" ] ),
+       "https://docs.wixstatic.com/ugd/e33cdb_53da4c35b3d04a678740f752719371e3.pdf" ] ),
     color = design.orange,
     fontproperties = design.font_thick,
     fontsize = design.sizeText_lastPageAbove,
