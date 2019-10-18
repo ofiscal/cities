@@ -50,10 +50,13 @@ These are ordered by time.
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
+** TODO post FB ads
+determine population ranges
+automate
 ** DONE flatten pdfs
 send pdfs to one folder, not a tree
 change names
-** TODO urls in pdfs
+** DONE urls in pdfs
 Including a URL in the text itself makes it clickable.
 
 Guide (NEW): https://docs.wixstatic.com/ugd/e33cdb_53da4c35b3d04a678740f752719371e3.pdf
@@ -63,7 +66,7 @@ plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
 ** TODO ? Otros should be on one side of bars
 ** TODO upload full set of pdfs
-** TODO generate pictures for Facebook ads
+** DONE generate pictures for Facebook ads
 ** DONE generate radio scripts
 *** DONE generate additional, totally-disaggregated spending-pct charts
 that don't lump anything into Otros
