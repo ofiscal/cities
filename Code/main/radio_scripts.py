@@ -45,14 +45,14 @@ def write_script(
     100 * gastos_recent_pct[ t.edu ], 0 )
 
   print( "\n",
-         total_muni_income_2018, "\n",
-         fraction_income_transfers_after_2015, "\n",
-         fraction_income_regalias_after_2015, "\n",
-         fraction_income_taxes_after_2015, "\n",
-         fraction_spending_health_after_2015, "\n",
-         fraction_spending_health_after_2015, "\n",
-         fraction_spending_housing_after_2015, "\n",
-         fraction_spending_edu_after_2015, "\n" )
+         total_muni_income_2018,
+         fraction_income_transfers_after_2015,
+         fraction_income_regalias_after_2015,
+         fraction_income_taxes_after_2015,
+         fraction_spending_health_after_2015,
+         fraction_spending_health_after_2015,
+         fraction_spending_housing_after_2015,
+         fraction_spending_edu_after_2015 )
 
   dest_file = ( ( dest + "/" + dept + "__" + muni +
                   "_" + str(muni_code) + ".txt" )
