@@ -61,16 +61,11 @@ Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
-** TODO resend radio scripts
-commas to separate numbers
-one digit after the decimal place
+** TODO ? Otros should be on one side of bars
 ** TODO upload full set of pdfs
-** TODO check stages 6p7, 8, 9
-Better would be to fill the space early,
-and ditch the "munis in dept", "muni-years in dept" counts.
 ** TODO generate pictures for Facebook ads
-** TODO generate radio scripts
-*** TODO generate additional, totally-disaggregated spending-pct charts
+** DONE generate radio scripts
+*** DONE generate additional, totally-disaggregated spending-pct charts
 that don't lump anything into Otros
 ** DONE change charts, data
 Averages are only 2016-2018.
@@ -196,7 +191,6 @@ for looping over in main.py
 *** page dimensions, border
 512 to 1024 before margin
 margin is 85 more in each dimension
-** TODO ? Otros should be on one side of bars
 ** (abandoned) new data
 *** DONE find which money-value column to use from Juan
  "Valor Total Pagado Vigencia Con Regalías" : "item oblig"
