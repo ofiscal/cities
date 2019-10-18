@@ -1,3 +1,8 @@
+# PITFALL: This generates .txt files.
+# Our radio team wants .docx files.
+# To convert to .docx, use
+# `Code/convert-to-docx-via-pandoc.sh`.
+
 if True:
   import os
   import pandas as pd
