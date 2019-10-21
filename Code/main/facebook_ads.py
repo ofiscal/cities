@@ -28,16 +28,14 @@ def create_pdf( dept : str,
                 muni_code : int ):
   muni_short = shorten_names.munis[muni]
   dept_short = shorten_names.depts[dept]
-
   if True: # folders
     source = ( source_root + "/" + dept + "/" + muni )
     if not os.path.exists( dest_folder ):
       os.makedirs( dest_folder )
-    dest_file = ( ( dest_folder + "/" + dept_short + "__" +
-                    muni_short + "_" + str(muni_code) + ".png" ) .
+    dest_file = ( ( dest_folder + "/"
+                   + str(muni_code) + ".png" ) .
                   replace( " ", "-" ) )
     print("folder: ", source)
-
   page = chart_content.page2( muni_short, dept_short)
   df = pd.read_csv(
     source + "/" + page.file + ".csv",
