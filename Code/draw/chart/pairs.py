@@ -12,6 +12,7 @@ if True:
   import Code.draw.design               as design
   import Code.draw.text.newlines        as newlines
   import Code.draw.text.shorten_numbers as abbrev
+  import Code.draw.text.shorten_names as shorten_names
 
 def drawPairs( ax : mplot.axes.SubplotBase,
                background_color : str,
@@ -71,7 +72,8 @@ def drawPairs( ax : mplot.axes.SubplotBase,
   
   leg = ax.legend(
     (p0[0], p1[0]),
-    (df.columns[0], df.columns[1]),
+    ( shorten_names.munis[df.columns[0]] . upper(),
+      df.columns[1] ),
     prop = fm.FontProperties( # PITFALL: This cannot be simplified.
         # Incredibly, if we first define
         #     def font_light_func( size : int ):
