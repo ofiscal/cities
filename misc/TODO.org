@@ -51,8 +51,7 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO post FB ads
-determine population ranges
-automate
+re-post the rejects
 ** DONE flatten pdfs
 send pdfs to one folder, not a tree
 change names
@@ -65,7 +64,6 @@ Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
 ** TODO ? Otros should be on one side of bars
-** TODO upload full set of pdfs
 ** DONE generate pictures for Facebook ads
 ** DONE generate radio scripts
 *** DONE generate additional, totally-disaggregated spending-pct charts
