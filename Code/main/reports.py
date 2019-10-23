@@ -25,8 +25,7 @@ def create_pdf( dept : str,
                 muni : str,
                 muni_code : int ):
 
-
-  # Use one of these if in a hurry and not in need of all data.
+  # Use one of these if in a hurry or not in need of all data.
   #
   # if ( (c.subsample == 1) &
   #      ~(muni_code in treated_muni_set) ): return
