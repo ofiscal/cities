@@ -15,6 +15,7 @@ if True:
 
 # Use this if in a hurry and only in need of the
 # facebook-treated group.
+#
 # treated = pd.read_excel( "data/regions/fb-treated.xlsx" )
 # treated_muni_set = set( treated["muni code"] )
 
@@ -25,7 +26,8 @@ def create_pdf( dept : str,
                 muni : str,
                 muni_code : int ):
 
-  # Use one of these if in a hurry or not in need of all data.
+  # Use one of these if in a hurry and not in need of all data.
+  # ("treated_muni_set" is defined and disabled above.)
   #
   # if ( (c.subsample == 1) &
   #      ~(muni_code in treated_muni_set) ): return

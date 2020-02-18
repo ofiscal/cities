@@ -51,8 +51,7 @@ These are ordered by time.
 ** muni-specific pdf has a link to guide, and to all munis
 * TODO first
 ** TODO post FB ads
-determine population ranges
-automate
+re-post the rejects
 ** DONE flatten pdfs
 send pdfs to one folder, not a tree
 change names
@@ -65,7 +64,6 @@ Reports: http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/
 plt.subplot, and plt.text, both have "url" arguments. neither is working.
 file:///home/jeff/cities/output/pivots/recip-100/CAUCA/MORALES/report.pdf
 ** TODO ? Otros should be on one side of bars
-** TODO upload full set of pdfs
 ** DONE generate pictures for Facebook ads
 ** DONE generate radio scripts
 *** DONE generate additional, totally-disaggregated spending-pct charts
@@ -443,34 +441,6 @@ This should not matter for drawing charts, though,
 as those are always specific to a particular municipality.
 *** in the raw data
  Some series might not be uniformly sampled across time.
-*** PITFALL: cannot convert to int when some values are NaN
- Hence muni code is float.
-** Python or its libraries
-*** the boolean value of np.nan is True
-*** underscores in filenames seem to confuse Matplotlib's font_manager
- https://github.com/matplotlib/matplotlib/issues/14536
-*** local modules must begin with a capital letter to be imported in Jupyter
-Keeping all code in a top-level folder that starts with a capital letter solves this problem.
-Subfolders and files suffer no naming restriction.
-*** every code folder needs a __init__.py file
-as of some recent version of Python
-*** change every background color: methods that didn't work
-**** plt.rcParams['axes.facecolor] = 'b'
-Changes the legend background, nothing else
-**** ax.set_facecolor('b')
-no discernible effect
-**** ax.patch.set_facecolor('b')
-no discernible effect
-**** fig.add_subplot(2, 1, 1, facecolor = "red")
-causes the second figure not to be drawn,
-no other discernible effect
-***** code example
-    fig = Figure()
-
-    ax = fig.add_subplot(2, 1, 1, facecolor = "red")
-    drawText( ax, lines )
-**** pdf.savefig() overrides background color in figures
-https://stackoverflow.com/questions/56606122/matplotlib-use-the-same-custom-font-in-every-kind-of-text-axes-title-text
 * DONE
 ** count, use muni-years, not just munis
 *** why
