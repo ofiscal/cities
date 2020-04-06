@@ -1,6 +1,6 @@
-docker run --name cities -it -v /home/jeff/cities:/mnt \
-  -p 8886:8886 -d -h 127.0.0.1                         \
-  jeffreybbrown/tax.co:2019-09-20.pandas-0-25-1
+docker run --name cities -it   \
+  -v /home/jeff/of/cities:/mnt \
+  -p 8886:8886 -d -h 127.0.0.1 \
+  ofiscal/tax.co:2020-03-12.csv-diff
 
 docker exec -it cities bash
-
