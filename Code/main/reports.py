@@ -49,8 +49,8 @@ def create_pdf( dept : str,
       muni_short)
     if len(muni_short) > 15
     else muni_short )
-  dest_file = dest_folder + "/" + str(muni_code) + ".pdf"
-
+  dest_file = ( dest_folder + "/" + str(dept) + "_" + str(muni)
+                + "_" + str(muni_code) + ".pdf" )
   with PdfPages( dest_file ) as pdf:
     pages.drawTitlePage( muni_split, pdf )
     for page in chart_content.pages( muni_short, dept_short):
@@ -70,11 +70,11 @@ def create_pdf( dept : str,
   sort_values( "muni code" ) .
   apply(
   ( lambda row:
-    create_pdf( dept      =      row["dept"],
-                muni      =      row["muni"],
-                muni_code = int( row["muni code"] ) ) ),
+    create_pdf(
+      dept      =      row["dept"],
+      muni      =      row["muni"],
+      muni_code = int( row["muni code"] ) ) ),
   axis = "columns" ) )
 
 ( Path( dest_folder + "/" + "timestamp-for-reports" ) .
   touch() )
-
