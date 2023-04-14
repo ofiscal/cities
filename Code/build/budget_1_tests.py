@@ -11,7 +11,7 @@ def row_numbers_raw( dfs ):
   """That these lengths are appropriate can be verified
   by running `wc *file*` in data/sisfut/csv
   and subutracting seven (which is the number of years,
-  and therefore the number of header files)."""
+  and therefore the number of header lines)."""
   for (file,length) in [ ( t.ingresos      , 862530  ),
                          ( t.inversion     , 1525111 ),
                          ( t.funcionamiento, 1258049 ),
@@ -44,4 +44,3 @@ def types_and_missings_for_raw_data(
                <= ( 1e-3 if s == t.ingresos
                     else 1e-5 ) ) .
              all() )
-

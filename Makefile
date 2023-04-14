@@ -1,15 +1,14 @@
-### #### #### ####
+#### #### #### ####
 #### #### #### #### Variables
 #### #### #### ####
 
 SHELL := bash
 
-subsample?=100
-  # default value; can be overridden from the command line,
-  # as in "make all subsample=10"
-  # possibilities: 1, 10, 100 and 1000
-ss=$(strip $(subsample))
-  # removes trailing space
+subsample?=100 # Default value.
+               # Can be overridden from the command line,
+               # as in "make all subsample=10".
+               # Possibilities: 1, 10, 100 and 1000
+ss=$(strip $(subsample)) # removes trailing space
 myPython=PYTHONPATH='.' python3
 
 .PHONY: all				\
@@ -54,8 +53,8 @@ all: keys				\
   radio
   # sample_tables
 
-keys =				\
-  output/keys/budget.csv	\
+keys =                   \
+  output/keys/budget.csv \
   output/keys/geo.csv
 
 budget_0_collect =				\
@@ -407,4 +406,3 @@ $(radio):				\
 	date
 	$(myPython) Code/main/radio_scripts.py $(ss)
 	date
-

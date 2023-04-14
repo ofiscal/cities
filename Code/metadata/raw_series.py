@@ -1,9 +1,10 @@
 # Definitions to know when manipulating the SISFUT data.
-# Nothing defined here is a function -- it's all data
-# (specifically folder locations and column names).
+# Nothing defined here is a function -- it's all data,
+# specifically folder locations and column names.
 
 from itertools import chain
 import Code.metadata.terms as t
+
 
 series = [t.ingresos,
           t.inversion,
