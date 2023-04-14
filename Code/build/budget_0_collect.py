@@ -1,4 +1,17 @@
-###### This step takes so long that it deserves to be in its own file.
+###### PURPOSE:
+###### Collect SISFUT data across years.
+###### Creates these four files in output/budget_0_collect/,
+###### each line of which represents a budget item,
+###### i.e. a source of tax revenue or an expenditure:
+######   deuda.csv
+######   funcionamiento.csv
+######   ingresos.csv
+######   inversion.csv
+
+###### WHY THIS IS ITS OWN FILE:
+###### Rerunning this step takes forever.
+###### Isolating it means the Makefile will not rerun it unnecessarily.
+
 if True:
   import os
   from typing import Set
@@ -6,6 +19,7 @@ if True:
   import pandas as pd
   #
   import Code.metadata.raw_series as raw
+
 
 if True:
   dest = "output/budget_0_collect"
@@ -39,4 +53,3 @@ dfs = collect_raw( raw.source_folder + "csv" )
 for s in raw.series:
   dfs[s].to_csv( dest + "/" + s + ".csv",
                  index = False )
-

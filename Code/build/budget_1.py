@@ -1,8 +1,10 @@
-###### Based on the original three data sets from DNP
-###### (ingreso, inversiones and funcionamiento), this builds three
-###### similar data sets.
+###### PURPOSE:
+###### WHereas the last stage just collected those observations across years,
+###### this one cleans them --
+###### changing formats, filling missing values with 0
+###### -- and tests the results.
 ###### The unit of observation is the same, a "budget",
-###### i.e. an item of either expenditure or income.
+###### i.e. an item of either expenditure (many, small) or income (few, big).
 
 if True:
   import os
@@ -12,6 +14,7 @@ if True:
   import Code.build.budget_1_tests as tests
   import Code.metadata.raw_series as raw
   import Code.metadata.terms as t
+
 
 if True: # input data
   source = "output/budget_0_collect"
@@ -46,4 +49,3 @@ if True: # write
   for s in raw.series:
     dfs[s].to_csv( dest + "/" + s + ".csv",
                    index = False )
-

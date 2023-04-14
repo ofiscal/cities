@@ -1,6 +1,14 @@
-###### This restricts the data to the budget items of interest.
-###### The file has a funny name because I split budget_1.py.
-###### (Read it as "budget 1 point 5.py".)
+###### ABOUT THE NAME
+###### 1p5 means "1.5". That is, this program runs after budget_1
+###### and before budget_2.
+###### (I can't include a dot in the name without confusing Python.)
+
+###### PURPOSE
+###### This restricts the data to the budget items of interest,
+###### as specified by `of interest`, which is defined in
+###### `Code.build.classify_budget_codes`.
+###### It outputs only two data sets, "ingresos" and "gastos",
+###### collapsing three of the four inputs data sets into "gastos".
 
 if True:
   import os
@@ -10,6 +18,7 @@ if True:
   import Code.build.classify_budget_codes as cla
   import Code.metadata.terms as t
   import Code.metadata.raw_series as sm
+
 
 if True: # folders
   source = "output/budget_1"
@@ -31,8 +40,8 @@ if True: # Filter rows by item code.
       apply( lambda c :
              c in cla.of_interest[s] ) ]
 
-if True : # verify
-  for s in sm.series: # each data set shrank, and not too much
+if True : # Test the result.
+  for s in sm.series: # Each data set shrank, and not too much.
     assert len( dfs[s] ) > 1.5 * len( dfs_filt[s] )
     assert len( dfs[s] ) < 50 * len( dfs_filt[s] )
   tests.column_names_after_agg( sm.series, dfs_filt )
@@ -48,4 +57,3 @@ if True: # output two data sets, not four
         (t.gastos,   df_gastos) ]:
     df.to_csv( dest + "/" + name + ".csv",
                index = False )
-
