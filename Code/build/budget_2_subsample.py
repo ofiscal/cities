@@ -1,6 +1,6 @@
-# Subsample municipalities.
-# Every subsample will, however, have all the departments.
-# The required testing of lengths makes the dataflow a bit complex --
+# PURPOSE: Subsample the municipalities.
+# Every subsample must have all the departments,
+# which makes the dataflow a bit complex --
 # we test that the sample size shrank by roughly a factor of 10
 # (100, 1000) in the municipalities alone,
 # then add departments back in just before writing to disk.
@@ -11,11 +11,10 @@ if True:
   import pandas as pd
   import numpy as np
   #
-  import Code.build.budget_1p5_tests as test
   import Code.build.budget_2_subsample_defs as defs
   import Code.build.use_keys as uk
-  import Code.metadata.terms as t
   import Code.metadata.two_series as s2
+
 
 if not os.path.exists( defs.top_dest ):
   os.makedirs( defs.top_dest )
