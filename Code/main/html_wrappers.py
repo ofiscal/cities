@@ -9,6 +9,7 @@ if True:
   import Code.metadata.terms as t
   from   Code.main.geo import depts_and_munis
 
+
 # Use this if only in need of the facebook-treated group.
 treated = pd.read_excel( "data/regions/fb-treated.xlsx" )
 treated_muni_set = set( treated["muni code"] )
@@ -30,4 +31,3 @@ def write_html( muni_code : int ):
 
 ( Path( dest + "/" + "timestamp-for-html" ) .
   touch() )
-

@@ -1,6 +1,7 @@
 if True:
   import pandas as pd
 
+
 if True: # get, test data
   geo = (
     pd.read_csv( "output/keys/geo.csv" ) .
@@ -72,4 +73,3 @@ def merge_geo( df : pd.DataFrame ) -> pd.DataFrame:
     merge( depts,
            how = "left",
            on = ["dept code"] ) )
-

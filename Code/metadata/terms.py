@@ -29,4 +29,3 @@ if True: # our own aggregate categories
     transfer    = "Transferencias del Gobierno Nacional"
     capital     = """Dinero sobrante de\naños anteriores y\notros ingresos financieros*"""
     regalias    = "Regalías" # unused until much further downstream
-
