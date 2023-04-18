@@ -71,7 +71,7 @@ for s in ts.series:
       median_change = (
         ( df_by_muni_item
           [df_by_muni_item["year"] == year ]
-          ["pc"] ) . # TODO : What is "pc"?
+          ["pct change"] ) .
         median() )
       assert median_change < 2
       assert median_change > (-2/3)
