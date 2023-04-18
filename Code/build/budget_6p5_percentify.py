@@ -1,7 +1,4 @@
 # PURPOSE:
-#   (1) Cull: This is obsolete
-#     This program used to drop some unneeded columns, rows.
-#     Now that happens upstream.
 # Switch from two series to four:
 #   Initial 2: gastos, ingresos
 #   Final 4: gastos, gastos-pct, ingresos, ingresos-pct

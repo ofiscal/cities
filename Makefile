@@ -280,13 +280,13 @@ $(budget_6_deflate):			\
 budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
 $(budget_6p5_cull_and_percentify):		\
   $(budget_6_deflate)				\
-  Code/build/budget_6p5_cull_and_percentify.py	\
+  Code/build/budget_6p5_percentify.py	\
   Code/util/percentify.py			\
   Code/common.py				\
   Code/metadata/two_series.py			\
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_6p5_cull_and_percentify.py $(ss)
+	$(myPython) Code/build/budget_6p5_percentify.py $(ss)
 	date
 
 budget_6p7_avg_muni: $(budget_6p7_avg_muni)
