@@ -17,6 +17,7 @@ if True:
   import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
 
+
 if True: # folders
   source = "output/budget_6_deflate/recip-"               + str(c.subsample)
   dest   = "output/budget_6p5_cull_and_percentify/recip-" + str(c.subsample)

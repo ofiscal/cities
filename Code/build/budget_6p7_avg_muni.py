@@ -13,6 +13,7 @@ if True:
   import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
 
+
 if True: # folders
   source = ( "output/budget_6p5_cull_and_percentify/recip-"
              + str(c.subsample) )
@@ -77,8 +78,8 @@ if True: # count munis per department
              else 3 ) # TODO ? ugly, ought to be Optional.
     # (Would return Nothing for depts with only dept-level info.)
 
-if True: # define how to compute the average non-dept muni
-         # in some (dept,year,item categ) cell
+if True: # Define how to compute the average non-dept muni
+         # in some (dept,year,item categ) cell.
   def prepend_avg_muni( index_cols : List[str],
                         money_cols : List[str],
                         munis_in_dept : int,
@@ -134,11 +135,11 @@ Output: The same, plus a new "average" muni.
     del(x,y,z)
 
 index_cols = ["dept code","year","item categ"]
-for s in s2.series: # add average muni to the to -pct data sets
-  dfs1[s.name] = ( # handle the peso-valued data sets
+for s in s2.series: # Add average muni to the to -pct data sets.
+  dfs1[s.name] = ( # Handle the peso-valued data sets.
     dfs0[s.name] )
   spct = s.name + "-pct"
-  if True: # handle the %-valued data sets
+  if True: # Handle the %-valued data sets.
     df = dfs0[ spct ]
     df["dc"] = df["dept code"] # TODO ? ugly
     dfs1[spct] = to_front(
@@ -177,4 +178,3 @@ if True: # tests
 
 for s in s4.series:
   dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )
-
