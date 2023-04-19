@@ -3,6 +3,7 @@ if True:
   import numpy as np
   import pandas as pd
 
+
 if True:
   def un_latin_decimal_columns(
       column_names : List[str],
@@ -73,4 +74,3 @@ def myDescribe( df : pd.DataFrame ) -> pd.DataFrame:
           apply( lambda col:
                  len( col[ col < 0 ] ) ) )
   return stats
-

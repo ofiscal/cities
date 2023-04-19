@@ -9,13 +9,14 @@ if True:
     as agger # "aggregator"
   import Code.metadata.four_series as s4
 
+
 dest_root = "output/pivots/recip-" + str(c.subsample)
 
 if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
   space     = ["dept", "muni",         "dept code", "muni code"]
 
-if True: # read data
+if True: # Read data.
   ungrouped : Dict[str, pd.DataFrame] = {}
   for s in s4.series:
     ungrouped[s.name] = (
@@ -24,15 +25,15 @@ if True: # read data
           + "/" + s.name + ".csv") ) .
       sort_values( spacetime ) )
 
-if True: # in each spacetime slice, lump every expenditure which is
+if True: # In each spacetime slice, lump every expenditure which is
          # not among the top five expenditures for some year
-         # into a single observation
+         # into a single observation.
   grouped : Dict[str, pd.DataFrame] = {}
   for s in s4.series:
     grouped[s.name] = (
       agger.go(
         five = 5,
-        space_cols = space, # PITFALL: include (dept code,muni code),
+        space_cols = space, # PITFALL: Include (dept code,muni code),
           # not just (dept,muni), to avoid summing the codes.
         time_col = "year",
         categ_col = "item categ",
@@ -73,4 +74,3 @@ for s in s4.series:
 
 ( Path( dest_root + "/" + "timestamp-for-pivot-tables" ) .
   touch() )
-

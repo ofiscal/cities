@@ -1,6 +1,6 @@
 # The pivot tables from the previous stage describe
 # how a place's finances have evolved over time.
-# These tables will compare how their sum over the last
+# These tables will compare their sum over the last
 # three years to that of the department average.
 
 if True:
@@ -14,6 +14,7 @@ if True:
   import Code.metadata.four_series as s4
   import Code.util.fill_subspace as fill
 
+
 testing = True if c.subsample == 100 else False
 
 if True:
@@ -22,7 +23,7 @@ if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
   space     = ["dept", "muni",         "dept code", "muni code"]
 
-if True: # read a few big tables
+if True: # Read a few big tables.
   monolith : Dict[str, pd.DataFrame] = {}
   for s in s4.series_pct:
     monolith[s.name] = ( # These data sets are "monolithic" in that
@@ -272,4 +273,3 @@ for s in s4.series_pct:
 
 ( Path( by_place_root + "/" + "timestamp-for-static-compare" ) .
   touch() )
-

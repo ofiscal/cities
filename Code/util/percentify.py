@@ -2,6 +2,7 @@ if True:
   from typing import List,Set,Dict
   import pandas as pd
 
+
 def percentify_columns( cols : List[str],
                         df0 : pd.DataFrame
                       ) -> pd.DataFrame:
@@ -47,4 +48,3 @@ if True: # test it
       df = x ) .
     reset_index( drop = True ) )
   assert should_be.equals( really_is )
-

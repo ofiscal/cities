@@ -3,11 +3,13 @@ PITFALL
 This only corrects the peso-valued columns we are interested in --
 namely "item recaudo" and "item oblig".
 
-What this does: This multiplies pre-2017 values by 1000,
+PURPOSE: (1) Multiply pre-2017 values by 1000,
 because (as you might guess) in the raw data,
 pre-2017 peso values are about 1000 times smaller than those post-2016.
 
-It's a long program because it then tests that the percentage change from one year to the next is well behaved, ensuring that no similar problems remain present.
+(2_ After that,
+test that the percentage change from one year to the next is well behaved,
+to ensure that no similar problems remain present.
 """
 
 if True:
@@ -69,10 +71,10 @@ for s in ts.series:
       median_change = (
         ( df_by_muni_item
           [df_by_muni_item["year"] == year ]
-          ["pc"] ) .
+          ["pct change"] ) .
         median() )
       assert median_change < 2
-      assert median_change > -(2/3)
+      assert median_change > (-2/3)
         # These bounds might look pretty loose --
         # they say that in each (file,year) pair,
         # the median (across (municipality, budget item) pairs)
@@ -83,4 +85,3 @@ for s in ts.series:
     dfs_by_muni_item[s.name] = df_by_muni_item
   df.to_csv( dest + "/" + s.name + ".csv",
              index = False )
-

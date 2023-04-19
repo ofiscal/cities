@@ -18,3 +18,4 @@ output/
 record-audio-stream/store/
 temp/
 dead/
+_stale/not-in-git/

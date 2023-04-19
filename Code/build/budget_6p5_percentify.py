@@ -1,7 +1,4 @@
 # PURPOSE:
-#   (1) Cull: This is obsolete
-#     This program used to drop some unneeded columns, rows.
-#     Now that happens upstream.
 # Switch from two series to four:
 #   Initial 2: gastos, ingresos
 #   Final 4: gastos, gastos-pct, ingresos, ingresos-pct
@@ -16,6 +13,7 @@ if True:
   from Code.util.percentify import percentify_columns
   import Code.metadata.two_series as s2
   import Code.metadata.four_series as s4
+
 
 if True: # folders
   source = "output/budget_6_deflate/recip-"               + str(c.subsample)

@@ -5,6 +5,7 @@ if True:
   import Code.common as c
   import Code.metadata.two_series as ser
 
+
 if True: # folders
   source = "output/budget_5_add_regalias/recip-" + str(c.subsample)
   dest   = "output/budget_6_deflate/recip-"      + str(c.subsample)
@@ -31,4 +32,3 @@ for s in ser.series:
   dfs[s.name] = df
   df.to_csv( dest + "/" + s.name + ".csv",
              index = False )
-

@@ -1,3 +1,34 @@
+# # PURPOSE
+###########
+# These two files define two sets of codes:
+#
+# ## `geo.csv`
+##############
+#
+# maps 5-digit geo codes to municipality names,
+# and (redundantly, since each row is a municipality)
+# 2-digit department codes to department names.
+#
+# ## `budget.csv`
+#################
+#
+# maps budget codes to budget item names.
+#
+# ### How to interpret budget codes
+###################################
+#
+# The codes look like `TI` or `A.10.19.1` or `1.2` --
+# they can be any number of (.)-separated expressions,
+# where the first might be alphabetical or numeric,
+# and the rest are always numeric.
+#
+# If item X has a code with one fewer (.) than the code of item Y,
+# it is because X is a linear combination of all such Ys.
+# (I don't remember if X is always a simple sum,
+# or if sometimes one subtracts rather than adding.)
+# So for instance, item 1 = "TOTAL GASTOS DE FUNCIONAMIENTO"
+# includes item 1.1 = "GASTOS DE PERSONAL".
+
 if True:
   import os
   from itertools import chain
@@ -58,4 +89,3 @@ if not os.path.exists( "output/keys" ):
   . to_csv(
     "output/keys/budget.csv",
     index = False ) )
-

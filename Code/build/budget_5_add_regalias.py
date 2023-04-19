@@ -10,6 +10,7 @@ if True:
   import Code.metadata.terms as t
   import Code.metadata.two_series as ser
 
+
 if True: # bearings
   source = "output/budget_4_scaled/recip-"       + str(c.subsample)
   dest   = "output/budget_5_add_regalias/recip-" + str(c.subsample)
@@ -23,11 +24,11 @@ if True: # input
       source + "/" + s.name + ".csv" )
   regalias = pd.read_csv( "output/regalias.csv" )
 
-if True: # adjust regalias
-  if c.subsample > 1: # discard some regalias rows if needed
-    if True: # find all the relevant (dept,muni) pairs.
-      df = dfsi[s.name] # for extracting (dept, muni) pairs,
-                        # any member of dfsi is equivalent
+if True: # Adjust regalias.
+  if c.subsample > 1: # Discard some regalias rows if needed.
+    if True: # Find all the relevant (dept,muni) pairs.
+      df = dfsi[s.name] # For extracting (dept, muni) pairs,
+                        # any member of dfsi is equivalent.
       places = set(
         df[["dept code","muni code"]] .
         groupby( ["dept code","muni code"] ) .
@@ -36,7 +37,7 @@ if True: # adjust regalias
         apply( lambda row: ( row["dept code"],
                              row["muni code"] ),
                axis = "columns" ) )
-    if True: # discard irrelevant regalias observations
+    if True: # Discard irrelevant regalias observations.
       regalias["keeper"] = (
         regalias.apply( ( lambda row:
                           (row["dept code"], row["muni code"])
@@ -44,7 +45,7 @@ if True: # adjust regalias
                         axis = "columns" ) )
       regalias = regalias[ regalias["keeper"] ]
       regalias = regalias.drop( columns = "keeper" )
-  if True: # define money_cols
+  if True: # Define money_cols.
     for c in ser.ingresos.money_cols:
       regalias[c] = regalias["regalias"]
     regalias = regalias.drop( columns = ["regalias"] )
@@ -56,10 +57,9 @@ if True: # output
   dfso["ingresos"] = pd.concat(
     [ dfsi["ingresos"],
       regalias ],
-    sort = True, # sort columns by name so they align
+    sort = True, # Sort columns by name so they align.
     axis = "rows" )
   for s in ser.series:
     dfso[s.name].to_csv(
       dest + "/" + s.name + ".csv",
       index = False )
-

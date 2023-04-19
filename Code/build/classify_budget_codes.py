@@ -6,6 +6,7 @@
 from typing import List, Dict, Set
 import Code.metadata.terms as t
 
+
 def invert_set_dict(
     sd : Dict[ "k", Set["e"]]
     ) -> Dict[ "e", "k" ]:
@@ -140,4 +141,3 @@ of_interest = {
   t.deuda : set.union( *[
     categs_to_codes[t.deuda][k]
     for k in categs_to_codes[t.deuda].keys() ] ) }
-

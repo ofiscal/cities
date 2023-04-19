@@ -1,10 +1,12 @@
 """ If your data is missing some years, or some places,
-or whatever, this will create observations for those missing spots, with whatever you were hoping to observe set to 0.
+or whatever, this will create observations for those missing spots,
+with whatever you were hoping to observe set to 0.
 """
 
 if True:
   from typing import List,Set,Dict
   import pandas as pd
+
 
 def powerset(
     axis_names : List[str], # columns definiing the subspace
@@ -42,8 +44,7 @@ def fill_space(
 fill_space( # the spot (a,b)=(2,3) should appear,
             # with v=0
   ['a','b'],
-  ['v'], 
+  ['v'],
   pd.DataFrame( { 'a' : [1,1,2],
                   'b' : [3,4,4],
                   'v' : [1,2,3] } ) )
-

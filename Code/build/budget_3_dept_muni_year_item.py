@@ -1,4 +1,4 @@
-# What this does:
+# PURPOSE:
 #  (1) Aggregate spending observations within
 #    (muni,year,item code) triples,
 #    using the broad item categories from classify_budget_codes.py
@@ -11,6 +11,12 @@
 #    upon using pandas.DataFrame.groupby().
 #  (3) Subtract ingresos category TI.A.2.6 (transferencias)
 #    from TI.A (propios).
+#    TODO: What is this for?
+#    I understand that T1.A includes T1.A.2.6,
+#    and that apparently we don't want it to.
+#    But why not? What *are* those things, even?
+#    And do they still (in 2023)
+#    mean what they used to mean (in 2019)?
 
 if True:
   from typing import List, Set, Dict
@@ -23,6 +29,7 @@ if True:
   import Code.metadata.terms as t
   import Code.metadata.two_series as s2
 
+
 if True:
   budget_key = pd.read_csv( "output/keys/budget.csv" )
   source = "output/budget_2_subsample/recip-"      + str(c.subsample)
@@ -31,6 +38,7 @@ if True:
     os.makedirs(         dest )
   dfs0, dfs1, dfs2 = {}, {}, {} # input, midput, output
   spacetime = ["muni code","dept code","year"]
+
 
 ######
 ###### Build
@@ -134,7 +142,7 @@ if True: # accumulate (in acc) a data frame like df but
   for spot in spots.index:
     df = ing[ (ing[spacetime] == spots.iloc[spot]) .
               all( axis="columns") ]
-    acc = acc.append( 
+    acc = acc.append(
       tax_categ_subtract(
         subtract      = t.transfer,
         subtract_from = t.propios,
@@ -161,4 +169,3 @@ if True: # test (loosely) that it worked
 for s in [t.ingresos,t.gastos]:
   dfs2[s].to_csv( dest + "/" + s + ".csv" ,
                   index = False )
-

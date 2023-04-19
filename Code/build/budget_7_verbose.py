@@ -10,13 +10,14 @@ if True:
   import Code.metadata.four_series as s4
   import Code.build.use_keys as uk
 
+
 if True: # folders
   source = "output/budget_6p7_avg_muni/recip-" + str(c.subsample)
   dest = "output/budget_7_verbose/recip-"      + str(c.subsample)
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
-if True: # merge geo data into main data
+if True: # Merge geo data into main data.
   dfs = {}
   for s in s4.series:
     extra_columns = ( ["munis in dept","muni-years in dept"]
@@ -36,4 +37,3 @@ if True: # merge geo data into main data
     df.to_csv( dest + "/" + s.name + ".csv",
                index = False )
     dfs[sn] = df
-

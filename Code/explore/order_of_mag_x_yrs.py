@@ -44,10 +44,12 @@ for (s, pesos_column) in [
 report = pd.DataFrame()
 for s in sm.series:
   dfmi = dfs_by_muni_item[s]
-  summary_2017 = util.myDescribe( dfmi[ dfmi["year"] == 2017 ][["pc"]] )
+  summary_2017 = \
+    util.myDescribe( dfmi[ dfmi["year"] == 2017 ][["pct change"]] )
   summary_2017["2017"] = True
   summary_2017["data"] = s
-  summary_others = util.myDescribe( dfmi[ dfmi["year"] != 2017 ][["pc"]] )
+  summary_others = \
+    util.myDescribe( dfmi[ dfmi["year"] != 2017 ][["pct change"]] )
   summary_others["2017"] = False
   summary_others["data"] = s
   report = report.append( [summary_2017, summary_others] )

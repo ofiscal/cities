@@ -12,4 +12,3 @@ gastos = seriesType(
 series = [ingresos,gastos]
 series_dict = { t.ingresos : ingresos,
                 t.gastos   : gastos }
-

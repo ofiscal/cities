@@ -45,7 +45,6 @@ These are ordered by time.
 
 ("Pagos"                  , "item pagos")
   # what they've actually spent
-
 * notes from meeting, 2019 10 01
 ** TODO pdf without page break
 ** muni-specific pdf has a link to guide, and to all munis
@@ -332,7 +331,7 @@ e.g., continuing the previous example, this doesn't work:
 ** fix broken OneDrive archive
 I added a key, so that OneDrive can't extract and re-archive it,
 and now it takes forever to download.
-* ~TODO test
+* TODO test
 ** check my aggregated sums against DNP's own
 Good opportunity for property-based testinig.
 ** integration data tests
@@ -420,15 +419,16 @@ but not after reducing the number of rows at stage 1p5.
 * wishes
 ** that I could set font only once, affecting all types of text
 * PITFALLS
-** modifying the code
-*** only the peso columns of interest are deflated
+** only the peso columns of interest are deflated
+** pivots must include no NaN values
+*** use the new library aggregate_all_but_biggest/better.py
 ** interpreting the data
 *** missing data
 See `explore/missing-spacetime.py` for demo code.
 **** the problem
 For tax info, there should be at least 4 items in every spacetime cell.
 Instead there are exceptions -- at least 46 of them.
-*** pecial muni codes
+*** special muni codes
 -1 = Department-level spending.
 -2 = The average muni within a department,
      averaged across munis only
@@ -467,8 +467,6 @@ This means those counts must be separate across ingresos and gastos.
  Rather than count n, it uses the "top n" column.
 *** DONE 4 - sum_all_but_greatest_n_rows_in_groups
  Might not need any change.
-** pivots must include no NaN values
-*** use the new library aggregate_all_but_biggest/better.py
 ** last-minute changes for Manuela
 *** check that "item recaudo", "item total", "item oblig" are not hard-coded
  That is, that they are accessed only through metadata.two_series,
@@ -517,7 +515,7 @@ Municipalities are those in which the first column is 21.
 Departments are those in which the first column is 11.
 
 ** build data
-*** write code (string) interpretation functions
+*** write budget code interpretation functions
 **** codes to aggregate
 ***** Ingresos
 TI.A.1
@@ -525,7 +523,7 @@ TI.A.2
 TI.B
 ***** For all other series, just use the first two coordinates.
 Note that the a subcode sometimes has 1 character, sometimes 2.
-*** apply code interpretation functions to data
+*** apply budget code interpretation functions to data
 **** keep data separate by originating dataset
 i.e. funcionamiento, inversion, ingreso
 Pool for the creation of keys, but not for aggregating numbers.
