@@ -21,9 +21,17 @@ if not os.path.exists( defs.top_dest ):
 
 # For the recip-1/ folder, use a symlink; don't copy the full sample.
 if True:
-  if os.path.exists(       defs.sub_dest(1) ):
-    os.remove(             defs.sub_dest(1) )
-  os.symlink( defs.source, defs.sub_dest(1) )
+  # PITFALL: The following uses absolute paths.
+  # It's hard to do otherwise, because the destination folder
+  # is different from the working folder.
+  # PITFALL: "lexists" is not a typo. It differs from "exists"
+  # in that "lexists" returns True for broken symlinks,
+  # whereas "exists"  returns False.
+  abs_recip_1_folder = os.path.join ( defs.home, defs.sub_dest(1) )
+  abs_source         = os.path.join ( defs.home, defs.source )
+  if os.path.lexists(     abs_recip_1_folder ):
+    os.remove(            abs_recip_1_folder )
+  os.symlink( abs_source, abs_recip_1_folder )
 
 if True:
   dfs = defs.read_data()
