@@ -1,4 +1,5 @@
-This file a tricky test at the end of Code/build/budget_6p7_avg_muni.py.
+This file describes a tricky test
+at the end of `Code/build/budget_6p7_avg_muni.py`.
 
 The test is to verify that the number of rows in each %-valued series is equal to the sum of the number of rows in the corresponding peso-valued series and the number of averages that should have been computed:
 ```

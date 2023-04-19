@@ -15,7 +15,7 @@ if True:
   import Code.util.fill_subspace as fill
 
 
-testing = True if c.subsample == 100 else False
+testing = True if c.subsample >= 100 else False
 
 if True:
   monolith_root = "output/budget_7_verbose/recip-" + str(c.subsample)
