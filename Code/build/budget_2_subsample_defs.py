@@ -11,8 +11,8 @@ if True:
 if True: # bearings
   # These folders must be absolute, not relative,
   # in order for the recip-1 symlink to work
-  source   = "/mnt/output/budget_1p5"
-  top_dest = "/mnt/output/budget_2_subsample"
+  source   = "output/budget_1p5"
+  top_dest = "output/budget_2_subsample"
     # destinations are immediate child folders of this folder
   def sub_dest( subsample ):
     return top_dest + "/" + "recip-" + str( subsample )
@@ -30,4 +30,3 @@ def subsample( subsample : int,
                df : pd.DataFrame ) -> pd.DataFrame:
   return df.sample( frac = 1/subsample,
                     random_state = 0 ) # seed
-
