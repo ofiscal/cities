@@ -89,7 +89,7 @@ if True:
       subtract_vec = (df[ df[categ] == subtract ]
                       [value] )
       if len(subtract_vec) < 1: pass
-      else:
+      else: # There should be at most 1 row where categ = subtract.
         assert len(subtract_vec) == 1
         df.loc[ df[categ] == subtract_from,
                 value ] = (
@@ -104,7 +104,7 @@ if True:
              # Subtract val at row where cat=1 from val at row where cat=2.
              equals(
                pd.DataFrame( { "cat" : ["1",  "2", "3"],
-                               "val" : [ 11.0, 1.0, 13.0 ] } ) ) )
+                               "val" : [ 11, 1, 13 ] } ) ) )
     assert ( tax_categ_subtract( "0", "2", "cat", ["val"], x ) .
              # The subtract code ("0") is not present, so `x` is unchanged.
              equals( x ) )
