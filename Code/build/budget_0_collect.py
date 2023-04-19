@@ -45,7 +45,8 @@ def collect_raw( source : str,
           **kwargs ) .
         rename( columns = dict( raw.column_subsets[series] ) ) )
       shuttle["year"] = year
-      dfs[series] = dfs[series] . append(shuttle)
+      dfs[series] = pd.concat( [ dfs[series],
+                                 shuttle ] )
   return dfs
 
 dfs = collect_raw( raw.source_folder + "csv" )

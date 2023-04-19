@@ -69,8 +69,8 @@ if True: # reduce to the data we need
                  "2013-2014" ]
   wide_muni = wide_muni[["dept code","muni code"] + year_pairs]
   wide_dept = wide_dept[["dept code","muni code"] + year_pairs]
-  wide = wide_muni.append( wide_dept,
-                           sort = True ) # sort columns to align
+  wide = pd.concat( [wide_muni, wide_dept ],
+                    sort = True ) # Sort columns to conform the two frames.
   wide = util.un_latin_decimal_columns(
     year_pairs, wide )
 
@@ -84,8 +84,8 @@ if True: # change from wide to long, adding a "yaer" column
            rename( columns = { yearPair : "regalias" } ) )
     df["regalias"] = df["regalias"] / 2
     df["year"] = startYear
-    long = long.append(df)
+    long = pd.concat( [long, df] )
     df["year"] = startYear + 1
-    long = long.append(df)
+    long = pd.concat( [long, df] )
   long.to_csv( "output/regalias.csv",
                index = False )

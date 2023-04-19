@@ -54,7 +54,7 @@ if True: # build source data set, from which both keys are built
            "Código Concepto",
            "Concepto"
          ] )
-      source_data = source_data.append( shuttle )
+      source_data = pd.concat( [ source_data, shuttle ] )
 
 # PITFALL: If any tuple of keys in from_columns maps to more than one
 # tuple in to_columns, make_key will only provide the first mapping it encounters.

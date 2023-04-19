@@ -146,13 +146,13 @@ if True: # accumulate (in acc) a data frame like df but
   for spot in spots.index:
     df = ing[ (ing[spacetime] == spots.iloc[spot]) .
               all( axis="columns") ]
-    acc = acc.append(
-      tax_categ_subtract(
-        subtract      = t.transfer,
-        subtract_from = t.propios,
-        categ = "item categ",
-        valueCols = s2.ingresos.money_cols,
-        df0   = df ) )
+    acc = pd.concat( [ acc,
+                       tax_categ_subtract(
+                         subtract      = t.transfer,
+                         subtract_from = t.propios,
+                         categ = "item categ",
+                         valueCols = s2.ingresos.money_cols,
+                         df0   = df ) ] )
   dfs2[t.ingresos] = acc
 
 if True: # test (loosely) that it worked
