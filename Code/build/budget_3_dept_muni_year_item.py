@@ -65,7 +65,7 @@ for s in [t.ingresos,t.gastos]:
     spacetime + ["item categ"],
     ( df .
       groupby( by = spacetime + ["item categ"] ) .
-      agg( sum ) .
+      sum ( numeric_only = True ) .
       reset_index() ) )
   dfs1[s] = df
 
