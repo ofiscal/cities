@@ -32,7 +32,7 @@ if True:
 
 if True:
   budget_key = pd.read_csv( "output/keys/budget.csv" )
-  source = "output/budget_2_subsample/recip-"      + str(c.subsample)
+  source = "output/budget_2_subsample/recip-"           + str(c.subsample)
   dest   = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
   if not os.path.exists( dest ):
     os.makedirs(         dest )
@@ -74,11 +74,15 @@ for s in [t.ingresos,t.gastos]:
 # from the "recaudo" value in the row where categ = "propios".
 if True:
   def tax_categ_subtract (
-      subtract : "x",      # the categ value of rows to subtract
-      subtract_from : "x", # the categ value of rows to subtract from
-      categ : str, # the name of an "x"-valued column
+      # TODO : What black magic did I have in mind when I wrote
+      # that two of the following arguments have the type "x"?
+      # It might relate to the type variables in the definition of
+      #   `Code.build.classify_budget_codes.invert_many_to_one_dict`.
+      subtract : "x",        # the categ value of rows to subtract
+      subtract_from : "x",   # the categ value of rows to subtract from
+      categ : str,           # the name of an "x"-valued column
       valueCols : List[str], # the name of a peso-valued column
-      df0 : pd.DataFrame # a single muni-dept-year cell
+      df0 : pd.DataFrame     # a single muni-dept-year cell
       ) -> pd.DataFrame:
     df = df0.copy()
     for value in valueCols:
@@ -97,12 +101,12 @@ if True:
     x = pd.DataFrame( { "cat" : [ "1", "2", "3"],
                         "val" : [ 11,  12,  13 ] } )
     assert ( tax_categ_subtract( "1", "2", "cat", ["val"], x ) .
-             # subtract val at row where cat=1 from val at row where cat=2
+             # Subtract val at row where cat=1 from val at row where cat=2.
              equals(
                pd.DataFrame( { "cat" : ["1",  "2", "3"],
                                "val" : [ 11.0, 1.0, 13.0 ] } ) ) )
     assert ( tax_categ_subtract( "0", "2", "cat", ["val"], x ) .
-             # here the subtract code ("0") is not present
+             # The subtract code ("0") is not present, so `x` is unchanged.
              equals( x ) )
 
 if False: # TODO ? This approach, using .groupby(),
