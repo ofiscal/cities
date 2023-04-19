@@ -23,8 +23,9 @@ if True:
         df[c] = (
           df[c] .
           astype( str ) .
-          str.replace( ".", ""  ) . # PITFALL: The order of these
-          str.replace( ",", "." ) . # two replacements is important.
+          # PITFALL: The order of the following two replacements matters.
+          str.replace( ".", "" , regex=False ) .
+          str.replace( ",", ".", regex=False ) .
           astype( float ) )
     return df
   if True: # test it
