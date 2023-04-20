@@ -348,15 +348,15 @@ $(budget_9_static_compare):			\
 	date
 
 sample_tables: $(sample_tables)
-$(sample_tables):				\
-  $(budget_7_verbose)				\
-  Code/common.py				\
-  Code/draw/sample_tables.py			\
-  Code/util/aggregate_all_but_biggest/gappy.py  \
-  Code/metadata/terms.py			\
+$(sample_tables):			       \
+  $(budget_7_verbose)			       \
+  Code/common.py			       \
+  Code/draw/demo/sample_tables.py	       \
+  Code/util/aggregate_all_but_biggest/gappy.py \
+  Code/metadata/terms.py		       \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/draw/sample_tables.py $(ss)
+	$(myPython) Code/draw/demo/sample_tables.py $(ss)
 	date
 
 output/inflation.csv:				\
