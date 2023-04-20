@@ -8,7 +8,10 @@ subsample?=100 # Default value.
                # Can be overridden from the command line,
                # as in "make all subsample=10".
                # Possibilities: 1, 10, 100 and 1000
-ss=$(strip $(subsample)) # removes trailing space
+ss=$(strip $(subsample))
+  # Removes trailing space.
+  # PITFALL: Whitespace after that definition is a bug!
+  # (And an easy error to make by putting a comment on the same line.)
 myPython=PYTHONPATH='.' python3
 
 .PHONY: all				\
@@ -30,9 +33,13 @@ myPython=PYTHONPATH='.' python3
   sample_tables				\
   reports				\
   facebook_ads				\
-  radio
+  radio                                 \
+  show_params
 
-all: keys				\
+# `show_params` should be listed first,
+# so that it always runs. (It depends on nothing.)
+all: show_params                        \
+  keys                                  \
   budget_0_collect			\
   budget_1				\
   budget_1p5				\
@@ -141,6 +148,10 @@ radio = output/radio/recip-$(ss)/timestamp-for-radio
 #### #### #### ####
 #### #### #### #### Recipes
 #### #### #### ####
+
+show_params:
+	echo "subsample: " -$(subsample)-
+	echo "ss: "        -$(ss)-
 
 keys: $(keys)
 $(keys):			\
