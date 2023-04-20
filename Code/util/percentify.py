@@ -30,7 +30,8 @@ def percentify_columns_by_groups(
     cols : List[str], # percentify these
     df : pd.DataFrame
     ) -> pd.DataFrame:
-  return ( df . groupby( by ) .
+  return ( df . groupby ( by,
+                          group_keys = False ) .
            apply( lambda df :
                   percentify_columns( cols, df ) ) )
 

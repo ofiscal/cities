@@ -4,6 +4,7 @@ if True:
   import pandas as pd
   from Code.util.normalize import normalize
 
+
 if True:
   def add_top_five_column(
       five : int, # when testing it might not be five
@@ -121,7 +122,8 @@ if True:
             apply( lambda df:
                    add_top_five_column( five, money_col, df ) ) .
             reset_index( drop=True ) )
-    df2 = ( df1 . groupby( space_cols ) .
+    df2 = ( df1 . groupby ( space_cols,
+                            group_keys = False ) .
             apply( lambda df:
                    add_top_n_column( categ_col, df ) ) .
             reset_index( drop=True ) )
@@ -148,4 +150,3 @@ if True:
         "cash"  : [1,   2,3,4, 1,   4,3,2, 5,4,3,  3,  5,3,4,  3] } )
     assert ( normalize( ty ) .
              equals( normalize( tz ) ) )
-

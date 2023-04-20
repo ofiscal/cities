@@ -38,7 +38,8 @@ if True: # input data
 
 for s in s2.series:
   df = dfs[s.name].copy()
-  df = ( df . groupby(spacetime) .
+  df = ( df . groupby ( spacetime,
+                        group_keys = False ) .
          apply( lambda df:
                 percentify_columns(
                   s.money_cols, df ) ) .

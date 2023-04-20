@@ -61,7 +61,8 @@ for s in ts.series:
     df_by_muni_item = (
       df[["year",     "muni code", "dept code", "item categ"]
          + s.money_cols ] .
-      groupby( by = [ "muni code", "dept code", "item categ"] ) .
+      groupby ( by = [ "muni code", "dept code", "item categ"],
+                group_keys = False ) .
       apply( lambda df:
              lib.add_pct_change( s.money_cols[0], df) ) .
       reset_index() )
