@@ -8,6 +8,7 @@ if True:
   import Code.util.aggregate_all_but_biggest as defs
   import Code.metadata.two_series as ser
 
+
 if True:
   group_vars = ["dept", "muni", "year"]
   geo_vars   = ["dept", "muni", "dept code", "muni code"]
@@ -86,4 +87,3 @@ if False: # for comparison to integ_tests/iBudget_7_verbose
       [["dept","muni"] + s.money_cols + ["item categ"]] .
       sort_values( ["dept","muni",s.pesos_col],
                    ascending = False ) )
-

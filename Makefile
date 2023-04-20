@@ -58,7 +58,7 @@ all: show_params                        \
   reports				\
   facebook_ads				\
   radio
-  # sample_tables
+  # sample_tables # Unneeded, except to understand more complex programs.
 
 keys =                   \
   output/keys/budget.csv \
@@ -347,6 +347,7 @@ $(budget_9_static_compare):			\
 	$(myPython) Code/build/budget_9_static_compare.py $(ss)
 	date
 
+# Unneeded, except to understand more complex programs.
 sample_tables: $(sample_tables)
 $(sample_tables):			       \
   $(budget_7_verbose)			       \
