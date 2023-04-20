@@ -31,7 +31,7 @@ def write_script(
   print( dept + " / " + muni )
   total_muni_income_2018 = (
     abbrev.show_brief_with_units( round(
-      ingresos_all_years["2018.0"].sum() ) ) )
+      ingresos_all_years["2018"].sum() ) ) )
   fraction_income_transfers_after_2015 = abbrev.show_brief(
     100 * ingresos_recent_pct[ t.transfer ], 0 )
   fraction_income_regalias_after_2015 = abbrev.show_brief(
@@ -101,4 +101,3 @@ depts_and_munis.apply(
 
 ( Path( dest + "/" + "timestamp-for-radio" ) .
   touch() )
-
