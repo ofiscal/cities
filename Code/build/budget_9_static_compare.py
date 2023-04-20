@@ -78,7 +78,9 @@ if testing:
   df = df[ (df["dept code"]==dc) &
            (df["muni code"]==mc) &
            (df["year"] > 2015) ]
-  (df . groupby( "item categ" ) . agg("mean") )["item oblig"]
+  ( df . groupby( "item categ" )
+    . mean ( numeric_only = True ) )
+  ["bitem oblig"]
   static_muni_ungrouped( fn, dc, mc )
 
 def group_small_if_needed( filename : str,

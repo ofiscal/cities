@@ -73,8 +73,8 @@ if True:
     df_low  = df0[ df0["top n"] == 0 ].copy()
     df_high = df0[ df0["top n"] == 1 ].copy()
     others = ( df_low .
-               groupby( group_cols ) .
-               agg( sum ) .
+               groupby ( group_cols ) .
+               sum ( numeric_only = True ) .
                reset_index() )
     others[categ_col] = "Otros"
     return (
