@@ -4,14 +4,16 @@
 
 SHELL := bash
 
-subsample?=100 # Default value.
-               # Can be overridden from the command line,
-               # as in "make all subsample=10".
-               # Possibilities: 1, 10, 100 and 1000
-ss=$(strip $(subsample))
-  # Removes trailing space.
-  # PITFALL: Whitespace after that definition is a bug!
-  # (And an easy error to make by putting a comment on the same line.)
+# PITFALL: Trailing space after definitions such as these will break them,
+# and is easy to introduce accidentally by appending a comment to the line.
+vintage=2019
+  # Default value.
+  # Possibilities: 2019, 2023.
+subsample?=100
+  # Default value.
+  # Possibilities: 1, 10, 100 and 1000
+  # Can be overridden from the command line,
+  # as in "make all subsample=10".
 myPython=PYTHONPATH='.' python3
 
 .PHONY: all				\
@@ -76,73 +78,73 @@ budget_1 =				\
   output/budget_1/inversion.csv		\
   output/budget_1/deuda.csv
 
-budget_1p5 =							\
-  output/budget_1p5/ingresos.csv				\
+budget_1p5 =                     \
+  output/budget_1p5/ingresos.csv \
   output/budget_1p5/gastos.csv
 
-budget_2_subsample =						\
-  output/budget_2_subsample/recip-10/ingresos.csv		\
-  output/budget_2_subsample/recip-10/gastos.csv			\
-  output/budget_2_subsample/recip-100/ingresos.csv		\
-  output/budget_2_subsample/recip-100/gastos.csv		\
-  output/budget_2_subsample/recip-1000/ingresos.csv		\
+budget_2_subsample =                                \
+  output/budget_2_subsample/recip-10/ingresos.csv   \
+  output/budget_2_subsample/recip-10/gastos.csv     \
+  output/budget_2_subsample/recip-100/ingresos.csv  \
+  output/budget_2_subsample/recip-100/gastos.csv    \
+  output/budget_2_subsample/recip-1000/ingresos.csv \
   output/budget_2_subsample/recip-1000/gastos.csv
 
-budget_3_dept_muni_year_item =					\
-  output/budget_3_dept_muni_year_item/recip-$(ss)/ingresos.csv	\
-  output/budget_3_dept_muni_year_item/recip-$(ss)/gastos.csv
+budget_3_dept_muni_year_item =                                        \
+  output/budget_3_dept_muni_year_item/recip-$(subsample)/ingresos.csv \
+  output/budget_3_dept_muni_year_item/recip-$(subsample)/gastos.csv
 
-#sanity_child_sum_is_parent =							\
-#  output/sanity_child_sum_is_parent/recip-$(ss)/funcionamiento.csv		\
-#  output/sanity_child_sum_is_parent/recip-$(ss)/ingresos.csv			\
-#  output/sanity_child_sum_is_parent/recip-$(ss)/inversion.csv			\
-#  output/sanity_child_sum_is_parent_summary/recip-$(ss)/funcionamiento.csv	\
-#  output/sanity_child_sum_is_parent_summary/recip-$(ss)/ingresos.csv		\
-#  output/sanity_child_sum_is_parent_summary/recip-$(ss)/inversion.csv
+#sanity_child_sum_is_parent =                                                      \
+#  output/sanity_child_sum_is_parent/recip-$(subsample)/funcionamiento.csv	   \
+#  output/sanity_child_sum_is_parent/recip-$(subsample)/ingresos.csv		   \
+#  output/sanity_child_sum_is_parent/recip-$(subsample)/inversion.csv		   \
+#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/funcionamiento.csv \
+#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/ingresos.csv	   \
+#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/inversion.csv
 
-explore_order_of_mag_x_yrs =					\
-  output/explore/order_of_mag_x_yrs/recip-$(ss)/report.csv
+explore_order_of_mag_x_yrs =				       \
+  output/explore/order_of_mag_x_yrs/recip-$(subsample)/report.csv
 
-budget_4_scaled =						\
-  output/budget_4_scaled/recip-$(ss)/ingresos.csv		\
-  output/budget_4_scaled/recip-$(ss)/gastos.csv
+budget_4_scaled =					       \
+  output/budget_4_scaled/recip-$(subsample)/ingresos.csv       \
+  output/budget_4_scaled/recip-$(subsample)/gastos.csv
 
-budget_5_add_regalias =					\
-  output/budget_5_add_regalias/recip-$(ss)/ingresos.csv	\
-  output/budget_5_add_regalias/recip-$(ss)/gastos.csv
+budget_5_add_regalias =                                        \
+  output/budget_5_add_regalias/recip-$(subsample)/ingresos.csv \
+  output/budget_5_add_regalias/recip-$(subsample)/gastos.csv
 
-budget_6_deflate =					\
-  output/budget_6_deflate/recip-$(ss)/ingresos.csv	\
-  output/budget_6_deflate/recip-$(ss)/gastos.csv
+budget_6_deflate =                                             \
+  output/budget_6_deflate/recip-$(subsample)/ingresos.csv      \
+  output/budget_6_deflate/recip-$(subsample)/gastos.csv
 
-budget_6p5_cull_and_percentify =					\
-  output/budget_6p5_cull_and_percentify/recip-$(ss)/ingresos.csv	\
-  output/budget_6p5_cull_and_percentify/recip-$(ss)/gastos.csv
+budget_6p5_cull_and_percentify =                                        \
+  output/budget_6p5_cull_and_percentify/recip-$(subsample)/ingresos.csv \
+  output/budget_6p5_cull_and_percentify/recip-$(subsample)/gastos.csv
 
-budget_6p7_avg_muni =					\
-  output/budget_6p7_avg_muni/recip-$(ss)/ingresos.csv	\
-  output/budget_6p7_avg_muni/recip-$(ss)/gastos.csv
+budget_6p7_avg_muni =                                                   \
+  output/budget_6p7_avg_muni/recip-$(subsample)/ingresos.csv            \
+  output/budget_6p7_avg_muni/recip-$(subsample)/gastos.csv
 
-budget_7_verbose =					\
-  output/budget_7_verbose/recip-$(ss)/ingresos.csv	\
-  output/budget_7_verbose/recip-$(ss)/gastos.csv
+budget_7_verbose =                                                      \
+  output/budget_7_verbose/recip-$(subsample)/ingresos.csv               \
+  output/budget_7_verbose/recip-$(subsample)/gastos.csv
 
 # Listing one place (Honda, in Tolima)
 # is sufficient to trigger the recipe.
 # Listing every place would be tedious.
-budget_8_pivots =					\
-  output/pivots/recip-$(ss)/timestamp-for-pivot-tables
+budget_8_pivots =				       \
+  output/pivots/recip-$(subsample)/timestamp-for-pivot-tables
 
-budget_9_static_compare =				\
-  output/pivots/recip-$(ss)/timestamp-for-static-compare
+budget_9_static_compare =			       \
+  output/pivots/recip-$(subsample)/timestamp-for-static-compare
 
-sample_tables =					\
-  output/sample_tables/recip-$(ss)/ingresos.csv	\
-  output/sample_tables/recip-$(ss)/gastos.csv
+sample_tables =                                        \
+  output/sample_tables/recip-$(subsample)/ingresos.csv \
+  output/sample_tables/recip-$(subsample)/gastos.csv
 
-reports = output/reports/recip-$(ss)/timestamp-for-reports
-facebook_ads = output/facebook_ads/recip-$(ss)/timestamp-for-facebook-ads
-radio = output/radio/recip-$(ss)/timestamp-for-radio
+reports = output/reports/recip-$(subsample)/timestamp-for-reports
+facebook_ads = output/facebook_ads/recip-$(subsample)/timestamp-for-facebook-ads
+radio = output/radio/recip-$(subsample)/timestamp-for-radio
 
 
 #### #### #### ####
@@ -150,8 +152,8 @@ radio = output/radio/recip-$(ss)/timestamp-for-radio
 #### #### #### ####
 
 show_params:
+	echo "vintage: "   -$(vintage)-
 	echo "subsample: " -$(subsample)-
-	echo "ss: "        -$(ss)-
 
 keys: $(keys)
 $(keys):			\
@@ -224,7 +226,7 @@ $(budget_3_dept_muni_year_item):		\
   Code/util/misc.py				\
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(ss)
+	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(subsample)
 	date
 
 # TODO ? resurrect. This broke when we switched item code specs.
@@ -237,31 +239,31 @@ $(budget_3_dept_muni_year_item):		\
 #  Code/common.py				\
 #  Code/util/misc.py				\
 #  Code/metadata/raw_series.py
-#	$(myPython) Code/build/sanity_child_sum_is_parent.py $(ss)
+#	$(myPython) Code/build/sanity_child_sum_is_parent.py $(subsample)
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
-$(explore_order_of_mag_x_yrs):			\
-  $(budget_3_dept_muni_year_item)		\
-  Code/explore/order_of_mag_x_yrs.py		\
-  Code/common.py				\
-  Code/util/misc.py				\
-  Code/metadata/terms.py                        \
+$(explore_order_of_mag_x_yrs):	     \
+  $(budget_3_dept_muni_year_item)    \
+  Code/explore/order_of_mag_x_yrs.py \
+  Code/common.py		     \
+  Code/util/misc.py		     \
+  Code/metadata/terms.py             \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/explore/order_of_mag_x_yrs.py $(ss)
+	$(myPython) Code/explore/order_of_mag_x_yrs.py $(subsample)
 	date
 
 budget_4_scaled: $(budget_4_scaled)
-$(budget_4_scaled):				\
-  $(budget_3_dept_muni_year_item)		\
-  Code/build/budget_4_scaled.py			\
-  Code/explore/order_of_mag_x_yrs_defs.py	\
-  Code/common.py				\
-  Code/util/misc.py				\
-  Code/metadata/terms.py                        \
+$(budget_4_scaled):			  \
+  $(budget_3_dept_muni_year_item)	  \
+  Code/build/budget_4_scaled.py		  \
+  Code/explore/order_of_mag_x_yrs_defs.py \
+  Code/common.py			  \
+  Code/util/misc.py			  \
+  Code/metadata/terms.py                  \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_4_scaled.py $(ss)
+	$(myPython) Code/build/budget_4_scaled.py $(subsample)
 	date
 
 budget_5_add_regalias: $(budget_5_add_regalias)
@@ -273,56 +275,56 @@ $(budget_5_add_regalias):		\
   Code/metadata/terms.py                \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_5_add_regalias.py $(ss)
+	$(myPython) Code/build/budget_5_add_regalias.py $(subsample)
 	date
 
 budget_6_deflate: $(budget_6_deflate)
-$(budget_6_deflate):			\
-  $(budget_5_add_regalias)		\
-  output/inflation.csv			\
-  Code/build/budget_6_deflate.py	\
-  Code/common.py			\
-  Code/metadata/terms.py                \
+$(budget_6_deflate):		 \
+  $(budget_5_add_regalias)	 \
+  output/inflation.csv		 \
+  Code/build/budget_6_deflate.py \
+  Code/common.py		 \
+  Code/metadata/terms.py         \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_6_deflate.py $(ss)
+	$(myPython) Code/build/budget_6_deflate.py $(subsample)
 	date
 
 budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
-$(budget_6p5_cull_and_percentify):		\
-  $(budget_6_deflate)				\
-  Code/build/budget_6p5_percentify.py	\
-  Code/util/percentify.py			\
-  Code/common.py				\
-  Code/metadata/two_series.py			\
+$(budget_6p5_cull_and_percentify):    \
+  $(budget_6_deflate)		      \
+  Code/build/budget_6p5_percentify.py \
+  Code/util/percentify.py	      \
+  Code/common.py		      \
+  Code/metadata/two_series.py	      \
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_6p5_percentify.py $(ss)
+	$(myPython) Code/build/budget_6p5_percentify.py $(subsample)
 	date
 
 budget_6p7_avg_muni: $(budget_6p7_avg_muni)
-$(budget_6p7_avg_muni):			\
-  $(budget_6p5_cull_and_percentify)	\
-  Code/build/budget_6p7_avg_muni.py	\
-  Code/common.py			\
-  Code/util/misc.py			\
-  Code/build/use_keys.py		\
+$(budget_6p7_avg_muni):		    \
+  $(budget_6p5_cull_and_percentify) \
+  Code/build/budget_6p7_avg_muni.py \
+  Code/common.py		    \
+  Code/util/misc.py		    \
+  Code/build/use_keys.py	    \
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_6p7_avg_muni.py $(ss)
+	$(myPython) Code/build/budget_6p7_avg_muni.py $(subsample)
 	date
 
 budget_7_verbose: $(budget_7_verbose)
-$(budget_7_verbose):			\
-  $(budget_6p7_avg_muni)		\
-  Code/build/budget_7_verbose.py	\
-  Code/build/use_keys.py		\
-  Code/common.py			\
-  Code/util/misc.py			\
-  Code/metadata/terms.py                \
+$(budget_7_verbose):		 \
+  $(budget_6p7_avg_muni)	 \
+  Code/build/budget_7_verbose.py \
+  Code/build/use_keys.py	 \
+  Code/common.py		 \
+  Code/util/misc.py		 \
+  Code/metadata/terms.py         \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_7_verbose.py $(ss)
+	$(myPython) Code/build/budget_7_verbose.py $(subsample)
 	date
 
 budget_8_pivots: $(budget_8_pivots)
@@ -333,18 +335,18 @@ $(budget_8_pivots):				\
   Code/util/aggregate_all_but_biggest/better.py	\
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_8_pivots.py $(ss)
+	$(myPython) Code/build/budget_8_pivots.py $(subsample)
 	date
 
 budget_9_static_compare: $(budget_9_static_compare)
-$(budget_9_static_compare):			\
-  $(budget_7_verbose)				\
-  $(budget_8_pivots)				\
-  Code/build/budget_9_static_compare.py		\
-  Code/common.py				\
+$(budget_9_static_compare):		\
+  $(budget_7_verbose)			\
+  $(budget_8_pivots)			\
+  Code/build/budget_9_static_compare.py	\
+  Code/common.py			\
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_9_static_compare.py $(ss)
+	$(myPython) Code/build/budget_9_static_compare.py $(subsample)
 	date
 
 # Unneeded, except to understand more complex programs.
@@ -357,64 +359,64 @@ $(sample_tables):			       \
   Code/metadata/terms.py		       \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/draw/demo/sample_tables.py $(ss)
+	$(myPython) Code/draw/demo/sample_tables.py $(subsample)
 	date
 
-output/inflation.csv:				\
-  data/inflation.csv				\
+output/inflation.csv: \
+  data/inflation.csv  \
   Code/build/inflation.py
 	date
 	$(myPython) Code/build/inflation.py
 	date
 
-output/regalias.csv:			\
-  data/regalias/muni.csv		\
-  data/regalias/dept.csv		\
-  Code/build/regalias.py		\
-  Code/util/misc.py			\
+output/regalias.csv:	 \
+  data/regalias/muni.csv \
+  data/regalias/dept.csv \
+  Code/build/regalias.py \
+  Code/util/misc.py	 \
   Code/build/use_keys.py
 	date
 	$(myPython) Code/build/regalias.py
 	date
 
 reports: $(reports)
-$(reports):				\
-  $(budget_8_pivots)			\
-  $(budget_9_static_compare)		\
-  Code/build/use_keys.py		\
-  Code/draw/chart/time_series.py	\
-  Code/draw/chart/pairs.py		\
-  Code/draw/text/newlines.py		\
-  Code/draw/pages.py			\
-  Code/draw/design.py			\
-  Code/draw/chart_content.py		\
+$(reports):			 \
+  $(budget_8_pivots)		 \
+  $(budget_9_static_compare)	 \
+  Code/build/use_keys.py	 \
+  Code/draw/chart/time_series.py \
+  Code/draw/chart/pairs.py	 \
+  Code/draw/text/newlines.py	 \
+  Code/draw/pages.py		 \
+  Code/draw/design.py		 \
+  Code/draw/chart_content.py	 \
   Code/main/reports.py
 	date
-	$(myPython) Code/main/reports.py $(ss)
+	$(myPython) Code/main/reports.py $(subsample)
 	date
 
 facebook_ads: $(facebook_ads)
-$(facebook_ads):			\
-  $(budget_8_pivots)			\
-  $(budget_9_static_compare)		\
-  Code/build/use_keys.py		\
-  Code/draw/chart/time_series.py	\
-  Code/draw/chart/pairs.py		\
-  Code/draw/text/newlines.py		\
-  Code/draw/pages.py			\
-  Code/draw/design.py			\
-  Code/draw/chart_content.py		\
+$(facebook_ads):		 \
+  $(budget_8_pivots)		 \
+  $(budget_9_static_compare)	 \
+  Code/build/use_keys.py	 \
+  Code/draw/chart/time_series.py \
+  Code/draw/chart/pairs.py	 \
+  Code/draw/text/newlines.py	 \
+  Code/draw/pages.py		 \
+  Code/draw/design.py		 \
+  Code/draw/chart_content.py	 \
   Code/main/facebook_ads.py
 	date
-	$(myPython) Code/main/facebook_ads.py $(ss)
+	$(myPython) Code/main/facebook_ads.py $(subsample)
 	date
 
 radio: $(radio)
-$(radio):				\
-  $(budget_8_pivots)			\
-  $(budget_9_static_compare)		\
-  Code/main/radio_scripts.py		\
+$(radio):		     \
+  $(budget_8_pivots)	     \
+  $(budget_9_static_compare) \
+  Code/main/radio_scripts.py \
   Code/main/geo.py
 	date
-	$(myPython) Code/main/radio_scripts.py $(ss)
+	$(myPython) Code/main/radio_scripts.py $(subsample)
 	date
