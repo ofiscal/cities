@@ -9,3 +9,4 @@ else:
   import Code.params.fixed as imp
 
 subsample = imp.subsample
+vintage   = imp.vintage
