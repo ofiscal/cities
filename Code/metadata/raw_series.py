@@ -11,7 +11,9 @@ series = [t.ingresos,
           t.funcionamiento,
           t.deuda]
 
-source_folder = "data/sisfut/"
+source_folder = "data/sisfut/" # TODO (ongoing): Remove.
+  # See the commit just after cdcd2e5b7fcacd1fe9bf2d1b3ecf4aa5a6432fe1
+  # for how to do that.
 columns_peso = {
   "ingresos" : [
       ("Total Ingresos"         , "item total")

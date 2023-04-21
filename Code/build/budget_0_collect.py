@@ -18,6 +18,7 @@ if True:
   import numpy as np
   import pandas as pd
   #
+  import Code.common as common
   import Code.metadata.raw_series as raw
 
 
@@ -49,7 +50,8 @@ def collect_raw( source : str,
                                  shuttle ] )
   return dfs
 
-dfs = collect_raw( raw.source_folder + "csv" )
+dfs = collect_raw ( os.path.join (
+  "data", str(common.vintage), "sisfut", "csv" ) )
 
 for s in raw.series:
   dfs[s].to_csv( dest + "/" + s + ".csv",

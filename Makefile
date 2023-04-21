@@ -163,7 +163,8 @@ $(keys):			\
   Code/build/make_keys.py	\
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/make_keys.py
+	$(myPython) Code/build/make_keys.py \
+          --subsample=$(subsample) --vintage=$(vintage)
 	date
 
 budget_0_collect: $(budget_0_collect)
@@ -171,7 +172,8 @@ $(budget_0_collect):			\
   Code/build/budget_0_collect.py	\
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_0_collect.py
+	$(myPython) Code/build/budget_0_collect.py \
+          --subsample=$(subsample) --vintage=$(vintage)
 	date
 
 # PITFALL: Don't include Code/metadata/terms.py;

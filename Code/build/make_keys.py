@@ -33,6 +33,7 @@ if True:
   import os
   from itertools import chain
   import pandas as pd
+  import Code.common as common
   import Code.metadata.terms as t
   import Code.metadata.raw_series as sm
 
@@ -42,8 +43,10 @@ if True: # build source data set, from which both keys are built
   for series in set.difference(
       set(sm.series), set([t.deuda])):
     for year in range( 2013, 2018+1 ):
-      filename = ( sm.source_folder + "csv/"
-                   + str(year) + "_" + series + ".csv" )
+      filename = (
+        os.path.join (
+          "data", str(common.vintage), "sisfut", "csv",
+          str(year) + "_" + series + ".csv" ) )
       shuttle = pd.read_csv(
         filename,
         usecols = [
