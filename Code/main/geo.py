@@ -8,7 +8,7 @@ if True:
 
 if True: # create geo indices to loop over
   depts_and_munis = uk.merge_geo( # Using stage 6p7 rather than 7 because
-    pd.read_csv(      # they are equivalent and it's smaller
+    pd.read_csv (                 # they are equivalent and it's smaller
       ( "output/budget_6p7_avg_muni/recip-" + str(c.subsample) +
         "/" + "gastos-pct.csv" ),
       usecols = ['dept code', 'muni code'] ) .
@@ -18,4 +18,3 @@ if True: # create geo indices to loop over
   depts_and_munis = (
     depts_and_munis[
       depts_and_munis["muni code"] > 0 ] )
-

@@ -20,9 +20,10 @@ if True: # bearings
 if True: # input
   dfsi = {}
   for s in ser.series:
-    dfsi[s.name] = pd.read_csv(
-      source + "/" + s.name + ".csv" )
-  regalias = pd.read_csv( "output/regalias.csv" )
+    dfsi[s.name] = pd.read_csv (
+      os.path.join ( source,
+                     s.name + ".csv" ) )
+  regalias = pd.read_csv ( "output/regalias.csv" )
 
 if True: # Adjust regalias.
   if c.subsample > 1: # Discard some regalias rows if needed.

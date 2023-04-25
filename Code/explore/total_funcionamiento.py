@@ -1,3 +1,4 @@
+import os.path as path
 import numpy as np
 import pandas as pd
 
@@ -25,8 +26,9 @@ if True: # This is like build.budget_1_defs.collect_raw
   df = pd.DataFrame()
   for year in range( 2012, 2019 ):
     shuttle = (
-      pd.read_csv(
-        "data/sisfut/csv/" + str(year) + "_funcionamiento.csv",
+      pd.read_csv (
+        path.join ( "data", str(c.vintage), "sisfut", "csv",
+                    str(year) + "_funcionamiento.csv" ),
         usecols = set.union(
           {"Concepto"},
           set.difference(

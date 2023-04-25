@@ -379,18 +379,18 @@ $(sample_tables):			       \
           --subsample=$(subsample) --vintage=$(vintage)
 	date
 
-output/inflation.csv: \
-  data/inflation.csv  \
+output/inflation.csv:           \
+  data/$(vintage)/inflation.csv \
   Code/build/inflation.py
 	date
 	$(myPython) Code/build/inflation.py
 	date
 
-output/regalias.csv:	 \
-  data/regalias/muni.csv \
-  data/regalias/dept.csv \
-  Code/build/regalias.py \
-  Code/util/misc.py	 \
+output/regalias.csv:                \
+  data/$(vintage)/regalias/muni.csv \
+  data/$(vintage)/regalias/dept.csv \
+  Code/build/regalias.py            \
+  Code/util/misc.py                 \
   Code/build/use_keys.py
 	date
 	$(myPython) Code/build/regalias.py

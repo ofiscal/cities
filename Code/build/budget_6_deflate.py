@@ -15,8 +15,10 @@ if True: # folders
 if True: # input data
   dfs = {}
   for s in ser.series:
-    dfs[s.name] = pd.read_csv( source + "/" + s.name + ".csv" )
-  deflator = pd.read_csv( "output/inflation.csv" )
+    dfs[s.name] = pd.read_csv (
+      os.path.join ( source,
+                     s.name + ".csv" ) )
+  deflator = pd.read_csv ( "output/inflation.csv" )
   deflator["deflator"] = ( # normalize in terms of 2018 pesos
     1 / ( deflator["deflator"] /
           float( deflator

@@ -17,7 +17,9 @@ if True:
 # Use this if in a hurry and only in need of the
 # facebook-treated group.
 #
-# treated = pd.read_excel( "data/regions/fb-treated.xlsx" )
+# treated = pd.read_excel (
+#   os.path.join ( "data", str( c.vintage ), "regions",
+#                  "fb-treated.xlsx" ) )
 # treated_muni_set = set( treated["muni code"] )
 
 source_root = "output/pivots/recip-"  + str(c.subsample)

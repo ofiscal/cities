@@ -1,7 +1,10 @@
 if True:
+  import os.path as path
   import pandas as pd
   import Code.build.classify_budget_codes as cla
   import matplotlib.pyplot as plt
+  #
+  import Code.common as common
 
 
 ######
@@ -18,9 +21,10 @@ cols = { "Cód. DANE Municipio"                      : "muni code",
 regal_gastos_by_year = {}
 for year in range(2013,2019):
   shuttle = (
-    pd.read_excel(
-      ( "data/gasto-con-regalias/gastoconregalias_" +
-        str(year) + ".xlsx" ),
+    pd.read_excel (
+      os.path.join (
+        "data", str(common.vintage), "gasto-con-regalias",
+        "gastoconregalias_" + str(year) + ".xlsx" ),
       usecols = list( cols.keys() ) ) .
     rename( columns = cols ) )
   shuttle = shuttle[
@@ -205,4 +209,3 @@ long_regalias_spending_sums_over_time = (
            regalias_spending_sums_over_time(
              row["muni code"] ) ),
          axis = "columns" ) )
-

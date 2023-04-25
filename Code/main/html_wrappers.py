@@ -11,7 +11,10 @@ if True:
 
 
 # Use this if only in need of the facebook-treated group.
-treated = pd.read_excel( "data/regions/fb-treated.xlsx" )
+treated = pd.read_excel (
+  os.path.join (
+    "data", str(c.vintage), "regions",
+    "fb-treated.xlsx" ) )
 treated_muni_set = set( treated["muni code"] )
 
 dest = "output/html/recip-" + str(c.subsample)

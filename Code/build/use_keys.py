@@ -4,7 +4,7 @@ if True:
 
 if True: # get, test data
   geo = (
-    pd.read_csv( "output/keys/geo.csv" ) .
+    pd.read_csv ( "output/keys/geo.csv" ) .
     rename( columns =
             { "Cód. DANE Municipio"      : "muni code",
               "Cód. DANE Departamento"   : "dept code",

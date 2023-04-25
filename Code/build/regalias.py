@@ -1,12 +1,17 @@
 if True:
+  import os.path as path
   import pandas as pd
+  import Code.common as common
   import Code.util.misc as util
   import Code.build.use_keys as uk
 
 
 if True: # ingest
   wide_muni = (
-    pd.read_csv( "data/regalias/muni.csv" ) .
+    pd.read_csv (
+      path.join (
+        "data", str(common.vintage), "regalias",
+        "muni.csv" ) ) .
     rename( columns = {
       "cod_dane"          : "muni code",
       "periodo 2019-2020" : "2019-2020",
@@ -14,7 +19,9 @@ if True: # ingest
       "periodo 2016-2015" : "2015-2016",
       "periodo 2013-2014" : "2013-2014" } ) )
   wide_dept = (
-    pd.read_csv( "data/regalias/dept.csv" ) .
+    pd.read_csv (
+      path.join ( "data", str(common.vintage), "regalias",
+                  "dept.csv" ) ) .
     rename( columns = {
       "cod_dane"          : "5 digit dane code",
       "departamento"      : "dept",

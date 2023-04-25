@@ -30,7 +30,9 @@ if True: # Read a few big tables.
       # all munis are contained together in the same data set.
       # By contrast, each output of this file corresponds to
       # to a separate muni.
-      pd.read_csv( monolith_root + "/" + s.name + ".csv") .
+      pd.read_csv (
+        os.path.join ( monolith_root,
+                       s.name + ".csv") ) .
       sort_values( spacetime ) )
 
 geo = ( # geo indices of interest

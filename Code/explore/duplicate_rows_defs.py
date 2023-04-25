@@ -1,6 +1,8 @@
+import os.path as path
 from typing import List
 import pandas as pd
 import Code.metadata.raw_series as sm
+import Code.common as common
 
 
 group_fields = [
@@ -23,7 +25,7 @@ percentiles_str = ["50%",
 
 def how_I_calculated_non_group_fields( df : pd.DataFrame ) -> List[str]:
   """ After running this on each data set,
-  I manually removed some redundant fields 
+  I manually removed some redundant fields
   (e.g. no "Fuente" if we already have "Codigo Fuente")."""
   def not_starts_with_item( s : str ):
     return not s[:4] == "item"
@@ -46,8 +48,9 @@ def fetch_series( series : str ) -> pd.DataFrame:
   acc = pd.DataFrame()
   for year in range(2012,2019):
     df = (
-      pd.read_csv(
-        "data/sisfut/csv/" + str(year) + "_" + series + ".csv" ) .
+      pd.read_csv (
+        path.join ( "data", str(common.vintage), "sisfut", "csv",
+                    str(year) + "_" + series + ".csv" ) ) .
       rename( columns = dict( sm.column_subsets[series] ) ) )
     df["year"] = year
     acc = acc.append( df )
@@ -117,4 +120,3 @@ def report_3_extra_groupvars( df : pd.DataFrame,
       b += 1
     a += 1
   return acc
-

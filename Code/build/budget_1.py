@@ -20,7 +20,9 @@ if True: # input data
   source = "output/budget_0_collect"
   dfs = {}
   for s in raw.series:
-    dfs[s] = pd.read_csv( source + "/" + s + ".csv" )
+    dfs[s] = pd.read_csv (
+      os.path.join ( source,
+                     s + ".csv" ) )
 
 if True: # format
   for s in [ t.ingresos,

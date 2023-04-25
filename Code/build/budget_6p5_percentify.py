@@ -26,8 +26,9 @@ spacetime = ["dept code","muni code","year"]
 if True: # input data
   dfs = {}
   for s in s2.series:
-    df = pd.read_csv(
-      source + "/" + s.name + ".csv" )
+    df = pd.read_csv (
+      os.path.join ( source,
+                     s.name + ".csv" ) )
     df = ( # drop some columns, rows. OBSOLETE --
            # those are now already dropped upstream.
       df[df["year"] >= 2013]

@@ -37,7 +37,8 @@ def collect_raw( source : str,
     for year in range( 2013, 2018+1 ):
       shuttle = (
         pd.read_csv(
-          source + "/" + str(year) + "_" + series + ".csv",
+          os.path.join ( source,
+                         str(year) + "_" + series + ".csv" ),
           usecols = set.union(
             extra_columns,
             set.difference(

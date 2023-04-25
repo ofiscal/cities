@@ -43,12 +43,12 @@ if True: # build source data set, from which both keys are built
   for series in set.difference(
       set(sm.series), set([t.deuda])):
     for year in range( 2013, 2018+1 ):
-      filename = (
+      filepath = (
         os.path.join (
           "data", str(common.vintage), "sisfut", "csv",
           str(year) + "_" + series + ".csv" ) )
-      shuttle = pd.read_csv(
-        filename,
+      shuttle = pd.read_csv (
+        filepath,
         usecols = [
            "Cód. DANE Municipio",
            "Nombre DANE Municipio",

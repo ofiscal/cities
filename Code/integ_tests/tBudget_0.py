@@ -46,4 +46,3 @@ for f in [t.ingresos, t.inversion,t.funcionamiento,t.deuda]:
     groupby( [ "dept","muni","item code" ] ) .
     agg( sum ) .
     sort_values( ["dept","muni","item code"] ) )
-

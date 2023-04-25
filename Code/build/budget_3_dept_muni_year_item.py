@@ -46,7 +46,9 @@ if True:
 
 # dfs0: read data
 for s in [t.ingresos,t.gastos]:
-  dfs0[s] = pd.read_csv( source + "/" + s + ".csv" )
+  dfs0[s] = pd.read_csv (
+    os.path.join ( source,
+                   s + ".csv" ) )
 
 # dfs1: fill NaN values in muni with 0,
 # create "item categ" and drop "item code",

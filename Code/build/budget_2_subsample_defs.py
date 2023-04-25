@@ -17,12 +17,14 @@ if True: # bearings
     return os.path.join ( top_dest,
                           "recip-" + str( subsample ) )
 
-def read_data( nrows = None ):
+def read_data ( nrows = None ):
   """Returns a dictionary of three data frames."""
   dfs = {}
   for filename in [t.ingresos,t.gastos]:
-    df = pd.read_csv( source + "/" + filename + ".csv",
-                      nrows = nrows )
+    df = pd.read_csv (
+      os.path.join ( source,
+                     filename + ".csv" ),
+      nrows = nrows )
     dfs[filename] = df
   return dfs
 

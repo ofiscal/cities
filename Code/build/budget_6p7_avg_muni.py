@@ -25,8 +25,9 @@ if True: # folders
 if True: # input data
   dfs0, dfs1 = {}, {} # input, output
   for s in s4.series:
-    dfs0[s.name] = pd.read_csv(
-      source + "/" + s.name + ".csv" )
+    dfs0[s.name] = pd.read_csv (
+      os.path.join ( source,
+                     s.name + ".csv" ) )
 
 if True: # count munis per department
   # PITFALL: The number depends on the subsample size being used.

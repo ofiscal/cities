@@ -27,7 +27,9 @@ if True: # Merge geo data into main data.
     df = util.to_front(
       ["dept","muni","year"] + s.money_cols + ["item categ"],
       uk.merge_geo(
-        pd.read_csv( source + "/" + sn + ".csv" )
+        pd.read_csv (
+          os.path.join ( source,
+                         sn + ".csv" ) )
         [ ["muni code","dept code","year","item categ"]
           + extra_columns + s.money_cols] ) )
     df.loc[ df["muni code"] == 0,

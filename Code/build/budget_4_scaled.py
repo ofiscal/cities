@@ -54,7 +54,9 @@ if True: # function to multiply early years by 1000
 dfs, dfs_by_muni_item = ({},{})
 for s in ts.series:
   if True: # clean the data
-    df = pd.read_csv( source + "/" + s.name + ".csv" )
+    df = pd.read_csv (
+      os.path.join ( source,
+                     s.name + ".csv" ) )
     df = correct_peso_columns( s.money_cols, df )
     dfs[s.name] = df
   if True: # add percent change across years within place-item

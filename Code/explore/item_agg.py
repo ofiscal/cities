@@ -1,3 +1,4 @@
+import os.path as path
 import numpy as np
 import pandas as pd
 
@@ -7,17 +8,19 @@ import Code.metadata.raw_series as sm
 import Code.build.budget_3_dept_muni_year_item_defs as defs
 
 
-disagg = "output/budget_2_subsample/recip-"       + str(c.subsample)
+disagg = "output/budget_2_subsample/recip-"           + str(c.subsample)
 agg    = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
 
 group_fields = ["year","muni code","item code"]
 
 dfs,dfas = ({},{})
 for s in sm.series:
-  dfs[s] = pd.read_csv( disagg + "/" + s + ".csv",
-                        encoding = "utf-8" )
-  dfas[s] = pd.read_csv( agg + "/" + s + ".csv",
-                         encoding = "utf-8" )
+  dfs[s] = pd.read_csv (
+    path.join ( disagg, s + ".csv" ),
+    encoding = "utf-8" )
+  dfas[s] = pd.read_csv (
+    path.join ( agg, s + ".csv" ),
+    encoding = "utf-8" )
 
 def at_spot( spot : pd.DataFrame,
              df : pd.DataFrame ) -> pd.DataFrame:

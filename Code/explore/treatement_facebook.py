@@ -1,16 +1,23 @@
 if True:
+  import os.path as path
   import pandas as pd
   import Code.build.use_keys as uk
+  #
   import Code.draw.text.shorten_names as shorten_names
+  import Code.common as common
+
 
 if True: # initial data
-  treated = pd.read_excel( "data/regions/fb-treated.xlsx" )
+  treated = pd.read_excel (
+    path.join ( "data", str(common.vintage), "regions",
+                "fb-treated.xlsx" ) )
   geo = uk.geo
   geo["muni code"] = (
     geo["muni code"] . astype( int ) )
   population = (
-    pd.read_excel(
-      "data/regions/population_2018.xlsx" )
+    pd.read_excel (
+      path.join ( "data", str(common.vintage), "regions",
+                  "population_2018.xlsx" ) )
     [["muni code","population"]] )
 
 treated = (
@@ -86,4 +93,3 @@ treated_2 = treated[ treated["group"]==2 ]
              axis = "rows" )
   [cols_to_keep] .
   to_excel( "jeff.xlsx" ) )
-

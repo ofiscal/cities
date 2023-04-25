@@ -4,12 +4,14 @@
 
 if True:
   import pandas as pd
+  #
   import Code.util.misc as util
+
 
 if True:
   juan = ( pd.read_csv( "regalias_municipios.csv", sep=";" ) .
            sort_values( ["cod_dane","nombre_mun","departamento"] ) )
-  jeff = ( pd.read_csv( "data/regalias/muni.csv" ) .
+  jeff = ( pd.read_csv( "data/2019/regalias/muni.csv" ) .
            sort_values( ["cod_dane","nombre_mun","departamento"] ) )
 
 for c in [ 'periodo 2019-2020',
@@ -27,4 +29,3 @@ x = pd.concat( [ jeff["periodo 2019-2020"],
                axis = "columns" )
 
 (x.iloc[:,0] - x.iloc[:,1]).max()
-

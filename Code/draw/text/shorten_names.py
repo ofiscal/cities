@@ -1,7 +1,10 @@
 if True:
-  from typing import Dict
+  import os.path as path
   import pandas as pd
+  from typing import Dict
+  #
   import Code.common as c
+
 
 def split_at_middlest_space( s : str ) -> int:
   n = len(s)
@@ -24,9 +27,15 @@ def split_at_middlest_space( s : str ) -> int:
   l[closest-1] = "\n"
   return "".join(l)
 
-dept_data = pd.read_csv( "data/regions/depts-brief.csv" )
-muni_data = ( pd.read_csv( "data/regions/munis-brief.csv" ) .
-          drop_duplicates() )
+dept_data = (
+  pd.read_csv (
+    path.join ( "data", str(c.vintage), "regions",
+                "depts-brief.csv" ) ) )
+muni_data = (
+  pd.read_csv (
+    path.join ( "data", str(c.vintage), "regions",
+                "munis-brief.csv" ) )
+  . drop_duplicates() )
 
 def update_dict( d : Dict["k","v"],
                  key : "k",
@@ -43,4 +52,3 @@ for (data,dct) in [ (dept_data, depts),
                  row["long"],
                  row["short"] ),
     axis = "columns" )
-

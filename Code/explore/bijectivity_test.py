@@ -3,9 +3,12 @@
 # They mostly are.
 # Anomalies are written to output/non_bijective/.
 
+import os.path as path
 from itertools import chain
 import pandas as pd
+#
 import Code.metadata.raw_series as sm
+import Code.common as common
 
 
 ######
@@ -15,12 +18,12 @@ import Code.metadata.raw_series as sm
 dup_columns = pd.DataFrame()
 for series in sm.series:
   for year in range( 2012, 2018+1 ):
-    shuttle = pd.read_csv(
-      ( "data/2019/sisfut/csv/"
-        + str(year) + "_" + series + ".csv" )
-      , usecols = set.intersection(
-          set( sm.column_subsets[series] )
-        , sm.duplicative_columns_set ) )
+    shuttle = pd.read_csv (
+      path.join ( "data", str(common.vintage), "sisfut", "csv",
+                  str(year) + "_" + series + ".csv" ),
+      usecols = set.intersection (
+        set( sm.column_subsets[series] ),
+        sm.duplicative_columns_set ) )
     shuttle["year"] = year
     dup_columns = dup_columns.append( shuttle )
 
