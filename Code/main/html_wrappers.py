@@ -2,12 +2,13 @@
 
 if True:
   import os
-  import pandas as pd
+  import pandas                          as pd
   from   pathlib import Path
-  import Code.common as c
-  import Code.draw.text.shorten_numbers as abbrev
-  import Code.metadata.terms as t
+  #
+  import Code.common                     as c
+  import Code.draw.text.shorten_numbers  as abbrev
   from   Code.main.geo import depts_and_munis
+  import Code.metadata.terms             as t
 
 
 # Use this if only in need of the facebook-treated group.
@@ -18,7 +19,8 @@ treated = pd.read_excel (
     "fb-treated.xlsx" ) )
 treated_muni_set = set( treated["muni code"] )
 
-dest = "output/html/recip-" + str(c.subsample)
+dest = os.path.join ( c.outdata, "html",
+                      "recip-" + str(c.subsample) )
 if not os.path.exists( dest ):
   os.makedirs( dest )
 

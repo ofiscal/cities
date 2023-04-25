@@ -1,12 +1,12 @@
 if True:
+  import numpy                                as np
   import os
-  import numpy as np
-  import pandas as pd
+  import pandas                               as pd
   #
-  import Code.common as c
-  import Code.util.misc as util
-  import Code.util.aggregate_all_but_biggest as defs
-  import Code.metadata.two_series as ser
+  import Code.common                          as c
+  import Code.metadata.two_series             as ser
+  import Code.util.aggregate_all_but_biggest  as defs
+  import Code.util.misc                       as util
 
 
 if True:
@@ -19,8 +19,9 @@ if True: # read data
   for s in ser.series:
     raw[s.name] = (
       pd.read_csv(
-        ( "output/budget_7_verbose/recip-" + str(c.subsample)
-          + "/" + s.name + ".csv") ) .
+        os.path.join ( c.outdata, "budget_7_verbose",
+                       "recip-" + str(c.subsample),
+                       s.name + ".csv") ) .
       sort_values( group_vars ) )
 
 if True: # restrict to the spacetime we need
@@ -65,7 +66,8 @@ if True: # group all but the biggest five categories
     items_grouped[s.name] = df
 
 if True: # output two big tables
-  dest = "output/sample_tables/recip-" + str(c.subsample)
+  dest = os.path.join ( c.outdata, "sample_tables",
+                        "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
   for s in ser.series:

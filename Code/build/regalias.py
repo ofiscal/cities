@@ -1,9 +1,10 @@
 if True:
-  import os.path as path
-  import pandas as pd
-  import Code.common as common
-  import Code.util.misc as util
-  import Code.build.use_keys as uk
+  import os.path              as path
+  import pandas               as pd
+  #
+  import Code.build.use_keys  as uk
+  import Code.common          as common
+  import Code.util.misc       as util
 
 
 if True: # ingest
@@ -68,8 +69,9 @@ if False: # verify that muni codes correspond to (muni,dept) the same way
   # There are a few mismatches. Eyeballing the data in OpenOffice,
   # one sees that they are due entirely to minor spelling differences,
   # e.g. "don matías" v. "donmatías"
-  test_match.to_csv(
-    "output/explore/regalias_muni_codes.csv",
+  test_match.to_csv (
+    path.join ( common.outdata, "explore",
+                "regalias_muni_codes.csv" ),
     index = False )
 
 if True: # reduce to the data we need
@@ -96,5 +98,6 @@ if True: # change from wide to long, adding a "yaer" column
     long = pd.concat( [long, df] )
     df["year"] = startYear + 1
     long = pd.concat( [long, df] )
-  long.to_csv( "output/regalias.csv",
-               index = False )
+  long.to_csv ( path.join ( common.outdata,
+                            "regalias.csv" ),
+                index = False )

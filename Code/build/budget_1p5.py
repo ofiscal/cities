@@ -14,6 +14,7 @@ if True:
   import os
   import pandas as pd
   #
+  import Code.common as common
   import Code.build.budget_1p5_tests as tests
   import Code.build.classify_budget_codes as cla
   import Code.metadata.terms as t
@@ -21,8 +22,8 @@ if True:
 
 
 if True: # folders
-  source = "output/budget_1"
-  dest = "output/budget_1p5"
+  source = os.path.join ( common.outdata, "budget_1" )
+  dest   = os.path.join ( common.outdata, "budget_1p5" )
   if not os.path.exists( dest ):
     os.makedirs( dest )
 

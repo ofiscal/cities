@@ -30,12 +30,13 @@
 # includes item 1.1 = "GASTOS DE PERSONAL".
 
 if True:
+  from   itertools import chain
   import os
-  from itertools import chain
-  import pandas as pd
-  import Code.common as common
-  import Code.metadata.terms as t
-  import Code.metadata.raw_series as sm
+  import pandas                    as pd
+
+  import Code.common               as common
+  import Code.metadata.raw_series  as sm
+  import Code.metadata.terms       as t
 
 
 if True: # build source data set, from which both keys are built
@@ -73,8 +74,9 @@ def make_key( from_columns, to_columns, df ):
          . agg( lambda x: x.iloc[0] ) # take the first in each to_column
          . reset_index() )
 
-if not os.path.exists( "output/keys" ):
-  os.makedirs( "output/keys" )
+dest = os.path.join ( common.outdata, "keys" )
+if not os.path.exists( dest ):
+  os.makedirs ( dest )
 
 ( make_key(
       ["Cód. DANE Municipio"]
@@ -83,7 +85,7 @@ if not os.path.exists( "output/keys" ):
       , "Nombre DANE Departamento" ]
     , source_data )
   . to_csv(
-    "output/keys/geo.csv",
+    os.path.join ( dest, "geo.csv" ),
     index = False ) )
 
 ( make_key(
@@ -91,5 +93,5 @@ if not os.path.exists( "output/keys" ):
     , [ "Concepto" ]
     , source_data )
   . to_csv(
-    "output/keys/budget.csv",
+    os.path.join ( dest, "budget.csv" ),
     index = False ) )

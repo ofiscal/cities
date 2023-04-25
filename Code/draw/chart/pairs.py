@@ -2,17 +2,20 @@
 # https://matplotlib.org/3.1.1/gallery/units/bar_unit_demo.html
 
 if True:
-  import matplotlib as mplot
-  import matplotlib.pyplot as plt
-  import matplotlib.ticker as ticker
-  import matplotlib.font_manager as fm
-  import numpy as np
-  import pandas as pd
+  import matplotlib                      as mplot
+  import matplotlib.font_manager         as fm
+  import matplotlib.pyplot               as plt
+  import matplotlib.ticker               as ticker
+  import numpy                           as np
+  import os.path                         as path
+  import pandas                          as pd
 
-  import Code.draw.design               as design
-  import Code.draw.text.newlines        as newlines
-  import Code.draw.text.shorten_numbers as abbrev
-  import Code.draw.text.shorten_names as shorten_names
+  import Code.common                     as common
+  import Code.draw.design                as design
+  import Code.draw.text.newlines         as newlines
+  import Code.draw.text.shorten_names    as shorten_names
+  import Code.draw.text.shorten_numbers  as abbrev
+
 
 def drawPairs( ax : mplot.axes.SubplotBase,
                background_color : str,
@@ -69,7 +72,7 @@ def drawPairs( ax : mplot.axes.SubplotBase,
               axis="y",
               linewidth = design.sizeLineWidth,
               color = design.orange )
-  
+
   leg = ax.legend(
     (p0[0], p1[0]),
     ( shorten_names.munis[df.columns[0]] . upper(),
@@ -96,13 +99,14 @@ def drawPairs( ax : mplot.axes.SubplotBase,
 
 testing = False
 if testing:
-  df = pd.read_csv(
-    ( "output/pivots/recip-100/CAUCA/TIMBIQUÍ/" +
-      "gastos-pct-compare.csv" ),
+  df = pd.read_csv (
+    path.join ( common.outdata, "pivots", "recip-100",
+                "CAUCA", "TIMBIQUÍ",
+                "gastos-pct-compare.csv" ),
     index_col = 0 )
   df.index = list( map( lambda s: newlines.remap[s],
                         df.index ) )
   fig, ax = plt.subplots()
   drawPairs( ax, df )
-  plt.savefig( "output/a-city-comparison.png" )
-
+  plt.savefig ( path.join ( common.outdata,
+                            "a-city-comparison.png" ) )

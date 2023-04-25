@@ -12,8 +12,10 @@ if True:
 
 
 if True: # bearings
-  source = "output/budget_4_scaled/recip-"       + str(c.subsample)
-  dest   = "output/budget_5_add_regalias/recip-" + str(c.subsample)
+  source = os.path.join ( c.outdata, "budget_4_scaled",
+                          "recip-" + str(c.subsample) )
+  dest   = os.path.join ( c.outdata, "budget_5_add_regalias",
+                          "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
@@ -23,7 +25,8 @@ if True: # input
     dfsi[s.name] = pd.read_csv (
       os.path.join ( source,
                      s.name + ".csv" ) )
-  regalias = pd.read_csv ( "output/regalias.csv" )
+  regalias = pd.read_csv ( os.path.join ( c.outdata,
+                                          "regalias.csv" ) )
 
 if True: # Adjust regalias.
   if c.subsample > 1: # Discard some regalias rows if needed.

@@ -13,17 +13,18 @@
 ###### Isolating it means the Makefile will not rerun it unnecessarily.
 
 if True:
-  import os
-  from typing import Set
   import numpy as np
+  import os
   import pandas as pd
+  from   typing import Set
   #
   import Code.common as common
   import Code.metadata.raw_series as raw
 
 
 if True:
-  dest = "output/budget_0_collect"
+  dest = os.path.join ( common.outdata,
+                        "budget_0_collect" )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 

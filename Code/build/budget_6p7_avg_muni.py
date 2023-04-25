@@ -4,21 +4,23 @@
 
 if True:
   import os
-  from typing import List,Set,Dict
-  import pandas as pd
+  import pandas                     as pd
+  from   typing import List,Set,Dict
   #
-  import Code.common as c
-  import Code.metadata.terms as t
-  from Code.util.misc import to_front
-  import Code.metadata.two_series as s2
-  import Code.metadata.four_series as s4
+  import Code.common                as c
+  import Code.metadata.four_series  as s4
+  import Code.metadata.two_series   as s2
+  import Code.metadata.terms        as t
+  from   Code.util.misc import to_front
 
 
 if True: # folders
-  source = ( "output/budget_6p5_cull_and_percentify/recip-"
-             + str(c.subsample) )
-  dest   = ( "output/budget_6p7_avg_muni/recip-"
-             + str(c.subsample) )
+  source = os.path.join ( c.outdata,
+                          "budget_6p5_cull_and_percentify",
+                          "recip-" + str(c.subsample) )
+  dest   = os.path.join ( c.outdata,
+                          "budget_6p7_avg_muni",
+                          "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 

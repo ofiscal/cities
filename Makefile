@@ -43,111 +43,111 @@ myPython=PYTHONPATH='.' python3
 
 # `show_params` should be listed first,
 # so that it always runs. (It depends on nothing.)
-all: show_params                        \
-  keys                                  \
-  budget_0_collect			\
-  budget_1				\
-  budget_1p5				\
-  budget_2_subsample			\
-  budget_3_dept_muni_year_item		\
-  budget_4_scaled			\
-  budget_5_add_regalias			\
-  budget_6_deflate			\
-  budget_6p5_cull_and_percentify	\
-  budget_6p7_avg_muni			\
-  budget_7_verbose			\
-  budget_8_pivots			\
-  budget_9_static_compare		\
-  output/inflation.csv			\
-  output/regalias.csv			\
-  reports				\
-  facebook_ads				\
+all: show_params                  \
+  keys                            \
+  budget_0_collect		  \
+  budget_1			  \
+  budget_1p5			  \
+  budget_2_subsample		  \
+  budget_3_dept_muni_year_item	  \
+  budget_4_scaled		  \
+  budget_5_add_regalias		  \
+  budget_6_deflate		  \
+  budget_6p5_cull_and_percentify  \
+  budget_6p7_avg_muni		  \
+  budget_7_verbose		  \
+  budget_8_pivots		  \
+  budget_9_static_compare	  \
+  output/$(vintage)/inflation.csv \
+  output/$(vintage)/regalias.csv  \
+  reports			  \
+  facebook_ads			  \
   radio
   # sample_tables # Unneeded, except to understand more complex programs.
 
-keys =                   \
-  output/keys/budget.csv \
-  output/keys/geo.csv
+keys =                                                  \
+  output/$(vintage)/keys/budget.csv                     \
+  output/$(vintage)/keys/geo.csv
 
-budget_0_collect =				\
-  output/budget_0_collect/funcionamiento.csv	\
-  output/budget_0_collect/ingresos.csv		\
-  output/budget_0_collect/inversion.csv		\
-  output/budget_0_collect/deuda.csv
+budget_0_collect =                                      \
+  output/$(vintage)/budget_0_collect/funcionamiento.csv	\
+  output/$(vintage)/budget_0_collect/ingresos.csv	\
+  output/$(vintage)/budget_0_collect/inversion.csv	\
+  output/$(vintage)/budget_0_collect/deuda.csv
 
-budget_1 =				\
-  output/budget_1/funcionamiento.csv	\
-  output/budget_1/ingresos.csv		\
-  output/budget_1/inversion.csv		\
-  output/budget_1/deuda.csv
+budget_1 =                                              \
+  output/$(vintage)/budget_1/funcionamiento.csv         \
+  output/$(vintage)/budget_1/ingresos.csv		\
+  output/$(vintage)/budget_1/inversion.csv		\
+  output/$(vintage)/budget_1/deuda.csv
 
-budget_1p5 =                     \
-  output/budget_1p5/ingresos.csv \
-  output/budget_1p5/gastos.csv
+budget_1p5 =                                            \
+  output/$(vintage)/budget_1p5/ingresos.csv             \
+  output/$(vintage)/budget_1p5/gastos.csv
 
-budget_2_subsample =                                \
-  output/budget_2_subsample/recip-10/ingresos.csv   \
-  output/budget_2_subsample/recip-10/gastos.csv     \
-  output/budget_2_subsample/recip-100/ingresos.csv  \
-  output/budget_2_subsample/recip-100/gastos.csv    \
-  output/budget_2_subsample/recip-1000/ingresos.csv \
-  output/budget_2_subsample/recip-1000/gastos.csv
+budget_2_subsample =                                                             \
+  output/$(vintage)/budget_2_subsample/recip-10/ingresos.csv                     \
+  output/$(vintage)/budget_2_subsample/recip-10/gastos.csv                       \
+  output/$(vintage)/budget_2_subsample/recip-100/ingresos.csv                    \
+  output/$(vintage)/budget_2_subsample/recip-100/gastos.csv                      \
+  output/$(vintage)/budget_2_subsample/recip-1000/ingresos.csv                   \
+  output/$(vintage)/budget_2_subsample/recip-1000/gastos.csv
 
-budget_3_dept_muni_year_item =                                        \
-  output/budget_3_dept_muni_year_item/recip-$(subsample)/ingresos.csv \
-  output/budget_3_dept_muni_year_item/recip-$(subsample)/gastos.csv
+budget_3_dept_muni_year_item =                                                   \
+  output/$(vintage)/budget_3_dept_muni_year_item/recip-$(subsample)/ingresos.csv \
+  output/$(vintage)/budget_3_dept_muni_year_item/recip-$(subsample)/gastos.csv
 
-#sanity_child_sum_is_parent =                                                      \
-#  output/sanity_child_sum_is_parent/recip-$(subsample)/funcionamiento.csv	   \
-#  output/sanity_child_sum_is_parent/recip-$(subsample)/ingresos.csv		   \
-#  output/sanity_child_sum_is_parent/recip-$(subsample)/inversion.csv		   \
-#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/funcionamiento.csv \
-#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/ingresos.csv	   \
-#  output/sanity_child_sum_is_parent_summary/recip-$(subsample)/inversion.csv
+#sanity_child_sum_is_parent =                                                                 \
+#  output/$(vintage)/sanity_child_sum_is_parent/recip-$(subsample)/funcionamiento.csv         \
+#  output/$(vintage)/sanity_child_sum_is_parent/recip-$(subsample)/ingresos.csv               \
+#  output/$(vintage)/sanity_child_sum_is_parent/recip-$(subsample)/inversion.csv	      \
+#  output/$(vintage)/sanity_child_sum_is_parent_summary/recip-$(subsample)/funcionamiento.csv \
+#  output/$(vintage)/sanity_child_sum_is_parent_summary/recip-$(subsample)/ingresos.csv       \
+#  output/$(vintage)/sanity_child_sum_is_parent_summary/recip-$(subsample)/inversion.csv
 
-explore_order_of_mag_x_yrs =				       \
-  output/explore/order_of_mag_x_yrs/recip-$(subsample)/report.csv
+explore_order_of_mag_x_yrs =                                              \
+  output/$(vintage)/explore/order_of_mag_x_yrs/recip-$(subsample)/report.csv
 
-budget_4_scaled =					       \
-  output/budget_4_scaled/recip-$(subsample)/ingresos.csv       \
-  output/budget_4_scaled/recip-$(subsample)/gastos.csv
+budget_4_scaled =                                                         \
+  output/$(vintage)/budget_4_scaled/recip-$(subsample)/ingresos.csv       \
+  output/$(vintage)/budget_4_scaled/recip-$(subsample)/gastos.csv
 
-budget_5_add_regalias =                                        \
-  output/budget_5_add_regalias/recip-$(subsample)/ingresos.csv \
-  output/budget_5_add_regalias/recip-$(subsample)/gastos.csv
+budget_5_add_regalias =                                                   \
+  output/$(vintage)/budget_5_add_regalias/recip-$(subsample)/ingresos.csv \
+  output/$(vintage)/budget_5_add_regalias/recip-$(subsample)/gastos.csv
 
-budget_6_deflate =                                             \
-  output/budget_6_deflate/recip-$(subsample)/ingresos.csv      \
-  output/budget_6_deflate/recip-$(subsample)/gastos.csv
+budget_6_deflate =                                                                 \
+  output/$(vintage)/budget_6_deflate/recip-$(subsample)/ingresos.csv               \
+  output/$(vintage)/budget_6_deflate/recip-$(subsample)/gastos.csv
 
-budget_6p5_cull_and_percentify =                                        \
-  output/budget_6p5_cull_and_percentify/recip-$(subsample)/ingresos.csv \
-  output/budget_6p5_cull_and_percentify/recip-$(subsample)/gastos.csv
+budget_6p5_cull_and_percentify =                                                   \
+  output/$(vintage)/budget_6p5_cull_and_percentify/recip-$(subsample)/ingresos.csv \
+  output/$(vintage)/budget_6p5_cull_and_percentify/recip-$(subsample)/gastos.csv
 
-budget_6p7_avg_muni =                                                   \
-  output/budget_6p7_avg_muni/recip-$(subsample)/ingresos.csv            \
-  output/budget_6p7_avg_muni/recip-$(subsample)/gastos.csv
+budget_6p7_avg_muni =                                                              \
+  output/$(vintage)/budget_6p7_avg_muni/recip-$(subsample)/ingresos.csv            \
+  output/$(vintage)/budget_6p7_avg_muni/recip-$(subsample)/gastos.csv
 
-budget_7_verbose =                                                      \
-  output/budget_7_verbose/recip-$(subsample)/ingresos.csv               \
-  output/budget_7_verbose/recip-$(subsample)/gastos.csv
+budget_7_verbose =                                                                 \
+  output/$(vintage)/budget_7_verbose/recip-$(subsample)/ingresos.csv               \
+  output/$(vintage)/budget_7_verbose/recip-$(subsample)/gastos.csv
 
 # Listing one place (Honda, in Tolima)
 # is sufficient to trigger the recipe.
 # Listing every place would be tedious.
-budget_8_pivots =				       \
-  output/pivots/recip-$(subsample)/timestamp-for-pivot-tables
+budget_8_pivots =                                                 \
+  output/$(vintage)/pivots/recip-$(subsample)/timestamp-for-pivot-tables
 
-budget_9_static_compare =			       \
-  output/pivots/recip-$(subsample)/timestamp-for-static-compare
+budget_9_static_compare =                                         \
+  output/$(vintage)/pivots/recip-$(subsample)/timestamp-for-static-compare
 
-sample_tables =                                        \
-  output/sample_tables/recip-$(subsample)/ingresos.csv \
-  output/sample_tables/recip-$(subsample)/gastos.csv
+sample_tables =                                                   \
+  output/$(vintage)/sample_tables/recip-$(subsample)/ingresos.csv \
+  output/$(vintage)/sample_tables/recip-$(subsample)/gastos.csv
 
-reports = output/reports/recip-$(subsample)/timestamp-for-reports
-facebook_ads = output/facebook_ads/recip-$(subsample)/timestamp-for-facebook-ads
-radio = output/radio/recip-$(subsample)/timestamp-for-radio
+reports = output/$(vintage)/reports/recip-$(subsample)/timestamp-for-reports
+facebook_ads = output/$(vintage)/facebook_ads/recip-$(subsample)/timestamp-for-facebook-ads
+radio = output/$(vintage)/radio/recip-$(subsample)/timestamp-for-radio
 
 
 #### #### #### ####
@@ -159,17 +159,17 @@ show_params:
 	echo "subsample: " -$(subsample)-
 
 keys: $(keys)
-$(keys):			\
-  Code/build/make_keys.py	\
+$(keys):                                           \
+  Code/build/make_keys.py                          \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/make_keys.py \
+	$(myPython) Code/build/make_keys.py        \
           --subsample=$(subsample) --vintage=$(vintage)
 	date
 
 budget_0_collect: $(budget_0_collect)
-$(budget_0_collect):			\
-  Code/build/budget_0_collect.py	\
+$(budget_0_collect):                               \
+  Code/build/budget_0_collect.py                   \
   Code/metadata/raw_series.py
 	date
 	$(myPython) Code/build/budget_0_collect.py \
@@ -276,12 +276,12 @@ $(budget_4_scaled):			  \
 	date
 
 budget_5_add_regalias: $(budget_5_add_regalias)
-$(budget_5_add_regalias):		\
-  $(budget_4_scaled)			\
-  output/regalias.csv			\
-  Code/build/budget_5_add_regalias.py	\
-  Code/common.py			\
-  Code/metadata/terms.py                \
+$(budget_5_add_regalias):                               \
+  $(budget_4_scaled)                                    \
+  output/$(vintage)/regalias.csv			\
+  Code/build/budget_5_add_regalias.py                   \
+  Code/common.py                                        \
+  Code/metadata/terms.py                                \
   Code/metadata/two_series.py
 	date
 	$(myPython) Code/build/budget_5_add_regalias.py \
@@ -289,12 +289,12 @@ $(budget_5_add_regalias):		\
 	date
 
 budget_6_deflate: $(budget_6_deflate)
-$(budget_6_deflate):		 \
-  $(budget_5_add_regalias)	 \
-  output/inflation.csv		 \
-  Code/build/budget_6_deflate.py \
-  Code/common.py		 \
-  Code/metadata/terms.py         \
+$(budget_6_deflate):                               \
+  $(budget_5_add_regalias)                         \
+  output/$(vintage)/inflation.csv                  \
+  Code/build/budget_6_deflate.py                   \
+  Code/common.py                                   \
+  Code/metadata/terms.py                           \
   Code/metadata/two_series.py
 	date
 	$(myPython) Code/build/budget_6_deflate.py \
@@ -379,14 +379,14 @@ $(sample_tables):			       \
           --subsample=$(subsample) --vintage=$(vintage)
 	date
 
-output/inflation.csv:           \
-  data/$(vintage)/inflation.csv \
+output/$(vintage)/inflation.csv:    \
+  data/$(vintage)/inflation.csv     \
   Code/build/inflation.py
 	date
 	$(myPython) Code/build/inflation.py
 	date
 
-output/regalias.csv:                \
+output/$(vintage)/regalias.csv:     \
   data/$(vintage)/regalias/muni.csv \
   data/$(vintage)/regalias/dept.csv \
   Code/build/regalias.py            \

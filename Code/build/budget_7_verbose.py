@@ -1,19 +1,22 @@
 # Merge verbal names of depts and munis back into the data.
 
 if True:
+  import numpy                      as np
   import os
-  import numpy as np
-  import pandas as pd
+  import pandas                     as pd
   #
-  import Code.common as c
-  import Code.util.misc as util
-  import Code.metadata.four_series as s4
-  import Code.build.use_keys as uk
+  import Code.build.use_keys        as uk
+  import Code.common                as c
+  import Code.metadata.four_series  as s4
+  import Code.util.misc             as util
 
 
 if True: # folders
-  source = "output/budget_6p7_avg_muni/recip-" + str(c.subsample)
-  dest = "output/budget_7_verbose/recip-"      + str(c.subsample)
+  source = os.path.join ( c.outdata,
+                          "budget_6p7_avg_muni",
+                          "recip-" + str(c.subsample) )
+  dest = os.path.join ( c.outdata, "budget_7_verbose",
+                        "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 

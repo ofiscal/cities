@@ -7,19 +7,23 @@ if True:
   import os
   import pandas as pd
   from   pathlib import Path
+  #
   import Code.common as c
   import Code.draw.text.shorten_numbers as abbrev
   import Code.metadata.terms as t
   from   Code.main.geo import depts_and_munis
 
-src_root  = "output/pivots/recip-" + str(c.subsample)
-dest = "output/radio/recip-"  + str(c.subsample)
+
+src_root = os.path.join ( c.outdata, "pivots",
+                          "recip-" + str(c.subsample) )
+dest     = os.path.join ( c.outdata, "radio",
+                          "recip-" + str(c.subsample) )
 if not os.path.exists( dest ):
   os.makedirs( dest )
 
 def src_folder( dept : str,
                 muni : str ) -> str:
-  return src_root + "/" + dept + "/" + muni
+  return os.path.join ( src_root, dept, muni )
 
 def write_script(
     dept : str,

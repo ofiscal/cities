@@ -17,5 +17,5 @@ vintage   = imp.vintage
 # Currently they bifurcate based only on `vintage`.
 # Bifurcation those paths is painful if it requires
 # updating every site that uses those paths.
-indata  = path.join ( "data", str(vintage) )
-outdata = path.join ( "data", str(vintage) )
+indata  = path.join ( "data",   str(vintage) )
+outdata = path.join ( "output", str(vintage) )

@@ -1,17 +1,18 @@
 if True:
-  from typing import Dict,Set,List
+  import numpy as np
   import os
   import pandas as pd
-  import numpy as np
+  from   typing import Dict,Set,List
   #
-  import Code.metadata.terms as t
+  import Code.common as common
   import Code.metadata.raw_series as sm
+  import Code.metadata.terms as t
 
 
 if True: # bearings
   home     = "/mnt"
-  source   = "output/budget_1p5"
-  top_dest = "output/budget_2_subsample"
+  source   = os.path.join ( common.outdata, "budget_1p5" )
+  top_dest = os.path.join ( common.outdata, "budget_2_subsample" )
     # Destinations are immediate child folders of this folder.
   def sub_dest( subsample ):
     return os.path.join ( top_dest,

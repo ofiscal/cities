@@ -24,8 +24,12 @@ if True:
 
 
 if True:
-  source = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
-  dest   = "output/budget_4_scaled/recip-"         + str(c.subsample)
+  source = os.path.join ( c.outdata,
+                          "budget_3_dept_muni_year_item",
+                          "recip-" + str(c.subsample) )
+  dest   = os.path.join ( c.outdata,
+                          "budget_4_scaled",
+                          "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 

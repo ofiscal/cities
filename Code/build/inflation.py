@@ -1,9 +1,9 @@
 # The inflation series is indexed by a composite "year-month"
 # string column. We only need the 12th month of each year after 2011.
 
-import os.path as path
-import pandas as pd
-import Code.common as common
+import Code.common  as common
+import os.path      as path
+import pandas       as pd
 
 
 def is_last_month(s : str) -> bool:
@@ -28,6 +28,7 @@ deflator = ( deflator
 deflator["year"] = ( deflator["when"] .
                      apply( year_month_to_year ) )
 ( deflator[["year","deflator"]] .
-  to_csv( "output/inflation.csv",
-          encoding="utf-8",
-          index = False ) )
+  to_csv ( path.join ( common.outdata,
+                       "inflation.csv" ),
+           encoding="utf-8",
+           index = False ) )

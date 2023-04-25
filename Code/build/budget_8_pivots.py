@@ -1,16 +1,17 @@
 if True:
-  from typing import List,Set,Dict
   import os
-  from pathlib import Path
   import pandas as pd
+  from   pathlib import Path
+  from   typing import List,Set,Dict
   #
   import Code.common as c
+  import Code.metadata.four_series as s4
   import Code.util.aggregate_all_but_biggest.better \
     as agger # "aggregator"
-  import Code.metadata.four_series as s4
 
 
-dest_root = "output/pivots/recip-" + str(c.subsample)
+dest_root = os.path.join ( c.outdata, "pivots",
+                           "recip-" + str(c.subsample) )
 
 if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
@@ -20,10 +21,12 @@ if True: # Read data.
   ungrouped : Dict[str, pd.DataFrame] = {}
   for s in s4.series:
     ungrouped[s.name] = (
-      pd.read_csv(
-        ( "output/budget_7_verbose/recip-" + str(c.subsample)
-          + "/" + s.name + ".csv") ) .
-      sort_values( spacetime ) )
+      pd.read_csv (
+        ( os.path.join ( c.outdata,
+                         "budget_7_verbose",
+                         "recip-" + str(c.subsample),
+                         s.name + ".csv") ) ) .
+      sort_values ( spacetime ) )
 
 if True: # In each spacetime slice, lump every expenditure which is
          # not among the top five expenditures for some year

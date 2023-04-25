@@ -4,24 +4,27 @@
 # (The line reads `for page in [chart_content.page2 ...`.)
 
 if True:
-  import os
-  from   typing import List, Set, Dict
-  from   pathlib import Path
-  import pandas as pd
-  import matplotlib.pyplot as plt
   from   matplotlib.backends.backend_pdf import PdfPages
+  import matplotlib.pyplot as plt
+  import os
+  import pandas as pd
+  from   pathlib import Path
+  from   typing import List, Set, Dict
   #
   import Code.common as c
-  import Code.metadata.four_series as s4
-  import Code.draw.pages as pages
-  import Code.draw.text.shorten_names as shorten_names
-  import Code.draw.text.newlines as newlines
   import Code.draw.chart_content as chart_content
-  from   Code.main.geo import depts_and_munis
   import Code.draw.design as design
+  import Code.draw.pages as pages
+  import Code.draw.text.newlines as newlines
+  import Code.draw.text.shorten_names as shorten_names
+  from   Code.main.geo import depts_and_munis
+  import Code.metadata.four_series as s4
 
-source_root = "output/pivots/recip-" + str(c.subsample)
-dest_folder = "output/facebook_ads/recip-"   + str(c.subsample)
+
+source_root = os.path.join ( c.outdata, "pivots",
+                             "recip-" + str(c.subsample) )
+dest_folder = os.path.join ( c.outdata, "facebook_ads",
+                             "recip-" + str(c.subsample) )
 
 def create_pdf( dept : str,
                 muni : str,
@@ -63,4 +66,3 @@ depts_and_munis.apply(
 
 ( Path( dest_folder + "/" + "timestamp-for-facebook-ads" ) .
   touch() )
-

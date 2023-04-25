@@ -1,15 +1,19 @@
 if True:
+  import os.path as path
   import pandas as pd
+  #
+  import Code.common as common
 
 
 if True: # get, test data
   geo = (
-    pd.read_csv ( "output/keys/geo.csv" ) .
-    rename( columns =
-            { "Cód. DANE Municipio"      : "muni code",
-              "Cód. DANE Departamento"   : "dept code",
-              "Nombre DANE Municipio"    : "muni",
-              "Nombre DANE Departamento" : "dept" } ) )
+    pd.read_csv ( path.join ( common.outdata, "keys",
+                              "geo.csv" ) ) .
+    rename ( columns =
+             { "Cód. DANE Municipio"      : "muni code",
+               "Cód. DANE Departamento"   : "dept code",
+               "Nombre DANE Municipio"    : "muni",
+               "Nombre DANE Departamento" : "dept" } ) )
   depts = ( geo[["dept code","dept"]] .
             groupby( "dept code" ) .
             agg('first') .

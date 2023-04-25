@@ -31,9 +31,15 @@ if True:
 
 
 if True:
-  budget_key = pd.read_csv( "output/keys/budget.csv" )
-  source = "output/budget_2_subsample/recip-"           + str(c.subsample)
-  dest   = "output/budget_3_dept_muni_year_item/recip-" + str(c.subsample)
+  budget_key = pd.read_csv (
+    os.path.join ( c.outdata, "keys",
+                   "budget.csv" ) )
+  source = os.path.join ( c.outdata,
+                          "budget_2_subsample",
+                          "recip-" + str(c.subsample) )
+  dest   = os.path.join ( c.outdata,
+                          "budget_3_dept_muni_year_item",
+                          "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
   dfs0, dfs1, dfs2 = {}, {}, {} # input, midput, output

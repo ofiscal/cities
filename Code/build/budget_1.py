@@ -10,14 +10,15 @@ if True:
   import os
   import pandas as pd
   #
-  import Code.util.misc as util
   import Code.build.budget_1_tests as tests
+  import Code.common as common
   import Code.metadata.raw_series as raw
   import Code.metadata.terms as t
+  import Code.util.misc as util
 
 
 if True: # input data
-  source = "output/budget_0_collect"
+  source = os.path.join ( common.outdata, "budget_0_collect" )
   dfs = {}
   for s in raw.series:
     dfs[s] = pd.read_csv (
@@ -45,7 +46,7 @@ if True: # test
   tests.types_and_missings_for_raw_data( dfs )
 
 if True: # write
-  dest = "output/budget_1"
+  dest = os.path.join ( common.outdata, "budget_1" )
   if not os.path.exists( dest ):
     os.makedirs( dest )
   for s in raw.series:

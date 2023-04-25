@@ -4,22 +4,25 @@
 # three years to that of the department average.
 
 if True:
-  from typing import List,Set,Dict
   import os
-  from pathlib import Path
-  import pandas as pd
+  import pandas                     as pd
+  from   pathlib import Path
+  from   typing import List,Set,Dict
   #
-  import Code.common as c
-  import Code.metadata.terms as t
-  import Code.metadata.four_series as s4
-  import Code.util.fill_subspace as fill
+  import Code.common                as c
+  import Code.metadata.terms        as t
+  import Code.metadata.four_series  as s4
+  import Code.util.fill_subspace    as fill
 
 
 testing = True if c.subsample >= 100 else False
 
 if True:
-  monolith_root = "output/budget_7_verbose/recip-" + str(c.subsample)
-  by_place_root = "output/pivots/recip-"           + str(c.subsample)
+  monolith_root = os.path.join ( c.outdata,
+                                 "budget_7_verbose",
+                                 "recip-" + str(c.subsample) )
+  by_place_root = os.path.join ( c.outdata, "pivots",
+                                 "recip-" + str(c.subsample) )
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
   space     = ["dept", "muni",         "dept code", "muni code"]
 

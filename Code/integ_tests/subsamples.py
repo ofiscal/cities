@@ -13,6 +13,7 @@ if True:
   import Code.metadata.four_series as s4
   from Code.util.normalize import normalize
 
+
 def geo_slice( dept : str,
                muni : str,
                df : pd.DataFrame
@@ -51,4 +52,3 @@ for filename in list( map( lambda s: s.name, s4.series ) ):
   small = pd.read_csv( small_folder + "/" + filename + ".csv" )
   large = pd.read_csv( large_folder + "/" + filename + ".csv" )
   compare( small, large )
-

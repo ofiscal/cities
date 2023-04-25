@@ -7,8 +7,10 @@ if True:
 
 
 if True: # folders
-  source = "output/budget_5_add_regalias/recip-" + str(c.subsample)
-  dest   = "output/budget_6_deflate/recip-"      + str(c.subsample)
+  source = os.path.join ( c.outdata, "budget_5_add_regalias",
+                          "recip-" + str(c.subsample) )
+  dest   = os.path.join ( c.outdata, "budget_6_deflate",
+                          "recip-" + str(c.subsample) )
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
@@ -18,7 +20,9 @@ if True: # input data
     dfs[s.name] = pd.read_csv (
       os.path.join ( source,
                      s.name + ".csv" ) )
-  deflator = pd.read_csv ( "output/inflation.csv" )
+  deflator = pd.read_csv (
+    os.path.join ( c.outdata,
+                   "inflation.csv" ) )
   deflator["deflator"] = ( # normalize in terms of 2018 pesos
     1 / ( deflator["deflator"] /
           float( deflator
