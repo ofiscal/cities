@@ -9,14 +9,16 @@ if True:
 
 if True: # initial data
   treated = pd.read_excel (
-    path.join ( "data", str(common.vintage), "regions",
+    path.join ( common.indata,
+                "regions",
                 "fb-treated.xlsx" ) )
   geo = uk.geo
   geo["muni code"] = (
     geo["muni code"] . astype( int ) )
   population = (
     pd.read_excel (
-      path.join ( "data", str(common.vintage), "regions",
+      path.join ( common.indata,
+                  "regions",
                   "population_2018.xlsx" ) )
     [["muni code","population"]] )
 

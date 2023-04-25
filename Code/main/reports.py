@@ -18,7 +18,8 @@ if True:
 # facebook-treated group.
 #
 # treated = pd.read_excel (
-#   os.path.join ( "data", str( c.vintage ), "regions",
+#   os.path.join ( c.indata,
+#                  "regions",
 #                  "fb-treated.xlsx" ) )
 # treated_muni_set = set( treated["muni code"] )
 

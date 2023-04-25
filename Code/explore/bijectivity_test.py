@@ -19,7 +19,8 @@ dup_columns = pd.DataFrame()
 for series in sm.series:
   for year in range( 2012, 2018+1 ):
     shuttle = pd.read_csv (
-      path.join ( "data", str(common.vintage), "sisfut", "csv",
+      path.join ( common.indata,
+                  "sisfut", "csv",
                   str(year) + "_" + series + ".csv" ),
       usecols = set.intersection (
         set( sm.column_subsets[series] ),

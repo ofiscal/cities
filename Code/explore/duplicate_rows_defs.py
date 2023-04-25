@@ -49,7 +49,8 @@ def fetch_series( series : str ) -> pd.DataFrame:
   for year in range(2012,2019):
     df = (
       pd.read_csv (
-        path.join ( "data", str(common.vintage), "sisfut", "csv",
+        path.join ( common.indata,
+                    "sisfut", "csv",
                     str(year) + "_" + series + ".csv" ) ) .
       rename( columns = dict( sm.column_subsets[series] ) ) )
     df["year"] = year

@@ -23,7 +23,8 @@ for year in range(2013,2019):
   shuttle = (
     pd.read_excel (
       os.path.join (
-        "data", str(common.vintage), "gasto-con-regalias",
+        common.indata,
+        "gasto-con-regalias",
         "gastoconregalias_" + str(year) + ".xlsx" ),
       usecols = list( cols.keys() ) ) .
     rename( columns = cols ) )

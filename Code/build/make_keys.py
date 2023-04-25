@@ -45,7 +45,8 @@ if True: # build source data set, from which both keys are built
     for year in range( 2013, 2018+1 ):
       filepath = (
         os.path.join (
-          "data", str(common.vintage), "sisfut", "csv",
+          common.indata,
+          "sisfut", "csv",
           str(year) + "_" + series + ".csv" ) )
       shuttle = pd.read_csv (
         filepath,

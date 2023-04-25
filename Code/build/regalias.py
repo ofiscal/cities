@@ -10,9 +10,10 @@ if True: # ingest
   wide_muni = (
     pd.read_csv (
       path.join (
-        "data", str(common.vintage), "regalias",
+        common.indata,
+        "regalias",
         "muni.csv" ) ) .
-    rename( columns = {
+    rename ( columns = {
       "cod_dane"          : "muni code",
       "periodo 2019-2020" : "2019-2020",
       "periodo 2017-2018" : "2017-2018",
@@ -20,7 +21,8 @@ if True: # ingest
       "periodo 2013-2014" : "2013-2014" } ) )
   wide_dept = (
     pd.read_csv (
-      path.join ( "data", str(common.vintage), "regalias",
+      path.join ( common.indata,
+                  "regalias",
                   "dept.csv" ) ) .
     rename( columns = {
       "cod_dane"          : "5 digit dane code",

@@ -52,7 +52,8 @@ def collect_raw( source : str,
   return dfs
 
 dfs = collect_raw ( os.path.join (
-  "data", str(common.vintage), "sisfut", "csv" ) )
+  common.indata,
+  "sisfut", "csv" ) )
 
 for s in raw.series:
   dfs[s].to_csv( dest + "/" + s + ".csv",

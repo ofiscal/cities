@@ -16,7 +16,8 @@ def year_month_to_year(s : str) -> int:
   return int( s[:4] )
 
 deflator = pd.read_csv (
-  path.join ( "data", str(common.vintage), "inflation.csv" ),
+  path.join ( common.indata,
+              "inflation.csv" ),
   encoding = "utf-16" )
 deflator = ( deflator
              [ deflator["when"] .
