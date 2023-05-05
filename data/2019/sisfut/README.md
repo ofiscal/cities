@@ -24,12 +24,19 @@ The files were downloaded, at some length, from
 https://sisfut.dnp.gov.co/
 via to the following process:
 
+* If the site asks for a login, choose the anonymous option.
 * From the sidebar, choose Reporte FUT, and under that, Categoria.
 * Download each of the following categories:
     * FUT_GASTOS_DE_INVERSION
     * FUT_GASTOS_FUNCIONAMIENTO
-    * FUT_INGRESOS
+      and below that "Gastos de Funcionamiento", not "Transferencias"
+    * FUT_INGRESSO
+      and below that "Reporte", not "Transferencias"
     * FUT_INDICADORES_DE_CALIDAD
+	  and below that "Definitivo"
+	* FUT_DEUDA_PUBLICA
+	  and below that "Creditos",
+	  not "Creditos por sector" or "Renta Pignorada"
 * Download the "last quarter" of each year. (It actually represents the entire year's activity.)
 * Under "cargue", choose Definitivo.
 * Leave department and municipality unspecified.

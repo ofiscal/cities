@@ -1,6 +1,7 @@
 from os import path
 from sys import argv
 
+
 # If argv > 1, we are using the command line.
 # Otherwise, we are in the interpreter.
 
