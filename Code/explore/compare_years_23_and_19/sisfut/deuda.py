@@ -5,12 +5,18 @@ import numpy as np
 
 
 #####
-##### Load
+##### Define paths
 #####
 
 year : GenericAlias = int
 in19 = "data/2019/sisfut/csv"
 in23 = "data/2023/sisfut/csv"
+out19 = "output/2019"
+
+
+#####
+##### In inputs, compare column names and dtypes
+#####
 
 # The "view as of" (vao) years 19 and 23.
 # This will be a dictionary, the keys of which are 2-digit years,
@@ -25,10 +31,6 @@ for y in range(13,22):
     vao19[y] = pd.read_csv (
       path.join ( in19, "20" + str(y) + "_deuda.csv" ) )
 
-
-#####
-##### Look
-#####
 
 # As of 2019, each data frame had the same columns amd dtypes
 for df in vao19.values():
@@ -70,3 +72,55 @@ mismatches.transpose()
 ( vao19[13].columns
   . equals(
     vao23[13].columns )
+
+
+#####
+##### Determine what I need from them
+#####
+
+# This raw data seems less interesting ...
+# prod19_0 = pd.read_csv(
+#   path.join ( out19,
+#               "budget_0_collect",
+#               "deuda.csv" ) )
+
+# ... than this cleaned data.
+prod19_1 = pd.read_csv(
+  path.join ( out19,
+              "budget_1",
+              "deuda.csv" ) )
+
+# Seems simple enough.
+prod19_1.dtypes
+
+# According to the definition of categs_to_code
+# in Code/build/classify_budget_codes.py,
+# we are only interested in rows for which the "item code" is "T".
+
+
+#####
+##### Determine what to keep in them
+#####
+
+# Here are the columns I end up with.
+
+prod19_1.dtypes
+# name           object
+# dept code       int64
+# muni code     float64
+# item code      object
+# item oblig    float64
+# year            int64
+
+# "year" is fixed in each data set.
+# The others will correspond to (hopefully exactly one)
+# column in the input data.
+
+vao23[13].columns
+
+# "Nombre Entidad" in the new data is clearly what I eventually call "name".
+# "dept code" and "muni code"
+# are "Cód. DANE Departamento" and "Cód. DANE Municipio".
+
+# That leaves "item code" and "item oblig".
+# Nothing in the new data looks like that.
