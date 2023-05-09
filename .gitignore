@@ -5,11 +5,12 @@ Code/temp*.py
 Untitled*.ipynb
 __pycache__/
 clone/
-data/2019/gasto-con-regalias
-data/2019/regions/source_material
-data/2019/sisfut/csv
-data/2019/sisfut/orig-xlsx
-data/2019/sisfut/quality-control
+data/**/gasto-con-regalias
+data/**/regions/source_material
+data/**/sisfut/csv
+data/**/sisfut/orig-xlsx
+data/**/sisfut/quality-control
+bk*
 docker_commands.laptop.txt
 fonts/all/
 git*comment
