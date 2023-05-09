@@ -124,3 +124,26 @@ vao23[13].columns
 
 # That leaves "item code" and "item oblig".
 # Nothing in the new data looks like that.
+
+
+#####
+##### Daniel explains I'm using the wrong 2023 data
+#####
+
+# What I need now is instead
+# "Operación Efectiva de Caja 2000-2021",
+# also downloadable from SISFUT (see `data/2023/sisfut/README.md`).
+# Relevant columns in it are likely to include:
+#   Intereses de la deuda pública
+#   Regalías (not deuda but good for this project)
+#   Déficit o Superávit Total
+#   FINANCIAMIENTO
+#   Crédito Externo neto
+#   Desembolsos
+#   Amortizaciones
+#   Crédito Interno neto
+#   Desembolsos
+#   Amortizaciones
+#   Recursos del Balance, Variación de Depósitos y Otros
+#
+# uh ... I'll have to ask Daniel some more.
