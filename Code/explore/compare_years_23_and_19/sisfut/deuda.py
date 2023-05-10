@@ -1,3 +1,8 @@
+# SOLVED, I think:
+# Add "intereses" and "amortizaciones"
+# from `Operación Efectiva de Caja 2000-2021`
+# to get that year's debt payments.
+
 from typing import List, Dict, GenericAlias
 import os.path as path
 import pandas as pd
@@ -30,7 +35,6 @@ for y in range(13,22):
   if y <= 18:
     vao19[y] = pd.read_csv (
       path.join ( in19, "20" + str(y) + "_deuda.csv" ) )
-
 
 # As of 2019, each data frame had the same columns amd dtypes
 for df in vao19.values():
@@ -71,7 +75,7 @@ mismatches.transpose()
 # (i.e. the view from 2019 and the view from 2023).
 ( vao19[13].columns
   . equals(
-    vao23[13].columns )
+    vao23[13].columns ) )
 
 
 #####
@@ -145,5 +149,5 @@ vao23[13].columns
 #   Desembolsos
 #   Amortizaciones
 #   Recursos del Balance, Variación de Depósitos y Otros
-#
-# uh ... I'll have to ask Daniel some more.
+
+# SOLVED! Daniel says debt payments = intereses + amortizaciones.
