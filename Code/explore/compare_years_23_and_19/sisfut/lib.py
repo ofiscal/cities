@@ -1,6 +1,3 @@
-# GOOD NEWS!
-# The ingresos data not to have changed in format at all.
-
 from typing import List, Dict, GenericAlias
 import os.path as path
 import pandas as pd
@@ -104,7 +101,3 @@ def demonstrate_mismatches_are_due_to_commas_in_numbers_in_one_view (
           . reset_index() ) ],
       axis = 1 )
   print(acc)
-
-(vao19,vao23) = compare_views_from_2019_and_2023 ("ingresos")
-(vao19,vao23) = compare_views_from_2019_and_2023 ("funcionamiento")
-(vao19,vao23) = compare_views_from_2019_and_2023 ("inversion")
