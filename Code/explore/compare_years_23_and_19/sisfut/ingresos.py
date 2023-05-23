@@ -10,11 +10,10 @@ from typing import List, Dict, GenericAlias
 import pandas as pd
 import numpy as np
 #
-import Code.explore.compare_years_23_and_19.sisfut.nearly_unchanged_data \
-  as lib
+import Code.explore.compare_years_23_and_19.sisfut.lib as lib
 
 
-(vao19,vao23) = load_views_from_2019_and_2023 ( "ingresos" )
+(vao19,vao23) = lib.load_views_from_2019_and_2023 ( "ingresos" )
 
 df = vao19[13]
 
