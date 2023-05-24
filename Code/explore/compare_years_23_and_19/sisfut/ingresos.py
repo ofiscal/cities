@@ -96,13 +96,13 @@ for year in vao23.keys():
                       . unique() ) )
 
 # Fortunately, each year has the few codes we need.
-codes_we_need = { "TI.A", "TI.A.2.6", "TI.B" }
+ingresos_codes_we_use = { "TI.A", "TI.A.2.6", "TI.B" }
   # These codes come from Code/build/classify_budget_codes.py
 for year in vao23.keys():
   print("")
   print(year)
   print("Missing from this year: ",
-        codes_we_need -
+        ingresos_codes_we_use -
         set ( vao23 [year] ["Código Concepto"] . unique() ) )
 
 # If for some reason I need to see all the codes in a year,
@@ -113,3 +113,31 @@ for year in vao23.keys():
       vao23 [year] ["Código Concepto"].unique() } )
   s["len"] = s["code"] . apply( len )
   print(s.sort_values("len")[0:5])
+
+
+#################
+# Total Ingresos
+
+vao23 [13] ["Total Ingresos"]
+
+for year in vao23.keys(): # They are all floats.
+  print ( vao23 [year] ["Total Ingresos"] . dtype )
+
+restricted_views_23 = {}
+for year in vao23.keys():
+  df = vao23 [year]
+  restricted_views_23[year] = \
+    df [ df ["Código Concepto"]
+         . isin ( ingresos_codes_we_use ) ]
+
+# PITFALL: Expenses through 2016 are in thousands of pesos.
+# After that, they are in pesos.
+# (There's already code in build/ to correct for this.)
+descriptions = pd.DataFrame()
+for year in restricted_views_23.keys():
+  df = restricted_views_23 [year]
+  s = df ["Total Ingresos"] . describe()
+  s.name = year
+  descriptions = pd.concat ( [ descriptions, s ],
+                             axis = 1 )
+descriptions . transpose()

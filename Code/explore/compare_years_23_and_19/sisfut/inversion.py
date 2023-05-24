@@ -99,3 +99,39 @@ for year in vao23.keys():
   print("Missing from this year: ",
         inversion_codes_we_use -
         set ( vao23 [year] ["Código Concepto"] . unique() ) )
+
+
+#################
+# Obligaciones
+
+vao23 [13] ["Obligaciones"]
+
+for year in vao23.keys(): # They are all floats.
+  print ( vao23 [year] ["Obligaciones"] . dtype )
+
+restricted_views_23 = {}
+for year in vao23.keys():
+  df = vao23 [year]
+  restricted_views_23[year] = \
+    df [ df ["Código Concepto"]
+         . isin ( inversion_codes_we_use ) ]
+
+# PITFALL: Expenses through 2016 are in thousands of pesos.
+# After that, they are in pesos.
+# (There's already code in build/ to correct for this.)
+descriptions = pd.DataFrame()
+for year in restricted_views_23.keys():
+  df = restricted_views_23 [year]
+  s = df ["Obligaciones"] . describe()
+  s.name = year
+  descriptions = pd.concat ( [ descriptions, s ],
+                             axis = 1 )
+descriptions . transpose()
+
+# PITFALL: There's exactly one negative observation
+# (among the codes of interest to us).
+for year in restricted_views_23.keys():
+  print (year)
+  df = restricted_views_23 [year]
+  print ( ( df [ df ["Obligaciones"] < 0 ] )
+          . transpose() )
