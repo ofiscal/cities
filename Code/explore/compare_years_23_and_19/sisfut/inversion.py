@@ -1,25 +1,25 @@
 # PURPOSE: Compare the columns named in
 # the `column_subsets` dictionary defined in Code/metadata/raw_series.py
 # across all years in both views.
-#
-# RESULT: The set of municipalities tracked in 2021 is terribly small --
-# less than 200. For the other years, most of them are present.
-# All the spending codes we need are present.
 
 from typing import List, Dict, GenericAlias
 import pandas as pd
 import numpy as np
 #
 import Code.explore.compare_years_23_and_19.sisfut.lib as lib
+import Code.metadata.terms as t
+import Code.build.classify_budget_codes as codes
 
 
-(vao19,vao23) = lib.load_views_from_2019_and_2023 ( "ingresos" )
+(vao19,vao23) = lib.load_views_from_2019_and_2023 ( "inversion" )
 
 
 ################
 # Nombre Entidad
 
-for k,v in {1:2}.items(): print( k, ": ", v )
+# 2021 is again useless for this data set --
+# only 193 Entidades as of 2023 05 23.
+# The other years have roughly enough Entidades.
 
 for year, df in ( vao19.items() ):
   print ( year, ": ", len ( df["Nombre Entidad"].unique() ) )
@@ -27,26 +27,19 @@ for year, df in ( vao19.items() ):
 for year, df in ( vao23.items() ):
   print ( year, ": ", len ( df["Nombre Entidad"].unique() ) )
 
-# Year 2021 in vao23 is way too short --
-# fewer than 200 Entidades as of 2023 05 23.
-vao23[21] ["Nombre Entidad"].unique()
-
-# Ignoring that one, the shortest series is vao23[19].
-# Lets see if the others all have those names.
-names19 = set ( vao23[19] ["Nombre Entidad"].unique() )
+# Ignoring that one, the shortest series is vao23[14].
+# The others have most of the Entidades that it does.
+names14 = set ( vao23[14] ["Nombre Entidad"].unique() )
 for year in range(13,21):
   names = set ( vao23[year] ["Nombre Entidad"].unique() )
   print("")
   print("year: ", year)
-  x = list(names19 - names)
+  x = list(names14 - names)
   x.sort() # stupid impure function
-  print("In 2019 and not this year.",x)
-  y = list(names - names19)
+  print("In 2014 and not this year.",x)
+  y = list(names - names14)
   y.sort() # stupid impure function
-  print("In this year and not 2019.", y)
-# They're all more or less the same but with a handful
-# of municipalities not in 2019, and vice-versa.
-# None of those differences appears to be due to simple misspelling.
+  print("In this year and not 2014.", y)
 
 
 ########################
@@ -67,22 +60,23 @@ for year in range(13,22):
 #####################
 # Cód. DANE Municipio
 
-# Again 2021 has pitifully few, and of the rest 2019 has the least.
+# Again 2021 has pitifully few (162 as of 2023 05 23)
+# and of the rest 2014 has the least.
 for year in vao23.keys():
   print ( year, len ( vao23 [year] ["Cód. DANE Municipio"]
                       . unique() ) )
 
 # Again, they're all more or less the same, but with a handful
-# of municipalities not in 2019, and vice-versa.
-codes19 = set ( vao23[19] ["Cód. DANE Municipio"] . unique() )
+# of municipalities not in 2014, and vice-versa.
+codes14 = set ( vao23[14] ["Cód. DANE Municipio"] . unique() )
 for year in vao23.keys():
   codes = set ( vao23[year]["Cód. DANE Municipio"].unique() )
   print("")
   print("year: ", year)
-  print( "In 2019 and not this year.",
-         pd.Series(list(codes19 - codes)) . sort_values() )
-  print( "In this year and not 2019.",
-         pd.Series(list(codes - codes19)) . sort_values() )
+  print( "In 2014 and not this year.",
+         pd.Series(list(codes14 - codes)) . sort_values() )
+  print( "In this year and not 2014.",
+         pd.Series(list(codes - codes14)) . sort_values() )
 
 
 #################
@@ -95,21 +89,13 @@ for year in vao23.keys():
   print ( year, len ( vao23 [year] ["Código Concepto"]
                       . unique() ) )
 
-# Fortunately, each year has the few codes we need.
-codes_we_need = { "TI.A", "TI.A.2.6", "TI.B" }
-  # These codes come from Code/build/classify_budget_codes.py
+# Fortunately, each year has all the codes we use.
+inversion_codes_we_use = set()
+for v in codes.categs_to_codes[t.inversion].values():
+  inversion_codes_we_use = { *inversion_codes_we_use, *v }
 for year in vao23.keys():
   print("")
   print(year)
   print("Missing from this year: ",
-        codes_we_need -
+        inversion_codes_we_use -
         set ( vao23 [year] ["Código Concepto"] . unique() ) )
-
-# If for some reason I need to see all the codes in a year,
-# the shortest ones first, this does that.
-for year in vao23.keys():
-  s = pd.DataFrame (
-    { "code" :
-      vao23 [year] ["Código Concepto"].unique() } )
-  s["len"] = s["code"] . apply( len )
-  print(s.sort_values("len")[0:5])
