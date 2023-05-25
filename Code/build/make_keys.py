@@ -41,9 +41,9 @@ if True:
 
 if True: # build source data set, from which both keys are built
   source_data = pd.DataFrame()
-  for series in set.difference(
-      set(sm.series), set([t.deuda])):
-    for year in range( 2013, 2018+1 ):
+  for series in set.difference( {*sm.series},
+                                {t.deuda} ):
+    for year in range( 2013, common.last_year + 1 ):
       filepath = (
         os.path.join (
           common.indata,
