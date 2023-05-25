@@ -6,10 +6,10 @@ from itertools import chain
 import Code.metadata.terms as t
 
 
-series = [t.ingresos,
-          t.inversion,
-          t.funcionamiento,
-          t.deuda]
+series = [ t.ingresos,
+           t.inversion,
+           t.funcionamiento,
+           t.deuda ]
 
 columns_peso = {
   "ingresos" : [

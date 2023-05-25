@@ -33,7 +33,7 @@ if True:
   from   itertools import chain
   import os
   import pandas                    as pd
-
+  #
   import Code.common               as common
   import Code.metadata.raw_series  as sm
   import Code.metadata.terms       as t
@@ -78,20 +78,16 @@ dest = os.path.join ( common.outdata, "keys" )
 if not os.path.exists( dest ):
   os.makedirs ( dest )
 
-( make_key(
-      ["Cód. DANE Municipio"]
-    , [ "Nombre DANE Municipio"
-      , "Cód. DANE Departamento"
-      , "Nombre DANE Departamento" ]
-    , source_data )
-  . to_csv(
-    os.path.join ( dest, "geo.csv" ),
-    index = False ) )
+( make_key ( [ "Cód. DANE Municipio" ],
+             [ "Nombre DANE Municipio",
+               "Cód. DANE Departamento",
+               "Nombre DANE Departamento" ],
+             source_data )
+  . to_csv ( os.path.join ( dest, "geo.csv" ),
+             index = False ) )
 
-( make_key(
-      [ "Código Concepto" ]
-    , [ "Concepto" ]
-    , source_data )
-  . to_csv(
-    os.path.join ( dest, "budget.csv" ),
-    index = False ) )
+( make_key ( [ "Código Concepto" ],
+             [ "Concepto" ],
+             source_data )
+  . to_csv ( os.path.join ( dest, "budget.csv" ),
+             index = False ) )
