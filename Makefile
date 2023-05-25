@@ -383,7 +383,8 @@ output/$(vintage)/inflation.csv:    \
   data/$(vintage)/inflation.csv     \
   Code/build/inflation.py
 	date
-	$(myPython) Code/build/inflation.py
+	$(myPython) Code/build/inflation.py \
+          --subsample=$(subsample) --vintage=$(vintage)
 	date
 
 output/$(vintage)/regalias.csv:     \

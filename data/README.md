@@ -1,9 +1,16 @@
 # The inflation data
 
+## for 2019
+
 comes from DANE,
 specifically the most recent (as of today)
 "Anexo" here:
 https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc/ipc-historico
+
+## for 2023
+
+is the inflation index excluding food from the Central Bank --
+which as of this commit was downloaded in March 2023.
 
 # Why there are 2019 and 2023 subdirectories
 
