@@ -154,7 +154,7 @@ def static_avg( filename : str,
 if testing: # PITFALL: Theese numbers cannot simply be read off
   # the time-series charts; they require averaging  the last three years
   # for every muni in the dept, and then averaging those.
-  dc = 19
+  dc = 25
   filename = "gastos-pct"
   money_col = "item oblig"
   df = monolith[filename]
