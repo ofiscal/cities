@@ -1,3 +1,17 @@
+# How to run this
+
+From the project root, run
+```
+make vintage=2023 subsample=1000
+```
+`vintage` can be in [2019, 2023].
+`subsample` can be in [1,10,100,1000]. It is actually the reciprocal of the subsample size -- so 1 gives you the full sample and takes the longest.
+
+If you run `make` without specifying those arguments,
+default values will be used,
+as found in `./Makefile`.
+
+
 # What this does
 
 ## The original vision, which is pretty well documented
