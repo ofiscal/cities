@@ -1,3 +1,9 @@
+# PURPOSE: Defines utilities for using `output/<vintage>/keys/geo.csv`,
+# -- especially for merging that data into a preexisting data frame.
+#
+# TODO ? This could be faster if its intermediate products were stored,
+# rather than creating them anew each time it is imported.
+
 if True:
   import os.path as path
   import pandas as pd
