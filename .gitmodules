@@ -1,0 +1,6 @@
+[submodule "utilities"]
+	path = ofiscal_utils
+	url = git@github.com:ofiscal/utilities
+[submodule "ofiscal_utils"]
+	path = ofiscal_utils
+	url = git@github.com:ofiscal/utilities

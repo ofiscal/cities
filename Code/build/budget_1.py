@@ -26,10 +26,7 @@ if True: # input data
                      s + ".csv" ) )
 
 if True: # format
-  for s in [ t.ingresos,
-             t.inversion,
-             t.funcionamiento,
-             t.deuda]:
+  for s in raw.series:
     dfs[s] = (
       util.un_latin_decimal_columns(
         list( map( lambda pair: pair[1],

@@ -82,8 +82,11 @@ endif
 budget_1 =                                              \
   output/$(vintage)/budget_1/funcionamiento.csv         \
   output/$(vintage)/budget_1/ingresos.csv		\
-  output/$(vintage)/budget_1/inversion.csv		\
-  output/$(vintage)/budget_1/deuda.csv
+  output/$(vintage)/budget_1/inversion.csv
+ifeq ($(vintage),2019)
+  budget_1 += \
+    output/$(vintage)/budget_1/deuda.csv
+endif
 
 budget_1p5 =                                            \
   output/$(vintage)/budget_1p5/ingresos.csv             \

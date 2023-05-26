@@ -1,7 +1,8 @@
 from os import path
 from sys import argv
 #
-from Code.params.cl import vintage_universe
+from Code.params.cl_arg_universe import vintage_universe
+
 
 # If argv > 1, we are using the command line.
 # Otherwise, we are in the interpreter.
