@@ -16,7 +16,8 @@ if True:
         Fortunately, every column that this function is used to sanitize
         contains a maximum value much bigger than 1e6,
         so if it is encoded in the Spanish style,
-        it will have multiple periods, hence be read as a string.
+        it will have multiple periods, hence be read as a string,
+        even if it includes no fractional component.
     """
     for c in column_names:
       if df[c].dtype == "O":
@@ -39,7 +40,7 @@ if True:
                  "c" : ["1.000,3","3,3","2.000"] } ) ) )
 
 if True:
-  def to_front( front_columns, df ):
+  def to_front ( front_columns, df ):
     """ Move some columns to the front of a data frame. """
     rear_columns = [ i for i in df.columns
                      if i not in set( front_columns ) ]
