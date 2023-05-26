@@ -18,6 +18,7 @@ subsample?=100
   # as in "make all subsample=10".
 
 myPython=PYTHONPATH='.' python3
+myArgs=--subsample=$(subsample) --vintage=$(vintage)
 
 .PHONY: all				\
   keys					\
@@ -166,8 +167,7 @@ $(keys):                                           \
   Code/build/make_keys.py                          \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/make_keys.py        \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/make_keys.py $(myArgs)
 	date
 
 budget_0_collect: $(budget_0_collect)
@@ -175,8 +175,7 @@ $(budget_0_collect):                               \
   Code/build/budget_0_collect.py                   \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_0_collect.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_0_collect.py $(myArgs)
 	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -190,7 +189,7 @@ $(budget_1):			\
   Code/util/misc.py		\
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_1.py
+	$(myPython) Code/build/budget_1.py $(myArgs)
 	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -205,7 +204,7 @@ $(budget_1p5):					\
   Code/metadata/terms.py                        \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_1p5.py
+	$(myPython) Code/build/budget_1p5.py $(myArgs)
 	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -220,7 +219,7 @@ $(budget_2_subsample):				\
   Code/util/misc.py				\
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_2_subsample.py
+	$(myPython) Code/build/budget_2_subsample.py $(myArgs)
 	date
 
 # PITFALL: Don't include Code/metadata/terms.py;
@@ -234,8 +233,7 @@ $(budget_3_dept_muni_year_item):		\
   Code/util/misc.py				\
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_3_dept_muni_year_item.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_3_dept_muni_year_item.py $(myArgs)
 	date
 
 # TODO ? resurrect. This broke when we switched item code specs.
@@ -248,8 +246,7 @@ $(budget_3_dept_muni_year_item):		\
 #  Code/common.py				\
 #  Code/util/misc.py				\
 #  Code/metadata/raw_series.py
-#	$(myPython) Code/build/sanity_child_sum_is_parent.py \
-#           --subsample=$(subsample) --vintage=$(vintage)
+#	$(myPython) Code/build/sanity_child_sum_is_parent.py $(myArgs)
 
 explore_order_of_mag_x_yrs: $(explore_order_of_mag_x_yrs)
 $(explore_order_of_mag_x_yrs):	     \
@@ -260,8 +257,7 @@ $(explore_order_of_mag_x_yrs):	     \
   Code/metadata/terms.py             \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/explore/order_of_mag_x_yrs.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/explore/order_of_mag_x_yrs.py $(myArgs)
 	date
 
 budget_4_scaled: $(budget_4_scaled)
@@ -274,8 +270,7 @@ $(budget_4_scaled):			  \
   Code/metadata/terms.py                  \
   Code/metadata/raw_series.py
 	date
-	$(myPython) Code/build/budget_4_scaled.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_4_scaled.py $(myArgs)
 	date
 
 budget_5_add_regalias: $(budget_5_add_regalias)
@@ -287,8 +282,7 @@ $(budget_5_add_regalias):                               \
   Code/metadata/terms.py                                \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_5_add_regalias.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_5_add_regalias.py $(myArgs)
 	date
 
 budget_6_deflate: $(budget_6_deflate)
@@ -300,8 +294,7 @@ $(budget_6_deflate):                               \
   Code/metadata/terms.py                           \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_6_deflate.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_6_deflate.py $(myArgs)
 	date
 
 budget_6p5_cull_and_percentify: $(budget_6p5_cull_and_percentify)
@@ -313,8 +306,7 @@ $(budget_6p5_cull_and_percentify):    \
   Code/metadata/two_series.py	      \
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_6p5_percentify.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_6p5_percentify.py $(myArgs)
 	date
 
 budget_6p7_avg_muni: $(budget_6p7_avg_muni)
@@ -326,8 +318,7 @@ $(budget_6p7_avg_muni):		    \
   Code/build/use_keys.py	    \
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_6p7_avg_muni.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_6p7_avg_muni.py $(myArgs)
 	date
 
 budget_7_verbose: $(budget_7_verbose)
@@ -340,8 +331,7 @@ $(budget_7_verbose):		 \
   Code/metadata/terms.py         \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_7_verbose.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_7_verbose.py $(myArgs)
 	date
 
 budget_8_pivots: $(budget_8_pivots)
@@ -352,8 +342,7 @@ $(budget_8_pivots):				\
   Code/util/aggregate_all_but_biggest/better.py	\
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/build/budget_8_pivots.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_8_pivots.py $(myArgs)
 	date
 
 budget_9_static_compare: $(budget_9_static_compare)
@@ -364,8 +353,7 @@ $(budget_9_static_compare):		\
   Code/common.py			\
   Code/metadata/four_series.py
 	date
-	$(myPython) Code/build/budget_9_static_compare.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/budget_9_static_compare.py $(myArgs)
 	date
 
 # Unneeded, except to understand more complex programs.
@@ -378,16 +366,14 @@ $(sample_tables):			       \
   Code/metadata/terms.py		       \
   Code/metadata/two_series.py
 	date
-	$(myPython) Code/draw/demo/sample_tables.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/draw/demo/sample_tables.py $(myArgs)
 	date
 
 output/$(vintage)/inflation.csv:    \
   data/$(vintage)/inflation.csv     \
   Code/build/inflation.py
 	date
-	$(myPython) Code/build/inflation.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/build/inflation.py $(myArgs)
 	date
 
 output/$(vintage)/regalias.csv:     \
@@ -397,7 +383,7 @@ output/$(vintage)/regalias.csv:     \
   Code/util/misc.py                 \
   Code/build/use_keys.py
 	date
-	$(myPython) Code/build/regalias.py
+	$(myPython) Code/build/regalias.py $(myArgs)
 	date
 
 reports: $(reports)
@@ -413,8 +399,7 @@ $(reports):			 \
   Code/draw/chart_content.py	 \
   Code/main/reports.py
 	date
-	$(myPython) Code/main/reports.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/main/reports.py $(myArgs)
 	date
 
 facebook_ads: $(facebook_ads)
@@ -430,8 +415,7 @@ $(facebook_ads):		 \
   Code/draw/chart_content.py	 \
   Code/main/facebook_ads.py
 	date
-	$(myPython) Code/main/facebook_ads.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/main/facebook_ads.py $(myArgs)
 	date
 
 radio: $(radio)
@@ -441,6 +425,5 @@ $(radio):		     \
   Code/main/radio_scripts.py \
   Code/main/geo.py
 	date
-	$(myPython) Code/main/radio_scripts.py \
-          --subsample=$(subsample) --vintage=$(vintage)
+	$(myPython) Code/main/radio_scripts.py $(myArgs)
 	date
