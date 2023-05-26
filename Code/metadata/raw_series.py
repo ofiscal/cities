@@ -4,12 +4,15 @@
 
 from itertools import chain
 import Code.metadata.terms as t
+from   Code.common import vintage
 
 
-series = [ t.ingresos,
-           t.inversion,
-           t.funcionamiento,
-           t.deuda ]
+series = ( [ t.ingresos,
+             t.inversion,
+             t.funcionamiento, ]
+           + ( [ t.deuda ]
+               if vintage == 2019
+               else [] ) )
 
 columns_peso = {
   "ingresos" : [

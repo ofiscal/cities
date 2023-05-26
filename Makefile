@@ -72,8 +72,11 @@ keys =                                                  \
 budget_0_collect =                                      \
   output/$(vintage)/budget_0_collect/funcionamiento.csv	\
   output/$(vintage)/budget_0_collect/ingresos.csv	\
-  output/$(vintage)/budget_0_collect/inversion.csv	\
-  output/$(vintage)/budget_0_collect/deuda.csv
+  output/$(vintage)/budget_0_collect/inversion.csv
+ifeq ($(vintage),2019)
+  budget_0_collect += \
+    output/$(vintage)/budget_0_collect/deuda.csv
+endif
 
 budget_1 =                                              \
   output/$(vintage)/budget_1/funcionamiento.csv         \

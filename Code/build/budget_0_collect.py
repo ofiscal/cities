@@ -35,7 +35,8 @@ def collect_raw( source : str,
   dfs = {}
   for series in raw.series:
     dfs[series] = pd.DataFrame()
-    for year in range( 2013, 2018+1 ):
+    for year in range ( common.first_year,
+                        common.last_year + 1 ):
       shuttle = (
         pd.read_csv(
           os.path.join ( source,
