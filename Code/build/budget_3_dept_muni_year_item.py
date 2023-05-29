@@ -178,6 +178,8 @@ if True: # test (loosely) that it worked
 ###### Test, output
 ######
 
-for s in [t.ingresos,t.gastos]:
-  dfs2[s].to_csv( dest + "/" + s + ".csv" ,
-                  index = False )
+for s in [t.ingresos, t.gastos]:
+  dfs2 [s] . to_csv (
+    os.path.join ( dest,
+                   s + ".csv" ),
+    index = False )

@@ -1,11 +1,14 @@
 if True:
-  import os.path              as path
+  from   os import path, makedirs
   import pandas               as pd
   #
   import Code.build.use_keys  as uk
   import Code.common          as common
   import Code.util.misc       as util
 
+
+if not path.exists ( common.outdata ):
+  makedirs ( common.outdata )
 
 if True: # ingest
   wide_muni = (
@@ -53,7 +56,7 @@ if True: # fix a "dept code" column for the dept data
                      how = "left", on = "dept" )
     print( test[["dept","dept code_x","dept code_y"]] )
 
-if False: # verify that muni codes correspond to (muni,dept) the same way
+if True: # verify that muni codes correspond to (muni,dept) the same way
   # in the regalias data as in our main body of SISFUT data. (They do.)
   for df in [wide_muni,uk.geo]: # lowercase words are easier to compare
     for c in ["muni","dept"]:

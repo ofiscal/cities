@@ -36,5 +36,7 @@ for s in ser.series:
     df[c] = df[c] * df["deflator"]
   df = df.drop( columns = ["deflator"] )
   dfs[s.name] = df
-  df.to_csv( dest + "/" + s.name + ".csv",
-             index = False )
+  df.to_csv (
+    os.path.join ( dest,
+                   s.name + ".csv" ),
+    index = False )

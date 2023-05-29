@@ -43,9 +43,9 @@ def create_pdf( dept : str,
   #       return
 
   if True: # folders
-    source = ( source_root + "/" + dept + "/" + muni )
-    if not os.path.exists( dest_folder ):
-      os.makedirs( dest_folder )
+    source = os.path.join ( source_root, dept, muni )
+    if not os.path.exists ( dest_folder ):
+      os.makedirs ( dest_folder )
     print("folder: ", source)
 
   muni_short = shorten_names.munis[muni]
@@ -55,13 +55,16 @@ def create_pdf( dept : str,
       muni_short)
     if len(muni_short) > 15
     else muni_short )
-  dest_file = ( dest_folder + "/" + str(dept) + "_" + str(muni)
-                + "_" + str(muni_code) + ".pdf" )
+  dest_file = os.path.join (
+    dest_folder,
+    ( str(dept) + "_" + str(muni)
+                + "_" + str(muni_code) + ".pdf" ) )
   with PdfPages( dest_file ) as pdf:
     pages.drawTitlePage( muni_split, pdf )
     for page in chart_content.pages( muni_short, dept_short):
-      df = pd.read_csv(
-        source + "/" + page.file + ".csv",
+      df = pd.read_csv (
+        os.path.join ( source,
+                       page.file + ".csv" ),
         index_col = page.index_col )
       if page.insertNewlines:
         df.index = list( map( lambda s: newlines.remap[s],
@@ -82,5 +85,7 @@ def create_pdf( dept : str,
       muni_code = int( row["muni code"] ) ) ),
   axis = "columns" ) )
 
-( Path( dest_folder + "/" + "timestamp-for-reports" ) .
-  touch() )
+( Path (
+    os.path.join ( dest_folder,
+                   "timestamp-for-reports" ) )
+  . touch () )

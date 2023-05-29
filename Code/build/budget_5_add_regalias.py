@@ -64,6 +64,7 @@ if True: # output
     sort = True, # Sort columns by name so they align.
     axis = "rows" )
   for s in ser.series:
-    dfso[s.name].to_csv(
-      dest + "/" + s.name + ".csv",
+    dfso [s.name] . to_csv (
+      os.path.join ( dest,
+                     s.name + ".csv" ),
       index = False )

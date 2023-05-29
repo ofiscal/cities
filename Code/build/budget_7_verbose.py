@@ -39,6 +39,8 @@ if True: # Merge geo data into main data.
             "muni" ] = "dept"
     df.loc[ df["muni code"] == -2,
             "muni" ] = "promedio"
-    df.to_csv( dest + "/" + s.name + ".csv",
-               index = False )
+    df.to_csv (
+      os.path.join ( dest,
+                     s.name + ".csv" ),
+      index = False )
     dfs[sn] = df

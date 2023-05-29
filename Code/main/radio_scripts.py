@@ -63,12 +63,15 @@ def write_script(
          fraction_spending_housing_after_2015,
          fraction_spending_edu_after_2015 )
 
-  dest_file = ( ( dest + "/" + dept + "__" + muni +
-                  "_" + str(muni_code) + ".txt" )
-                . replace( " ", "-" ) )
+  dest_file = (
+    os.path.join (
+      dest,
+      ( dept + "__" + muni
+             + "_" + str(muni_code) + ".txt" ) )
+    . replace( " ", "-" ) )
 
   with open( dest_file, "w" ) as f:
-    f.write( "\n\n".join( [
+    f.write ( "\n\n".join( [
       "Píldora municipal para " + muni + ", " + dept + "(Código DANE: " + str(muni_code) + ")",
       "Recuerde: su voto determina en manos de quién van a quedar los recursos de " + muni + ". Por eso es importante que conozca de dónde viene la plata su municipio y cómo la gastan sus gobernantes.",
       "Mi nombre es Luis Carlos Reyes y soy el director del Observatorio Fiscal de la Universidad Javeriana. Con el fin de que usted pueda conocer cómo se usan los recursos de su municipio, el Observatorio ha preparado un análisis de lo que pasa con este dinero, para que usted evalúe el uso que la alcaldía y el concejo municipal les dan a los recursos públicos.",
@@ -103,5 +106,6 @@ depts_and_munis.apply(
         iloc[:,0] ) ) ),
   axis = "columns" )
 
-( Path( dest + "/" + "timestamp-for-radio" ) .
-  touch() )
+( Path ( os.path.join ( dest,
+                        "timestamp-for-radio" ) ) .
+  touch () )

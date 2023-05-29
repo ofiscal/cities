@@ -58,5 +58,7 @@ dfs = collect_raw ( os.path.join (
   "sisfut", "csv" ) )
 
 for s in raw.series:
-  dfs[s].to_csv( dest + "/" + s + ".csv",
-                 index = False )
+  dfs [s] . to_csv (
+    os.path.join ( dest,
+                   s + ".csv" ),
+    index = False )

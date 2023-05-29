@@ -56,6 +56,7 @@ for subsample in [1000, 100, 10]: # smallest first, to catch errors faster
     df = df.merge( places,
                    on = ["dept code","muni code"],
                    how = "inner" )
-    df . to_csv( ( defs.sub_dest( subsample ) +
-                   "/" + s.name + ".csv" ),
-                 index = False )
+    df . to_csv (
+      os.path.join ( defs.sub_dest ( subsample ),
+                     s.name + ".csv" ),
+      index = False )

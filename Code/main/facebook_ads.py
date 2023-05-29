@@ -32,16 +32,17 @@ def create_pdf( dept : str,
   muni_short = shorten_names.munis[muni]
   dept_short = shorten_names.depts[dept]
   if True: # folders
-    source = ( source_root + "/" + dept + "/" + muni )
+    source = os.path.join ( source_root, dept, muni )
     if not os.path.exists( dest_folder ):
       os.makedirs( dest_folder )
-    dest_file = ( ( dest_folder + "/"
-                   + str(muni_code) + ".png" ) .
-                  replace( " ", "-" ) )
+    dest_file = ( os.path.join ( dest_folder,
+                                 str ( muni_code ) + ".png" )
+                  . replace ( " ", "-" ) )
     print("folder: ", source)
   page = chart_content.page2( muni_short, dept_short)
-  df = pd.read_csv(
-    source + "/" + page.file + ".csv",
+  df = pd.read_csv (
+    os.path.join ( source,
+                   page.file + ".csv" ),
     index_col = page.index_col )
   if page.insertNewlines:
     df.index = list( map( lambda s: newlines.remap[s],
@@ -64,5 +65,7 @@ depts_and_munis.apply(
                 muni_code = int( row["muni code"] ) ) ),
   axis = "columns" )
 
-( Path( dest_folder + "/" + "timestamp-for-facebook-ads" ) .
-  touch() )
+( Path (
+    os.path.join ( dest_folder,
+                   "timestamp-for-facebook-ads" ) )
+  . touch () )

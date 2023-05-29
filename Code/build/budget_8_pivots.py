@@ -50,7 +50,7 @@ def write_pivots( dept : str,
                   filename : str
                   ) -> pd.DataFrame:
   """ PITFALL: Writes a file *and* returns a value."""
-  dest = ( dest_root + "/" + dept + "/" + muni )
+  dest = os.path.join ( dest_root, dept, muni )
   if not os.path.exists(dest): os.makedirs(dest)
   place = ( all_places
             [ (all_places["muni"] == muni) &
@@ -59,8 +59,8 @@ def write_pivots( dept : str,
   p = place.pivot( index = "item categ",
                    columns = "year",
                    values = values_col )
-  p.to_csv(   dest + "/" + filename + ".csv" )
-  p.to_excel( dest + "/" + filename + ".xlsx" )
+  p.to_csv   ( os.path.join ( dest, filename + ".csv"  ) )
+  p.to_excel ( os.path.join ( dest, filename + ".xlsx" ) )
   return p
 
 for s in s4.series:
@@ -75,5 +75,7 @@ for s in s4.series:
         all_places = df,
         filename = s.name ) ) )
 
-( Path( dest_root + "/" + "timestamp-for-pivot-tables" ) .
-  touch() )
+( Path (
+    os.path.join ( dest_root,
+                   "timestamp-for-pivot-tables" ) )
+  . touch () )

@@ -27,7 +27,8 @@ if not os.path.exists( dest ):
 def write_html( muni_code : int ):
   """HTML lifted from https://www.codexworld.com/embed-pdf-document-file-in-html-web-page/"""
   if not muni_code in treated_muni_set: return
-  dest_file = dest + "/" + str(muni_code) + ".html"
+  dest_file = os.path.join ( dest,
+                             str(muni_code) + ".html" )
   with open( dest_file, "w" ) as f:
     f.write( """<embed src="http://www.luiscarlosreyes.com/wp-content/uploads/2019/10/""" + str(muni_code) + """.pdf" type="application/pdf" width="100%" height="100%" />""" )
 
@@ -35,5 +36,7 @@ def write_html( muni_code : int ):
   astype( int ) .
   apply( write_html ) )
 
-( Path( dest + "/" + "timestamp-for-html" ) .
-  touch() )
+( Path (
+    os.path.join ( dest,
+                   "timestamp-for-html" ) )
+  . touch () )

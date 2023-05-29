@@ -24,8 +24,8 @@ if True:
 if True: # folders
   source = os.path.join ( common.outdata, "budget_1" )
   dest   = os.path.join ( common.outdata, "budget_1p5" )
-  if not os.path.exists( dest ):
-    os.makedirs( dest )
+  if not os.path.exists ( dest ):
+    os.makedirs ( dest )
 
 if True: # input data
   dfs = {}
@@ -58,5 +58,7 @@ if True: # output two data sets, not four
   for (name,df) in [
         (t.ingresos, dfs_filt[t.ingresos] ),
         (t.gastos,   df_gastos) ]:
-    df.to_csv( dest + "/" + name + ".csv",
-               index = False )
+    df.to_csv (
+      os.path.join ( dest,
+                     name + ".csv" ),
+      index = False )

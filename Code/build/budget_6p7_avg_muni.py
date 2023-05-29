@@ -180,4 +180,6 @@ if True: # tests
     assert len(pct_series) == nAverages + len(non_pct_series)
 
 for s in s4.series:
-  dfs1[s.name].to_csv( dest + "/" + s.name + ".csv" )
+  dfs1 [s.name] . to_csv (
+    os.path.join ( dest,
+                   s.name + ".csv" ),

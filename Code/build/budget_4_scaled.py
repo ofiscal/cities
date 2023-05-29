@@ -90,5 +90,7 @@ for s in ts.series:
         # Fortunately, these bounds are far more than tight enough to assure
         # the order of magnitude problem is solved.
     dfs_by_muni_item[s.name] = df_by_muni_item
-  df.to_csv( dest + "/" + s.name + ".csv",
-             index = False )
+  df.to_csv (
+    os.path.join ( dest,
+                   s.name + ".csv" ),
+    index = False )

@@ -8,7 +8,7 @@
 # I was using in 2019. I've given the 2023 series the precise name
 # "inflation-no-food-2023-03.csv", to avoid similar confusion in future.
 
-import os.path        as path
+from   os import path, makedirs
 import pandas         as pd
 #
 import Code.common    as common
@@ -56,6 +56,8 @@ else: raise ValueError ( "vintage not in ", vintage_universe )
 #########################################
 # Write `deflator : pd.DataFrame` to disk
 
+if not path.exists ( common.outdata ):
+  makedirs ( common.outdata )
 ( deflator[["year","deflator"]] .
   to_csv ( path.join ( common.outdata,
                        "inflation.csv" ),

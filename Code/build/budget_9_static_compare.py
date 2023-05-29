@@ -255,28 +255,39 @@ def series_to_frame( ser : pd.Series ) -> pd.DataFrame:
 for s in s4.series_pct:
   ( geo[geo["muni code"] > 0] .
       # exclude rows about depts or average munis
-    apply(
+    apply (
       ( lambda row:
         static_muni_pair( s.name,
                           s.money_cols[0],
                           row["dept code"],
                           row["muni code"] ) .
-        to_csv( by_place_root + "/" + row["dept"] + "/" +
-                row["muni"] + "/" + s.name + "-compare.csv" ) ),
+        to_csv (
+          os.path.join (
+            by_place_root,
+            row [ "dept" ],
+            row["muni"],
+            s.name + "-compare.csv" ) ) ),
       axis = "columns" ) )
 
   if s.name == t.gastos_pct:
     ( geo[geo["muni code"] > 0] .
         # exclude rows about depts or average munis
-      apply(
+      apply (
         ( lambda row:
           series_to_frame(
             static_muni_ungrouped( s.name,
                                    row["dept code"],
                                    row["muni code"] ) ) .
-          to_csv( by_place_root + "/" + row["dept"] + "/" +
-                  row["muni"] + "/" + s.name + "-ungrouped.csv" ) ),
+          to_csv (
+            os.path.join (
+              by_place_root,
+              row [ "dept" ],
+              row [ "muni" ],
+              s.name + "-ungrouped.csv" ) ) ),
         axis = "columns" ) )
 
-( Path( by_place_root + "/" + "timestamp-for-static-compare" ) .
-  touch() )
+( Path (
+    os.path.join (
+      by_place_root,
+      "timestamp-for-static-compare" ) )
+  . touch () )

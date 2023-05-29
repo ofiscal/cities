@@ -61,5 +61,7 @@ for s in s2.series:
            equals(p[spacetime].reset_index() ) )
 
 for s in s4.series:
-  dfs[s.name].to_csv( dest + "/" + s.name + ".csv",
-                      index = False )
+  dfs[s.name].to_csv (
+    os.path.join ( dest,
+                   s.name + ".csv" ),
+    index = False )
