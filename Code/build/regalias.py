@@ -56,11 +56,13 @@ if True: # fix a "dept code" column for the dept data
                      how = "left", on = "dept" )
     print( test[["dept","dept code_x","dept code_y"]] )
 
-if True: # verify that muni codes correspond to (muni,dept) the same way
-  # in the regalias data as in our main body of SISFUT data. (They do.)
-  for df in [wide_muni,uk.geo]: # lowercase words are easier to compare
-    for c in ["muni","dept"]:
-      df[c] = df[c].apply( str.lower )
+if False: # verify that muni codes correspond to (muni,dept) the same way
+  # in the regalias data as in our main body of SISFUT data.
+  # TODO ? They did in 2019. I have not repeated the exercise in 2023.
+  # Spelling differences can throw it off, so it needs human oversight.
+  for df in [wide_muni, uk.geo]: # lowercase words are easier to compare
+    for c in ["muni", "dept"]:
+      df[c] = df[c].apply ( str.lower )
   test_match = (
     wide_muni . merge( uk.geo,
                   on = "muni code" )

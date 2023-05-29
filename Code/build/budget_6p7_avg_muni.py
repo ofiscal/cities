@@ -183,3 +183,4 @@ for s in s4.series:
   dfs1 [s.name] . to_csv (
     os.path.join ( dest,
                    s.name + ".csv" ),
+    index = False ) # TODO : Right? I just added this line, and haven't tested it. It might break a test.
