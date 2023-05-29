@@ -12,13 +12,13 @@
 
 if True:
   import os
-  import pandas as pd
+  import pandas                            as pd
   #
-  import Code.common as common
-  import Code.build.budget_1p5_tests as tests
-  import Code.build.classify_budget_codes as cla
-  import Code.metadata.terms as t
-  import Code.metadata.raw_series as sm
+  import Code.common                       as common
+  import Code.build.budget_1p5_tests       as tests
+  import Code.build.classify_budget_codes  as cla
+  import Code.metadata.terms               as t
+  import Code.metadata.raw_series          as sm
 
 
 if True: # folders
@@ -40,20 +40,21 @@ if True: # Filter rows by item code.
     df = dfs[s]
     dfs_filt[s] = df[
       df["item code"] .
-      apply( lambda c :
-             c in cla.of_interest[s] ) ]
+      apply ( lambda c :
+              c in cla.of_interest [s] ) ]
 
 if True : # Test the result.
   for s in sm.series: # Each data set shrank, and not too much.
     assert len( dfs[s] ) > 1.5 * len( dfs_filt[s] )
-    assert len( dfs[s] ) < 50 * len( dfs_filt[s] )
+    assert len( dfs[s] ) < 50  * len( dfs_filt[s] )
   tests.column_names_after_agg( sm.series, dfs_filt )
 
 if True: # output two data sets, not four
-  df_gastos = pd.concat(
-    [ dfs_filt[t.funcionamiento],
-      dfs_filt[t.inversion],
-      dfs_filt[t.deuda] ],
+  # Ingresos is still called the same thing.
+  # The others are collapsed into a single "gastos".
+  non_ingresos_names = set ( sm.series ) - set ( t.ingresos )
+  df_gastos = pd.concat (
+    [ dfs_filt [n] for n in non_ingresos_names ],
     axis = "rows" )
   for (name,df) in [
         (t.ingresos, dfs_filt[t.ingresos] ),
