@@ -1,9 +1,9 @@
 # PURPOSE:
-#  (1) Aggregate spending observations within
-#    (muni,year,item code) triples,
+#  (1) Aggregate spending observations by summing within
+#    (place,year,item code) triples,
 #    using the broad item categories from classify_budget_codes.py
-#    Why: For most of the data, a given (muni, year, item)
-#    triple identifies exactly one row -- but sometimes it does not,
+#    Why: Although for most of the data, a given (place, year, item)
+#    triple identifies exactly one row, sometimes it does not,
 #    because spending on an item can be divided by fuente and ejecutor,
 #    as demonstrated in explore/duplicate_rows.py.
 #  (2) Replace missing muni values with 0,
@@ -11,7 +11,8 @@
 #    upon using pandas.DataFrame.groupby().
 #  (3) Subtract ingresos category TI.A.2.6 (transferencias)
 #    from TI.A (propios).
-#    TODO: What is this for?
+#
+#    TODO: What is (3) for?
 #    I understand that T1.A includes T1.A.2.6,
 #    and that apparently we don't want it to.
 #    But why not? What *are* those things, even?
@@ -32,7 +33,8 @@ if True:
 
 if True:
   budget_key = pd.read_csv (
-    os.path.join ( c.outdata, "keys",
+    os.path.join ( c.outdata,
+                   "keys",
                    "budget.csv" ) )
   source = os.path.join ( c.outdata,
                           "budget_2_subsample",
@@ -69,12 +71,16 @@ for s in [t.ingresos,t.gastos]:
       astype(str) .
       apply( lambda c: codes.codes_to_categs[c] ) )
     df = df.drop( columns = ["item code"] )
-  df = util.to_front( # aggregate within item categories
+  df = util.to_front ( # aggregate within item categories
     spacetime + ["item categ"],
-    ( df .
-      groupby( by = spacetime + ["item categ"] ) .
+    ( df . # PITFALL: This causes no change in the number of ingresos rows,
+           # but the number of gastos falls to around 1/10 of what it was.
+           # This can be checked thus:
+           #   [ [ (k, df.shape) for k,df in d.items() ]
+           #     for d in [dfs0, dfs1] ]
+      groupby ( by = spacetime + ["item categ"] ) .
       sum ( numeric_only = True ) .
-      reset_index() ) )
+      reset_index () ) )
   dfs1[s] = df
 
 # dfs2: For ingresos only, for each spacetime slice,
@@ -86,25 +92,27 @@ if True:
       # that two of the following arguments have the type "x"?
       # It might relate to the type variables in the definition of
       #   `Code.build.classify_budget_codes.invert_many_to_one_dict`.
-      subtract : "x",        # the categ value of rows to subtract
-      subtract_from : "x",   # the categ value of rows to subtract from
-      categ : str,           # the name of an "x"-valued column
-      valueCols : List[str], # the name of a peso-valued column
-      df0 : pd.DataFrame     # a single muni-dept-year cell
+      subtract      : "x",         # the categ value of rows to subtract
+      subtract_from : "x",         # the categ value of rows to subtract from
+      categ         : str,         # the name of an "x"-valued column
+      valueCols     : List[str],   # the name of a peso-valued column
+      df0           : pd.DataFrame # a single muni-dept-year cell
       ) -> pd.DataFrame:
     df = df0.copy()
     for value in valueCols:
-      subtract_vec = (df[ df[categ] == subtract ]
-                      [value] )
+      subtract_vec = ( df[ df[categ] == subtract ]
+                       [value] )
       if len(subtract_vec) < 1: pass
       else: # There should be at most 1 row where categ = subtract.
         assert len(subtract_vec) == 1
+        subtract_float = float ( subtract_vec.iloc [0] )
         df.loc[ df[categ] == subtract_from,
                 value ] = (
-          df.loc[ df[categ] == subtract_from,
-                  value ] -
-          float( subtract_vec ) )
+                  df.loc [ df[categ] == subtract_from,
+                           value ]
+                  - subtract_float )
     return df
+
   if True: # test it on fake data
     x = pd.DataFrame( { "cat" : [ "1", "2", "3"],
                         "val" : [ 11,  12,  13 ] } )
