@@ -18,7 +18,8 @@ if True: # bearings
     return os.path.join ( top_dest,
                           "recip-" + str( subsample ) )
 
-def read_data ( nrows = None ):
+def read_data ( nrows = None
+               ) -> Dict [ str, pd.DataFrame ]:
   """Returns a dictionary of three data frames."""
   dfs = {}
   for filename in [t.ingresos,t.gastos]:
@@ -29,7 +30,7 @@ def read_data ( nrows = None ):
     dfs[filename] = df
   return dfs
 
-def subsample( subsample : int,
-               df : pd.DataFrame ) -> pd.DataFrame:
-  return df.sample( frac = 1/subsample,
-                    random_state = 0 ) # seed
+def subsample ( subsample : int,
+                df : pd.DataFrame ) -> pd.DataFrame:
+  return df.sample ( frac = 1/subsample,
+                     random_state = 0 ) # seed

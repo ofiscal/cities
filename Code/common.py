@@ -7,6 +7,7 @@ from Code.params.cl_arg_universe import vintage_universe
 # If argv > 1, we are using the command line.
 # Otherwise, we are in the interpreter.
 
+# PITFALL: Mypy flags the second import as an error, but it is not.
 if len( argv) > 1:
   import Code.params.cl    as imp
 else:
