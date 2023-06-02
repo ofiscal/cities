@@ -214,6 +214,48 @@ if True: # define map from aggregate categories to the codes comprising them
   if True: # for the deuda files
     categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
 
+if True:
+  def two_codes_overlap ( a : str,
+                          b : str
+                         ) -> bool:
+    al : List[str] = a.split(".")
+    bl : List[str] = b.split(".")
+    return all ( [ al [i] == bl [i]
+                   for i in range ( min ( len(al),
+                                          len(bl) ) ) ] )
+  if True: # test it
+    assert     two_codes_overlap ( "1.2.3", "1.2.3.1" )
+    assert not two_codes_overlap ( "1.2", "1.23" )
+    assert not two_codes_overlap ( "1.2.3", "1.2.4.1" )
+
+if True:
+  def overlap_in_code_set ( coll : Set[str]
+                           )-> List[str]:
+    acc = []
+    while coll:
+      c = coll.pop()
+      overlap = [ (c,d)
+                  for d in coll
+                  if two_codes_overlap (c,d) ]
+      acc = acc + overlap
+    return acc
+  if True: # test it
+    assert ( overlap_in_code_set ( [ "1.2", "1.2.3", "2" ] )
+             == [ ("1.2.3", "1.2") ] )
+    assert ( overlap_in_code_set ( [ "1", "2.3", "4.5.6", "1" ] )
+             == [ ("1","1") ] )
+
+if True: # test that categs_to_codes has no overlap,
+         # with the exception that
+         # "propios" includes "transferencias".
+         # TODO: When I rename propios to corrientes,
+         # this will need a corresponding change.
+  assert ( overlap_in_code_set ( { v
+                                   for k in categs_to_codes.keys()
+                                   for s in categs_to_codes[k].values()
+                                   for v in s } )
+           == [ ( list ( categs_to_codes[t.ingresos][t.propios] )  [0],
+                  list ( categs_to_codes[t.ingresos][t.transfer] ) [0] ) ] )
 
 if True: # the inverse map: from (spending) budget codes to our aggregate categories
   three_inverses = {

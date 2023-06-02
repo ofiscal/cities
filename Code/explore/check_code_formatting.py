@@ -3,6 +3,7 @@ if True:
   import Code.metadata.raw_series as s4
   import Code.metadata.terms as t
 
+
 for s in s4.series:
   for i in sorted(cla.of_interest[s]):
     print(i)
@@ -15,4 +16,3 @@ with open("test.txt", "w") as myfile:
       myfile.write("\t" + k + "\n")
       for s in sorted(d[k]):
         myfile.write("\t\t" + s + "\n")
-
