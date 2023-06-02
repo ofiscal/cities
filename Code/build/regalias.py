@@ -9,7 +9,7 @@ if True:
   import Code.util.misc       as util
 
 
-# We currently have no regalias data for the view from 2023,
+# TODO: We currently have no regalias data for the view from 2023,
 # so this just creates symlinks to the last stage.
 if common.vintage == 2023:
   for p in [ pathlib.Path ( q )

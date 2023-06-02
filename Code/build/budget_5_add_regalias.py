@@ -21,7 +21,7 @@ if True: # bearings
   if not os.path.exists( dest ):
     os.makedirs(         dest )
 
-# We currently have no regalias data for the view from 2023,
+# TODO: We currently have no regalias data for the view from 2023,
 # so this just creates symlinks to the last stage.
 if c.vintage == 2023:
   for fn in [ s.name + ".csv"

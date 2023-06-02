@@ -20,51 +20,57 @@ subsample?=100
 myPython=PYTHONPATH='.' python3
 myArgs=--subsample=$(subsample) --vintage=$(vintage)
 
-.PHONY: all				\
-  keys					\
-  budget_0_collect			\
-  budget_1				\
-  budget_1p5				\
-  budget_2_subsample			\
-  subsample				\
-  budget_3_dept_muni_year_item		\
-  budget_4_scaled			\
-  budget_5_add_regalias			\
-  budget_6_deflate			\
-  budget_6p5_cull_and_percentify	\
-  budget_6p7_avg_muni			\
-  budget_7_verbose			\
-  budget_8_pivots			\
-  budget_9_static_compare		\
-  sample_tables				\
-  reports				\
-  facebook_ads				\
-  radio                                 \
-  show_params
+.PHONY: all                      \
+  budget_0_collect               \
+  budget_1                       \
+  budget_1p5                     \
+  budget_2_subsample             \
+  budget_3_dept_muni_year_item   \
+  budget_4_scaled                \
+  budget_5_add_regalias          \
+  budget_6_deflate               \
+  budget_6p5_cull_and_percentify \
+  budget_6p7_avg_muni            \
+  budget_7_verbose               \
+  budget_8_pivots                \
+  budget_9_static_compare        \
+  facebook_ads                   \
+  inflation                      \
+  keys                           \
+  radio                          \
+  regalias                       \
+  reports                        \
+  sample_tables                  \
+  show_params                    \
+  subsample
 
 # `show_params` should be listed first,
 # so that it always runs. (It depends on nothing.)
-all: show_params                  \
-  keys                            \
-  budget_0_collect		  \
-  budget_1			  \
-  budget_1p5			  \
-  budget_2_subsample		  \
-  budget_3_dept_muni_year_item	  \
-  budget_4_scaled		  \
-  budget_5_add_regalias		  \
-  budget_6_deflate		  \
-  budget_6p5_cull_and_percentify  \
-  budget_6p7_avg_muni		  \
-  budget_7_verbose		  \
-  budget_8_pivots		  \
-  budget_9_static_compare	  \
-  output/$(vintage)/inflation.csv \
-  output/$(vintage)/regalias.csv  \
-  reports			  \
-  facebook_ads			  \
-  radio
+all:                             \
+  budget_0_collect		 \
+  budget_1			 \
+  budget_1p5			 \
+  budget_2_subsample		 \
+  budget_3_dept_muni_year_item	 \
+  budget_4_scaled		 \
+  budget_5_add_regalias		 \
+  budget_6_deflate		 \
+  budget_6p5_cull_and_percentify \
+  budget_6p7_avg_muni		 \
+  budget_7_verbose		 \
+  budget_8_pivots		 \
+  budget_9_static_compare	 \
+  facebook_ads			 \
+  keys                           \
+  inflation                      \
+  regalias                       \
+  radio                          \
+  reports			 \
+  show_params
   # sample_tables # Unneeded, except to understand more complex programs.
+
+inflation = output/$(vintage)/inflation.csv
+regalias =  output/$(vintage)/regalias.csv
 
 keys =                                                  \
   output/$(vintage)/keys/budget.csv                     \
@@ -277,24 +283,24 @@ $(budget_4_scaled):			  \
 	date
 
 budget_5_add_regalias: $(budget_5_add_regalias)
-$(budget_5_add_regalias):                               \
-  $(budget_4_scaled)                                    \
-  output/$(vintage)/regalias.csv			\
-  Code/build/budget_5_add_regalias.py                   \
-  Code/common.py                                        \
-  Code/metadata/terms.py                                \
+$(budget_5_add_regalias):             \
+  $(budget_4_scaled)                  \
+  $(regalias)                         \
+  Code/build/budget_5_add_regalias.py \
+  Code/common.py                      \
+  Code/metadata/terms.py              \
   Code/metadata/two_series.py
 	date
 	$(myPython) Code/build/budget_5_add_regalias.py $(myArgs)
 	date
 
 budget_6_deflate: $(budget_6_deflate)
-$(budget_6_deflate):                               \
-  $(budget_5_add_regalias)                         \
-  output/$(vintage)/inflation.csv                  \
-  Code/build/budget_6_deflate.py                   \
-  Code/common.py                                   \
-  Code/metadata/terms.py                           \
+$(budget_6_deflate):             \
+  $(budget_5_add_regalias)       \
+  $(inflation)                   \
+  Code/build/budget_6_deflate.py \
+  Code/common.py                 \
+  Code/metadata/terms.py         \
   Code/metadata/two_series.py
 	date
 	$(myPython) Code/build/budget_6_deflate.py $(myArgs)
@@ -372,19 +378,21 @@ $(sample_tables):			       \
 	$(myPython) Code/draw/demo/sample_tables.py $(myArgs)
 	date
 
-output/$(vintage)/inflation.csv:    \
-  data/$(vintage)/inflation.csv     \
+inflation: $(inflation)
+$(inflation):                   \
+  data/$(vintage)/inflation.csv \
   Code/build/inflation.py
 	date
 	$(myPython) Code/build/inflation.py $(myArgs)
 	date
 
-output/$(vintage)/regalias.csv:     \
-  data/$(vintage)/regalias/muni.csv \
+regalias: $(regalias)
+$(regalias):                        \
   data/$(vintage)/regalias/dept.csv \
+  data/$(vintage)/regalias/muni.csv \
   Code/build/regalias.py            \
-  Code/util/misc.py                 \
-  Code/build/use_keys.py
+  Code/build/use_keys.py            \
+  Code/util/misc.py
 	date
 	$(myPython) Code/build/regalias.py $(myArgs)
 	date
