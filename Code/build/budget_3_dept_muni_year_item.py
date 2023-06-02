@@ -84,16 +84,18 @@ for s in [t.ingresos,t.gastos]:
   dfs1[s] = df
 
 # dfs2: For ingresos only, for each spacetime slice,
-# subtract the "recaudo" value in the row where categ = "transfers"
+# we must subtract the "recaudo" value in the row where categ = "transfers"
 # from the "recaudo" value in the row where categ = "propios".
+# The function `tax_categ_subtract` permits that.
 if True:
   def tax_categ_subtract (
-      # TODO : What black magic did I have in mind when I wrote
-      # that two of the following arguments have the type "x"?
-      # It might relate to the type variables in the definition of
-      #   `Code.build.classify_budget_codes.invert_many_to_one_dict`.
+      # PITFALL: The "x" below is a particular type of string:
+      # it must be one of the values appearing in
+      # the column named `categ` (the third argument).
       subtract      : "x",         # the categ value of rows to subtract
       subtract_from : "x",         # the categ value of rows to subtract from
+      new_name      : "x",         # What to call subtract_from
+                                   # after subtracting from it
       categ         : str,         # the name of an "x"-valued column
       valueCols     : List[str],   # the name of a peso-valued column
       df0           : pd.DataFrame # a single muni-dept-year cell
@@ -107,21 +109,23 @@ if True:
         assert len(subtract_vec) == 1
         subtract_float = float ( subtract_vec.iloc [0] )
         df.loc[ df[categ] == subtract_from,
-                value ] = (
+                value ] = ( # the subtraction
                   df.loc [ df[categ] == subtract_from,
                            value ]
                   - subtract_float )
+        df.loc[ df[categ] == subtract_from,
+                categ ] = new_name # the renaming
     return df
 
   if True: # test it on fake data
     x = pd.DataFrame( { "cat" : [ "1", "2", "3"],
                         "val" : [ 11,  12,  13 ] } )
-    assert ( tax_categ_subtract( "1", "2", "cat", ["val"], x ) .
+    assert ( tax_categ_subtract( "1", "2", "2.1", "cat", ["val"], x ) .
              # Subtract val at row where cat=1 from val at row where cat=2.
              equals(
-               pd.DataFrame( { "cat" : ["1",  "2", "3"],
+               pd.DataFrame( { "cat" : ["1",  "2.1", "3"],
                                "val" : [ 11, 1, 13 ] } ) ) )
-    assert ( tax_categ_subtract( "0", "2", "cat", ["val"], x ) .
+    assert ( tax_categ_subtract( "0", "2", "2", "cat", ["val"], x ) .
              # The subtract code ("0") is not present, so `x` is unchanged.
              equals( x ) )
 
@@ -136,7 +140,8 @@ if False: # TODO ? This approach, using .groupby(),
     apply( lambda df :
            tax_categ_subtract(
              subtract      = t.transfer,
-             subtract_from = t.propios,
+             subtract_from = t.corrientes,
+             new_name = t.propios,
              categ = "item categ",
              value = "item recaudo",
              df0   = df ) ) .
@@ -165,7 +170,8 @@ if True: # accumulate (in acc) a data frame like df but
     acc = pd.concat( [ acc,
                        tax_categ_subtract(
                          subtract      = t.transfer,
-                         subtract_from = t.propios,
+                         subtract_from = t.corrientes,
+                         new_name      = t.propios,
                          categ = "item categ",
                          valueCols = s2.ingresos.money_cols,
                          df0   = df ) ] )

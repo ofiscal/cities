@@ -208,8 +208,12 @@ if True: # define map from aggregate categories to the codes comprising them
     categs_to_codes[t.inversion][t.cult] = {"A.4", "A.5"}
     categs_to_codes[t.inversion][t.agro] = {"A.8"}
   if True: # for the ingresos files
-    categs_to_codes[t.ingresos][t.propios] = {"TI.A"}
+    categs_to_codes[t.ingresos][t.corrientes] = {"TI.A"}
     categs_to_codes[t.ingresos][t.transfer] = {"TI.A.2.6"}
+    # PITFALL: the income category propios = corrientes - transfer.
+    # It is not defined here as a set of codes,
+    # because that would be an annoyingly big set.
+    # Rather, it gets computed in `budget_3_dept_muni_year_item.py`.
     categs_to_codes[t.ingresos][t.capital] = {"TI.B"}
   if True: # for the deuda files
     categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
@@ -247,15 +251,13 @@ if True:
 
 if True: # test that categs_to_codes has no overlap,
          # with the exception that
-         # "propios" includes "transferencias".
-         # TODO: When I rename propios to corrientes,
-         # this will need a corresponding change.
+         # "corrientes" includes "transferencias".
   assert ( overlap_in_code_set ( { v
                                    for k in categs_to_codes.keys()
                                    for s in categs_to_codes[k].values()
                                    for v in s } )
-           == [ ( list ( categs_to_codes[t.ingresos][t.propios] )  [0],
-                  list ( categs_to_codes[t.ingresos][t.transfer] ) [0] ) ] )
+           == [ ( list ( categs_to_codes[t.ingresos][t.corrientes] ) [0],
+                  list ( categs_to_codes[t.ingresos][t.transfer] )   [0] ) ] )
 
 if True: # the inverse map: from (spending) budget codes to our aggregate categories
   three_inverses = {

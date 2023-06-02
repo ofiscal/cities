@@ -25,6 +25,7 @@ if True: # our own aggregate categories
     agro        = "Agropecuario"
     deuda_gasto = "Pago de la deuda"
   if True: # for income
+    corrientes  = "Ingresos corrientes"
     propios     = "Impuestos y otros recursos propios*"
     transfer    = "Transferencias del Gobierno Nacional"
     capital     = """Dinero sobrante de\naños anteriores y\notros ingresos financieros*"""
