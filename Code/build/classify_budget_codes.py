@@ -238,14 +238,16 @@ if True:
     acc = []
     while coll:
       c = coll.pop()
-      overlap = [ (c,d)
+      overlap = [ ( (c,d)
+                    if c < d
+                    else (d,c) )
                   for d in coll
                   if two_codes_overlap (c,d) ]
       acc = acc + overlap
     return acc
   if True: # test it
     assert ( overlap_in_code_set ( [ "1.2", "1.2.3", "2" ] )
-             == [ ("1.2.3", "1.2") ] )
+             == [ ("1.2", "1.2.3") ] )
     assert ( overlap_in_code_set ( [ "1", "2.3", "4.5.6", "1" ] )
              == [ ("1","1") ] )
 
