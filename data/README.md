@@ -9,7 +9,7 @@ https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-
 
 ## for 2023
 
-is the inflation index excluding food from the Central Bank --
+is the inflation index EXCLUDING FOOD from the Central Bank --
 which as of this commit was downloaded in March 2023.
 
 # Why there are 2019 and 2023 subdirectories
