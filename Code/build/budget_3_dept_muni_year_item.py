@@ -177,15 +177,22 @@ if True: # accumulate (in acc) a data frame like df but
                          df0   = df ) ] )
   dfs2[t.ingresos] = acc
 
-if True: # test (loosely) that it worked
-  acc = acc . sort_values(spacetime) . reset_index(drop=True)
-  ing = ing . sort_values(spacetime) . reset_index(drop=True)
-  assert ( acc.drop( columns = s2.ingresos.money_cols ) .
-           equals(
-             ing.drop( columns = s2.ingresos.money_cols ) ) )
+if True: # Test (loosely) that it worked.
+         # Recall that `acc` is defined after and using `ing`.
+  accTest = acc . sort_values(spacetime) . reset_index(drop=True) . copy()
+  ingTest = ing . sort_values(spacetime) . reset_index(drop=True) . copy()
+  ingTest.loc [
+    # Until this is done, the non-money columns of accTest and ingTest differ.
+    ingTest["item categ" ] == t.corrientes,
+    "item categ" ] = \
+      t.propios
+  assert ( # Their non-money columns are now equal.
+    accTest.drop ( columns = s2.ingresos.money_cols ) .
+    equals (
+      ingTest.drop ( columns = s2.ingresos.money_cols ) ) )
   for c in s2.ingresos.money_cols:
-    assert (acc[c]  < ing[c]).any()
-    assert (acc[c] <= ing[c]).all()
+    assert (accTest[c]  < ingTest[c]).any() # Some are smaller.
+    assert (accTest[c] <= ingTest[c]).all() # None are bigger.
 
 
 ######
