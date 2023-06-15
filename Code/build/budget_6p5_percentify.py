@@ -6,12 +6,13 @@
 
 if True:
   import os
-  import pandas                     as pd
+  import pandas                                 as pd
   from   typing import List,Set,Dict
   #
-  import Code.common                as c
-  import Code.metadata.four_series  as s4
-  import Code.metadata.two_series   as s2
+  import Code.build.budget_6p5_percentify_defs  as lib
+  import Code.common                            as c
+  import Code.metadata.four_series              as s4
+  import Code.metadata.two_series               as s2
   from   Code.util.percentify import percentify_columns
 
 
@@ -37,9 +38,13 @@ if True: # input data
     dfs[s.name] = df
 
 for s in s2.series:
+  # Add "ingresos-pct" and "gastos-pct" data sets to `dfs`,
+  # in which the money columns have been percentified.
   df = dfs [s.name] . copy()
   df = ( df
-         . groupby (
+         . groupby ( # TODO ? the `group_keys` option
+                     # appears to have no effect (any longer?) here.
+                     # Maybe it should be removed.
            spacetime,
            group_keys = False )
          . apply ( lambda df:
@@ -48,17 +53,34 @@ for s in s2.series:
          . reset_index ( drop = True) )
   dfs[s.name + "-pct"] = df
 
-for s in s2.series:
-  m = ( dfs[s.name] .
+for s in s2.series: # test the axes
+  m = ( dfs [s.name] .          # money-valued
         sort_values ( spacetime ) .
         reset_index ( drop = True ) )
-  p = ( dfs[s.name + "-pct"] .
+  p = ( dfs [s.name + "-pct"] . # "percentage of money"-valued
         sort_values ( spacetime ) .
         reset_index ( drop = True ) )
-  assert m.columns.equals ( p.columns )
-  assert ( m [spacetime] . reset_index () .
+  assert m.columns.equals ( p.columns )     # same columns
+  assert ( m [spacetime] . reset_index () . # same spacetime rows
            equals ( p [spacetime]
                     . reset_index () ) )
+
+  # Verify that within each spacetime group,
+  # sorting by the percentified or the non-percentified
+  # money column has the same effect,
+  # at least after reducing the gruop to a set of rows
+  # over which all money (not percentage) values are unique.
+  t = m.merge ( p,
+                on = spacetime + ["item categ"] )
+  t["index"] = t.index
+  for c in s.money_cols:
+    assert ( t . groupby ( spacetime )
+             . apply ( lambda group :
+                       lib.order_of_both_values_the_same (
+                         unique_col = c + "_x",
+                         other_col  = c + "_y",
+                         df         = group ) )
+             . all () )
 
 for s in s4.series:
   dfs[s.name] . to_csv (

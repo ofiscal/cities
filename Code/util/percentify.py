@@ -18,11 +18,11 @@ def percentify_columns( cols : List[str],
 if True: # test it
   x = pd.DataFrame( [[1,2,3],
                      [4,6,8]],
-                    columns = ["moon","helium","art"] )
-  y = percentify_columns(["moon","helium"],x)
+                    columns = ["a","b","c"] )
+  y = percentify_columns(["a","b"],x)
   z = pd.DataFrame( [[0.2,0.25,3],
                      [0.8,0.75,8]],
-    columns = ["moon","helium","art"] )
+    columns = ["a","b","c"] )
   assert y.equals(z)
 
 def percentify_columns_by_groups(
