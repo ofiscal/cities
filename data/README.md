@@ -12,6 +12,10 @@ https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-
 is the inflation index EXCLUDING FOOD from the Central Bank --
 which as of this commit was downloaded in March 2023.
 
+# Why the data only goes back to 2013
+
+There is no regalías data before that.
+
 # Why there are 2019 and 2023 subdirectories
 
 This project was first conceived in May of 2019,

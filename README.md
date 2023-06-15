@@ -1,5 +1,7 @@
 # How to run this
 
+## To build the whole project
+
 From the project root, run
 ```
 make vintage=2023 subsample=1000
@@ -10,6 +12,17 @@ make vintage=2023 subsample=1000
 If you run `make` without specifying those arguments,
 default values will be used,
 as found in `./Makefile`.
+
+
+## To build something else
+
+Do similarly to the above, except specify the target:
+```
+make <target> vintage=2023 subsample=1000
+```
+
+For possible values that `<target>` could take in the above,
+see the definition of `.PHONY` in `./Makefile`.
 
 
 # What this does

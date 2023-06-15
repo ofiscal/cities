@@ -20,8 +20,8 @@ if True: # folders
                           "recip-" + str(c.subsample) )
   dest   = os.path.join ( c.outdata, "budget_6p5_cull_and_percentify",
                           "recip-" + str(c.subsample) )
-  if not os.path.exists( dest ):
-    os.makedirs(         dest )
+  if not os.path.exists ( dest ):
+    os.makedirs (         dest )
 
 spacetime = ["dept code","muni code","year"]
 
@@ -31,37 +31,37 @@ if True: # input data
     df = pd.read_csv (
       os.path.join ( source,
                      s.name + ".csv" ) )
-    df = ( # drop some columns, rows. OBSOLETE --
-           # those are now already dropped upstream.
-      df[df["year"] >= 2013]
-        # because there is no regalias data before 2013
+    df = ( df # Reorder some columns, and in the case of the `gastos` data,
+              # drop the "item total" columns.
            [spacetime + ["item categ"] + s.money_cols] )
-        # this line drops the money columns we don't use
     dfs[s.name] = df
 
 for s in s2.series:
-  df = dfs[s.name].copy()
-  df = ( df . groupby ( spacetime,
-                        group_keys = False ) .
-         apply( lambda df:
-                percentify_columns(
-                  s.money_cols, df ) ) .
-         reset_index( drop=True) )
+  df = dfs [s.name] . copy()
+  df = ( df
+         . groupby (
+           spacetime,
+           group_keys = False )
+         . apply ( lambda df:
+                   percentify_columns (
+                     s.money_cols, df ) )
+         . reset_index ( drop = True) )
   dfs[s.name + "-pct"] = df
 
 for s in s2.series:
   m = ( dfs[s.name] .
-        sort_values(spacetime) .
-        reset_index(drop=True) )
+        sort_values ( spacetime ) .
+        reset_index ( drop = True ) )
   p = ( dfs[s.name + "-pct"] .
-        sort_values(spacetime) .
-        reset_index(drop=True) )
-  assert m.columns.equals( p.columns )
-  assert ( m[spacetime].reset_index() .
-           equals(p[spacetime].reset_index() ) )
+        sort_values ( spacetime ) .
+        reset_index ( drop = True ) )
+  assert m.columns.equals ( p.columns )
+  assert ( m [spacetime] . reset_index () .
+           equals ( p [spacetime]
+                    . reset_index () ) )
 
 for s in s4.series:
-  dfs[s.name].to_csv (
+  dfs[s.name] . to_csv (
     os.path.join ( dest,
                    s.name + ".csv" ),
     index = False )
