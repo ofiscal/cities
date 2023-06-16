@@ -181,9 +181,11 @@ if True: # Define how to compute the average non-dept muni
 
 index_cols = ["dept code","year","item categ"]
 for s in s2.series: # Add average muni to the to -pct data sets.
-  dfs1 [s.name] = ( # Handle the peso-valued data sets.
+  dfs1 [s.name] = ( # Copy only two (the peso-valued ones)
+    # of the four data sets from dfs0.
+    # PITFALL: This "copy" is by reference,
+    # which is (faster, and) fine because they aren't modified.
     dfs0 [s.name] )
-    # TODO ? The above looks like it should be a copy.
   spct = s.name + "-pct"
   if True: # Handle the %-valued data sets.
     df = dfs0 [ spct ]
@@ -205,8 +207,8 @@ for s in s2.series: # Add average muni to the to -pct data sets.
         drop ( columns = ["dc","level_3"] ) ) )
 
 if True: # tests
-  assert dfs0 ["gastos"]   . equals ( dfs1 ["gastos"] )
-  assert dfs0 ["ingresos"] . equals ( dfs1 ["ingresos"] )
+  assert dfs0 ["gastos"]   is dfs1 ["gastos"]
+  assert dfs0 ["ingresos"] is dfs1 ["ingresos"]
   for s in s4.series_pct: # test dimensions
     pct_series =     dfs1 [ s.name       ]
     non_pct_series = dfs1 [ s.name [:-4] ] # drop the "-pct" suffix
