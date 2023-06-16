@@ -117,8 +117,10 @@ if True: # Count munis per department.
 if True: # Define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell.
   def prepend_avg_muni (
-      index_cols         : List [str], # Sometimes length 1 ["dept code"],
-                                       # sometimes length > 1.
+      index_cols         : List [str],
+        # `index_cols` is an argument only to make testing easier.
+        # In the test it has length 1 (it is ["dept code"]).
+        # In production it has length 3: ["dept code","year","item categ"].
       money_cols         : List [str], # What to average.
       munis_in_dept      : int,
       muni_years_in_dept : int,
@@ -165,8 +167,13 @@ if True: # Define how to compute the average non-dept muni
                         columns = [ "dept code", "muni code",
                                     "money","cash","pecan" ] ) .
           astype (float) )
-    z = ( prepend_avg_muni ( ["dept code"], ["money","cash"], 4, 8, x) .
-          reset_index ( drop = True ) )
+    z = (
+      prepend_avg_muni ( index_cols = ["dept code"],
+                         money_cols = ["money","cash"],
+                         munis_in_dept = 4,
+                         muni_years_in_dept = 8,
+                         df0 = x)
+      . reset_index ( drop = True ) )
     for cn in y.columns:
       assert y [cn] . equals (
              z [cn] )
@@ -184,14 +191,16 @@ for s in s2.series: # Add average muni to the to -pct data sets.
     dfs1 [spct] = to_front (
       ["dept code","muni code"],
       ( df . groupby ( index_cols ) .
-        apply ( lambda df:
-                prepend_avg_muni (
-                  index_cols,
-                  s.money_cols,
-                  get_muni_count      ( spct, df["dc"].iloc[0] ),
-                  get_muni_year_count ( spct, df["dc"].iloc[0] ),
-                  df ) .
-                drop ( columns = index_cols ) ) .
+        apply (
+          lambda df:
+          prepend_avg_muni ( index_cols         = index_cols,
+                             money_cols         = s.money_cols,
+                             munis_in_dept      = get_muni_count
+                               ( spct, df["dc"].iloc[0] ),
+                             muni_years_in_dept = get_muni_year_count
+                               ( spct, df["dc"].iloc[0] ),
+                             df0                = df )
+          . drop ( columns = index_cols ) ) .
         reset_index () .
         drop ( columns = ["dc","level_3"] ) ) )
 
