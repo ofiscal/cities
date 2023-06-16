@@ -187,9 +187,13 @@ for s in s2.series: # Add average muni to the to -pct data sets.
     # which is (faster, and) fine because they aren't modified.
     dfs0 [s.name] )
   spct = s.name + "-pct"
-  if True: # Handle the %-valued data sets.
-    df = dfs0 [ spct ]
-    df ["dc"] = df ["dept code"] # TODO ? ugly
+  if True: # Create the other two (the %-valued) data sets.
+    df = dfs0 [ spct ] . copy ()
+    df ["dc"] = df ["dept code"] # TODO ? Ugly, but seems unavoidable. Why:
+      # The `groupby` below absorbs "dept code" into grouped data index.
+      # The `apply` that follows it needs to use the department code, but
+      # none of the individual frames has access to the grouped data index.
+      # "dc", a copy of "dept code", thus conveys it to `prepend_avg_muni`.
     dfs1 [spct] = to_front (
       ["dept code","muni code"],
       ( df . groupby ( index_cols ) .
