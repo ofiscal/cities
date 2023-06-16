@@ -84,21 +84,35 @@ if True: # Count munis per department.
                                   axis = "columns" )
     counts [s.name] . columns = ["munis","muni-years"]
 
-  def get_muni_count( fn, dc : int ) -> int:
-    return ( int ( counts [fn] .
-                   loc [ dc, "munis" ] )
-             if dc in muni_counts . index
+  def get_muni_count ( filename : str,
+                       dept_code : int
+                      ) -> int:
+    """A helper function for getting data from `counts`."""
+    return ( int ( counts [filename] .
+                   loc [ dept_code, "munis" ] )
+             if dept_code in muni_counts . index
              else 1 ) # TODO ? ugly, ought to be Optional.
-                      # (In that case I would return Nothing
-                      # for depts with only dept-level info.)
+  # (In that case I would return Nothing for depts with only dept-level info.)
+  #
+  # TODO : Is this even right? I seem to be assuming the muni is present,
+  # even if it's not in the count.
+  # Maybe it's because the default value is only relevant in subsamples,
+  # i.e. for testing?
 
-  def get_muni_year_count( fn, dc : int ) -> int:
-    return ( int ( counts [fn] .
-                  loc [ dc, "muni-years" ] )
-             if dc in muni_counts . index
+  def get_muni_year_count ( filename : str,
+                            dept_code : int
+                           ) -> int:
+    """A helper function for getting data from `counts`."""
+    return ( int ( counts [filename] .
+                  loc [ dept_code, "muni-years" ] )
+             if dept_code in muni_counts . index
              else 3 ) # TODO ? ugly, ought to be Optional.
-                      # (In that case I would return Nothing
-                      # for depts with only dept-level info.)
+  # (In that case I would return Nothing for depts with only dept-level info.)
+  #
+  # TODO : Is this even right? I seem to be assuming the muni is present,
+  # in every year, even if it's not in the count.
+  # Maybe it's because the default value is only relevant in subsamples,
+  # i.e. for testing?
 
 if True: # Define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell.
