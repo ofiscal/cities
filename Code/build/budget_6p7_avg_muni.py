@@ -16,10 +16,11 @@ if True:
   import pandas                     as pd
   from   typing import List, Set, Dict
   #
+  import Code.build.use_keys        as uk
   import Code.common                as c
   import Code.metadata.four_series  as s4
-  import Code.metadata.two_series   as s2
   import Code.metadata.terms        as t
+  import Code.metadata.two_series   as s2
   from   Code.util.misc import to_front
 
 
@@ -56,6 +57,7 @@ if True: # Count munis per department.
   counts : Dict [str, pd.DataFrame] = {}
     # The index of each `DataFrame` in `counts` will be the dept code,
     # due to the groupby statements below.
+    # The column names in each will be ["munis", "muni-years"].
   for s in s4.series_pct:
     pre_counts = (
       dfs0 [s.name]
@@ -94,10 +96,10 @@ if True: # Count munis per department.
              else 1 ) # TODO ? ugly, ought to be Optional.
   # (In that case I would return Nothing for depts with only dept-level info.)
   #
-  # TODO : Is this even right? I seem to be assuming the muni is present,
-  # even if it's not in the count.
-  # Maybe it's because the default value is only relevant in subsamples,
-  # i.e. for testing?
+  # PITFALL: This default value are ultimately not important,
+  # because every dept code is present in `counts` in the full sample.
+  # For proof see the test below that bears the comment
+  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
 
   def get_muni_year_count ( filename : str,
                             dept_code : int
@@ -109,10 +111,10 @@ if True: # Count munis per department.
              else 3 ) # TODO ? ugly, ought to be Optional.
   # (In that case I would return Nothing for depts with only dept-level info.)
   #
-  # TODO : Is this even right? I seem to be assuming the muni is present,
-  # in every year, even if it's not in the count.
-  # Maybe it's because the default value is only relevant in subsamples,
-  # i.e. for testing?
+  # PITFALL: This default value is ultimately not important,
+  # because every dept code is present in `counts` in the full sample.
+  # For proof see the test below that bears the comment
+  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
 
 if True: # Define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell.
@@ -213,6 +215,7 @@ for s in s2.series: # Add average muni to the to -pct data sets.
 if True: # tests
   assert dfs0 ["gastos"]   is dfs1 ["gastos"]
   assert dfs0 ["ingresos"] is dfs1 ["ingresos"]
+
   for s in s4.series_pct: # test dimensions
     pct_series =     dfs1 [ s.name       ]
     non_pct_series = dfs1 [ s.name [:-4] ] # drop the "-pct" suffix
@@ -229,6 +232,18 @@ if True: # tests
       groupby ( ["dept code","year","item categ"] ) .
       apply ( lambda _: () ) )
     assert len (pct_series) == nAverages + len (non_pct_series)
+
+  if c.subsample == 1: # In full sample, every dept is present
+                       # in both `DataFrame`s in `counts`.
+    geo = uk.geo[["dept code"]] . drop_duplicates()
+    geo["one"] = 1
+    for k in counts.keys():
+      i = counts [k] . index
+      assert i . equals ( i . drop_duplicates () )
+      df = pd.DataFrame ( { "dept code" : i } )
+      df = df.merge ( geo, on = "dept code" )
+      assert ( geo["one"] . sum() ==
+               df ["one"] . sum() )
 
 for s in s4.series: # Save the result.
   dfs1 [s.name] . to_csv (
