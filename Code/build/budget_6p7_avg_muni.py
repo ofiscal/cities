@@ -67,7 +67,7 @@ if True: # Count munis per department.
     muni_counts = ( # Count distinct munis.
       # If a muni appears in any year, it is counted.
       pre_counts
-      [["dept code","muni code","count"]]
+      . drop ( columns = ["year"] )
       . drop_duplicates ()
       . groupby ( "dept code" )
       . agg ('sum')
@@ -75,7 +75,6 @@ if True: # Count munis per department.
     muni_year_counts = ( # Count distinct muni-years post-2015.
       pre_counts
       [ pre_counts ["year"] > 2015]
-      [["dept code","muni code","year","count"]]
       . drop_duplicates ()
       . groupby ( ["dept code"] )
       . agg ('sum')
