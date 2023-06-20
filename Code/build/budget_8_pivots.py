@@ -1,17 +1,31 @@
+# PURPOSE:
+# Generates a lot of little data sets, in a file tree.
+# The columns of each data (except the first) set are years,
+# and the rows are budget items.
+# The structure of the filetree is best described by example:
+#
+#   [output/2023/pivots/recip-100/CAUCA/MORALES]$ ls *.csv -1
+#   gastos.csv              # in COP
+#   gastos-pct.csv          # in percentages
+#   ingresos.csv            # in COP
+#   ingresos-pct.csv        # in percentages
+#
+# (Each folder also includes equivalent .xlsx files.)
+
 if True:
   from   os import path, makedirs
   import pandas as pd
   from   pathlib import Path
   from   typing import List,Set,Dict
   #
-  import Code.common as c
-  import Code.metadata.four_series as s4
+  import Code.common                as c
+  import Code.metadata.four_series  as s4
   import Code.util.aggregate_all_but_biggest.better \
     as agger # "aggregator"
 
 
 dest_root = path.join ( c.outdata, "pivots",
-                        "recip-" + str(c.subsample) )
+                        "recip-" + str (c.subsample) )
 
 if True:
   spacetime = ["dept", "muni", "year", "dept code", "muni code"]
@@ -24,7 +38,7 @@ if True: # Read data.
       pd.read_csv (
         ( path.join ( c.outdata,
                       "budget_7_verbose",
-                      "recip-" + str(c.subsample),
+                      "recip-" + str (c.subsample),
                       s.name + ".csv" ) ) ) .
       sort_values ( spacetime ) )
 
