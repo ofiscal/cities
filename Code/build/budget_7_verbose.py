@@ -14,33 +14,34 @@ if True:
 if True: # folders
   source = os.path.join ( c.outdata,
                           "budget_6p7_avg_muni",
-                          "recip-" + str(c.subsample) )
+                          "recip-" + str (c.subsample) )
   dest = os.path.join ( c.outdata, "budget_7_verbose",
-                        "recip-" + str(c.subsample) )
-  if not os.path.exists( dest ):
-    os.makedirs(         dest )
+                        "recip-" + str (c.subsample) )
+  if not os.path.exists ( dest ):
+    os.makedirs (         dest )
 
 if True: # Merge geo data into main data.
   dfs = {}
   for s in s4.series:
-    extra_columns = ( ["munis in dept","muni-years in dept"]
-                      if s.name[-4:] == "-pct"
+    # If the series name ends in `-pct`, include these columns.
+    extra_columns = ( ["munis in dept", "muni-years in dept"]
+                      if s.name [-4:] == "-pct"
                       else [] )
     sn = s.name
-    df = util.to_front(
-      ["dept","muni","year"] + s.money_cols + ["item categ"],
-      uk.merge_geo(
+    df = util.to_front (
+      ["dept", "muni", "year"] + s.money_cols + ["item categ"],
+      uk.merge_geo (
         pd.read_csv (
           os.path.join ( source,
                          sn + ".csv" ) )
-        [ ["muni code","dept code","year","item categ"]
-          + extra_columns + s.money_cols] ) )
-    df.loc[ df["muni code"] == 0,
-            "muni" ] = "dept"
-    df.loc[ df["muni code"] == -2,
-            "muni" ] = "promedio"
+        [ [ "muni code","dept code","year","item categ"]
+          + extra_columns + s.money_cols ] ) )
+    df.loc [ df ["muni code"] == 0,
+             "muni" ] = "dept"
+    df.loc [ df ["muni code"] == -2,
+             "muni" ] = "promedio"
     df.to_csv (
       os.path.join ( dest,
                      s.name + ".csv" ),
       index = False )
-    dfs[sn] = df
+    dfs [sn] = df
