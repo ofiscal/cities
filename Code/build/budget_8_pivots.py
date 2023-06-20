@@ -1,5 +1,5 @@
 if True:
-  from   os import path
+  from   os import path, makedirs
   import pandas as pd
   from   pathlib import Path
   from   typing import List,Set,Dict
@@ -51,7 +51,7 @@ def write_pivots ( dept : str,
                   ) -> pd.DataFrame:
   """ PITFALL: Writes a file *and* returns a value."""
   dest = path.join ( dest_root, dept, muni )
-  if not path.exists (dest): os.makedirs (dest)
+  if not path.exists (dest): makedirs (dest)
   place = ( all_places
             [ ( all_places ["muni"] == muni ) &
               ( all_places ["dept"] == dept ) ] .
