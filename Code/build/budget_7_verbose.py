@@ -27,13 +27,12 @@ if True: # Merge geo data into main data.
     extra_columns = ( ["munis in dept", "muni-years in dept"]
                       if s.name [-4:] == "-pct"
                       else [] )
-    sn = s.name
     df = util.to_front (
       ["dept", "muni", "year"] + s.money_cols + ["item categ"],
       uk.merge_geo (
         pd.read_csv (
           os.path.join ( source,
-                         sn + ".csv" ) )
+                         s.name + ".csv" ) )
         [ [ "muni code","dept code","year","item categ"]
           + extra_columns + s.money_cols ] ) )
     df.loc [ df ["muni code"] == 0,
@@ -44,4 +43,4 @@ if True: # Merge geo data into main data.
       os.path.join ( dest,
                      s.name + ".csv" ),
       index = False )
-    dfs [sn] = df
+    dfs [s.name] = df
