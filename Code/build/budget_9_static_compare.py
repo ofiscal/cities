@@ -74,12 +74,11 @@ def static_muni_ungrouped ( filename : str,
   df = fill.fill_space ( ["year","item categ"],
                          [money_col],
                          df )
-  df = ( df [["item categ",money_col]]
-         . groupby ( ["item categ"] )
-         . agg ('mean')
-         [money_col]
-         . sort_values () )
-  return df
+  return ( df [["item categ",money_col]]
+           . groupby ( ["item categ"] )
+           . agg ('mean')
+           [money_col]
+           . sort_values () )
 
 if testing:
   dc, mc = 25, 25873 # Villapinzón, in Cundinamarca
@@ -91,7 +90,9 @@ if testing:
   ( df . groupby( "item categ" )
     . mean ( numeric_only = True ) )
   ["bitem oblig"]
-  static_muni_ungrouped ( fn, dc, mc )
+  static_muni_ungrouped ( filename  = fn,
+                          dept_code = dc,
+                          muni_code = mc )
 
 def group_small_if_needed ( filename : str,
                             ser : pd.Series
@@ -112,10 +113,11 @@ def static_muni ( filename : str,
                   muni_code : int
                 ) -> pd.Series:
   return group_small_if_needed (
-    filename,
-    static_muni_ungrouped ( filename,
-                            dept_code,
-                            muni_code ) )
+    filename = filename,
+    ser      = static_muni_ungrouped (
+      filename  = filename,
+      dept_code = dept_code,
+      muni_code = muni_code ) )
 
 if testing: # Test by hand
   filename = "gastos-pct"
@@ -135,8 +137,12 @@ if testing: # Test by hand
                        apply ( lambda s: s[:10] ) )
   d
   d ["item oblig"] . mean()
-  static_muni_ungrouped ( filename, 25, mc )
-  static_muni ( filename, 25, mc )
+  static_muni_ungrouped ( filename  = filename,
+                          dept_code = 25,
+                          muni_code = mc )
+  static_muni ( filename  = filename,
+                dept_code = 25,
+                muni_code = mc )
 
 def static_avg ( filename : str,
                  money_col : str,
@@ -185,22 +191,26 @@ if testing: # PITFALL: Theese numbers cannot simply be read off
                . agg ( 'sum' ) ) /
              muni_years )
            [money_col] )
-  func = ( static_avg ( filename, money_col, dc ) .
-           drop ( columns = ["dept code","dept"] ) )
-  res = pd.concat ( [test,func],
+  func = ( static_avg ( filename  = filename,
+                        money_col = money_col,
+                        dept_code = dc ) .
+           drop ( columns = ["dept code", "dept"] ) )
+  res = pd.concat ( [test, func],
                     axis = "columns" )
   res.columns = ["test","func"]
   res
 
 def static_avg_with_otros (
-    filename : str,
-    money_col : str,
-    dept_code : int,
-    sm : pd.DataFrame # result of calling static_muni()
+    filename       : str,
+    money_col      : str,
+    dept_code      : int,
+    static_muni_df : pd.DataFrame # result of calling static_muni()
 ) -> pd.Series:
-  """ Like `static_avg()`, but lumps together every row not in the `sm` argument. Only for gastos data sets only."""
-  top_rows = sm.index.drop ( "Otros" )
-  avg = static_avg ( filename, money_col, dept_code )
+  """ Like `static_avg()`, but lumps together every row not in the `static_muni_df` argument. Only for gastos data sets only."""
+  top_rows = static_muni_df.index.drop ( "Otros" )
+  avg = static_avg ( filename  = filename,
+                     money_col = money_col,
+                     dept_code = dept_code )
   avg_top = avg . loc [top_rows]
   avg_bottom = ( pd.Series ( [ avg . copy() .
                                drop ( index = top_rows ) .
@@ -212,18 +222,20 @@ def static_avg_with_otros (
 if testing: # Test by hand
   dc = 25
   mc = 25873
-  sm = static_muni ( "gastos-pct", dc, mc )
-  sa = static_avg ( "gastos-pct",
-                    "item oblig",
-                    dc )
-  sawo = static_avg_with_otros ( "gastos-pct",
-                                 "item oblig",
-                                 dc,
-                                sm )
-  res = pd.concat ( [sm,sa,sawo],
+  static_muni_df = static_muni ( filename  = "gastos-pct",
+                                 dept_code = dc,
+                                 muni_code = mc )
+  static_avg_df = static_avg ( filename  = "gastos-pct",
+                               money_col = "item oblig",
+                               dept_code = dc )
+  sawo = static_avg_with_otros ( filename       = "gastos-pct",
+                                 money_col      = "item oblig",
+                                 dept_code      = dc,
+                                 static_muni_df = static_muni_df )
+  res = pd.concat ( [static_muni_df, static_avg_df, sawo],
                     axis = "columns",
                     sort = True )
-  res.columns = ["sa","sm","sawo"]
+  res.columns = ["static_muni_df","static_avg_df","sawo"]
   res
 
 def static_muni_pair ( filename : str,
@@ -231,8 +243,9 @@ def static_muni_pair ( filename : str,
                        dept_code : int,
                        muni_code : int
                       ) -> pd.DataFrame:
-  m = static_muni (
-    filename, dept_code, muni_code )
+  m = static_muni ( filename  = filename,
+                    dept_code = dept_code,
+                    muni_code = muni_code )
   m_name = str ( geo
                  [geo ["muni code"] == muni_code]
                  ["muni"]
@@ -241,13 +254,18 @@ def static_muni_pair ( filename : str,
                  [geo ["muni code"] == muni_code]
                  ["dept"]
                  . iloc[0] )
-  print ( str(dept_code), d_name, str(muni_code), m_name, filename )
+  print ( str(dept_code), d_name,
+          str(muni_code), m_name,
+          filename )
   a = (
-    static_avg_with_otros (
-      filename, money_col, dept_code, m )
+    static_avg_with_otros ( filename       = filename,
+                            money_col      = money_col,
+                            dept_code      = dept_code,
+                            static_muni_df = m )
     if filename == "gastos-pct"
-    else static_avg (
-        filename, money_col, dept_code ) )
+    else static_avg ( filename  = filename,
+                      money_col = money_col,
+                      dept_code = dept_code ) )
   return pd.DataFrame (
     { m_name                  : m,
       "promedio en " + d_name : a } )
@@ -287,9 +305,9 @@ for s in s4.series_pct:
       apply (
         ( lambda row:
           series_to_frame(
-            static_muni_ungrouped ( s.name,
-                                    row["dept code"],
-                                    row["muni code"] ) ) .
+            static_muni_ungrouped ( filename  = s.name,
+                                    dept_code = row["dept code"],
+                                    muni_code = row["muni code"] ) ) .
           to_csv (
             os.path.join (
               by_place_root,
