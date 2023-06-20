@@ -61,8 +61,8 @@ def myDescribe( df : pd.DataFrame ) -> pd.DataFrame:
     del( low_percentiles )
   numericTypes = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
   stats = ( df .
-            describe( include="all",
-                      percentiles = percentiles_reported ) .
+            describe ( include="all",
+                       percentiles = percentiles_reported ) .
             transpose() )
   if True: # count missing as fraction
     stats["missing"] = 1 - stats["count"] / len(df)

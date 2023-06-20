@@ -111,7 +111,7 @@ if True:
     del (td0,td1)
 
 if True:
-  def go ( five       : str, # Makes testing easier.
+  def go ( five       : int, # Makes testing easier.
                              # In production, set five = 5.
            space_cols : List[str],
            time_col   : str,
@@ -128,7 +128,7 @@ if True:
     df1 = ( df . copy () .
             groupby ( space_cols + [time_col] )
             . apply ( lambda df:
-                   add_top_five_column ( five, money_col, df ) )
+                      add_top_five_column ( five, money_col, df ) )
             . reset_index( drop=True ) )
     df2 = ( df1 . groupby ( space_cols,
                             group_keys = False )

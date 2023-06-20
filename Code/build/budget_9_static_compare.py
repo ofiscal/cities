@@ -201,13 +201,13 @@ if testing: # PITFALL: Theese numbers cannot simply be read off
   res
 
 def static_avg_with_otros (
-    filename       : str,
-    money_col      : str,
-    dept_code      : int,
-    static_muni_df : pd.DataFrame # result of calling static_muni()
+    filename        : str,
+    money_col       : str,
+    dept_code       : int,
+    static_muni_ser : pd.Series # result of calling static_muni()
 ) -> pd.Series:
-  """ Like `static_avg()`, but lumps together every row not in the `static_muni_df` argument. Only for gastos data sets only."""
-  top_rows = static_muni_df.index.drop ( "Otros" )
+  """ Like `static_avg()`, but lumps together every row not in the `static_muni_ser` argument. Only for gastos data sets only."""
+  top_rows = static_muni_ser.index.drop ( "Otros" )
   avg = static_avg ( filename  = filename,
                      money_col = money_col,
                      dept_code = dept_code )
@@ -222,20 +222,20 @@ def static_avg_with_otros (
 if testing: # Test by hand
   dc = 25
   mc = 25873
-  static_muni_df = static_muni ( filename  = "gastos-pct",
-                                 dept_code = dc,
-                                 muni_code = mc )
-  static_avg_df = static_avg ( filename  = "gastos-pct",
-                               money_col = "item oblig",
-                               dept_code = dc )
+  static_muni_ser = static_muni ( filename  = "gastos-pct",
+                                  dept_code = dc,
+                                  muni_code = mc )
+  static_avg_ser = static_avg ( filename  = "gastos-pct",
+                                money_col = "item oblig",
+                                dept_code = dc )
   sawo = static_avg_with_otros ( filename       = "gastos-pct",
                                  money_col      = "item oblig",
                                  dept_code      = dc,
-                                 static_muni_df = static_muni_df )
-  res = pd.concat ( [static_muni_df, static_avg_df, sawo],
+                                 static_muni_ser = static_muni_ser )
+  res = pd.concat ( [static_muni_ser, static_avg_ser, sawo],
                     axis = "columns",
                     sort = True )
-  res.columns = ["static_muni_df","static_avg_df","sawo"]
+  res.columns = ["static","static_avg","static avg + otros"]
   res
 
 def static_muni_pair ( filename : str,
@@ -261,7 +261,7 @@ def static_muni_pair ( filename : str,
     static_avg_with_otros ( filename       = filename,
                             money_col      = money_col,
                             dept_code      = dept_code,
-                            static_muni_df = m )
+                            static_muni_ser = m )
     if filename == "gastos-pct"
     else static_avg ( filename  = filename,
                       money_col = money_col,
