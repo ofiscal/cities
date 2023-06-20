@@ -1,3 +1,4 @@
+# PURPOSE:
 # Merge verbal names of depts and munis back into the data.
 
 if True:
@@ -23,7 +24,8 @@ if True: # folders
 if True: # Merge geo data into main data.
   dfs = {}
   for s in s4.series:
-    # If the series name ends in `-pct`, include these columns.
+    # If the series name ends in `-pct`,
+    # retrieve these columns from `source`.
     extra_columns = ( ["munis in dept", "muni-years in dept"]
                       if s.name [-4:] == "-pct"
                       else [] )
@@ -35,9 +37,12 @@ if True: # Merge geo data into main data.
                          s.name + ".csv" ) )
         [ [ "muni code","dept code","year","item categ"]
           + extra_columns + s.money_cols ] ) )
+    # Certain muni codes are special;
+    # they indicate something other than a municipality.
     df.loc [ df ["muni code"] == 0,
              "muni" ] = "dept"
-    df.loc [ df ["muni code"] == -2,
+    df.loc [ df ["muni code"] == -2, # PITFALL: Ugly. See
+                                     # ./budget_6p7_avg_muni.py
              "muni" ] = "promedio"
     df.to_csv (
       os.path.join ( dest,
