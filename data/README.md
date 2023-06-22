@@ -1,3 +1,10 @@
+# "Vintage" matters
+
+There are two vintages of data used --
+one set of data downloaded in 2019, the other in 2023.
+Both begin at 2013,
+and extend as far into the future as SISFUT permitted at the time.
+
 # The inflation data
 
 ## for 2019

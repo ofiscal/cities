@@ -29,13 +29,11 @@ def split_at_middlest_space( s : str ) -> int:
 
 dept_data = (
   pd.read_csv (
-    path.join ( c.indata,
-                "regions",
+    path.join ( "data/vintage-agnostic/regions",
                 "depts-brief.csv" ) ) )
 muni_data = (
   pd.read_csv (
-    path.join ( c.indata,
-                "regions",
+    path.join ( "data/vintage-agnostic/regions",
                 "munis-brief.csv" ) )
   . drop_duplicates() )
 
