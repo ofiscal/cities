@@ -54,7 +54,7 @@ def static_muni_ungrouped ( filename : str,
                             dept_code : int,
                             muni_code : int
                            ) -> pd.Series:
-  """Average a muni's values over years after 2015."""
+  """Average a muni's values over years during the latest administration."""
   assert muni_code > 0
   money_col = ( "item total"
                 if filename == t.ingresos_pct
@@ -66,9 +66,9 @@ def static_muni_ungrouped ( filename : str,
                       "muni" ] .
             iloc [0] )
   df = monolith [filename]
-  df = ( df [ ( df["dept code"] == dept_code ) &
-              ( df["muni code"] == muni_code ) &
-              ( df["year"]      >  2015      ) ]
+  df = ( df [ ( df["dept code"] == dept_code          ) &
+              ( df["muni code"] == muni_code          ) &
+              ( df["year"]      >= c.admin_first_year ) ]
          [[ "year", "item categ", money_col ]] .
          copy () )
   df = fill.fill_space ( ["year","item categ"],
@@ -84,9 +84,9 @@ if testing:
   dc, mc = 25, 25873 # Villapinzón, in Cundinamarca
   fn = "gastos-pct"
   df = monolith [fn]
-  df = df [ (df ["dept code"] == dc  ) &
-            (df ["muni code"] == mc  ) &
-            (df ["year"]      >  2015) ]
+  df = df [ (df ["dept code"] == dc                 ) &
+            (df ["muni code"] == mc                 ) &
+            (df ["year"]      >= c.admin_first_year ) ]
   ( df . groupby( "item categ" )
     . mean ( numeric_only = True ) )
   ["bitem oblig"]
@@ -124,9 +124,9 @@ if testing: # Test by hand
   dc = 25
   mc = 25873
   d = monolith[filename]
-  d = ( d[ ( d ["dept code"] == dc   ) &
-           ( d ["muni code"] == mc   ) &
-           ( d ["year"]      >= 2016 ) ] )
+  d = ( d[ ( d ["dept code"] == dc                 ) &
+           ( d ["muni code"] == mc                 ) &
+           ( d ["year"]      >= c.admin_first_year ) ] )
   d = ( d . drop( columns = ["dept","muni"] ) .
         rename (
           columns = { "munis in dept"      :"ms",
@@ -151,7 +151,7 @@ def static_avg ( filename : str,
   df = monolith [filename]
   df = df [ (df ["dept code"] == dept_code ) &
             (df ["muni code"] >  0         ) & # exclude dept-level info
-            (df ["year"]      >= 2016      ) ] . copy()
+            (df ["year"]      >= c.admin_first_year ) ] . copy()
   muni_years = df["muni-years in dept"] . iloc[0]
     # .iloc[0] is fine, becaused |muni-years| is constant in df
   dg = ( df [["item categ", money_col]] .
@@ -171,7 +171,7 @@ if testing: # PITFALL: Theese numbers cannot simply be read off
   df = monolith [filename]
   df = df [ ( df["dept code"] == dc   ) &
             ( df["muni code"] >  0    ) & # exclude dept-level info
-            ( df["year"]      >= 2016 ) ] . copy()
+            ( df["year"]      >= c.admin_first_year ) ] . copy()
   df [["dept","muni","year","item categ"]]
   #
   df_readable = df.copy ()

@@ -24,7 +24,6 @@ if True:
   import os
   import pandas as pd
   #
-  import Code.build.budget_3_dept_muni_year_item_lib  as lib
   import Code.build.classify_budget_codes             as codes
   import Code.common                                  as c
   import Code.metadata.terms                          as t
@@ -83,13 +82,6 @@ for s in [t.ingresos,t.gastos]:
       sum ( numeric_only = True ) .
       reset_index () ) )
   dfs1[s] = df
-
-for s in s2.series: # compute min, max year for each space slice
-  for stat in ["min","max"]:
-    dfs1 [s.name] = lib.compute_stat_of_year_per_space_slice (
-      space_cols = ["dept code","muni code"],
-      stat = stat,
-      df = dfs1 [s.name] )
 
 # dfs2: For ingresos only, for each spacetime slice,
 # we must subtract the "recaudo" value in the row where categ = "transfers"

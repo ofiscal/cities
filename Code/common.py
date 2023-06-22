@@ -17,9 +17,15 @@ else:
 subsample = imp.subsample
 vintage   = imp.vintage
 
-first_year = 2013
-if   vintage == 2019: last_year = 2018
-elif vintage == 2023: last_year = 2021
+first_year = 2013         # Data starts here.
+if   vintage == 2019:
+  admin_first_year = 2016 # Latest admin started office.
+  last_year        = 2018 # Data ends here.
+elif vintage       == 2023:
+  admin_first_year = 2020 # Latest admin started office.
+  last_year        = 2021 # Data ends here at the latest.
+                          # (FOr most munis it ends earlier,
+                          # in 2020.)
 else: raise ValueError ( "vintage not in ", vintage_universe )
 
 # PITFALL: These might not look worth defining, but they are!
