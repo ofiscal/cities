@@ -4,6 +4,7 @@ if True:
   import Code.draw.chart.pairs as pairs
   import Code.draw.design as design
 
+
 class chartPage:
   def __init__(self,
                file, background_color, insertNewlines,
@@ -28,7 +29,7 @@ def page1( muni_short : str,
             "administración (2015 a 2018) en cada sector."],
     index_col = 0,
     drawChart = pairs.drawPairs)
- 
+
 def page2( muni_short : str,
            dept_short : str ) -> chartPage:
   return chartPage(
@@ -71,4 +72,3 @@ def pages( muni_short : str,
           page2(muni_short,dept_short),
           page3(muni_short),
           page4(muni_short)]
-
