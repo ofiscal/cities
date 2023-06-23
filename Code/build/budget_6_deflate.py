@@ -38,8 +38,8 @@ for s in ser.series:
 
   for c in s.money_cols:
     df1[c] = df1[c] * df1["deflator"]
-    if True: # Verify (loosely) that it worked --
-             # i.e. that the ratio total money from 2018 to 2013
+    if True: # A loose test:
+             # Verifies that the ratio total money from 2018 to 2013
              # has fallen by between 1.2 and 1.3.
              # (The peso devalued by a factor of very close to 1.25
              # over that time. The exact value depends a bit

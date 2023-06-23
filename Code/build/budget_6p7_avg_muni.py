@@ -74,7 +74,7 @@ if True: # Count munis per department.
       . groupby ( "dept code" )
       . agg ('sum')
       ["count"] )
-    muni_year_counts = ( # Count distinct muni-years post-2015.
+    muni_year_counts = ( # Count distinct muni-years during this admin.
       pre_counts
       [ pre_counts ["year"] >= c.admin_first_year ]
       . drop_duplicates ()

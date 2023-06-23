@@ -1,3 +1,7 @@
+PITFALL: This file was written when there was only one vintage, 2019.
+It has not been updated to reflect
+the existence of the alternative 2023 vintage.
+
 This file describes a tricky test
 at the end of `Code/build/budget_6p7_avg_muni.py`.
 
