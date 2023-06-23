@@ -51,7 +51,7 @@ if True: # Count munis per department.
   # and why we count muni-years as well as munis.
   #
   # PITFALL: Later (in stage 9, "static compare")
-  # we take the average of years > 2015,
+  # we take the average over years in the current administration,
   # which is why we only count those years here.
 
   counts : Dict [str, pd.DataFrame] = {}
@@ -76,7 +76,7 @@ if True: # Count munis per department.
       ["count"] )
     muni_year_counts = ( # Count distinct muni-years post-2015.
       pre_counts
-      [ pre_counts ["year"] > 2015]
+      [ pre_counts ["year"] >= c.admin_first_year ]
       . drop_duplicates ()
       . groupby ( ["dept code"] )
       . agg ('sum')
