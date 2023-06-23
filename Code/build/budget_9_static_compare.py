@@ -279,7 +279,7 @@ if testing:
 
 def series_to_frame ( ser : pd.Series ) -> pd.DataFrame:
   df = pd.DataFrame ( ser )
-  df.columns = ["promedio 2016-2018"]
+  df.columns = ["promedio admin actual"]
   return df
 
 for s in s4.series_pct:
