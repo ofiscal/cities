@@ -325,12 +325,13 @@ $(budget_6p5_cull_and_percentify):    \
 	date
 
 budget_6p7_avg_muni: $(budget_6p7_avg_muni)
-$(budget_6p7_avg_muni):		    \
-  $(budget_6p5_cull_and_percentify) \
-  Code/build/budget_6p7_avg_muni.py \
-  Code/common.py		    \
-  Code/util/misc.py		    \
-  Code/build/use_keys.py	    \
+$(budget_6p7_avg_muni):                 \
+  $(budget_6p5_cull_and_percentify)     \
+  Code/build/budget_6p7_avg_muni.py     \
+  Code/build/budget_6p7_avg_muni_lib.py \
+  Code/common.py                        \
+  Code/util/misc.py                     \
+  Code/build/use_keys.py                \
   Code/metadata/four_series.py
 	date
 	$(myPython) Code/build/budget_6p7_avg_muni.py $(myArgs)
@@ -361,11 +362,12 @@ $(budget_8_pivots):				\
 	date
 
 budget_9_static_compare: $(budget_9_static_compare)
-$(budget_9_static_compare):		\
-  $(budget_7_verbose)			\
-  $(budget_8_pivots)			\
-  Code/build/budget_9_static_compare.py	\
-  Code/common.py			\
+$(budget_9_static_compare):                 \
+  $(budget_7_verbose)                       \
+  $(budget_8_pivots)                        \
+  Code/build/budget_9_static_compare.py     \
+  Code/build/budget_9_static_compare_lib.py \
+  Code/common.py                            \
   Code/metadata/four_series.py
 	date
 	$(myPython) Code/build/budget_9_static_compare.py $(myArgs)

@@ -16,6 +16,7 @@ if True:
   import pandas                     as pd
   from   typing import List, Set, Dict
   #
+  import Code.build.budget_6p7_avg_muni_lib as lib
   import Code.build.use_keys        as uk
   import Code.common                as c
   import Code.metadata.four_series  as s4
@@ -58,26 +59,29 @@ if True: # Count munis per department.
     # The index of each `DataFrame` in `counts` will be the dept code,
     # due to the groupby statements below.
     # The column names in each will be ["munis", "muni-years"].
-  for s in s4.series_pct:
+  for s in s4.series_pct: # Populate `counts`.
     pre_counts = (
       dfs0 [s.name]
-      [["dept code","muni code","year"]] )
+      [["dept code","muni code","year"]]
+      . drop_duplicates() )
     pre_counts = ( # discard dept-level rows
-      pre_counts . loc[
+      pre_counts . loc [
         pre_counts ["muni code"] > 0 ] )
     pre_counts ["count"] = 1
-    muni_counts = ( # Count distinct munis.
+    muni_counts : pd.Series = (
+      # Count distinct munis.
       # If a muni appears in any year, it is counted.
+      # TODO ? Should this only include years during this admin?
       pre_counts
       . drop ( columns = ["year"] )
       . drop_duplicates ()
       . groupby ( "dept code" )
       . agg ('sum')
       ["count"] )
-    muni_year_counts = ( # Count distinct muni-years during this admin.
+    muni_year_counts : pd.Series = (
+      # Count distinct muni-years during this admin.
       pre_counts
       [ pre_counts ["year"] >= c.admin_first_year ]
-      . drop_duplicates ()
       . groupby ( ["dept code"] )
       . agg ('sum')
       ["count"] )
@@ -86,35 +90,6 @@ if True: # Count munis per department.
                                   axis = "columns" )
     counts [s.name] . columns = ["munis","muni-years"]
 
-  def get_muni_count ( filename : str,
-                       dept_code : int
-                      ) -> int:
-    """A helper function for getting data from `counts`."""
-    return ( int ( counts [filename] .
-                   loc [ dept_code, "munis" ] )
-             if dept_code in muni_counts . index
-             else 1 ) # TODO ? ugly, ought to be Optional.
-  # (In that case I would return Nothing for depts with only dept-level info.)
-  #
-  # PITFALL: This default value are ultimately not important,
-  # because every dept code is present in `counts` in the full sample.
-  # For proof see the test below that bears the comment
-  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
-
-  def get_muni_year_count ( filename : str,
-                            dept_code : int
-                           ) -> int:
-    """A helper function for getting data from `counts`."""
-    return ( int ( counts [filename] .
-                  loc [ dept_code, "muni-years" ] )
-             if dept_code in muni_counts . index
-             else 3 ) # TODO ? ugly, ought to be Optional.
-  # (In that case I would return Nothing for depts with only dept-level info.)
-  #
-  # PITFALL: This default value is ultimately not important,
-  # because every dept code is present in `counts` in the full sample.
-  # For proof see the test below that bears the comment
-  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
 
 if True: # Define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell.
@@ -200,14 +175,20 @@ for s in s2.series: # Add average muni to the to -pct data sets.
       ["dept code","muni code"],
       ( df . groupby ( index_cols ) .
         apply (
-          lambda df:
-          prepend_avg_muni ( index_cols         = index_cols,
-                             money_cols         = s.money_cols,
-                             munis_in_dept      = get_muni_count
-                               ( spct, df["dc"].iloc[0] ),
-                             muni_years_in_dept = get_muni_year_count
-                               ( spct, df["dc"].iloc[0] ),
-                             df0                = df )
+          lambda df: prepend_avg_muni (
+            index_cols         = index_cols,
+            money_cols         = s.money_cols,
+            munis_in_dept      = lib.get_muni_count (
+              counts      = counts,
+              muni_counts = muni_counts,
+              filename    = spct,
+              dept_code   = df["dc"].iloc[0] ),
+            muni_years_in_dept = lib.get_muni_year_count (
+              counts      = counts,
+              muni_counts = muni_counts,
+              filename    = spct,
+              dept_code   = df["dc"].iloc[0] ),
+            df0 = df )
           . drop ( columns = index_cols ) ) .
         reset_index () .
         drop ( columns = ["dc","level_3"] ) ) )
