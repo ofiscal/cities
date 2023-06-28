@@ -42,7 +42,7 @@ if True: # input data
       os.path.join ( source,
                      s.name + ".csv" ) )
 
-if True: # Count munis per department.
+if True: # Count munis and muni-years per dept and per dept-year.
   #
   # PITFALL: The number depends on the subsample size being used.
   # That's why we can't just use the data from build.use_keys.geo
@@ -55,41 +55,56 @@ if True: # Count munis per department.
   # we take the average over years in the current administration,
   # which is why we only count those years here.
 
+  dept_year_level_counts : Dict [str, pd.DataFrame] = {}
+    # The index of each `DataFrame` in `dept_level_counts`
+    # will have two levels, ["dept code", "year"],
+    # due to the groupby statements below.
+    # The only column in each will be ["munis"].
+
   dept_level_counts : Dict [str, pd.DataFrame] = {}
     # The index of each `DataFrame` in `dept_level_counts`
     # will be the dept code,
     # due to the groupby statements below.
     # The column names in each will be ["munis", "muni-years"].
-  for s in s4.series_pct: # Populate `dept_level_counts`.
-    spacetime = (
-      dfs0 [s.name]
-      [["dept code","muni code","year"]]
-      . drop_duplicates() )
-    spacetime = ( # discard dept-level rows
-      spacetime . loc [
-        spacetime ["muni code"] > 0 ] )
-    spacetime ["count"] = 1
-    muni_counts : pd.Series = (
-      # Count distinct munis.
-      # If a muni appears in any year, it is counted.
-      # TODO ? Should this only include years during this admin?
+  for s in s4.series_pct: # Populate the two `*_counts` variables.
+    if True: # Define `spacetime`.
+      spacetime = (
+        dfs0 [s.name]
+        [["dept code","muni code","year"]]
+        . drop_duplicates () )
+      spacetime = ( # discard dept-level rows
+        spacetime . loc [
+          ( spacetime ["muni code"] >  0                  ) &
+          ( spacetime ["year"     ] >= c.admin_first_year ) ] )
+      spacetime ["count"] = 1
+
+    dept_year_level_counts [s.name] : pd.DataFrame = (
       spacetime
-      . drop ( columns = ["year"] )
-      . drop_duplicates ()
-      . groupby ( "dept code" )
-      . agg ('sum')
-      ["count"] )
-    muni_year_counts : pd.Series = (
-      # Count distinct muni-years during this admin.
-      spacetime
-      [ spacetime ["year"] >= c.admin_first_year ]
-      . groupby ( ["dept code"] )
-      . agg ('sum')
-      ["count"] )
-    dept_level_counts [s.name] = pd.concat ( [ muni_counts,
-                                               muni_year_counts ],
-                                             axis = "columns" )
-    dept_level_counts [s.name] . columns = ["munis","muni-years"]
+      . groupby ( ["dept code","year"] )
+      . agg ('sum' )
+      . reset_index() )
+
+    if True: # Define `dept_level_counts`.
+      muni_counts : pd.Series = (
+        # Count distinct munis.
+        # If a muni appears in any year, it is counted.
+        # TODO ? Should this only include years during this admin?
+        spacetime
+        . drop ( columns = ["year"] )
+        . drop_duplicates ()
+        . groupby ( "dept code" )
+        . agg ('sum')
+        ["count"] )
+      muni_year_counts : pd.Series = (
+        # Count distinct muni-years during this admin.
+        spacetime
+        . groupby ( ["dept code"] )
+        . agg ('sum')
+        ["count"] )
+      dept_level_counts [s.name] = pd.concat ( [ muni_counts,
+                                                 muni_year_counts ],
+                                               axis = "columns" )
+      dept_level_counts [s.name] . columns = ["munis","muni-years"]
 
 
 if True: # Define how to compute the average non-dept muni
