@@ -55,11 +55,12 @@ if True: # Count munis per department.
   # we take the average over years in the current administration,
   # which is why we only count those years here.
 
-  counts : Dict [str, pd.DataFrame] = {}
-    # The index of each `DataFrame` in `counts` will be the dept code,
+  dept_level_counts : Dict [str, pd.DataFrame] = {}
+    # The index of each `DataFrame` in `dept_level_counts`
+    # will be the dept code,
     # due to the groupby statements below.
     # The column names in each will be ["munis", "muni-years"].
-  for s in s4.series_pct: # Populate `counts`.
+  for s in s4.series_pct: # Populate `dept_level_counts`.
     pre_counts = (
       dfs0 [s.name]
       [["dept code","muni code","year"]]
@@ -85,10 +86,10 @@ if True: # Count munis per department.
       . groupby ( ["dept code"] )
       . agg ('sum')
       ["count"] )
-    counts [s.name] = pd.concat ( [ muni_counts,
-                                    muni_year_counts ],
-                                  axis = "columns" )
-    counts [s.name] . columns = ["munis","muni-years"]
+    dept_level_counts [s.name] = pd.concat ( [ muni_counts,
+                                               muni_year_counts ],
+                                             axis = "columns" )
+    dept_level_counts [s.name] . columns = ["munis","muni-years"]
 
 
 if True: # Define how to compute the average non-dept muni
@@ -114,9 +115,11 @@ if True: # Define how to compute the average non-dept muni
       # don't try to add an average municipality.
 
     avg = df.iloc [0] . copy ()
-    avg ["muni code"] = -2 # TODO ? Ugly.
+    avg ["muni code"] = -2 # TODO ? Ugly, requires special interpretation:
+      # Most muni codes really are muni codes, but -2 means "dept average".
     avg [money_cols] = ( # The missing-rows-aware mean.
       df [money_cols] . sum () /
+      # TODO ! This divisor could depend on the year.
       munis_in_dept )
     res = ( pd.concat ( [ pd.DataFrame ( [avg] ),
                           df0 ],
@@ -179,15 +182,15 @@ for s in s2.series: # Add average muni to the to -pct data sets.
             index_cols         = index_cols,
             money_cols         = s.money_cols,
             munis_in_dept      = lib.get_muni_count (
-              counts      = counts,
-              muni_counts = muni_counts,
-              filename    = spct,
-              dept_code   = df["dc"].iloc[0] ),
+              dept_level_counts = dept_level_counts,
+              muni_counts       = muni_counts,
+              filename          = spct,
+              dept_code         = df["dc"].iloc[0] ),
             muni_years_in_dept = lib.get_muni_year_count (
-              counts      = counts,
-              muni_counts = muni_counts,
-              filename    = spct,
-              dept_code   = df["dc"].iloc[0] ),
+              dept_level_counts = dept_level_counts,
+              muni_counts       = muni_counts,
+              filename          = spct,
+              dept_code         = df["dc"].iloc[0] ),
             df0 = df )
           . drop ( columns = index_cols ) ) .
         reset_index () .
@@ -215,11 +218,11 @@ if True: # tests
     assert len (pct_series) == nAverages + len (non_pct_series)
 
   if c.subsample == 1: # In full sample, every dept is present
-                       # in both `DataFrame`s in `counts`.
+                       # in both `DataFrame`s in `dept_level_counts`.
     geo = uk.geo[["dept code"]] . drop_duplicates()
     geo["one"] = 1
-    for k in counts.keys():
-      i = counts [k] . index
+    for k in dept_level_counts.keys():
+      i = dept_level_counts [k] . index
       assert i . equals ( i . drop_duplicates () )
       df = pd.DataFrame ( { "dept code" : i } )
       df = df.merge ( geo, on = "dept code" )
