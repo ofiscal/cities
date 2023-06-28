@@ -61,19 +61,19 @@ if True: # Count munis per department.
     # due to the groupby statements below.
     # The column names in each will be ["munis", "muni-years"].
   for s in s4.series_pct: # Populate `dept_level_counts`.
-    pre_counts = (
+    spacetime = (
       dfs0 [s.name]
       [["dept code","muni code","year"]]
       . drop_duplicates() )
-    pre_counts = ( # discard dept-level rows
-      pre_counts . loc [
-        pre_counts ["muni code"] > 0 ] )
-    pre_counts ["count"] = 1
+    spacetime = ( # discard dept-level rows
+      spacetime . loc [
+        spacetime ["muni code"] > 0 ] )
+    spacetime ["count"] = 1
     muni_counts : pd.Series = (
       # Count distinct munis.
       # If a muni appears in any year, it is counted.
       # TODO ? Should this only include years during this admin?
-      pre_counts
+      spacetime
       . drop ( columns = ["year"] )
       . drop_duplicates ()
       . groupby ( "dept code" )
@@ -81,8 +81,8 @@ if True: # Count munis per department.
       ["count"] )
     muni_year_counts : pd.Series = (
       # Count distinct muni-years during this admin.
-      pre_counts
-      [ pre_counts ["year"] >= c.admin_first_year ]
+      spacetime
+      [ spacetime ["year"] >= c.admin_first_year ]
       . groupby ( ["dept code"] )
       . agg ('sum')
       ["count"] )
