@@ -1,3 +1,13 @@
+# "The cuipo" data
+
+The Ofiscal knowledge graph notes on it are here:
+https://github.com/ofiscal/knowledge-graph/blob/master/cuipo_data.org
+
+This is data from a new system we're just learning about in 2023.
+It may be what we have to use instead of SISFUT for later years,
+because for most municipalities,
+SISFUT appears only to be complete for years through 2020.
+
 # "Vintage" matters
 
 There are two vintages of data used --
