@@ -1,12 +1,22 @@
 # Determining whether the new (2023) CUIPO data
 # is comparable to the oild SISFUT data.
 
+
+from   math import floor
 from   os import path
 import pandas as pd
 from   typing import List, Dict, Set
 #
 import Code.build.use_keys as uk
 
+
+def my_describe ( df : pd.DataFrame ) -> pd.DataFrame:
+  return ( df . describe() . transpose ()
+           [ ['count', 'mean', 'std', 'min', '50%', 'max'] ] )
+
+################
+# Input the data
+################
 
 build_3 = "output/2023/budget_3_dept_muni_year_item/recip-1"
 
@@ -16,64 +26,104 @@ g = pd.read_csv (
 i = pd.read_csv (
   path.join ( build_3, "ingresos.csv" ) )
 
-eg22 = pd.read_excel (
+g22 = pd.read_excel (
   path.join ( "data/cuipo/",
               "Ejecucion_GastosDic2022.xlsx" ) )
 
-ei22 = pd.read_excel (
+i22 = pd.read_excel (
   path.join ( "data/cuipo/",
               "Ejecucion_IngresosDic2022.xlsx" ) )
 
-geo = uk.geo
-geo [ geo["dept"] == "VICHADA" ]
+geo = uk.geo . copy()
 
 
+####################
+# Examine "entities"
+####################
 
-def my_describe ( df : pd.DataFrame ) -> pd.DataFrame:
-  return ( df . describe() . transpose ()
-           [ ['count', 'mean', 'std', 'min', '50%', 'max'] ] )
+entities = pd.Series ( g22
+                       . loc[ g22["4_COD_CONCEPTO"] == "2" ]
+                       ["3_ENTIDAD"] . unique() )
+# They include businesses, not just depts and munis. That's problematic.
 
-33   34_Conceptos_Cuipo_Agregacion       bool
-10   11_CONS_MGA_PROD                 float64
-12   13_CONS_CPC                      float64
-17   18_MGA_SECTOR                    float64
-24   25_COD_POLITICA                  float64
-26   27_COD_CHIP_TERCERO              float64
-28   29_COMPROMISOS                   float64
- 9   10_CONS_MGA_PROGR                float64
- 0   1_Índice                           int64
- 1   2_COD_CHIP                         int64
-16   17_COD_AMBITO                      int64
-29   30_OBLIGACIONES                    int64
-30   31_PAGOS                           int64
-32   33_Conceptos_Cuipo_Nivel           int64
- 5   6_COD_VIGENCIA                     int64
- 7   8_COD_SECCION                      int64
-11   12_PRODUCTO_MGA                   object
-13   14_CPC_PRODUCTO                   object
-14   15_COD_DETALLE_SECTORIAL          object
-15   16_DETALLE_SECTORIAL              object
-18   19_SECTOR                         object
-19   20_CONS_FUENTE                    object
-20   21_FUENTE                         object
-21   22_BPIN                           object
-22   23_COD_SF                         object
-23   24_SITUACION_FONDOS               object
- 2   3_ENTIDAD                         object
-25   26_POLITICA                       object
-27   28_Terceros_CHIP.ENTIDAD          object
-31   32_Conceptos_Cuipo_Padre          object
- 3   4_COD_CONCEPTO                    object
- 4   5_CONCEPTO                        object
- 6   7_VIGENCIA                        object
- 8   9_SECCION_PRESUPUESTAL            object
+entities [ entities
+           . str.match ("Departamento de.*") ]
+# There are exactly 32 departments, which is correct.
 
-for i in [11,13,14,15,21]:
-  print()
-  print("IT'S: " + str(i) )
-  print ( eg22.iloc [:,i] . unique() )
+entities [ entities
+           . str.match ("Villavicencio") ]
+# Disappointing: There's no prefix like "Municipio de"
+# one could filter on to extract municipalities.
 
-for i in [11,13,14,15,18,19,20,21,22,23,2,25,27,31,3,4,6,8]:
-  print()
-  print("IT'S: " + str(i) )
-  print ( eg22.iloc [:,i] )
+if True: # Good: There is a 1-1 correspondence
+         # between entity and CHIP code. Proof:
+  chip_entities = ( g22
+                    . groupby ( ["2_COD_CHIP", "3_ENTIDAD"] )
+                    . agg ( "first" )
+                    . reset_index () )
+  chip_entities["count"] = 1
+  for group in ["2_COD_CHIP", "3_ENTIDAD"]:
+    print ( chip_entities
+            . groupby ( group )
+            . agg ( sum )
+            . describe() . transpose () )
+
+
+##################################################
+# Exclude businesses (we only want depts and muis)
+##################################################
+
+if True:
+  # Via binary search, the code below lets one manually identify
+  # the boundary between the last non-business
+  # and the first business, assuming they are in fact ordered that way.
+  (low,high) = (659240, 659252)
+
+  print ( (low,high)                  )
+  print ( g22.iloc[low]["3_ENTIDAD"]  )
+  print ( g22.iloc[high]["3_ENTIDAD"] )
+  half = floor((low+high)/2)
+  print ( g22.iloc[half]["3_ENTIDAD"] )
+  # Now set low=half or high=half depending on the last result.
+
+
+# Inspecting the results of the following,
+# businesses do appear to appear after depts and munis.
+
+low_entities  = pd.Series ( g22 . iloc[:low]  ["3_ENTIDAD"] . unique() )
+high_entities = pd.Series ( g22 . iloc[high:] ["3_ENTIDAD"] . unique() )
+
+for i in low_entities: print ( i )
+print ( low_entities . shape )
+
+for i in high_entities: print ( i )
+print ( high_entities . shape )
+
+
+####################################################################
+# CHIP implies dept and muni! (Not necessarily the reverse, though.)
+#
+# Daniel found that the dept and muni codes *are*
+# embedded in the CHIP code; they are, resp. the first two of the last five,
+# and the last five, digits of the CHIP code.
+# (That's because the dept code is embedded in the muni code. too.)
+
+chips = g22 [["2_COD_CHIP","3_ENTIDAD"]] . copy()
+chips ["ent-str"] = ( # Entidad as string
+  chips["2_COD_CHIP"]
+  . astype (str)
+  . apply (lambda s: s[-5:] ) )
+chips ["dept code"] = ( chips ["ent-str"]
+                        . apply ( lambda s: s[:2] )
+                        . astype ( int ) )
+chips ["muni code"] = ( chips ["ent-str"]
+                        . astype ( int ) )
+
+chips [ chips["muni code"] == 5001 ]
+
+
+geo[ geo["dept code"] == 15 ]
+
+
+# Next problem: Are there pairs of CHIP codes with the same last 5 digits?
+# If so, how can we strip out the businesses?
