@@ -16,6 +16,7 @@ if True:
   import pandas                     as pd
   from   typing import List, Set, Dict
   #
+  import Code.build.budget_6p7_avg_muni_lib as lib
   import Code.build.use_keys        as uk
   import Code.common                as c
   import Code.metadata.four_series  as s4
@@ -41,7 +42,7 @@ if True: # input data
       os.path.join ( source,
                      s.name + ".csv" ) )
 
-if True: # Count munis per department.
+if True: # Count munis and muni-years per dept and per dept-year.
   #
   # PITFALL: The number depends on the subsample size being used.
   # That's why we can't just use the data from build.use_keys.geo
@@ -54,67 +55,57 @@ if True: # Count munis per department.
   # we take the average over years in the current administration,
   # which is why we only count those years here.
 
-  counts : Dict [str, pd.DataFrame] = {}
-    # The index of each `DataFrame` in `counts` will be the dept code,
+  dept_year_level_counts : Dict [str, pd.DataFrame] = {}
+    # The index of each `DataFrame` in `dept_level_counts`
+    # will have two levels, ["dept code", "year"],
+    # due to the groupby statements below.
+    # The only column in each will be ["munis"].
+
+  dept_level_counts : Dict [str, pd.DataFrame] = {}
+    # The index of each `DataFrame` in `dept_level_counts`
+    # will be the dept code,
     # due to the groupby statements below.
     # The column names in each will be ["munis", "muni-years"].
-  for s in s4.series_pct:
-    pre_counts = (
-      dfs0 [s.name]
-      [["dept code","muni code","year"]] )
-    pre_counts = ( # discard dept-level rows
-      pre_counts . loc[
-        pre_counts ["muni code"] > 0 ] )
-    pre_counts ["count"] = 1
-    muni_counts = ( # Count distinct munis.
-      # If a muni appears in any year, it is counted.
-      pre_counts
-      . drop ( columns = ["year"] )
-      . drop_duplicates ()
-      . groupby ( "dept code" )
-      . agg ('sum')
-      ["count"] )
-    muni_year_counts = ( # Count distinct muni-years during this admin.
-      pre_counts
-      [ pre_counts ["year"] >= c.admin_first_year ]
-      . drop_duplicates ()
-      . groupby ( ["dept code"] )
-      . agg ('sum')
-      ["count"] )
-    counts [s.name] = pd.concat ( [ muni_counts,
-                                    muni_year_counts ],
-                                  axis = "columns" )
-    counts [s.name] . columns = ["munis","muni-years"]
+  for s in s4.series_pct: # Populate the two `*_counts` variables.
+    if True: # Define `spacetime`.
+      spacetime = (
+        dfs0 [s.name]
+        [["dept code","muni code","year"]]
+        . drop_duplicates () )
+      spacetime = ( # discard dept-level rows
+        spacetime . loc [
+          ( spacetime ["muni code"] >  0                  ) &
+          ( spacetime ["year"     ] >= c.admin_first_year ) ] )
+      spacetime ["count"] = 1
 
-  def get_muni_count ( filename : str,
-                       dept_code : int
-                      ) -> int:
-    """A helper function for getting data from `counts`."""
-    return ( int ( counts [filename] .
-                   loc [ dept_code, "munis" ] )
-             if dept_code in muni_counts . index
-             else 1 ) # TODO ? ugly, ought to be Optional.
-  # (In that case I would return Nothing for depts with only dept-level info.)
-  #
-  # PITFALL: This default value are ultimately not important,
-  # because every dept code is present in `counts` in the full sample.
-  # For proof see the test below that bears the comment
-  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
+    dept_year_level_counts [s.name] : pd.DataFrame = (
+      spacetime
+      . groupby ( ["dept code","year"] )
+      . agg ('sum' )
+      . reset_index() )
 
-  def get_muni_year_count ( filename : str,
-                            dept_code : int
-                           ) -> int:
-    """A helper function for getting data from `counts`."""
-    return ( int ( counts [filename] .
-                  loc [ dept_code, "muni-years" ] )
-             if dept_code in muni_counts . index
-             else 3 ) # TODO ? ugly, ought to be Optional.
-  # (In that case I would return Nothing for depts with only dept-level info.)
-  #
-  # PITFALL: This default value is ultimately not important,
-  # because every dept code is present in `counts` in the full sample.
-  # For proof see the test below that bears the comment
-  # "In full sample, every dept is present in both `DataFrame`s in `counts`."
+    if True: # Define `dept_level_counts`.
+      muni_counts : pd.Series = (
+        # Count distinct munis.
+        # If a muni appears in any year, it is counted.
+        # TODO ? Should this only include years during this admin?
+        spacetime
+        . drop ( columns = ["year"] )
+        . drop_duplicates ()
+        . groupby ( "dept code" )
+        . agg ('sum')
+        ["count"] )
+      muni_year_counts : pd.Series = (
+        # Count distinct muni-years during this admin.
+        spacetime
+        . groupby ( ["dept code"] )
+        . agg ('sum')
+        ["count"] )
+      dept_level_counts [s.name] = pd.concat ( [ muni_counts,
+                                                 muni_year_counts ],
+                                               axis = "columns" )
+      dept_level_counts [s.name] . columns = ["munis","muni-years"]
+
 
 if True: # Define how to compute the average non-dept muni
          # in some (dept,year,item categ) cell.
@@ -139,9 +130,11 @@ if True: # Define how to compute the average non-dept muni
       # don't try to add an average municipality.
 
     avg = df.iloc [0] . copy ()
-    avg ["muni code"] = -2 # TODO ? Ugly.
+    avg ["muni code"] = -2 # TODO ? Ugly, requires special interpretation:
+      # Most muni codes really are muni codes, but -2 means "dept average".
     avg [money_cols] = ( # The missing-rows-aware mean.
       df [money_cols] . sum () /
+      # TODO ! This divisor could depend on the year.
       munis_in_dept )
     res = ( pd.concat ( [ pd.DataFrame ( [avg] ),
                           df0 ],
@@ -200,14 +193,20 @@ for s in s2.series: # Add average muni to the to -pct data sets.
       ["dept code","muni code"],
       ( df . groupby ( index_cols ) .
         apply (
-          lambda df:
-          prepend_avg_muni ( index_cols         = index_cols,
-                             money_cols         = s.money_cols,
-                             munis_in_dept      = get_muni_count
-                               ( spct, df["dc"].iloc[0] ),
-                             muni_years_in_dept = get_muni_year_count
-                               ( spct, df["dc"].iloc[0] ),
-                             df0                = df )
+          lambda df: prepend_avg_muni (
+            index_cols         = index_cols,
+            money_cols         = s.money_cols,
+            munis_in_dept      = lib.get_muni_count (
+              dept_level_counts = dept_level_counts,
+              muni_counts       = muni_counts,
+              filename          = spct,
+              dept_code         = df["dc"].iloc[0] ),
+            muni_years_in_dept = lib.get_muni_year_count (
+              dept_level_counts = dept_level_counts,
+              muni_counts       = muni_counts,
+              filename          = spct,
+              dept_code         = df["dc"].iloc[0] ),
+            df0 = df )
           . drop ( columns = index_cols ) ) .
         reset_index () .
         drop ( columns = ["dc","level_3"] ) ) )
@@ -234,11 +233,11 @@ if True: # tests
     assert len (pct_series) == nAverages + len (non_pct_series)
 
   if c.subsample == 1: # In full sample, every dept is present
-                       # in both `DataFrame`s in `counts`.
+                       # in both `DataFrame`s in `dept_level_counts`.
     geo = uk.geo[["dept code"]] . drop_duplicates()
     geo["one"] = 1
-    for k in counts.keys():
-      i = counts [k] . index
+    for k in dept_level_counts.keys():
+      i = dept_level_counts [k] . index
       assert i . equals ( i . drop_duplicates () )
       df = pd.DataFrame ( { "dept code" : i } )
       df = df.merge ( geo, on = "dept code" )
