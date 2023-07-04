@@ -1,7 +1,6 @@
 # Determining whether the new (2023) CUIPO data
 # is comparable to the oild SISFUT data.
 
-
 from   math import floor
 from   os import path
 import pandas as pd
@@ -13,6 +12,7 @@ import Code.build.use_keys as uk
 def my_describe ( df : pd.DataFrame ) -> pd.DataFrame:
   return ( df . describe() . transpose ()
            [ ['count', 'mean', 'std', 'min', '50%', 'max'] ] )
+
 
 ################
 # Input the data
@@ -48,12 +48,12 @@ entities = pd.Series ( g22
 
 entities [ entities
            . str.match ("Departamento de.*") ]
-# There are exactly 32 departments, which is correct.
+# Correct: There are exactly 32 departments.
 
 entities [ entities
            . str.match ("Villavicencio") ]
 # Disappointing: There's no prefix like "Municipio de"
-# one could filter on to extract municipalities.
+# one could filter on to distinguish municipalities from businesses.
 
 if True: # Good: There is a 1-1 correspondence
          # between entity and CHIP code. Proof:
@@ -73,34 +73,58 @@ if True: # Good: There is a 1-1 correspondence
 # Exclude businesses (we only want depts and muis)
 ##################################################
 
-if True:
-  # Via binary search, the code below lets one manually identify
-  # the boundary between the last non-business
-  # and the first business, assuming they are in fact ordered that way.
-  (low,high) = (659240, 659252)
+# Via binary search, the code below lets one manually identify
+# the boundary between the last non-business
+# and the first business, assuming they are in fact ordered that way.
+# First, set df to g22 or i22.
+df = i22
+(low,high) = (0,len(df)-1)
 
-  print ( (low,high)                  )
-  print ( g22.iloc[low]["3_ENTIDAD"]  )
-  print ( g22.iloc[high]["3_ENTIDAD"] )
-  half = floor((low+high)/2)
-  print ( g22.iloc[half]["3_ENTIDAD"] )
-  # Now set low=half or high=half depending on the last result.
+# Evaluate this by hand repeatedly.
+# After each evaluation,
+# set low=half or high=half depending on the last result.
+print ( (low,high)                 )
+print ( df.iloc[low]["3_Entidad"]  )
+print ( df.iloc[high]["3_Entidad"] )
+half = floor((low+high)/2)
+print ( df.iloc[half]["3_Entidad"] )
+
+# Solution for g22:
+# (low,high) = (659249, 659250)
+
+# MAYBE solution for i22:
+# (low,high) = (134597, 134598) --
+# but then what about Área Metropolitana de Bucaramanga,
+# at index 135000?
+# Either that's not a municipality,
+# or the data isn't partitioned like we hope
+# (with munis and departments coming first,
+# and other entities after them).
 
 
-# Inspecting the results of the following,
-# businesses do appear to appear after depts and munis.
+#######################################
+# Unique names in the high and low data
+#######################################
 
-low_entities  = pd.Series ( g22 . iloc[:low]  ["3_ENTIDAD"] . unique() )
-high_entities = pd.Series ( g22 . iloc[high:] ["3_ENTIDAD"] . unique() )
+gSep  = 659250
+gLow  = g22 [:gSep]
+gHigh = g22 [gSep:]
 
-for i in low_entities: print ( i )
-print ( low_entities . shape )
+for e in gLow["3_ENTIDAD"].unique(): print(e)
 
-for i in high_entities: print ( i )
-print ( high_entities . shape )
+place = pd.Series ( gLow["3_ENTIDAD"].unique() )
+
+biz = pd.Series ( gHigh["3_ENTIDAD"].unique() )
+
+regex = ".*(I.P.S|E.S.P|S.A.S|Fondo|Empresa|Lotería|Instituto|Terminal|Deporte|Alianza|Tribunal|Consejo|Sistema|Asociación|Alumbrado|E.P.S.|E.S.E|E.I.C.E|S.A|IPS|Fundación|Salud|Servicio|[Cc]aja de *[Cc]omp|[Cc]omercio|[Cc][aá]mara|Universidad|Universitaria|U.A.E|Administra|C.P.G.A|Corporaci[oó]n|Hospital|Casa.*Cultura|Diagnóstico|Industria|Transporte|Sociedad|Patrimonio|Agencia|Colegio).*"
+
+place [ place . str.match ( regex ) ]
+  # These three matches are all places.
+
+biz = biz [ ~ biz . str.match ( regex ) ] . sort_values()
+for i in biz: print(i)
 
 
-####################################################################
 # CHIP implies dept and muni! (Not necessarily the reverse, though.)
 #
 # Daniel found that the dept and muni codes *are*
@@ -108,22 +132,40 @@ print ( high_entities . shape )
 # and the last five, digits of the CHIP code.
 # (That's because the dept code is embedded in the muni code. too.)
 
+
+####################################################################
+# Trying to separate businesses from munis and depts via CHIP codes.
+####################################################################
+
 chips = g22 [["2_COD_CHIP","3_ENTIDAD"]] . copy()
 chips ["ent-str"] = ( # Entidad as string
   chips["2_COD_CHIP"]
   . astype (str)
-  . apply (lambda s: s[-5:] ) )
-chips ["dept code"] = ( chips ["ent-str"]
-                        . apply ( lambda s: s[:2] )
-                        . astype ( int ) )
-chips ["muni code"] = ( chips ["ent-str"]
-                        . astype ( int ) )
+  . str.zfill (9) )             # left-pad with zeroes
+chips ["prefix"] = (            # I don't know what these are for.
+  chips ["ent-str"]
+  . apply (lambda s: s[:-5] )   # all but last 5 digits
+  . astype ( int ) )
+chips ["muni code"] = (
+  chips ["ent-str"]
+  . apply (lambda s: s[-5:] )   # last 5 digits
+  . astype ( int ) )
+chips ["dept code"] = (
+  chips ["ent-str"]
+  . apply (lambda s: s[-5:-3] ) # first 2 of last 5 digits
+  . astype ( int ) )
 
-chips [ chips["muni code"] == 5001 ]
+clow  = chips [:high] # Note: This does not include the `high`th row.
+chigh = chips [high:]
 
+for c in  ["prefix", "muni code", "dept code"]:
+  ulow  = set ( clow [c] . unique() )
+  uhigh = set ( chigh[c] . unique() )
+  print ()
+  print (c)
+  print ( ulow .intersection ( uhigh ) )
 
-geo[ geo["dept code"] == 15 ]
-
-
-# Next problem: Are there pairs of CHIP codes with the same last 5 digits?
-# If so, how can we strip out the businesses?
+# FAILURE. For each part of the CHIP code -- the dept, the muni,
+# and the prefix -- there are values of that part which appear both
+# before and after the split. That is, there's no obvious way
+# to use CHIP codes to remove the businesses from the depts and munis.
