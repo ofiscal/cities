@@ -142,33 +142,34 @@ for i in mBizNames: print(i)
 # Trying to separate businesses from munis and depts via CHIP codes.
 ####################################################################
 
-chips = g22 [["2_COD_CHIP","3_ENTIDAD"]] . copy()
+chips = g22 [["1_Índice","2_COD_CHIP","3_ENTIDAD"]] . copy()
 chips ["ent-str"] = ( # Entidad as string
   chips["2_COD_CHIP"]
   . astype (str)
   . str.zfill (9) )             # left-pad with zeroes
-chips ["prefix"] = (            # I don't know what these are for.
-  chips ["ent-str"]
-  . apply (lambda s: s[:-5] )   # all but last 5 digits
-  . astype ( int ) )
-chips ["muni code"] = (
-  chips ["ent-str"]
-  . apply (lambda s: s[-5:] )   # last 5 digits
-  . astype ( int ) )
-chips ["dept code"] = (
-  chips ["ent-str"]
-  . apply (lambda s: s[-5:-3] ) # first 2 of last 5 digits
-  . astype ( int ) )
 
-clow  = chips [:high] # Note: This does not include the `high`th row.
-chigh = chips [high:]
+for (name,rangeLow,rangeHigh) in [
+    (":2"   ,None,2), # First 2 digits.
+                      # Daniel thinks maybe 21=muni & 11=dept.
+    (":-5"  ,None,-5), # All but the last 5 digits.
+                       # I don't know what these are for.
+    ("-5:"  ,-5,  None), # Last 5 digits. Looks like muni code.
+    ("-5:-3",-5,  -3) ]: # First 2 of last 5 digits. Looks like dept code.
+  chips[name] = (
+    chips ["ent-str"]
+    . apply ( lambda s : s[rangeLow:rangeHigh] )
+    . astype ( int ) )
 
-for c in  ["prefix", "muni code", "dept code"]:
+clow  = chips [:gSep] . drop_duplicates() # Excludes the `gSep`th row.
+chigh = chips [gSep:] . drop_duplicates()
+
+for c in  [":2",":-5","-5:","-5:-3"]:
   ulow  = set ( clow [c] . unique() )
   uhigh = set ( chigh[c] . unique() )
   print ()
   print (c)
-  print ( ulow .intersection ( uhigh ) )
+  print ( ulow . intersection ( uhigh ) )
+
 
 # FAILURE. For each part of the CHIP code -- the dept, the muni,
 # and the prefix -- there are values of that part which appear both
