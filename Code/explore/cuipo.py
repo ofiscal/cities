@@ -112,17 +112,22 @@ gHigh = g22 [gSep:]
 
 for e in gLow["3_ENTIDAD"].unique(): print(e)
 
-place = pd.Series ( gLow["3_ENTIDAD"].unique() )
+# Prefix 'm' is for 'maybe'.
+mPlaceNames = pd.Series ( gLow["3_ENTIDAD"].unique() )
 
-biz = pd.Series ( gHigh["3_ENTIDAD"].unique() )
+# Prefix 'm' is for 'maybe'.
+mBizNames = pd.Series ( gHigh["3_ENTIDAD"].unique() )
 
 regex = ".*(I.P.S|E.S.P|S.A.S|Fondo|Empresa|Lotería|Instituto|Terminal|Deporte|Alianza|Tribunal|Consejo|Sistema|Asociación|Alumbrado|E.P.S.|E.S.E|E.I.C.E|S.A|IPS|Fundación|Salud|Servicio|[Cc]aja de *[Cc]omp|[Cc]omercio|[Cc][aá]mara|Universidad|Universitaria|U.A.E|Administra|C.P.G.A|Corporaci[oó]n|Hospital|Casa.*Cultura|Diagnóstico|Industria|Transporte|Sociedad|Patrimonio|Agencia|Colegio).*"
 
-place [ place . str.match ( regex ) ]
-  # These three matches are all places.
+mPlaceNames [ mPlaceNames
+              . str.match ( regex, case=False ) ]
+  # These three matches are all in fact places, not businesses.
 
-biz = biz [ ~ biz . str.match ( regex ) ] . sort_values()
-for i in biz: print(i)
+mBizNames = ( mBizNames [ ~ mBizNames
+                          . str.match ( regex, case=False ) ]
+              . sort_values() )
+for i in mBizNames: print(i)
 
 
 # CHIP implies dept and muni! (Not necessarily the reverse, though.)
