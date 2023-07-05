@@ -170,8 +170,53 @@ for c in  [":2",":-5","-5:","-5:-3"]:
   print (c)
   print ( ulow . intersection ( uhigh ) )
 
+# FAILURE ? For each part of the CHIP code --
+# the dept, the muni (which includes the dept), and the prefix --
+# there are values of that part which appear both
+# before and after the split. That is, there's no obvious way to use
+# (only) CHIP codes to remove the businesses from the depts and munis.
+#
+# HOWEVER, the only overlap in the prefix (the first 4 digits)
+# is in code 9232.
 
-# FAILURE. For each part of the CHIP code -- the dept, the muni,
-# and the prefix -- there are values of that part which appear both
-# before and after the split. That is, there's no obvious way
-# to use CHIP codes to remove the businesses from the depts and munis.
+# Bad -- a mix of munis and other entities.
+chips [ chips ["prefix"] == 9232 ]
+
+# Bad -- these (apparent) munis have CHIPs that do not start with 11 or 21.
+for i in ( clow
+           [ ~ clow [":2"]
+             . isin ( [11,21] ) ]
+           ["3_ENTIDAD"]
+           . unique() ):
+  print(i)
+
+# Good -- `chigh` has nothing whose CHIP starts with 11 or 21.
+print ( chigh [ chigh[":2"] == 11 ] )
+print ( chigh [ chigh[":2"] == 21 ] )
+
+# To make these two variables appear in the results of `describe()`,
+# turn them into numbers.
+g22["34_Conceptos_Cuipo_Agregacion"] = (
+  g22["34_Conceptos_Cuipo_Agregacion"] . astype ( int ) )
+
+( g22 [ "7_VIGENCIA" ], vigencia_codes ) = pd.factorize (
+  g22 [ "7_VIGENCIA" ] )
+
+# A firehose of information. Too much; sertting aside.
+print ( my_describe ( s [   chips [":2"] == 11 ] )              )
+print ( my_describe ( s [   chips [":2"] == 21 ] )              )
+print ( my_describe ( s [ ~ chips [":2"] . isin ( [11,21] ) ] ) )
+
+# Consider the "ambito" code.
+s = g22 [ "17_COD_AMBITO" ]
+in11   = set ( s [   chips [":2"] == 11 ]              . unique() )
+in21   = set ( s [   chips [":2"] == 21 ]              . unique() )
+others = set ( s [ ~ chips [":2"] . isin ( [11,21] ) ] . unique() )
+
+# For CHIP codes starting with 11 or 21, there are respectively 2 "ambito"s:
+print (in11)
+print (in21)
+
+# One of those codes, 439,
+# applies also to entities with a CHIP not starting with 11 or 21:
+set.union ( in11, in21 ) . intersection ( others )
