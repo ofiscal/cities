@@ -1,6 +1,9 @@
 # Determining whether the new (2023) CUIPO data
 # is comparable to the oild SISFUT data.
 
+# TODO: Much of this analysis is limited to the gastos data for 2022
+# (`g22`), and should be duplicated for the ingresos data (`i22`).
+
 from   math import floor
 from   os import path
 import pandas as pd
@@ -37,6 +40,28 @@ i22 = pd.read_excel (
 geo = uk.geo . copy()
 
 
+########################
+# Create CHIP substrings
+########################
+
+g22 ["ent-str"] = ( # Entidad as string
+  g22["2_COD_CHIP"]
+  . astype (str)
+  . str.zfill (9) ) # left-pad with zeroes
+
+for (name,rangeLow,rangeHigh) in [
+    (":2"   ,None,2), # First 2 digits.
+                      # Daniel thinks maybe 21=muni & 11=dept.
+    (":-5"  ,None,-5), # All but the last 5 digits.
+                       # I don't know what these are for.
+    ("-5:"  ,-5,  None), # Last 5 digits. Looks like muni code.
+    ("-5:-3",-5,  -3) ]: # First 2 of last 5 digits. Looks like dept code.
+  g22[name] = (
+    g22 ["ent-str"]
+    . apply ( lambda s : s[rangeLow:rangeHigh] )
+    . astype ( int ) )
+
+
 ####################
 # Examine "entities"
 ####################
@@ -56,7 +81,8 @@ entities [ entities
 # one could filter on to distinguish municipalities from businesses.
 
 if True: # Good: There is a 1-1 correspondence
-         # between entity and CHIP code. Proof:
+         # between entity and CHIP code (at least in gastos).
+         # Proof:
   chip_entities = ( g22
                     . groupby ( ["2_COD_CHIP", "3_ENTIDAD"] )
                     . agg ( "first" )
@@ -118,14 +144,18 @@ mPlaceNames = pd.Series ( gLow["3_ENTIDAD"].unique() )
 # Prefix 'm' is for 'maybe'.
 mBizNames = pd.Series ( gHigh["3_ENTIDAD"].unique() )
 
-regex = ".*(I.P.S|E.S.P|S.A.S|Fondo|Empresa|Lotería|Instituto|Terminal|Deporte|Alianza|Tribunal|Consejo|Sistema|Asociación|Alumbrado|E.P.S.|E.S.E|E.I.C.E|S.A|IPS|Fundación|Salud|Servicio|[Cc]aja de *[Cc]omp|[Cc]omercio|[Cc][aá]mara|Universidad|Universitaria|U.A.E|Administra|C.P.G.A|Corporaci[oó]n|Hospital|Casa.*Cultura|Diagnóstico|Industria|Transporte|Sociedad|Patrimonio|Agencia|Colegio).*"
+# This matches few municipalities or departments,
+# and most entities that are not.
+regex = ".*(I.P.S|E.S.P|S.A.S|CPGA|C.P.G.M.A.E.|Fondo|Empresa|Lotería|Instituto|Terminal|Deporte| de Bomberos|Alianza|Tribunal|Consejo|Sistema|Asociación|Alumbrado|E.P.S.|E.S.E|E.I.C.E|S.A|Escuela|Fábrica|Fundación|Salud|Servicio|Caja de |[Cc]omercio|[Cc][aá]mara|Universidad|Universitaria|U.A.E|Administra|C.P.G.A|Corporaci[oó]n|Hospital|Casa.*Cultura|Aeropuerto|Inmobiliario|Diagnóstico|Industria|Transporte|Tecnológic|Politécnico|Licorera|Tránsito|Liquidaciones|Sociedad|Patrimonio|Agencia|IPS|Colegio).*"
 
+# In the data where I would hope nothing matches the regex,
+# three things do -- but they are all in fact municipalities.
 mPlaceNames [ mPlaceNames
-              . str.match ( regex, case=False ) ]
+              . str.match ( regex ) ]
   # These three matches are all in fact places, not businesses.
 
 mBizNames = ( mBizNames [ ~ mBizNames
-                          . str.match ( regex, case=False ) ]
+                          . str.match ( regex ) ]
               . sort_values() )
 for i in mBizNames: print(i)
 
@@ -142,30 +172,15 @@ for i in mBizNames: print(i)
 # Trying to separate businesses from munis and depts via CHIP codes.
 ####################################################################
 
-chips = g22 [["1_Índice","2_COD_CHIP","3_ENTIDAD"]] . copy()
-chips ["ent-str"] = ( # Entidad as string
-  chips["2_COD_CHIP"]
-  . astype (str)
-  . str.zfill (9) )             # left-pad with zeroes
+chips = g22 [["1_Índice","2_COD_CHIP","3_ENTIDAD",
+              ':2', ':-5', '-5:', '-5:-3']] . copy()
 
-for (name,rangeLow,rangeHigh) in [
-    (":2"   ,None,2), # First 2 digits.
-                      # Daniel thinks maybe 21=muni & 11=dept.
-    (":-5"  ,None,-5), # All but the last 5 digits.
-                       # I don't know what these are for.
-    ("-5:"  ,-5,  None), # Last 5 digits. Looks like muni code.
-    ("-5:-3",-5,  -3) ]: # First 2 of last 5 digits. Looks like dept code.
-  chips[name] = (
-    chips ["ent-str"]
-    . apply ( lambda s : s[rangeLow:rangeHigh] )
-    . astype ( int ) )
-
-clow  = chips [:gSep] . drop_duplicates() # Excludes the `gSep`th row.
-chigh = chips [gSep:] . drop_duplicates()
+cLowUnique  = chips [:gSep] . drop_duplicates() # Excludes the `gSep`th row.
+cHighUnique = chips [gSep:] . drop_duplicates()
 
 for c in  [":2",":-5","-5:","-5:-3"]:
-  ulow  = set ( clow [c] . unique() )
-  uhigh = set ( chigh[c] . unique() )
+  ulow  = set ( cLowUnique [c] . unique() )
+  uhigh = set ( cHighUnique[c] . unique() )
   print ()
   print (c)
   print ( ulow . intersection ( uhigh ) )
@@ -180,19 +195,19 @@ for c in  [":2",":-5","-5:","-5:-3"]:
 # is in code 9232.
 
 # Bad -- a mix of munis and other entities.
-chips [ chips ["prefix"] == 9232 ]
+chips [ chips [":-5"] == 9232 ]
 
 # Bad -- these (apparent) munis have CHIPs that do not start with 11 or 21.
-for i in ( clow
-           [ ~ clow [":2"]
+for i in ( cLowUnique
+           [ ~ cLowUnique [":2"]
              . isin ( [11,21] ) ]
            ["3_ENTIDAD"]
            . unique() ):
   print(i)
 
-# Good -- `chigh` has nothing whose CHIP starts with 11 or 21.
-print ( chigh [ chigh[":2"] == 11 ] )
-print ( chigh [ chigh[":2"] == 21 ] )
+# Good -- `cHighUnique` has nothing whose CHIP starts with 11 or 21.
+print ( cHighUnique [ cHighUnique[":2"] == 11 ] )
+print ( cHighUnique [ cHighUnique[":2"] == 21 ] )
 
 # To make these two variables appear in the results of `describe()`,
 # turn them into numbers.
@@ -220,3 +235,64 @@ print (in21)
 # One of those codes, 439,
 # applies also to entities with a CHIP not starting with 11 or 21:
 set.union ( in11, in21 ) . intersection ( others )
+
+# 1083 things have ambito 439. They look like municipalities.
+g22_ambito_439 = pd.Series ( g22 [ g22 [ "17_COD_AMBITO" ] == 439 ]
+                             ["3_ENTIDAD"]
+                             . unique() )
+for e in g22_ambito_439:
+  print(e)
+print( len( g22_ambito_439 ) )
+
+# BAD : Entities (cities?) with ambito 439 and CHIP[:2] not in [11,21]?
+g22_ambito_439_ugly_first_2 = (
+  g22 [ (   g22 [ "17_COD_AMBITO" ] ==       439     )   &
+        ( ~ g22 [ ":2" ]            . isin ( [11,21] ) ) ]
+  [["2_COD_CHIP","3_ENTIDAD","17_COD_AMBITO"]]
+  . drop_duplicates () )
+print ( g22_ambito_439_ugly_first_2 )
+
+# GOOD ? Nothing in mBizNames has one of the ambito codes we hope identify
+# munis and depts.
+( g22 [ ( g22 ["3_ENTIDAD"]     . isin ( mBizNames )                ) &
+        ( g22 ["17_COD_AMBITO"] . isin ( set.union ( in11, in21 ) ) ) ]
+  [["2_COD_CHIP","3_ENTIDAD","17_COD_AMBITO"]] )
+
+# BAD ? That includes even the "Area Metropolitana"s.
+( g22 [ g22 ["3_ENTIDAD"] . str.match ( "Área Metropolitana.*" ) ]
+  [["2_COD_CHIP","3_ENTIDAD","17_COD_AMBITO"]]
+  . drop_duplicates () )
+
+# Those "Área Metropolitana"s all have Ambito 442.
+# What else has that Ambito?
+( g22 [ g22 ["17_COD_AMBITO"] == 442 ]
+  [["2_COD_CHIP","3_ENTIDAD"]]
+  . drop_duplicates () )
+
+
+#########################################
+# Extracting a key for the "ambito" codes
+#########################################
+
+# g22 offers no guide, but i22 does -- it includes both
+# "6_COD_AMBITO" (int) and "7_AMBITO" (str).
+g22["17_COD_AMBITO"].describe()  # ranges from 438 to 454
+i22["6_COD_AMBITO"].describe()   # ranges from 438 to 454
+pd.factorize ( i22["7_AMBITO"] ) # ranges from 438 to 454
+
+# Result:
+# 438 Administración Central - Municipios
+# 439 Administración Central - Bogotá D.C
+# 440 Administración Central - San Andrés y Providencia
+# 441 Administración Central - Departamentos
+# 442 Estapúblicos, Asociaciones y Federaciones Territoriales
+# 443 Fondos sin personería jurídica denominados especiales o cuenta
+# 444 Empresas Territoriales no financieras sujetas al Decreto 115 de 1996
+# 445 Empresas Nacionales no financieras sujetas al Decreto 115 de 1996
+# 446 Empresas Nacionales no financieras no sujetas al Decreto 115 de 1996
+# 447 Empresas Territoriales Financieras
+# 448 Empresas Nacionales Financieras
+# 449 Fiducias públicas - encargos fiduciarios - Convenios
+# 450 Entes Autónomos Constitucionales  (No PGN)
+# 451 Particulares o entidades que manejan fondos de la Nación
+# 452 Empresas Territoriales no financieras no sujetas al Decreto 115 de 1996
