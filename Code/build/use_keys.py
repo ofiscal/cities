@@ -20,6 +20,7 @@ if True: # get, test data
                "Cód. DANE Departamento"   : "dept code",
                "Nombre DANE Municipio"    : "muni",
                "Nombre DANE Departamento" : "dept" } ) )
+  geo["muni code"] = geo["muni code"] . astype ( int )
   depts = ( geo [["dept code", "dept"]]
             . groupby ("dept code")
             . agg ('first')
@@ -29,6 +30,7 @@ if True: # get, test data
   munis = geo[["muni code","muni"]]
   assert munis.shape == (1101,2)
   assert pd.isnull (munis) . any() . any() == False
+
 
 if True: # how to add a column that counts munis in each dept
   def add_munis_in_dept_col (
