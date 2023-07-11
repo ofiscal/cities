@@ -88,7 +88,6 @@ if True: # Count munis and muni-years per dept and per dept-year.
       muni_counts : pd.Series = (
         # Count distinct munis.
         # If a muni appears in any year, it is counted.
-        # TODO ? Should this only include years during this admin?
         spacetime
         . drop ( columns = ["year"] )
         . drop_duplicates ()
