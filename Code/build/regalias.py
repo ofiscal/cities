@@ -10,7 +10,8 @@ if True:
 
 
 # TODO: We currently have no regalias data for the view from 2023,
-# so this just creates symlinks to the last stage.
+# so this currently just creates symlinks to the last stage.
+# When we get it, that will have to change.
 if common.vintage == 2023:
   for p in [ pathlib.Path ( q )
              for q in

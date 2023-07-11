@@ -20,7 +20,7 @@ def get_muni_count (
 # PITFALL: This default value is ultimately not important,
 # because every dept code is present in `dept_level_counts`
 # in the full sample.
-# For proof see the test in
+# For proof, see the test in
 #   `Code/build/budget_6p7_avg_muni.py`
 # that bears the comment
 # "In full sample, every dept is present in both `DataFrame`s in `dept_level_counts`."

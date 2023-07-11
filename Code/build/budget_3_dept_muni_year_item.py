@@ -10,14 +10,8 @@
 #    because rows with a missing group variable disappear
 #    upon using pandas.DataFrame.groupby().
 #  (3) Subtract ingresos category TI.A.2.6 (transferencias)
-#    from TI.A (propios).
-#
-#    TODO: What is (3) for?
-#    I understand that T1.A includes T1.A.2.6,
-#    and that apparently we don't want it to.
-#    But why not? What *are* those things, even?
-#    And do they still (in 2023)
-#    mean what they used to mean (in 2019)?
+#    from TI.A (corrientes) to arrive at "propios",
+#    and rename the latter accordingly.
 
 if True:
   from typing import List, Set, Dict
@@ -132,7 +126,7 @@ if True:
 if False: # TODO ? This approach, using .groupby(),
   # is more natural, and ought to give the same result as the next one,
   # in which I for-loop through all spots in spacetime and accumulate.
-  # Instead it has no effect.
+  # But instead it has no effect, so I've disabled it.
   dfs2 [t.gastos] = dfs1[t.gastos] # pointer equality is fine here
   dfs2 [t.ingresos] = (
     dfs1 [t.ingresos] . copy() .
