@@ -29,13 +29,19 @@ g = pd.read_csv (
 i = pd.read_csv (
   path.join ( build_3, "ingresos.csv" ) )
 
-g22 = pd.read_excel (
+g22 = pd.read_csv (
   path.join ( "data/cuipo/",
-              "Ejecucion_GastosDic2022.xlsx" ) )
+              "Ejecucion_GastosDic2022.csv" ) )
 
-i22 = pd.read_excel (
+i22 = pd.read_csv (
   path.join ( "data/cuipo/",
-              "Ejecucion_IngresosDic2022.xlsx" ) )
+              "Ejecucion_IngresosDic2022.csv" ) )
+
+jc = (
+  pd.read_csv (
+    path.join ( "data/juan-camilo",
+                "dept-and-muni-CHIPs-for-CUIPO.csv" ) )
+  . drop ( columns = ["E-Mail"] ) )
 
 geo = uk.geo . copy()
 
