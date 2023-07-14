@@ -35,3 +35,30 @@ regex = '.*(Anor[ií]|Apartad[oó]|Bol[ií]var|Bugalagrande|California|Caramanta
                      case = False ) ]
   ["3_ENTIDAD"]
   . unique() )
+
+
+##################################################################
+# Some "Áreas Metropolitanas" are not present under any other name
+##################################################################
+
+# Find the strings containing "Área Metropolitana" of interest.
+# (This finds a few that are not of interest, too --
+# the ones that are all *start* with the substring "Área".)
+( g22 ["3_ENTIDAD"]
+  [ g22["3_ENTIDAD"]
+    . str.match( ".*[AÁ]rea.*Metropolitana.*") ]
+  . unique() )
+
+# Substrings of interest from the above, reduced and tilde-sanitized:
+regex = ".*(Bucaramanga|Aburr[aá]|Barranquilla|C[uú]cuta|Occidente|Valledupar).*"
+
+# Some of those are not in JC's data:
+( jc["Entidad"]
+  [ jc["Entidad"]
+    . str.match ( regex ) ] )
+
+# Speficially:
+missing = ["Valle de Aburrá",
+           "Barranquilla",
+           "Cúcuta",
+           "Centro Occidente"]
