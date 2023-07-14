@@ -4,7 +4,7 @@
 #
 # USAGE: It seems more natural to import all definitions individually,
 # rather than qualifying them behind the module name, as in
-#   from   Code.explore.cuipo.load import build_3, g, i, g22, i22, jc, geo
+#   from   Code.explore.cuipo.load import g, i, g22, i22, jc, geo
 
 from   os import path
 import pandas as pd

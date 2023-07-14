@@ -12,7 +12,7 @@ from   math import floor
 import pandas as pd
 from   typing import List, Dict, Set
 #
-from   Code.explore.cuipo.load import (build_3, g, i, g22, i22, jc, geo)
+from   Code.explore.cuipo.load import g, i, g22, i22, jc, geo
 from   Code.explore.cuipo.lib import my_describe
 
 
