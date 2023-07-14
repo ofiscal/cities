@@ -1,4 +1,8 @@
-# Determining whether the new (2023) CUIPO data
+# PITFALL: Somewhat obsolete.
+# This is the analysis I did before Juan Camilo had responded.
+# His response supercedes much of it.
+
+# PURPOSE: Determining whether the new (2023) CUIPO data
 # is comparable to the oild SISFUT data.
 
 # TODO: Much of this analysis is limited to the gastos data for 2022
