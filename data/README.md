@@ -8,6 +8,17 @@ It may be what we have to use instead of SISFUT for later years,
 because for most municipalities,
 SISFUT appears only to be complete for years through 2020.
 
+## The file `dept-and-muni-CHIPs.csv`
+
+comes from Juan Camilo at the Contaduría,
+emailed to Oliver on <2023-07-13 Thu>.
+
+For an organized version of what he wrote,
+see the note entitled
+  Juan Camilo's response re. isolating munis and depts in CUIPO
+in the repo
+  https://github.com/JeffreyBenjaminBrown/secret-org
+
 # "Vintage" matters
 
 There are two vintages of data used --

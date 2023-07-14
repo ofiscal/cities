@@ -5,45 +5,11 @@
 # (`g22`), and should be duplicated for the ingresos data (`i22`).
 
 from   math import floor
-from   os import path
 import pandas as pd
 from   typing import List, Dict, Set
 #
-import Code.build.use_keys as uk
-
-
-def my_describe ( df : pd.DataFrame ) -> pd.DataFrame:
-  return ( df . describe() . transpose ()
-           [ ['count', 'mean', 'std', 'min', '50%', 'max'] ] )
-
-
-################
-# Input the data
-################
-
-build_3 = "output/2023/budget_3_dept_muni_year_item/recip-1"
-
-g = pd.read_csv (
-  path.join ( build_3, "gastos.csv" ) )
-
-i = pd.read_csv (
-  path.join ( build_3, "ingresos.csv" ) )
-
-g22 = pd.read_csv (
-  path.join ( "data/cuipo/",
-              "Ejecucion_GastosDic2022.csv" ) )
-
-i22 = pd.read_csv (
-  path.join ( "data/cuipo/",
-              "Ejecucion_IngresosDic2022.csv" ) )
-
-jc = (
-  pd.read_csv (
-    path.join ( "data/juan-camilo",
-                "dept-and-muni-CHIPs-for-CUIPO.csv" ) )
-  . drop ( columns = ["E-Mail"] ) )
-
-geo = uk.geo . copy()
+from   Code.explore.cuipo.load import (build_3, g, i, g22, i22, jc, geo)
+from   Code.explore.cuipo.lib import my_describe
 
 
 ########################
