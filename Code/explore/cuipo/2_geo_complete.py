@@ -22,11 +22,11 @@ missing_ids = set(jc_ids) - { *set(g22_ids), *set(i22_ids) }
 missing_names = ( jc [ jc["Id_Entidad"] . isin ( missing_ids ) ]
                   ["Entidad"] )
 
-proto_regex = ".*" + "|".join ( list( missing_names ) ) + ".*"
+proto_regex = ".*(" + "|".join ( list( missing_names ) ) + ").*"
 
 # I then edited that by hand, reducing some problematically long expressions
 # and making tildes optional.
-regex = '.*Anor[ií]|Apartad[oó]|Bol[ií]var|Bugalagrande|California|Caramanta|Carur[uú]|Corrales|Cotorra|Fuente.*Oro|Galeras|Ituango|Uribe|Momil|Luc[í]a|Sopetr[aá]n|Ulloa|Urrao.*'
+regex = '.*(Anor[ií]|Apartad[oó]|Bol[ií]var|Bugalagrande|California|Caramanta|Carur[uú]|Corrales|Cotorra|Fuente.*Oro|Galeras|Ituango|Uribe|Momil|Luc[í]a|Sopetr[aá]n|Ulloa|Urrao).*'
 
 # I still find almost none of them in CUIPO,
 # with the possible exception of Bolivar.
