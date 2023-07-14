@@ -28,9 +28,11 @@ i22.to_csv (
               "Ejecucion_IngresosDic2022.csv" ),
   index = False )
 
-if False: # For interactive testing
-  # Almost everything is equal, i.e. unchanged by the formatting.
-  # The one field that is an exception, "22_BPIN" in "gastos",
+
+if False: # For interactive testing.
+  # Results: Almost everything in `excel` and `csv` are equal,
+  # i.e. unchanged by the reformatting.
+  # The one exception, the field "22_BPIN" in "gastos",
   # is irrelevant to this analysis. (It's a type casting glitch,
   # not a data corruption one.)
   res = {}
