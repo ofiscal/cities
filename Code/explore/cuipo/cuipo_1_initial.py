@@ -156,6 +156,8 @@ for i in mBizNames: print(i)
 # Trying to separate businesses from munis and depts via CHIP codes.
 ####################################################################
 
+s : pd.Series = g22 [ "17_COD_AMBITO" ]
+
 chips = g22 [["1_Índice","2_COD_CHIP","3_ENTIDAD",
               ':2', ':-5', '-5:', '-5:-3']] . copy()
 
@@ -207,7 +209,6 @@ print ( my_describe ( s [   chips [":2"] == 21 ] )              )
 print ( my_describe ( s [ ~ chips [":2"] . isin ( [11,21] ) ] ) )
 
 # Consider the "ambito" code.
-s = g22 [ "17_COD_AMBITO" ]
 in11   = set ( s [   chips [":2"] == 11 ]              . unique() )
 in21   = set ( s [   chips [":2"] == 21 ]              . unique() )
 others = set ( s [ ~ chips [":2"] . isin ( [11,21] ) ] . unique() )
