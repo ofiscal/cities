@@ -29,19 +29,38 @@ i22p = load . read_ingresos_cuipo_22    ()
 # Process the CUIPO data
 ########################
 
-for i in cuipo.keys():
-  cuipo[i] : pd.DataFrame = (
-    cuipo[i]
-    [ cuipo[i]["2_COD_CHIP"]
+for (kind, colDict) in [
+    ( "gastos",
+      { "2_COD_CHIP"       : "chip",
+        "3_ENTIDAD"        : "entity",
+        "4_COD_CONCEPTO"   : "concept",
+        "5_CONCEPTO"       : "concept code",
+        "30_OBLIGACIONES"  : "COP",
+       } ),
+    ( "ingresos",
+      { "2_COD_CHIP"       : "chip",
+        "3_Entidad"        : "entity",
+        "4_COD_CONCEPTO"   : "concept",
+        "5_CONCEPTO"       : "concept code",
+        "27_TOTAL_RECAUDO" : "COP",
+       } ) ]:
+
+  cuipo[kind] : pd.DataFrame = (
+    cuipo[kind]
+    [ cuipo[kind]["2_COD_CHIP"]
       . isin ( gr["Id_Entidad"] ) ]
+    [ list[ colDict.keys() ] ]
+    . rename ( colDict )
     . copy () ) # This silly-looking copy-self instruction dodges a
                 # "value ... set on a copy of a slice" error.
-  cuipo[i] ["ent-str"] = (
-    cuipo[i]["2_COD_CHIP"]
+
+  cuipo[kind] ["ent-str"] = ( # Entity as string.
+    cuipo[kind]["2_COD_CHIP"]
     . astype (str)
     . str.zfill (9) ) # left-pad with zeroes
+
   for (colname, sMin, sMax) in [ ("muni", -5, None),
                                  ("dept", -5, -3 ) ]:
-    cuipo[i] [colname] = ( cuipo[i] ["ent-str"]
-                           . apply ( lambda s : s[ sMin : sMax ] )
-                           . astype ( int ) )
+    cuipo[kind] [colname] = ( cuipo[kind] ["ent-str"]
+                              . apply ( lambda s : s[ sMin : sMax ] )
+                              . astype ( int ) )
