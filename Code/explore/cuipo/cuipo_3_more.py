@@ -45,3 +45,28 @@ for i in cuipo.keys():
     cuipo[i] [colname] = ( cuipo[i] ["ent-str"]
                            . apply ( lambda s : s[ sMin : sMax ] )
                            . astype ( int ) )
+
+## PENDING
+
+
+# Maybe also "*ambito*" (case-insensitive) and
+# "34_Conceptos_Cuipo_Agregacion".
+gastos :
+2_COD_CHIP
+3_ENTIDAD
+4_COD_CONCEPTO
+5_CONCEPTO
+30_OBLIGACIONES
+
+ingresos :
+2_COD_CHIP
+3_Entidad
+4_COD_CONCEPTO
+5_CONCEPTO
+27_TOTAL_RECAUDO # TODO : Ask Daniel: Correct?
+# Other choices are:
+#   23_RECAUDO_VIGENCIA_ACTUAL_SIN_SITUACION_DE_FONDOS   float64
+#   24_RECAUDO_VIGENCIA_ACTUAL_CON_SITUACION_DE_FONDOS   float64
+#   25_RECAUDO_VIGENCIA_ANTERIOR_SIN_SITUACION_DE_FONDOS float64
+#   26_RECAUDO_VIGENCIA_ANTERIOR_CON_SITUACION_DE_FONDOS float64
+#   28_VALOR_DESTINACION_ESPECIFICA                      float64
