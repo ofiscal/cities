@@ -12,8 +12,16 @@ from   math import floor
 import pandas as pd
 from   typing import List, Dict, Set
 #
-from   Code.explore.cuipo.load import g, i, g22, i22, jc, geo
+import Code.build.use_keys as uk
 from   Code.explore.cuipo.lib import my_describe
+import Code.explore.cuipo.load as load
+
+
+g   = load . read_gastos_pre_cuipo ()
+i   = load . read_ingresos_pre_cuipo ()
+g22 = load . read_gastos_cuipo_22 ()
+i22 = load . read_ingresos_cuipo_22 ()
+geo = uk.geo . copy ()
 
 
 ########################
