@@ -16,15 +16,15 @@ from   os import path
 import pandas as pd
 
 
-build_3 = "output/2023/budget_3_dept_muni_year_item/recip-1"
+build_1p5 = "output/2023/budget_1p5"
 
 def read_gastos_pre_cuipo () -> pd.DataFrame:
   return pd.read_csv (
-    path.join ( build_3, "gastos.csv" ) )
+    path.join ( build_1p5, "gastos.csv" ) )
 
 def read_ingresos_pre_cuipo () -> pd.DataFrame:
   return pd.read_csv (
-    path.join ( build_3, "ingresos.csv" ) )
+    path.join ( build_1p5, "ingresos.csv" ) )
 
 def read_gastos_cuipo_22 () -> pd.DataFrame:
   return pd.read_csv (

@@ -10,23 +10,24 @@ import Code.explore.cuipo.load as load
 # Load some data
 ################
 
-g   = load   . read_gastos_pre_cuipo     ()
-i   = load   . read_ingresos_pre_cuipo   ()
-g22 = load   . read_gastos_cuipo_22      ()
-i22 = load   . read_ingresos_cuipo_22    ()
-gr  = load   . read_cuipo_geo_restrictor ()
-geo = uk.geo . copy                      ()
+gr    = load   . read_cuipo_geo_restrictor ()
+geo   = uk.geo . copy                      ()
 
-# pristine (not to modify) versions, for comparison
-g22p = load . read_gastos_cuipo_22      ()
-i22p = load . read_ingresos_cuipo_22    ()
+if True: # pristine (not to modify) versions, for comparison
+  g   = load   . read_gastos_pre_cuipo     ()
+  i   = load   . read_ingresos_pre_cuipo   ()
+  g22 = load   . read_gastos_cuipo_22      ()
+  i22 = load   . read_ingresos_cuipo_22    ()
 
 
 ########################
 # Process the CUIPO data
 ########################
 
-cuipo = {}
+sisfut = { "gastos"   : g.copy(),
+           "ingresos" : i.copy() }
+cuipo = { "gastos"    : g22.copy(),
+          "ingresos"  : i22.copy() }
 
 for (source, kind, colDict) in [
     ( g22, "gastos",
@@ -58,8 +59,18 @@ for (source, kind, colDict) in [
     . astype (str)
     . str.zfill (9) ) # left-pad with zeroes
 
-  for (colname, sMin, sMax) in [ ("muni", -5, None),
-                                 ("dept", -5, -3 ) ]:
+  for (colname, sMin, sMax) in [ ("muni code", -5, None),
+                                 ("dept code", -5, -3 ) ]:
     cuipo[kind] [colname] = ( cuipo[kind] ["ent-str"]
                               . apply ( lambda s : s[ sMin : sMax ] )
                               . astype ( int ) )
+
+
+#########################
+# Process the SISFUT data
+#########################
+
+for kind in sisfut.keys():
+  sisfut  [kind] ["muni code"] = (
+    sisfut[kind] ["muni code"] . astype ( int ) )
+
