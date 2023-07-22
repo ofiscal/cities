@@ -42,8 +42,6 @@ if True: # define map from aggregate categories to the codes comprising them
                       t.ingresos : {},
                       t.deuda : {} }
   if True: # for the funcionamiento files
-    categs_to_codes[t.funcionamiento] = {}
-
     categs_to_codes[t.funcionamiento][t.personal] = {
       "1.1.1.1",
       "1.1.1.10",
