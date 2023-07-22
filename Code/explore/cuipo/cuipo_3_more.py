@@ -1,3 +1,13 @@
+# PURPOSE:
+# Determine whether the CUIPO and SISFUT data are comparable,
+# by comparing COP values after matching on city and item.
+#
+# RESULT:
+# They don't correspond.
+# We'll have to build new keys for CUIPO,
+# and compare CUIPO aggregates to SISFUT aggregates,
+# because the individual expenditure codes have changed.
+
 import pandas as pd
 from   typing import List, Dict, Set
 #
@@ -13,19 +23,22 @@ import Code.explore.cuipo.load as load
 gr    = load   . read_cuipo_geo_restrictor ()
 geo   = uk.geo . copy                      ()
 
-if True: # pristine (not to modify) versions, for comparison
+if True: # Nearly-pristine* (not to modify) versions, for comparison.
+  # (They are only modified in this "if" statement.)
   g   = load   . read_gastos_pre_cuipo     ()
   i   = load   . read_ingresos_pre_cuipo   ()
   g22 = load   . read_gastos_cuipo_22      ()
   i22 = load   . read_ingresos_cuipo_22    ()
+
+  g = ( g
+        . drop ( columns = ["item total"] )
+        . rename ( columns = {"item oblig" : "item total"} ) )
 
 
 ########################
 # Process the CUIPO data
 ########################
 
-sisfut = { "gastos"   : g.copy(),
-           "ingresos" : i.copy() }
 cuipo = { "gastos"    : g22.copy(),
           "ingresos"  : i22.copy() }
 
@@ -33,15 +46,15 @@ for (source, kind, colDict) in [
     ( g22, "gastos",
       { "2_COD_CHIP"       : "chip",
         "3_ENTIDAD"        : "entity",
-        "4_COD_CONCEPTO"   : "concept",
-        "5_CONCEPTO"       : "concept code",
+        "4_COD_CONCEPTO"   : "item code",
+        "5_CONCEPTO"       : "item",
         "30_OBLIGACIONES"  : "COP",
        } ),
     ( i22, "ingresos",
       { "2_COD_CHIP"       : "chip",
         "3_Entidad"        : "entity",
-        "4_COD_CONCEPTO"   : "concept",
-        "5_CONCEPTO"       : "concept code",
+        "4_COD_CONCEPTO"   : "item code",
+        "5_CONCEPTO"       : "item",
         "27_TOTAL_RECAUDO" : "COP",
        } ) ]:
 
@@ -70,7 +83,26 @@ for (source, kind, colDict) in [
 # Process the SISFUT data
 #########################
 
+sisfut = { "gastos"   : g.copy(),
+           "ingresos" : i.copy() }
+
 for kind in sisfut.keys():
   sisfut  [kind] ["muni code"] = (
     sisfut[kind] ["muni code"] . astype ( int ) )
+  sisfut[kind] = (
+    sisfut[kind] . rename ( columns = {"item total" : "COP"} ) )
 
+
+############################
+# Merge CUIPO and older data
+############################
+
+m = {}
+
+# Bad news. Not a single code matches.
+for kind in sisfut.keys():
+  m[kind] = (
+    sisfut[kind]
+    [sisfut[kind] ["year"] == 2020]
+    . merge ( cuipo[kind],
+              on = ["muni code","item code"] ) )

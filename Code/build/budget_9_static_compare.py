@@ -50,10 +50,11 @@ geo = ( # geo indices of interest
   [space] .
   drop_duplicates () )
 
-def static_muni_ungrouped ( filename : str,
-                            dept_code : int,
-                            muni_code : int
-                           ) -> pd.Series:
+def static_muni_ungrouped (
+    filename : str, # TODO | PITFALL: Probably must be a "-pct" file.
+    dept_code : int,
+    muni_code : int
+) -> pd.Series:
   """Average a muni's values over years during the latest administration."""
   assert muni_code > 0
   money_col = ( "item total"
@@ -94,9 +95,10 @@ if testing:
                           dept_code = dc,
                           muni_code = mc )
 
-def group_small_if_needed ( filename : str,
-                            ser : pd.Series
-                           ) -> pd.Series:
+def group_small_if_needed (
+    filename : str,
+    ser : pd.Series
+) -> pd.Series:
   if filename == "ingresos-pct":
     return ser
   else: # lump all but the top five gastos
@@ -108,10 +110,11 @@ def group_small_if_needed ( filename : str,
     ser_new_otros.index = ["Otros"]
     return pd.concat ( [ser_top, ser_new_otros] )
 
-def static_muni ( filename : str,
-                  dept_code : int,
-                  muni_code : int
-                ) -> pd.Series:
+def static_muni (
+    filename : str,
+    dept_code : int,
+    muni_code : int
+) -> pd.Series:
   return group_small_if_needed (
     filename = filename,
     ser      = static_muni_ungrouped (
