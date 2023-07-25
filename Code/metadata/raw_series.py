@@ -104,7 +104,7 @@ duplicative_columns_long = [
 #    ("Código FUT", "Nombre Entidad" )
     ("Cód. DANE Departamento", "Nombre DANE Departamento" )
   , ("Cód. DANE Municipio", "Nombre DANE Municipio" )
-  , ("Código Concepto", "Concepto" )
+#  , ("Código Concepto", "Concepto" )
 #  , ("Código Fuente Financiación", "Fuente Financiación" )
 #  , ("Código Fuentes De Financiación", "Fuentes de Financiación" )
   ]

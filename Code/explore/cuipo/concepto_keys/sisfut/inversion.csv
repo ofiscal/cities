@@ -1,0 +1,20 @@
+item,item code,observatorio name
+AMBIENTAL,A.10,Ambiental
+SALUD,A.2,Salud
+EDUCACIÓN,A.1,Educación
+CENTROS DE RECLUSIÓN,A.11,Seguridad y justicia
+JUSTICIA Y SEGURIDAD,A.18,Seguridad y justicia
+FORTALECIMIENTO INSTITUCIONAL,A.17,Generales funcionamiento
+GASTOS ESPECÍFICOS DE REGALÍAS Y COMPENSACIONES,A.19,Generales funcionamiento
+PREVENCIÓN Y ATENCIÓN DE DESASTRES,A.12,Otros gastos sociales
+PROMOCIÓN DEL DESARROLLO,A.13,Otros gastos sociales
+ATENCIÓN A GRUPOS VULNERABLES - PROMOCIÓN SOCIAL,A.14,Otros gastos sociales
+DESARROLLO COMUNITARIO,A.16,Otros gastos sociales
+EQUIPAMIENTO,A.15,Infraestructura y vivienda
+VIVIENDA,A.7,Infraestructura y vivienda
+TRANSPORTE,A.9,Infraestructura y vivienda
+AGUA POTABLE Y SANEAMIENTO BÁSICO  (SIN INCLUIR PROYECTOS DE VIS),A.3,Servicios públicos
+SERVICIOS PÚBLICOS DIFERENTES A ACUEDUCTO ALCANTARILLADO Y ASEO (SIN INCLUIR PROYECTOS DE VIVIENDA DE INTERÉS SOCIAL),A.6,Servicios públicos
+DEPORTE Y RECREACIÓN,A.4,"Deporte, recreación, cultura"
+CULTURA,A.5,"Deporte, recreación, cultura"
+AGROPECUARIO,A.8,Agropecuario
