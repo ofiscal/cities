@@ -41,6 +41,7 @@ if True: # define map from aggregate categories to the codes comprising them
                       t.inversion : {},
                       t.ingresos : {},
                       t.deuda : {} }
+
   if True: # for the funcionamiento files
     categs_to_codes[t.funcionamiento][t.personal] = {
       "1.1.1.1",
@@ -213,6 +214,7 @@ if True: # define map from aggregate categories to the codes comprising them
     # because that would be an annoyingly big set.
     # Rather, it gets computed in `budget_3_dept_muni_year_item.py`.
     categs_to_codes[t.ingresos][t.capital] = {"TI.B"}
+
   if True: # for the deuda files
     categs_to_codes[t.deuda][t.deuda_gasto] = {"T"}
 
