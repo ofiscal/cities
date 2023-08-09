@@ -15,6 +15,9 @@ on which we want to report --
 e.g. "building hospitals" (too much detail) is part of "salud" (just right),
 "paying teachers" (too much detail) is part of "education" (just right),
 etc.
+PITFALL: Confusingly, the SISFUT concepto keys are built by
+a file with a lot of "cuipo" in its path:
+`Code/explore/cuipo/cuipo_4_concept_keys.py`
 
 For the CUIPO data, we want to build the same aggregate categories,
 and the purpose of these files is to allow us to construct them.
