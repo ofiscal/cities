@@ -243,7 +243,19 @@ to_delete = [
 g8 = ( g7 [ ~ g7 ["item code"] . isin ( to_delete ) ]
        . copy() )
 
-g7.equals(g8)
+g7.equals(g8) # Finally they're equal, so stop doing that.
+
+
+##############################
+#### Now keep only leaves ####
+
+
+g8["is leaf"] = g8["item code"] . apply ( lambda s :
+                                          is_leaf(g8,s) )
+g8 = g8 [ g8["is leaf"] ]
+g8 = g8 [ [ "observatorio name",
+            "item code",
+            "item" ] ]
 
 
 ########################
