@@ -1,6 +1,8 @@
 # PURPOSE:
-# Build the .csv files found in `Code/explore/cuipo/concepto_keys/`.
-# See the README file in that folder for more detail.
+# Build some of the .csv files found in these folders:
+#   Code/explore/cuipo/concepto_keys/cuipo/all-conceptos/
+#   Code/explore/cuipo/concepto_keys/sisfut/
+# See the README files in this folder and below for more detail.
 
 from   os import path
 from   typing import Set, List, Dict
