@@ -1,3 +1,10 @@
+# PURPOSE:
+#
+# Remove the "big categories" column (ingreso or gasto).
+# Reorder columns and rows.
+# Filter "gastos" to retain only the leaves
+# (that's the hard part).
+
 from   typing import Set, List, Dict
 from   os import path
 import pandas as pd
@@ -248,7 +255,6 @@ g7.equals(g8) # Finally they're equal, so stop doing that.
 
 ##############################
 #### Now keep only leaves ####
-
 
 g8["is leaf"] = g8["item code"] . apply ( lambda s :
                                           is_leaf(g8,s) )
